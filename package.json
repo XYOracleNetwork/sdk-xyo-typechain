@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@openzeppelin/contracts": "^4.6.0",
+    "@uniswap/v3-core": "^1.0.1",
     "ethers": "^5.6.5"
   },
   "author": {
@@ -67,12 +68,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rm -r -f src && rm -r -f build && yarn compile",
-    "clean": "rm -f yarn.lock && rm -f *.tsbuildinfo && rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
+    "build": "rimraf src && rm -r -f build && yarn compile",
+    "clean": "rimraf yarn.lock && rimraf *.tsbuildinfo && rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
     "compile": "yarn compile:solidity && yarn compile:typechain && yarn compile:sdk",
-    "compile:sdk": "tsc -p tsconfig.build.cjs.json && tsc -p tsconfig.build.esm.json",
-    "compile:solidity": "rm -rf ./build/contracts && truffle compile --config truffle-config.cjs",
-    "compile:typechain": "rm -rf ./typechain && typechain --out-dir=./src --target=ethers-v5 ./build/contracts/**/*.json",
+    "compile:sdk": "rimraf dist && tsc -p tsconfig.build.cjs.json && tsc -p tsconfig.build.esm.json",
+    "compile:solidity": "rimraf build && truffle compile --config truffle-config.cjs && truffle compile --config truffle-config-uniswap.cjs",
+    "compile:typechain": "rimraf src && typechain --out-dir=./src --target=ethers-v5 ./build/contracts/**/*.json",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
     "deploy": "yarn version --patch && yarn build && yarn publish .",
     "lint-pkg": "npmPkgJsonLint ."

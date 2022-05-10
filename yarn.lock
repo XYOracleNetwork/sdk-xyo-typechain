@@ -3086,6 +3086,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@uniswap/v3-core@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "@uniswap/v3-core@npm:1.0.1"
+  checksum: 4bfd8b218391a3d9efde44e0f984cfec3bc25889cd4d1386766828521006e71b210a3583ee32b52f3c81d384af9e8c39f471f2229e9af4d50da6801446ecb3e4
+  languageName: node
+  linkType: hard
+
 "@vue/compiler-core@npm:3.2.31":
   version: 3.2.31
   resolution: "@vue/compiler-core@npm:3.2.31"
@@ -3295,6 +3302,7 @@ __metadata:
     "@openzeppelin/contracts": ^4.6.0
     "@typechain/ethers-v5": ^10.0.0
     "@types/jest": ^27.5.0
+    "@uniswap/v3-core": ^1.0.1
     "@xylabs/eslint-config": 2.3.22
     "@xylabs/ts-scripts": ^1.0.66
     "@xylabs/tsconfig": ^1.0.13
