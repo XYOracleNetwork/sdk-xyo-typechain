@@ -44,21 +44,23 @@
     "typechain": "^8.0.0",
     "typescript": "^4.6.4"
   },
-  "browser": "dist/esm2017/index.js",
-  "esm5": "dist/esm5/index.js",
+  "browser": "dist/esm/index.js",
   "exports": {
     ".": {
-      "esm5": "./dist/esm5/index.js",
       "node": {
-        "import": "./dist/node-esm/index.js",
-        "require": "./dist/node/index.js"
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
       },
-      "default": "./dist/index.js"
+      "browser": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+      },
+      "default": "./dist/esm/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/node/index.js",
-  "module": "dist/index.js",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "types": "dist/index.d.ts",
   "name": "@xyo-network/sdk-xyo-typechain",
   "publishConfig": {
