@@ -1,0 +1,16 @@
+node_modules
+build
+dist
+.DS_Store
+*.log
+public/contracts
+src
+typechain
+lib
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
