@@ -69,10 +69,10 @@ yarn add @xyo-network/sdk-xyo-typechain
 [bch-badge]: https://bettercodehub.com/edge/badge/XYOracleNetwork/sdk-xyo-typechain?branch=main
 [bch-link]: https://bettercodehub.com/results/XYOracleNetwork/sdk-xyo-typechain
 
-[codacy-badge]: https://app.codacy.com/project/badge/Grade/TBD
+[codacy-badge]: https://app.codacy.com/project/badge/Grade/cceadf68cb0b4ec5896cb05f1e0d6b24
 [codacy-link]: https://www.codacy.com/gh/XYOracleNetwork/sdk-xyo-typechain/dashboard?utm_source=github.com&utm_medium=referral&utm_content=XYOracleNetwork/sdk-xyo-typechain&utm_campaign=Badge_Grade
 
-[codeclimate-badge]: https://api.codeclimate.com/v1/badges/TBD/maintainability
+[codeclimate-badge]: https://api.codeclimate.com/v1/badges/fd816e09dbad82d985d0/maintainability
 [codeclimate-link]: https://codeclimate.com/github/XYOracleNetwork/sdk-xyo-typechain/maintainability
 
 [snyk-badge]: https://snyk.io/test/github/XYOracleNetwork/sdk-xyo-typechain/badge.svg?targetFile=package.json
