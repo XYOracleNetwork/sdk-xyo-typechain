@@ -2142,9 +2142,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@truffle/codec@npm:^0.12.11":
-  version: 0.12.11
-  resolution: "@truffle/codec@npm:0.12.11"
+"@truffle/codec@npm:^0.12.12":
+  version: 0.12.12
+  resolution: "@truffle/codec@npm:0.12.12"
   dependencies:
     "@truffle/abi-utils": ^0.2.13
     "@truffle/compile-common": ^0.7.31
@@ -2156,7 +2156,7 @@ __metadata:
     semver: ^7.3.4
     utf8: ^3.0.0
     web3-utils: 1.5.3
-  checksum: fcb607befa489779e1bbe7410044a6087f008dd0b14c829beff014d4379e104a8860c8f0dbe9b5466d009d13593973805139de29a101f398caf4ad6f8c00afed
+  checksum: 8e3de849a93579d959cc27dea97cd648d4a8e8babf6e1c04aa1545b170b0814745015e126edfb7bc7983b849079a66d803c7559ac446b458544f7592036a8021
   languageName: node
   linkType: hard
 
@@ -2185,21 +2185,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@truffle/db-loader@npm:^0.1.15":
-  version: 0.1.15
-  resolution: "@truffle/db-loader@npm:0.1.15"
+"@truffle/db-loader@npm:^0.1.16":
+  version: 0.1.16
+  resolution: "@truffle/db-loader@npm:0.1.16"
   dependencies:
-    "@truffle/db": ^1.0.5
+    "@truffle/db": ^1.0.6
   dependenciesMeta:
     "@truffle/db":
       optional: true
-  checksum: 99de2e68c05c6336e99567be1ffe8452a683c8b194b79ddbc11acdc8da5a31d73e622d48acd341c0116867e4ca6499a83c9258429f0589d46c64715a53dba70c
+  checksum: 5a168292ebba1be97107d1730aff8e26e353f0e1bd151e3a7ca210917e05363f5e9f798b2de17933a67b29f4dc466b1fb34fa0482db353c15673a561ffab4b26
   languageName: node
   linkType: hard
 
-"@truffle/db@npm:^1.0.5":
-  version: 1.0.5
-  resolution: "@truffle/db@npm:1.0.5"
+"@truffle/db@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@truffle/db@npm:1.0.6"
   dependencies:
     "@graphql-tools/delegate": ^8.4.3
     "@graphql-tools/schema": ^8.3.1
@@ -2221,17 +2221,17 @@ __metadata:
     pouchdb-debug: ^7.1.1
     pouchdb-find: ^7.0.0
     web3-utils: 1.5.3
-  checksum: 4720542b890e3990f588fae4c8a4dac554d23937203453e125ed647bf90850accc0aa26e4e2a0d0462236498d3fe2f730b0f9086e62d31a0e62cb4da61c4ff3a
+  checksum: a1b85798db7be717678bfcdd995743759338801a0d17d309767f493e5d83cd03ffe2662706dcbd2876bc162a6ef0bd9854120fa7317e22f16a737d95e1635890
   languageName: node
   linkType: hard
 
-"@truffle/debugger@npm:^10.0.9":
-  version: 10.0.9
-  resolution: "@truffle/debugger@npm:10.0.9"
+"@truffle/debugger@npm:^10.0.10":
+  version: 10.0.10
+  resolution: "@truffle/debugger@npm:10.0.10"
   dependencies:
     "@truffle/abi-utils": ^0.2.13
-    "@truffle/codec": ^0.12.11
-    "@truffle/source-map-utils": ^1.3.83
+    "@truffle/codec": ^0.12.12
+    "@truffle/source-map-utils": ^1.3.84
     bn.js: ^5.1.3
     debug: ^4.3.1
     json-pointer: ^0.6.1
@@ -2243,7 +2243,7 @@ __metadata:
     semver: ^7.3.4
     web3: 1.5.3
     web3-eth-abi: 1.5.3
-  checksum: 646bf88612870af5f010ef2dc08482012fffd21bde364e207d4339435eda2ef2d9b8f3812b0b61ca775ca55b0bbb666a6e1e38ef537d0ac02cadbaf788aa3b03
+  checksum: f1705b13c6accb40271e4b9110cd60d30eefb4b377049ea237e03b322391912d4e7ab1b99ffe7942d495f8867847b4de356ba6e273dc1f7037c8d7d04f353e35
   languageName: node
   linkType: hard
 
@@ -2343,17 +2343,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@truffle/source-map-utils@npm:^1.3.83":
-  version: 1.3.83
-  resolution: "@truffle/source-map-utils@npm:1.3.83"
+"@truffle/source-map-utils@npm:^1.3.84":
+  version: 1.3.84
+  resolution: "@truffle/source-map-utils@npm:1.3.84"
   dependencies:
     "@truffle/code-utils": ^1.2.34
-    "@truffle/codec": ^0.12.11
+    "@truffle/codec": ^0.12.12
     debug: ^4.3.1
     json-pointer: ^0.6.1
     node-interval-tree: ^1.3.3
     web3-utils: 1.5.3
-  checksum: 6ec4a977bc44b34921f54a1729d993eb095666b799e300d0e20cbc823a6003398e61415aae861ccf6f92f8f3fdd2be3c7d142c45e470a1b5f977749f9bd7f487
+  checksum: bd6e8176928ac3df56d77ac56e7e2329b58616fa7c4677ddb46a203f297327bd9f24e86a46b97ebc3211f5de5d0378ba991bf169c52942754b82580dce04ffb2
   languageName: node
   linkType: hard
 
@@ -2649,13 +2649,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:^27.4.1, @types/jest@npm:^27.5.0":
-  version: 27.5.0
-  resolution: "@types/jest@npm:27.5.0"
+"@types/jest@npm:^27.4.1, @types/jest@npm:^27.5.1":
+  version: 27.5.1
+  resolution: "@types/jest@npm:27.5.1"
   dependencies:
     jest-matcher-utils: ^27.0.0
     pretty-format: ^27.0.0
-  checksum: ca09ac3a17972e18683c57b681a6866c7a56c67f429810ece00425d948da62f207d271becb5cc759da3630f120596ec3c8e0ceb0eecefbe26daffba168b82879
+  checksum: be20e39f7aaf17179109c0060d0a0489cec2034d4e2e28a631284c7ecd13c5ae52f62697a33a0e89b03b6cfe54e9d5e8c2bd387ab2bd90d6071d68c63b86d1e3
   languageName: node
   linkType: hard
 
@@ -3301,7 +3301,7 @@ __metadata:
     "@ethersproject/providers": ^5.6.5
     "@openzeppelin/contracts": ^4.6.0
     "@typechain/ethers-v5": ^10.0.0
-    "@types/jest": ^27.5.0
+    "@types/jest": ^27.5.1
     "@uniswap/v3-core": ^1.0.1
     "@xylabs/eslint-config": 2.3.22
     "@xylabs/ts-scripts": ^1.0.66
@@ -3321,7 +3321,7 @@ __metadata:
     prettier: ^2.6.2
     rimraf: ^3.0.2
     subscriptions-transport-ws: ^0.11.0
-    truffle: ^5.5.13
+    truffle: ^5.5.14
     tslib: ^2.4.0
     typechain: ^8.0.0
     typescript: ^4.6.4
@@ -16487,13 +16487,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"truffle@npm:^5.5.13":
-  version: 5.5.13
-  resolution: "truffle@npm:5.5.13"
+"truffle@npm:^5.5.14":
+  version: 5.5.14
+  resolution: "truffle@npm:5.5.14"
   dependencies:
-    "@truffle/db": ^1.0.5
-    "@truffle/db-loader": ^0.1.15
-    "@truffle/debugger": ^10.0.9
+    "@truffle/db": ^1.0.6
+    "@truffle/db-loader": ^0.1.16
+    "@truffle/debugger": ^10.0.10
     "@truffle/preserve-fs": ^0.2.7
     "@truffle/preserve-to-buckets": ^0.2.8
     "@truffle/preserve-to-filecoin": ^0.2.8
@@ -16515,7 +16515,7 @@ __metadata:
       optional: true
   bin:
     truffle: build/cli.bundled.js
-  checksum: 06b7c3a75b69ee3f8ad152af0910feec81f3491439d69a0f2e6f7c9360be7c1ddd497850982267f14ea128ce6c8eec57d22d01f6c81c060f06e5d7cae4f54d34
+  checksum: add96f9b9e4531cd1a1608bf4f17475df208c565944488f95e01ae15bed5f640e311ad7f64ef2635ce44bef70d007c07cb4f7a40647873d4c8e7dd60b0d82c33
   languageName: node
   linkType: hard
 
