@@ -20,7 +20,7 @@
   "devDependencies": {
     "@ethersproject/abi": "^5.6.1",
     "@ethersproject/bytes": "^5.6.1",
-    "@ethersproject/providers": "^5.6.5",
+    "@ethersproject/providers": "^5.6.6",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/jest": "^27.5.1",
     "@xylabs/eslint-config": "2.3.22",
