@@ -2,7 +2,7 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.6.0",
     "@uniswap/v3-core": "^1.0.1",
-    "ethers": "^5.6.5"
+    "ethers": "^5.6.8"
   },
   "author": {
     "email": "support@xyo.network",
@@ -18,9 +18,9 @@
     "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
   "devDependencies": {
-    "@ethersproject/abi": "^5.6.1",
+    "@ethersproject/abi": "^5.6.3",
     "@ethersproject/bytes": "^5.6.1",
-    "@ethersproject/providers": "^5.6.5",
+    "@ethersproject/providers": "^5.6.8",
     "@typechain/ethers-v5": "^10.0.0",
     "@types/jest": "^27.5.1",
     "@xylabs/eslint-config": "2.3.22",
@@ -29,7 +29,7 @@
     "abort-controller": "^3.0.0",
     "abstract-leveldown": "^7.2.0",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.15.0",
+    "eslint": "^8.16.0",
     "google-protobuf": "^3.20.1",
     "graphql": "^16.5.0",
     "jest": "^28.1.0",
@@ -40,10 +40,10 @@
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
     "subscriptions-transport-ws": "^0.11.0",
-    "truffle": "^5.5.14",
+    "truffle": "^5.5.16",
     "tslib": "^2.4.0",
     "typechain": "^8.0.0",
-    "typescript": "^4.6.4"
+    "typescript": "^4.7.2"
   },
   "browser": "dist/esm/index.js",
   "exports": {
@@ -62,7 +62,7 @@
   },
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/esm/index.d.ts",
   "name": "@xyo-network/sdk-xyo-typechain",
   "publishConfig": {
     "access": "public"
