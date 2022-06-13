@@ -42,7 +42,7 @@
     "subscriptions-transport-ws": "^0.11.0",
     "truffle": "^5.5.16",
     "tslib": "^2.4.0",
-    "typechain": "^8.0.0",
+    "typechain": "^8.1.0",
     "typescript": "^4.7.2"
   },
   "browser": "dist/esm/index.js",
