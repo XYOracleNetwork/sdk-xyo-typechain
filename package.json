@@ -25,7 +25,7 @@
     "@types/jest": "^27.5.1",
     "@xylabs/eslint-config": "2.3.22",
     "@xylabs/ts-scripts": "^1.0.66",
-    "@xylabs/tsconfig": "^1.0.13",
+    "@xylabs/tsconfig": "^2.6.1",
     "abort-controller": "^3.0.0",
     "abstract-leveldown": "^7.2.0",
     "copyfiles": "^2.4.1",
