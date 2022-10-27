@@ -4,8 +4,6 @@ dist
 .DS_Store
 *.log
 public/contracts
-src
-typechain
 lib
 .pnp.*
 .yarn/*
@@ -14,3 +12,4 @@ lib
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.tsconfig*

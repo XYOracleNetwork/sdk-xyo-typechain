@@ -40,7 +40,7 @@ module.exports = {
     },
   },
 
-  contracts_directory: './node_modules/@uniswap/v3-core/contracts/interfaces',
+  contracts_directory: './contracts/interfaces',
 
   // Set default mocha options here, use special reporters etc.
   mocha: {

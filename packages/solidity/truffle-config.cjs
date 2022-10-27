@@ -40,7 +40,7 @@ module.exports = {
     },
   },
 
-  contracts_directory: './solidity/contracts',
+  contracts_directory: './src/contracts',
 
   // Set default mocha options here, use special reporters etc.
   mocha: {

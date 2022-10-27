@@ -4,15 +4,20 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,
+    "**/node_modules": false,
     "**/build": false,
     "**/dist": false,
+    "**/src": false,
     "**/.webpack": true,
     "**/.serverless": true,
     "**/.rollup.cache": true
   },
   "editor.formatOnSave": true,
-  "editor.quickSuggestions": true,
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on",
+    "other": "on"
+  },
   "editor.tabSize": 2,
   "editor.suggestSelection": "first",
   "editor.codeActionsOnSave": {
@@ -39,4 +44,14 @@
   "[jsonc]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
+  "cSpell.words": [
+    "copyfiles",
+    "ethersproject",
+    "leveldown",
+    "protobuf",
+    "tsbuildinfo",
+    "typechain",
+    "xylabs",
+    "yarnpkg"
+  ],
 }
