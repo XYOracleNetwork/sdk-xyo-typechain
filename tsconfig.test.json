@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "typeRoots": ["./node_modules/@types"],
-    "types": ["jest", "node", "@types/jest", "jest-sorted"]
+    "composite": true,
+  "lib": [
+      "ES2022"
+    ],
+    "rootDir": "./src"
   },
-  "extends": "@xylabs/tsconfig",
-  "include": ["**/*.spec.ts"]
+  "extends": "./tsconfig.json",
+  "include": ["**/*.spec.ts", "**/*.d.ts"]
 }

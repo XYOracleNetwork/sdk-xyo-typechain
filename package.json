@@ -1,8 +1,8 @@
 {
   "dependencies": {
-    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts": "^4.7.3",
     "@uniswap/v3-core": "^1.0.1",
-    "ethers": "^5.6.8"
+    "ethers": "^5.7.2"
   },
   "author": {
     "email": "support@xyo.network",
@@ -17,33 +17,36 @@
     "type": "git",
     "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
+  "workspaces": [
+    "packages/**/*"
+  ],
   "devDependencies": {
-    "@ethersproject/abi": "^5.6.3",
-    "@ethersproject/bytes": "^5.6.1",
-    "@ethersproject/providers": "^5.6.8",
-    "@typechain/ethers-v5": "^10.0.0",
-    "@types/jest": "^27.5.1",
-    "@xylabs/eslint-config": "2.3.22",
-    "@xylabs/ts-scripts": "^1.0.66",
-    "@xylabs/tsconfig": "^1.0.13",
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
+    "@typechain/ethers-v5": "^10.1.0",
+    "@types/jest": "^29.2.0",
+    "@xylabs/eslint-config": "2.7.24",
+    "@xylabs/ts-scripts-yarn3": "^2.7.24",
+    "@xylabs/tsconfig": "^2.7.24",
     "abort-controller": "^3.0.0",
     "abstract-leveldown": "^7.2.0",
     "copyfiles": "^2.4.1",
-    "eslint": "^8.16.0",
-    "google-protobuf": "^3.20.1",
-    "graphql": "^16.5.0",
-    "jest": "^28.1.0",
+    "eslint": "^8.26.0",
+    "google-protobuf": "^3.21.2",
+    "graphql": "^16.6.0",
+    "jest": "^29.2.2",
     "jest-sorted": "^1.0.14",
-    "node-fetch": "^3.2.4",
+    "node-fetch": "^3.2.10",
     "npm-package-json-lint": "^6.3.0",
     "npm-package-json-lint-config-default": "^5.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "subscriptions-transport-ws": "^0.11.0",
-    "truffle": "^5.5.16",
+    "truffle": "^5.6.3",
     "tslib": "^2.4.0",
-    "typechain": "^8.0.0",
-    "typescript": "^4.7.2"
+    "typechain": "^8.1.0",
+    "typescript": "^4.8.4"
   },
   "browser": "dist/esm/index.js",
   "exports": {
@@ -75,10 +78,9 @@
     "compile:solidity": "rimraf build && truffle compile --config truffle-config.cjs && truffle compile --config truffle-config-uniswap.cjs",
     "compile:typechain": "rimraf src && typechain --out-dir=./src --target=ethers-v5 ./build/contracts/**/*.json",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
-    "deploy": "yarn version --patch && yarn build && yarn publish .",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
   "version": "1.0.4",
-  "packageManager": "yarn@3.2.0"
+  "packageManager": "yarn@3.2.4"
 }
