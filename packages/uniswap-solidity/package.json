@@ -55,11 +55,11 @@
   },
   "scripts": {
     "build": "rimraf src && rm -r -f build && yarn compile",
-    "clean": "rimraf yarn.lock && rimraf *.tsbuildinfo && rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
+    "clean": "rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
     "compile": "rimraf build && yarn copy-contracts && truffle compile --config truffle-config.cjs",
     "copy-contracts": "copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" contracts",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "2.0.0"
+  "version": "2.0.2"
 }

@@ -74,13 +74,14 @@
   },
   "scripts": {
     "build": "yarn workspaces foreach -pAtv run compile && yarn lint",
-    "clean": "rimraf yarn.lock && rimraf *.tsbuildinfo && rimraf ./build && rm -r -f ./dist && rimraf ./node_modules && rimraf ./lib",
+    "deploy": "yarn clean && yarn workspaces foreach --all version patch --deferred && yarn build && yarn compile && yarn cycle && yarn version apply --all && yarn workspaces foreach -pt npm publish",
+    "clean": "rimraf ./build && rm -r -f ./dist && rimraf ./lib",
     "compile": "yarn tsconfig-gen && yarn package-compile-esm && yarn package-compile-cjs",
     "compile:sdk": "rimraf dist && tsc -p .tsconfig.build.cjs.json && tsc -p .tsconfig.build.esm.json",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "1.0.4",
+  "version": "1.0.6",
   "packageManager": "yarn@3.2.4"
 }

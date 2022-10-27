@@ -70,10 +70,10 @@
   },
   "scripts": {
     "build": "yarn workspaces foreach -pAv run compile",
-    "clean": "rimraf yarn.lock && rimraf *.tsbuildinfo && rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
+    "clean": "rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
     "compile": "typechain --out-dir=./dist --target=ethers-v5 ../../node_modules/@xyo-network/uniswap-solidity/build/contracts/**/*.json",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "2.0.0"
+  "version": "2.0.2"
 }
