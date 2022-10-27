@@ -4271,10 +4271,154 @@ __metadata:
     "@openzeppelin/contracts": ^4.7.3
     "@typechain/ethers-v5": ^10.1.0
     "@types/jest": ^29.2.0
+    "@xylabs/eslint-config": 2.7.24
+    "@xylabs/ts-scripts-yarn3": ^2.7.24
+    "@xylabs/tsconfig": ^2.7.24
+    "@xyo-network/solidity": "workspace:^"
+    "@xyo-network/typechain": "workspace:^"
+    "@xyo-network/uniswap-solidity": "workspace:^"
+    "@xyo-network/uniswap-typechain": "workspace:^"
+    abort-controller: ^3.0.0
+    abstract-leveldown: ^7.2.0
+    copyfiles: ^2.4.1
+    eslint: ^8.26.0
+    ethers: ^5.7.2
+    google-protobuf: ^3.21.2
+    graphql: ^16.6.0
+    jest: ^29.2.2
+    jest-sorted: ^1.0.14
+    node-fetch: ^3.2.10
+    npm-package-json-lint: ^6.3.0
+    npm-package-json-lint-config-default: ^5.0.0
+    prettier: ^2.7.1
+    rimraf: ^3.0.2
+    subscriptions-transport-ws: ^0.11.0
+    tslib: ^2.4.0
+    typechain: ^8.1.0
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@xyo-network/solidity@workspace:^, @xyo-network/solidity@workspace:packages/solidity":
+  version: 0.0.0-use.local
+  resolution: "@xyo-network/solidity@workspace:packages/solidity"
+  dependencies:
+    "@ethersproject/abi": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@openzeppelin/contracts": ^4.7.3
+    "@typechain/ethers-v5": ^10.1.0
+    "@types/jest": ^29.2.0
     "@uniswap/v3-core": ^1.0.1
     "@xylabs/eslint-config": 2.7.24
     "@xylabs/ts-scripts-yarn3": ^2.7.24
     "@xylabs/tsconfig": ^2.7.24
+    abort-controller: ^3.0.0
+    abstract-leveldown: ^7.2.0
+    copyfiles: ^2.4.1
+    eslint: ^8.26.0
+    ethers: ^5.7.2
+    google-protobuf: ^3.21.2
+    graphql: ^16.6.0
+    jest: ^29.2.2
+    jest-sorted: ^1.0.14
+    node-fetch: ^3.2.10
+    npm-package-json-lint: ^6.3.0
+    npm-package-json-lint-config-default: ^5.0.0
+    prettier: ^2.7.1
+    rimraf: ^3.0.2
+    subscriptions-transport-ws: ^0.11.0
+    truffle: ^5.6.3
+    tslib: ^2.4.0
+    typechain: ^8.1.0
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@xyo-network/typechain@workspace:^, @xyo-network/typechain@workspace:packages/typechain":
+  version: 0.0.0-use.local
+  resolution: "@xyo-network/typechain@workspace:packages/typechain"
+  dependencies:
+    "@ethersproject/abi": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@typechain/ethers-v5": ^10.1.0
+    "@types/jest": ^29.2.0
+    "@xylabs/eslint-config": 2.7.24
+    "@xylabs/ts-scripts-yarn3": ^2.7.24
+    "@xylabs/tsconfig": ^2.7.24
+    "@xyo-network/solidity": "workspace:^"
+    abort-controller: ^3.0.0
+    abstract-leveldown: ^7.2.0
+    copyfiles: ^2.4.1
+    eslint: ^8.26.0
+    ethers: ^5.7.2
+    google-protobuf: ^3.21.2
+    graphql: ^16.6.0
+    jest: ^29.2.2
+    jest-sorted: ^1.0.14
+    node-fetch: ^3.2.10
+    npm-package-json-lint: ^6.3.0
+    npm-package-json-lint-config-default: ^5.0.0
+    prettier: ^2.7.1
+    rimraf: ^3.0.2
+    subscriptions-transport-ws: ^0.11.0
+    truffle: ^5.6.3
+    tslib: ^2.4.0
+    typechain: ^8.1.0
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@xyo-network/uniswap-solidity@workspace:^, @xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity":
+  version: 0.0.0-use.local
+  resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
+  dependencies:
+    "@ethersproject/abi": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@openzeppelin/contracts": ^4.7.3
+    "@typechain/ethers-v5": ^10.1.0
+    "@types/jest": ^29.2.0
+    "@uniswap/v3-core": ^1.0.1
+    "@xylabs/eslint-config": 2.7.24
+    "@xylabs/ts-scripts-yarn3": ^2.7.24
+    "@xylabs/tsconfig": ^2.7.24
+    abort-controller: ^3.0.0
+    abstract-leveldown: ^7.2.0
+    copyfiles: ^2.4.1
+    eslint: ^8.26.0
+    ethers: ^5.7.2
+    google-protobuf: ^3.21.2
+    graphql: ^16.6.0
+    jest: ^29.2.2
+    jest-sorted: ^1.0.14
+    node-fetch: ^3.2.10
+    npm-package-json-lint: ^6.3.0
+    npm-package-json-lint-config-default: ^5.0.0
+    prettier: ^2.7.1
+    rimraf: ^3.0.2
+    subscriptions-transport-ws: ^0.11.0
+    truffle: ^5.6.3
+    tslib: ^2.4.0
+    typechain: ^8.1.0
+    typescript: ^4.8.4
+  languageName: unknown
+  linkType: soft
+
+"@xyo-network/uniswap-typechain@workspace:^, @xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain":
+  version: 0.0.0-use.local
+  resolution: "@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain"
+  dependencies:
+    "@ethersproject/abi": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@typechain/ethers-v5": ^10.1.0
+    "@types/jest": ^29.2.0
+    "@xylabs/eslint-config": 2.7.24
+    "@xylabs/ts-scripts-yarn3": ^2.7.24
+    "@xylabs/tsconfig": ^2.7.24
+    "@xyo-network/uniswap-solidity": "workspace:^"
     abort-controller: ^3.0.0
     abstract-leveldown: ^7.2.0
     copyfiles: ^2.4.1

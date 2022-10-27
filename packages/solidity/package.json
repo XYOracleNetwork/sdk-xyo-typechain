@@ -1,11 +1,8 @@
 {
-  "name": "@xyo-network/sdk-xyo-typechain",
+  "name": "@xyo-network/solidity",
   "dependencies": {
     "@openzeppelin/contracts": "^4.7.3",
-    "@xyo-network/solidity": "workspace:^",
-    "@xyo-network/typechain": "workspace:^",
-    "@xyo-network/uniswap-solidity": "workspace:^",
-    "@xyo-network/uniswap-typechain": "workspace:^",
+    "@uniswap/v3-core": "^1.0.1",
     "ethers": "^5.7.2"
   },
   "author": {
@@ -47,40 +44,20 @@
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "subscriptions-transport-ws": "^0.11.0",
+    "truffle": "^5.6.3",
     "tslib": "^2.4.0",
     "typechain": "^8.1.0",
     "typescript": "^4.8.4"
   },
-  "browser": "dist/esm/index.js",
-  "exports": {
-    ".": {
-      "node": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
-      "browser": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
-      "default": "./dist/esm/index.js"
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "dist/esm/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "yarn workspaces foreach -pAtv run compile && yarn lint",
-    "clean": "rimraf yarn.lock && rimraf *.tsbuildinfo && rimraf ./build && rm -r -f ./dist && rimraf ./node_modules && rimraf ./lib",
-    "compile": "yarn tsconfig-gen && yarn package-compile-esm && yarn package-compile-cjs",
-    "compile:sdk": "rimraf dist && tsc -p .tsconfig.build.cjs.json && tsc -p .tsconfig.build.esm.json",
-    "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
+    "build": "rimraf src && rm -r -f build && yarn compile",
+    "clean": "rimraf yarn.lock && rimraf *.tsbuildinfo && rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
+    "compile": "rimraf build && truffle compile --config truffle-config.cjs",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "1.0.4",
-  "packageManager": "yarn@3.2.4"
+  "version": "2.0.0"
 }
