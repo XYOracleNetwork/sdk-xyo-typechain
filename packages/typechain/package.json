@@ -48,30 +48,33 @@
     "typechain": "^8.1.0",
     "typescript": "^4.8.4"
   },
-  "browser": "dist/index.ts",
+  "browser": "dist/esm/index.js",
+  "docs": "dist/docs.json",
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/index.ts",
-        "require": "./dist/index.ts"
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
       },
       "browser": {
-        "import": "./dist/index.ts",
-        "require": "./dist/index.ts"
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
       },
-      "default": "./dist/index.ts"
+      "default": "./dist/esm/index.js"
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/index.ts",
-  "module": "dist/index.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "yarn workspaces foreach -pAv run compile",
     "clean": "rm -r -f ./build && rm -r -f ./dist && rm -r -f ./src && rm -r -f ./node_modules && rm -r -f ./lib",
-    "compile": "typechain --out-dir=./dist --target=ethers-v5 ../../node_modules/@xyo-network/solidity/build/contracts/**/*.json",
+    "compile": "yarn generate:sdk && yarn compile:sdk",
+    "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/solidity/build/contracts/**/*.json",
+    "compile:sdk": "rimraf dist && tsc -p .tsconfig.build.cjs.json && tsc -p .tsconfig.build.esm.json",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
