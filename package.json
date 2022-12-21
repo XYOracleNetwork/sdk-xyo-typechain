@@ -30,7 +30,7 @@
     "@ethersproject/providers": "^5.7.2",
     "@typechain/ethers-v5": "^10.1.1",
     "@types/jest": "^29.2.3",
-    "@xylabs/eslint-config": "2.7.24",
+    "@xylabs/eslint-config": "2.10.3",
     "@xylabs/ts-scripts-yarn3": "^2.7.24",
     "@xylabs/tsconfig": "^2.7.24",
     "abort-controller": "^3.0.0",
