@@ -3287,6 +3287,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/jest@npm:^29.2.5":
+  version: 29.2.5
+  resolution: "@types/jest@npm:29.2.5"
+  dependencies:
+    expect: ^29.0.0
+    pretty-format: ^29.0.0
+  checksum: d668470f00ec4cb8b8457f1fd90f7358fad8f22d74b85006dad6be522d6b9bf10f49f597e88d1d1a518d211c1b65be32a1f27f0e49ce0658d110a9206b8ea310
+  languageName: node
+  linkType: hard
+
 "@types/jsdom@npm:^20.0.0":
   version: 20.0.0
   resolution: "@types/jsdom@npm:20.0.0"
@@ -3861,7 +3871,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@openzeppelin/contracts": ^4.8.0
     "@typechain/ethers-v5": ^10.1.1
-    "@types/jest": ^29.2.3
+    "@types/jest": ^29.2.5
     "@xylabs/eslint-config": 2.7.24
     "@xylabs/ts-scripts-yarn3": ^2.7.24
     "@xylabs/tsconfig": ^2.7.24
