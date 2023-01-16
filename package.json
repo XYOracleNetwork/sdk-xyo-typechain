@@ -1,7 +1,7 @@
 {
   "name": "@xyo-network/sdk-xyo-typechain",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.0",
+    "@openzeppelin/contracts": "^4.8.1",
     "@xyo-network/solidity": "workspace:^",
     "@xyo-network/typechain": "workspace:^",
     "@xyo-network/uniswap-solidity": "workspace:^",
