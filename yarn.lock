@@ -3946,7 +3946,7 @@ __metadata:
     npm-package-json-lint: ^6.4.0
     npm-package-json-lint-config-default: ^5.0.0
     prettier: ^2.8.3
-    rimraf: ^4.1.0
+    rimraf: ^4.1.2
     subscriptions-transport-ws: ^0.11.0
     tslib: ^2.4.1
     typechain: ^8.1.1
@@ -16253,6 +16253,15 @@ __metadata:
   bin:
     rimraf: dist/cjs/src/bin.js
   checksum: da4849802779a8c8cbe3aa1fbdf817b1ec41f7e95fb82074de3129e0030cd4e6e1f512a732344f0062c1cea59569c8113c78c3f50267cc469e8e9bfbe7622cb5
+  languageName: node
+  linkType: hard
+
+"rimraf@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "rimraf@npm:4.1.2"
+  bin:
+    rimraf: dist/cjs/src/bin.js
+  checksum: 480b8147fd9bcbef3ac118f88a7b1169c3872977a3411a0c84df838bfc30e175a394c0db6f9619fc8b8a886a18c6d779d5e74f380a0075ecc710afaf81b3f50c
   languageName: node
   linkType: hard
 
