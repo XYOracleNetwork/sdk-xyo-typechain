@@ -3916,6 +3916,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/tsconfig@npm:^2.12.26":
+  version: 2.12.26
+  resolution: "@xylabs/tsconfig@npm:2.12.26"
+  dependencies:
+    typescript: ^4.9.4
+  checksum: 4b8aa60784cfb56b96d61438c1da31cd242f320150ba438615b2c37ab4d73ee4bd4621ea9f6774e7d9cda99bd0aeb147e3987ea9077bd9b1061ac4b5ff29cc80
+  languageName: node
+  linkType: hard
+
 "@xyo-network/sdk-xyo-typechain@workspace:.":
   version: 0.0.0-use.local
   resolution: "@xyo-network/sdk-xyo-typechain@workspace:."
@@ -3928,7 +3937,7 @@ __metadata:
     "@types/jest": ^29.2.5
     "@xylabs/eslint-config": 2.12.0
     "@xylabs/ts-scripts-yarn3": ^2.12.0
-    "@xylabs/tsconfig": ^2.12.0
+    "@xylabs/tsconfig": ^2.12.26
     "@xyo-network/solidity": "workspace:^"
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-solidity": "workspace:^"
