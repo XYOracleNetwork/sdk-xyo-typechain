@@ -3,6 +3,6 @@ build
 dist
 .DS_Store
 *.log
-!src
+src
 *.tsconfig.*
 contracts

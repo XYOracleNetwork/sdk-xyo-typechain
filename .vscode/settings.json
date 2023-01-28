@@ -6,7 +6,7 @@
     "**/.DS_Store": true,
     "**/node_modules": true,
     "**/build": false,
-    "**/dist": true,
+    "**/dist": false,
     "**/src": false,
     "**/.webpack": true,
     "**/.serverless": true,
