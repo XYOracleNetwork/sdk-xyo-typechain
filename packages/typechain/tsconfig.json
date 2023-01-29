@@ -1,7 +1,21 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "rootDir": "./src"
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "declarationMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "incremental": true,
+    "noImplicitOverride": false,
+    "rootDir": "./src",
+    "typeRoots": ["./node_modules/@types", "**/src/types"],
+    "types": [
+      "jest-extended",
+      "jest-sorted",
+      "jest",
+      "node"
+    ]
   },
+  "exclude": ["dist", "node_modules", "**/dist", "**/node_modules"],
   "extends": "@xylabs/tsconfig"
 }

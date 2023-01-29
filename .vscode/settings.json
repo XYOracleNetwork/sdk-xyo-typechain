@@ -5,12 +5,13 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/node_modules": true,
-    "**/build": false,
-    "**/dist": false,
+    "**/build": true,
+    "**/dist": true,
     "**/src": false,
     "**/.webpack": true,
     "**/.serverless": true,
-    "**/.rollup.cache": true
+    "**/.rollup.cache": true,
+    "**/.tsconfig.*": true
   },
   "editor.formatOnSave": true,
   "editor.quickSuggestions": {
@@ -47,6 +48,8 @@
   "cSpell.words": [
     "copyfiles",
     "ethersproject",
+    "Geotoken",
+    "Geotokens",
     "leveldown",
     "protobuf",
     "tsbuildinfo",

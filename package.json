@@ -3,6 +3,7 @@
   "dependencies": {
     "@xyo-network/typechain": "workspace:^",
     "@xyo-network/uniswap-typechain": "workspace:^",
+    "@xyo-network/world-typechain": "workspace:^",
     "ethers": "^5.7.2"
   },
   "author": {

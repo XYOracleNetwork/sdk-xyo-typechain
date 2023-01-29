@@ -53,7 +53,7 @@
     "access": "public"
   },
   "scripts": {
-    "package-clean": "rimraf ./build && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
+    "package-clean": "rimraf ./src && rimraf ./build && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
     "package-compile": "rimraf build && yarn copy-contracts && truffle compile --config truffle-config.cjs",
     "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src"
   },
