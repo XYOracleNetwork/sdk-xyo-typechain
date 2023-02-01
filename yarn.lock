@@ -3921,6 +3921,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@xyo-network/sdk-xyo-typechain@workspace:."
   dependencies:
+    "@typechain/ethers-v5": ^10.2.0
     "@xylabs/eslint-config": 2.12.30
     "@xylabs/ts-scripts-yarn3": ^2.12.30
     "@xylabs/tsconfig": ^2.12.30

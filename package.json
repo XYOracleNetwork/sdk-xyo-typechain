@@ -22,6 +22,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
+    "@typechain/ethers-v5": "^10.2.0",
     "@xylabs/eslint-config": "2.12.30",
     "@xylabs/ts-scripts-yarn3": "^2.12.30",
     "@xylabs/tsconfig": "^2.12.30",
