@@ -34,5 +34,5 @@
     "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src"
   },
   "sideEffects": false,
-  "version": "2.1.0"
+  "version": "2.1.1"
 }

@@ -57,7 +57,7 @@
     "build": "yarn xy clean && yarn xy build",
     "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn build && yarn xy gen-docs && yarn version apply --all && workspaces foreach -pt npm publish"
   },
-  "version": "2.1.0",
+  "version": "2.1.1",
   "packageManager": "yarn@3.4.1",
   "volta": {
     "node": "18.13.0",

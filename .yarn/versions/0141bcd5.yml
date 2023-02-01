@@ -1,8 +1,0 @@
-releases:
-  "@xyo-network/sdk-xyo-typechain": patch
-  "@xyo-network/solidity": patch
-  "@xyo-network/typechain": patch
-  "@xyo-network/uniswap-solidity": patch
-  "@xyo-network/uniswap-typechain": patch
-  "@xyo-network/world-solidity": patch
-  "@xyo-network/world-typechain": patch
