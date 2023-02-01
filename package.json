@@ -56,6 +56,9 @@
     "access": "public"
   },
   "sideEffects": false,
+  "scripts": {
+    "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn xy gen-docs && yarn version apply --all && workspaces foreach -pt npm publish"
+  },
   "version": "2.1.0",
   "packageManager": "yarn@3.4.1",
   "volta": {
