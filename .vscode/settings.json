@@ -52,6 +52,7 @@
     "Geotokens",
     "leveldown",
     "protobuf",
+    "rimraf",
     "tsbuildinfo",
     "typechain",
     "xylabs",
