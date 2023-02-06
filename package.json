@@ -25,7 +25,7 @@
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@xylabs/eslint-config": "2.12.30",
+    "@xylabs/eslint-config": "2.12.32",
     "@xylabs/ts-scripts-yarn3": "^2.12.30",
     "@xylabs/tsconfig": "^2.12.30",
     "eslint": "^8.33.0",
