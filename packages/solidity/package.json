@@ -29,9 +29,9 @@
   },
   "license": "LGPL-3.0",
   "scripts": {
-    "package-clean": "rimraf ./build && rimraf ./node_modules && rimraf ./lib",
+    "package-clean": "rimraf ./build && rimraf ./lib",
     "package-compile": "rimraf build && truffle compile --config truffle-config.cjs"
   },
   "sideEffects": false,
-  "version": "2.1.1"
+  "version": "2.1.2"
 }
