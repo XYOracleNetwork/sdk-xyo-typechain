@@ -5,6 +5,7 @@ ignores: [
   "@ethersproject/abi",
   "@ethersproject/bytes",
   "@ethersproject/providers",
+  "@ethersproject/contracts",
   "ethers",
   "rimraf"
 ]

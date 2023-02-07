@@ -1645,7 +1645,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/contracts@npm:5.7.0":
+"@ethersproject/contracts@npm:5.7.0, @ethersproject/contracts@npm:^5.7.0":
   version: 5.7.0
   resolution: "@ethersproject/contracts@npm:5.7.0"
   dependencies:
@@ -4015,6 +4015,7 @@ __metadata:
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
     "@xylabs/ts-scripts-yarn3": ^2.13.10
@@ -4044,6 +4045,7 @@ __metadata:
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
     "@xylabs/ts-scripts-yarn3": ^2.13.10
@@ -4072,6 +4074,7 @@ __metadata:
   dependencies:
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.0
     "@xylabs/ts-scripts-yarn3": ^2.13.10

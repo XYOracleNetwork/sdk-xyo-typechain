@@ -1,6 +1,10 @@
 {
   "name": "@xyo-network/typechain",
   "dependencies": {
+    "@ethersproject/abi": "^5.7.0",
+    "@ethersproject/bytes": "^5.7.0",
+    "@ethersproject/contracts": "^5.7.0",
+    "@ethersproject/providers": "^5.7.2",
     "@xyo-network/solidity": "workspace:^"
   },
   "author": {
@@ -20,9 +24,6 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/bytes": "^5.7.0",
-    "@ethersproject/providers": "^5.7.2",
     "@typechain/ethers-v5": "^10.2.0",
     "@xylabs/ts-scripts-yarn3": "^2.13.10",
     "ethers": "^5.7.2",
