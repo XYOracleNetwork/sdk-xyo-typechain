@@ -52,6 +52,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "license": "LGPL-3.0",
   "scripts": {
     "package-clean": "rimraf ./build && rimraf ./dist && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
     "package-compile": "yarn generate:sdk && yarn compile:sdk",

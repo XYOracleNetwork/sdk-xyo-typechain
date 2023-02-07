@@ -28,6 +28,7 @@
   "publishConfig": {
     "access": "public"
   },
+  "license": "LGPL-3.0",
   "scripts": {
     "package-clean": "rimraf ./src && rimraf ./build && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
     "package-compile": "rimraf build && yarn copy-contracts && truffle compile --config truffle-config.cjs",
