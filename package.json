@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
-  "license": "LGPL-3.0",
+  "license": "LGPL-3.0-or-later",
   "workspaces": [
     "packages/**/*"
   ],
@@ -58,7 +58,7 @@
     "build": "yarn xy clean && yarn xy build",
     "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn build && yarn version apply --all && workspaces foreach -pt npm publish"
   },
-  "version": "2.1.4",
+  "version": "2.1.5",
   "packageManager": "yarn@3.4.1",
   "volta": {
     "node": "18.13.0",
