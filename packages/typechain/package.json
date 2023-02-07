@@ -61,5 +61,5 @@
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "2.1.2"
+  "version": "2.1.4"
 }

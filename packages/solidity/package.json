@@ -33,5 +33,5 @@
     "package-compile": "rimraf build && truffle compile --config truffle-config.cjs"
   },
   "sideEffects": false,
-  "version": "2.1.2"
+  "version": "2.1.4"
 }
