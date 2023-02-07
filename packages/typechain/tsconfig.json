@@ -1,14 +1,8 @@
 {
   "compilerOptions": {
-    "declarationDir": "dist/types",
-    "rootDir": "./src",
-    "types": [
-      "jest-extended",
-      "jest-sorted",
-      "jest",
-      "node"
-    ]
+    "composite": true,
+    "declarationDir": "./dist/types",
+    "rootDir": "src"
   },
-  "exclude": ["dist", "node_modules", "**/dist", "**/node_modules"],
   "extends": "@xylabs/tsconfig"
 }
