@@ -4,7 +4,6 @@
 
 [![main-build][]][main-build-link]
 [![npm-badge][]][npm-link]
-[![bch-badge][]][bch-link]
 [![codacy-badge][]][codacy-link]
 [![codeclimate-badge][]][codeclimate-link]
 [![snyk-badge][]][snyk-link]
@@ -62,9 +61,6 @@ yarn add @xyo-network/sdk-xyo-typechain
 
 [npm-badge]: https://img.shields.io/npm/v/@xyo-network/sdk-xyo-typechain.svg
 [npm-link]: https://www.npmjs.com/package/@xyo-network/sdk-xyo-typechain
-
-[bch-badge]: https://bettercodehub.com/edge/badge/XYOracleNetwork/sdk-xyo-typechain?branch=main
-[bch-link]: https://bettercodehub.com/results/XYOracleNetwork/sdk-xyo-typechain
 
 [codacy-badge]: https://app.codacy.com/project/badge/Grade/cceadf68cb0b4ec5896cb05f1e0d6b24
 [codacy-link]: https://www.codacy.com/gh/XYOracleNetwork/sdk-xyo-typechain/dashboard?utm_source=github.com&utm_medium=referral&utm_content=XYOracleNetwork/sdk-xyo-typechain&utm_campaign=Badge_Grade
