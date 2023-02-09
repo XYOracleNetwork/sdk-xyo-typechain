@@ -3886,6 +3886,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/eslint-config@npm:^2.14.0":
+  version: 2.14.0
+  resolution: "@xylabs/eslint-config@npm:2.14.0"
+  dependencies:
+    "@babel/core": ^7.20.12
+    "@babel/eslint-parser": ^7.19.1
+    "@typescript-eslint/eslint-plugin": ^5.51.0
+    "@typescript-eslint/parser": ^5.51.0
+    eslint-config-prettier: ^8.6.0
+    eslint-import-resolver-typescript: ^3.5.3
+    eslint-plugin-deprecation: ^1.3.3
+    eslint-plugin-import: ^2.27.5
+    eslint-plugin-json-es: ^1.5.7
+    eslint-plugin-md: ^1.0.19
+    eslint-plugin-no-secrets: ^0.8.9
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-simple-import-sort: ^10.0.0
+    eslint-plugin-sort-keys-fix: ^1.1.2
+    eslint-plugin-workspaces: ^0.7.0
+    markdown-eslint-parser: ^1.2.1
+    prettier: ^2.8.4
+    remark-lint-maximum-line-length: ^3.1.2
+    remark-preset-lint-markdown-style-guide: ^5.1.2
+    typescript: ^4.9.5
+  peerDependencies:
+    eslint: ^8.23.0
+  checksum: 71e4f0e4ad665bb05d0c9132d5f3486b73e3eb47dbf4c41252c9826c4969e1537dce7fbd9422bfd3ed9bfaa9eb26e6bbd6edf39a5fb4778dcbc5df001140b3f1
+  languageName: node
+  linkType: hard
+
 "@xylabs/ts-scripts-yarn3@npm:^2.13.10":
   version: 2.13.10
   resolution: "@xylabs/ts-scripts-yarn3@npm:2.13.10"
@@ -3971,12 +4001,104 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/ts-scripts-yarn3@npm:^2.14.0":
+  version: 2.14.0
+  resolution: "@xylabs/ts-scripts-yarn3@npm:2.14.0"
+  dependencies:
+    "@babel/core": ^7.20.12
+    "@babel/preset-env": ^7.20.2
+    "@xylabs/eslint-config": ^2.14.0
+    "@xylabs/tsconfig": ^2.14.0
+    chalk: ^4.1.2
+    cpy: ^8.1.2
+    depcheck: ^1.4.3
+    eslint: ^8.33.0
+    eslint-config-prettier: ^8.6.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-sonarjs: ^0.18.0
+    jest: ^29.4.2
+    jest-environment-jsdom: ^29.4.2
+    jest-extended: ^3.2.3
+    jest-mock-extended: ^3.0.1
+    jest-sorted: ^1.0.14
+    license-checker: ^25.0.1
+    lodash: ^4.17.21
+    node-cmd: ^5.0.0
+    npm-check-updates: ^16.6.5
+    npm-package-json-lint: ^6.4.0
+    npm-package-json-lint-config-default: ^5.0.0
+    parse-git-config: ^3.0.0
+    prettier: ^2.8.4
+    reflect-metadata: ^0.1.13
+    supertest: ^6.3.3
+    ts-jest: ^29.0.5
+    ts-node: ^10.9.1
+    ts-prune: ^0.10.3
+    typedoc: ^0.23.24
+    typescript: ^4.9.5
+    yargs: ^17.6.2
+  bin:
+    build: dist/cjs/bin/build.js
+    clean: dist/cjs/bin/clean.js
+    compile: dist/cjs/bin/compile.js
+    compile-cjs: dist/cjs/bin/compile-cjs.js
+    compile-esm: dist/cjs/bin/compile-esm.js
+    cycle: dist/cjs/bin/cycle.js
+    dead: dist/cjs/bin/dead.js
+    deploy: dist/cjs/bin/deploy.js
+    deploy-major: dist/cjs/bin/deploy-major.js
+    deploy-minor: dist/cjs/bin/deploy-minor.js
+    deploy-next: dist/cjs/bin/deploy-next.js
+    deps: dist/cjs/bin/deps.js
+    fix: dist/cjs/bin/fix.js
+    gen-docs: dist/cjs/bin/gen-docs.js
+    gitlint: dist/cjs/bin/gitlint.js
+    gitlint-fix: dist/cjs/bin/gitlint-fix.js
+    license: dist/cjs/bin/license.js
+    lint: dist/cjs/bin/lint.js
+    lint-clean: dist/cjs/bin/lint-clean.js
+    lint-fast: dist/cjs/bin/lint-fast.js
+    lint-profile: dist/cjs/bin/lint-profile.js
+    package-clean: dist/cjs/bin/package/clean.js
+    package-compile: dist/cjs/bin/package/compile.js
+    package-compile-cjs: dist/cjs/bin/package/compile-cjs.js
+    package-compile-esm: dist/cjs/bin/package/compile-esm.js
+    package-deps: dist/cjs/bin/package/deps.js
+    package-gen-docs: dist/cjs/bin/package/gen-docs.js
+    rebuild: dist/cjs/bin/rebuild.js
+    reinstall: dist/cjs/bin/reinstall.js
+    relint: dist/cjs/bin/relint.js
+    sonar: dist/cjs/bin/sonar.js
+    test: dist/cjs/bin/test.js
+    tsconfig-gen: dist/cjs/bin/tsconfig-gen.js
+    tsconfig-gen-cjs: dist/cjs/bin/tsconfig-gen-cjs.js
+    tsconfig-gen-clean: dist/cjs/bin/tsconfig-gen-clean.js
+    tsconfig-gen-esm: dist/cjs/bin/tsconfig-gen-esm.js
+    tsconfig-gen-test: dist/cjs/bin/tsconfig-gen-test.js
+    up: dist/cjs/bin/up.js
+    updo: dist/cjs/bin/updo.js
+    upplug: dist/cjs/bin/upplug.js
+    upyarn: dist/cjs/bin/upyarn.js
+    xy: dist/cjs/bin/xy.js
+    xy-ts: src/bin/xy-ts.ts
+    yarn3only: dist/cjs/bin/yarn3only.js
+  checksum: 80197c10d2d5a8b389f20b7ca8c44157a760472b198508787672796e941424731aa20e13dd2cdb9e38b12b39ddc2b06163ba3c190655a36e736383e74e553a68
+  languageName: node
+  linkType: hard
+
 "@xylabs/tsconfig@npm:^2.13.10":
   version: 2.13.10
   resolution: "@xylabs/tsconfig@npm:2.13.10"
   dependencies:
     typescript: ^4.9.5
   checksum: 1e4f1e65e9ce7497804d46a2fd64d4edcd3f91565908a64fed1b050ace9c0d4b4ac213405715b0210644e1953f8f0d35216199803b12eeea2e2ca0ece9cbfeb2
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:^2.14.0":
+  version: 2.14.0
+  resolution: "@xylabs/tsconfig@npm:2.14.0"
+  checksum: 7719f92307e05b27ec78b6527665adb093f2e74a5dfb2cc5bccae4429b7d2fb159fa530a767ffb5a54cc0ae85694ad7f9746f61737995470fde9a35f310ebb41
   languageName: node
   linkType: hard
 
@@ -3988,7 +4110,7 @@ __metadata:
     "@ethersproject/bytes": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@xylabs/eslint-config": 2.13.10
-    "@xylabs/ts-scripts-yarn3": ^2.13.10
+    "@xylabs/ts-scripts-yarn3": ^2.14.0
     "@xylabs/tsconfig": ^2.13.10
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
@@ -5978,7 +6100,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"component-emitter@npm:^1.2.1":
+"component-emitter@npm:^1.2.1, component-emitter@npm:^1.3.0":
   version: 1.3.0
   resolution: "component-emitter@npm:1.3.0"
   checksum: b3c46de38ffd35c57d1c02488355be9f218e582aec72d72d1b8bbec95a3ac1b38c96cd6e03ff015577e68f550fbb361a3bfdbd9bb248be9390b7b3745691be6b
@@ -6102,6 +6224,13 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 1f4bd2ca5765f8c9689a7e8954183f5332139eb72b6ff783d8947032ec1fdf43109852c178e21a953a30c0dd42257828185be01b49d1eb1a67fd054ca588a180
+  languageName: node
+  linkType: hard
+
+"cookiejar@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "cookiejar@npm:2.1.4"
+  checksum: c4442111963077dc0e5672359956d6556a195d31cbb35b528356ce5f184922b99ac48245ac05ed86cf993f7df157c56da10ab3efdadfed79778a0d9b1b092d5b
   languageName: node
   linkType: hard
 
@@ -6675,7 +6804,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dezalgo@npm:^1.0.0":
+"dezalgo@npm:^1.0.0, dezalgo@npm:^1.0.4":
   version: 1.0.4
   resolution: "dezalgo@npm:1.0.4"
   dependencies:
@@ -7978,6 +8107,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fast-safe-stringify@npm:^2.1.1":
+  version: 2.1.1
+  resolution: "fast-safe-stringify@npm:2.1.1"
+  checksum: a851cbddc451745662f8f00ddb622d6766f9bd97642dabfd9a405fb0d646d69fc0b9a1243cbf67f5f18a39f40f6fa821737651ff1bceeba06c9992ca2dc5bd3d
+  languageName: node
+  linkType: hard
+
 "fastq@npm:^1.6.0":
   version: 1.15.0
   resolution: "fastq@npm:1.15.0"
@@ -8248,6 +8384,18 @@ __metadata:
   version: 0.2.2
   resolution: "format@npm:0.2.2"
   checksum: 646a60e1336250d802509cf24fb801e43bd4a70a07510c816fa133aa42cdbc9c21e66e9cc0801bb183c5b031c9d68be62e7fbb6877756e52357850f92aa28799
+  languageName: node
+  linkType: hard
+
+"formidable@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "formidable@npm:2.1.2"
+  dependencies:
+    dezalgo: ^1.0.4
+    hexoid: ^1.0.0
+    once: ^1.4.0
+    qs: ^6.11.0
+  checksum: 81c8e5d89f5eb873e992893468f0de22c01678ca3d315db62be0560f9de1c77d4faefc9b1f4575098eb2263b3c81ba1024833a9fc3206297ddbac88a4f69b7a8
   languageName: node
   linkType: hard
 
@@ -9050,6 +9198,13 @@ __metadata:
     no-case: ^2.2.0
     upper-case: ^1.1.3
   checksum: fe1cc9a555ec9aabc2de80f4dd961a81c534fc23951694fef34297e59b0dd60f26647148731bf0dd3fdb3a1c688089d3cd147d7038db850e25be7c0a5fabb022
+  languageName: node
+  linkType: hard
+
+"hexoid@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "hexoid@npm:1.0.0"
+  checksum: 27a148ca76a2358287f40445870116baaff4a0ed0acc99900bf167f0f708ffd82e044ff55e9949c71963852b580fc024146d3ac6d5d76b508b78d927fa48ae2d
   languageName: node
   linkType: hard
 
@@ -11760,7 +11915,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"methods@npm:~1.1.2":
+"methods@npm:^1.1.2, methods@npm:~1.1.2":
   version: 1.1.2
   resolution: "methods@npm:1.1.2"
   checksum: 0917ff4041fa8e2f2fda5425a955fe16ca411591fbd123c0d722fcf02b73971ed6f764d85f0a6f547ce49ee0221ce2c19a5fa692157931cecb422984f1dcd13a
@@ -12057,6 +12212,15 @@ __metadata:
   bin:
     mime: cli.js
   checksum: fef25e39263e6d207580bdc629f8872a3f9772c923c7f8c7e793175cee22777bbe8bba95e5d509a40aaa292d8974514ce634ae35769faa45f22d17edda5e8557
+  languageName: node
+  linkType: hard
+
+"mime@npm:2.6.0":
+  version: 2.6.0
+  resolution: "mime@npm:2.6.0"
+  bin:
+    mime: cli.js
+  checksum: 1497ba7b9f6960694268a557eae24b743fd2923da46ec392b042469f4b901721ba0adcf8b0d3c2677839d0e243b209d76e5edcbd09cfdeffa2dfb6bb4df4b862
   languageName: node
   linkType: hard
 
@@ -13967,6 +14131,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"prettier@npm:^2.8.4":
+  version: 2.8.4
+  resolution: "prettier@npm:2.8.4"
+  bin:
+    prettier: bin-prettier.js
+  checksum: c173064bf3df57b6d93d19aa98753b9b9dd7657212e33b41ada8e2e9f9884066bb9ca0b4005b89b3ab137efffdf8fbe0b462785aba20364798ff4303aadda57e
+  languageName: node
+  linkType: hard
+
 "pretty-format@npm:^29.0.0, pretty-format@npm:^29.4.2":
   version: 29.4.2
   resolution: "pretty-format@npm:29.4.2"
@@ -14121,7 +14294,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qs@npm:6.11.0":
+"qs@npm:6.11.0, qs@npm:^6.11.0":
   version: 6.11.0
   resolution: "qs@npm:6.11.0"
   dependencies:
@@ -14444,6 +14617,13 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.9.2
   checksum: f63b9060c3a1d930ae775252bb6e579b42415aee7a23c4114e21a0b4ba7ec12f0ec76936c00f546893f06e139819f0e2855e0d55ebfce34ca9c026241a6950dd
+  languageName: node
+  linkType: hard
+
+"reflect-metadata@npm:^0.1.13":
+  version: 0.1.13
+  resolution: "reflect-metadata@npm:0.1.13"
+  checksum: 798d379a7b6f6455501145419505c97dd11cbc23857a386add2b9ef15963ccf15a48d9d15507afe01d4cd74116df8a213247200bac00320bd7c11ddeaa5e8fb4
   languageName: node
   linkType: hard
 
@@ -17138,6 +17318,34 @@ __metadata:
     ltgt: 2.2.1
     readable-stream: 1.1.14
   checksum: e9f09a7b95485ce5709597cc9a6bb9a2cb0f6a8c36f210f1cef6bed9e3ea3a535ab61cd21e38250c6231e4d9fe2f8bc0b067bf24fbcb15cdaa7339e158b020ce
+  languageName: node
+  linkType: hard
+
+"superagent@npm:^8.0.5":
+  version: 8.0.9
+  resolution: "superagent@npm:8.0.9"
+  dependencies:
+    component-emitter: ^1.3.0
+    cookiejar: ^2.1.4
+    debug: ^4.3.4
+    fast-safe-stringify: ^2.1.1
+    form-data: ^4.0.0
+    formidable: ^2.1.2
+    methods: ^1.1.2
+    mime: 2.6.0
+    qs: ^6.11.0
+    semver: ^7.3.8
+  checksum: 5d00cdc7ceb5570663da80604965750e6b1b8d7d7442b7791e285c62bcd8d578a8ead0242a2426432b59a255fb42eb3a196d636157538a1392e7b6c5f1624810
+  languageName: node
+  linkType: hard
+
+"supertest@npm:^6.3.3":
+  version: 6.3.3
+  resolution: "supertest@npm:6.3.3"
+  dependencies:
+    methods: ^1.1.2
+    superagent: ^8.0.5
+  checksum: 38239e517f7ba62b7a139a79c5c48d55f8d67b5ff4b6e51d5b07732ca8bbc4a28ffa1b10916fbb403dd013a054dbf028edc5850057d9a43aecbff439d494673e
   languageName: node
   linkType: hard
 
