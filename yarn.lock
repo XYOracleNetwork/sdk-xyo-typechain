@@ -3980,6 +3980,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/tsconfig@npm:^2.15.0":
+  version: 2.15.0
+  resolution: "@xylabs/tsconfig@npm:2.15.0"
+  checksum: 8bf5954823615ec108da60c18cae137a83b1eb05ef8c7b8d310286b0c7d064ee59cf85ec847858722d0a15068b54ac0f02e42c86dbd798722179cb8e34eec498
+  languageName: node
+  linkType: hard
+
 "@xyo-network/sdk-xyo-typechain@workspace:.":
   version: 0.0.0-use.local
   resolution: "@xyo-network/sdk-xyo-typechain@workspace:."
@@ -3989,7 +3996,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@xylabs/eslint-config": 2.13.10
     "@xylabs/ts-scripts-yarn3": ^2.13.10
-    "@xylabs/tsconfig": ^2.13.10
+    "@xylabs/tsconfig": ^2.15.0
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
     "@xyo-network/world-typechain": "workspace:^"
