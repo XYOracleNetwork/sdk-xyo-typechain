@@ -5,36 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "../erc20/contracts/Erc20Store.sol";
-
-interface IUniGenPair {
-    function source() external returns (IERC20);
-
-    function target() external returns (IERC20);
-
-    function stake(uint256 amount) external returns (uint256);
-
-    function unstake(uint256 amount) external returns (uint256);
-
-    function unstakeAll() external returns (uint256);
-
-    function sourceBalance() external returns (uint256);
-
-    function targetBalance() external returns (uint256);
-
-    function deposit(uint256 amount) external returns (uint256);
-
-    function withdraw(uint256 amount) external returns (uint256);
-
-    function withdrawAll() external returns (uint256);
-
-    function generate() external returns (uint256);
-
-    /* Returns target tokens pending */
-    function pending() external returns (uint256);
-
-    /* Returns target token availability */
-    function available() external returns (uint256);
-}
+import "./IUniGenPair.sol";
 
 contract UniGenPair is IUniGenPair, Erc20Store {
     using SafeMath for uint256;
@@ -43,7 +14,10 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     mapping(address => uint256) private _stakeBlock;
     mapping(address => uint256) private _pending;
 
+    //the source ERC20 to be used
     IERC20 private immutable _source;
+
+    //the target ERC20 to be used
     IERC20 private immutable _target;
 
     uint256 private _pendingTotal;
@@ -51,7 +25,10 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     //the frequency of which the target token is generated
     uint256 private immutable _frequency;
 
+    //the ratio used when generating the targetToken.  Either N-to-1 or 1-to-N depending on the setting of _fractional
     uint256 private immutable _ratio;
+
+    //if true, then N-to-1 algorithim is used
     bool private immutable _fractional;
 
     constructor(
@@ -133,6 +110,14 @@ contract UniGenPair is IUniGenPair, Erc20Store {
         return _balanceErc20(uint256(uint160(msg.sender)), _target);
     }
 
+    function targetBalanceFor(address addr) external view returns (uint256) {
+        return _targetBalanceFor(addr);
+    }
+
+    function _targetBalanceFor(address addr) internal view returns (uint256) {
+        return _balanceErc20(uint256(uint160(addr)), _target);
+    }
+
     function _blocksPassed() internal view returns (uint256) {
         return block.number - _stakeBlock[msg.sender];
     }
@@ -141,8 +126,8 @@ contract UniGenPair is IUniGenPair, Erc20Store {
         return _blocksPassed().div(_frequency);
     }
 
-    function pendingFor(address id) external view returns (uint256) {
-        return _pending[id];
+    function pendingFor(address addr) external view returns (uint256) {
+        return _pending[addr];
     }
 
     function pending() external view returns (uint256) {
@@ -150,7 +135,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function available() external view returns (uint256) {
-        return _target.balanceOf(msg.sender);
+        return _target.balanceOf(address(this));
     }
 
     function generate() external returns (uint256) {
