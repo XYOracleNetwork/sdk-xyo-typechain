@@ -55,7 +55,7 @@
     "access": "public"
   },
   "scripts": {
-    "clean": "rimraf ./build && rimraf ./dist && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
+    "package-clean": "rimraf ./build && rimraf ./dist && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
     "package-compile": "yarn generate:sdk && yarn compile:sdk",
     "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/uniswap-solidity/build/contracts/**/*.json",
     "compile:sdk": "rimraf dist && tsc -p .tsconfig.build.cjs.json && tsc -p .tsconfig.build.esm.json",
