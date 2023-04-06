@@ -21,8 +21,8 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^2.16.1",
-    "rimraf": "^4.4.0",
+    "@xylabs/ts-scripts-yarn3": "^2.16.5",
+    "rimraf": "^4.4.1",
     "truffle": "^5.8.1"
   },
   "publishConfig": {
@@ -30,7 +30,8 @@
   },
   "scripts": {
     "package-clean": "rimraf ./build && rimraf ./lib",
-    "package-compile": "rimraf build && truffle compile --config truffle-config.cjs"
+    "package-compile": "rimraf build && truffle compile --config truffle-config.cjs",
+    "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "sideEffects": false,
   "version": "2.1.5"

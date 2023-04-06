@@ -20,9 +20,9 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^2.16.1",
+    "@xylabs/ts-scripts-yarn3": "^2.16.5",
     "copyfiles": "^2.4.1",
-    "rimraf": "^4.4.0",
+    "rimraf": "^4.4.1",
     "truffle": "^5.8.1"
   },
   "publishConfig": {
@@ -32,6 +32,7 @@
   "scripts": {
     "package-clean": "rimraf ./src && rimraf ./build && rimraf ./src && rimraf ./lib",
     "package-compile": "rimraf build && yarn copy-contracts && truffle compile --config truffle-config.cjs",
+    "package-recompile": "yarn package-clean && yarn package-compile",
     "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src"
   },
   "sideEffects": false,

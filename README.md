@@ -57,8 +57,8 @@ yarn add @xyo-network/sdk-xyo-typechain
 
 [logo]: https://cdn.xy.company/img/brand/XYO_full_colored.png
 
-[main-build]: https://github.com/XYOracleNetwork/sdk-xyo-typechain/actions/workflows/build-main.yml/badge.svg
-[main-build-link]: https://github.com/XYOracleNetwork/sdk-xyo-typechain/actions/workflows/build-main.yml
+[main-build]: https://github.com/XYOracleNetwork/sdk-xyo-typechain/actions/workflows/build.yml/badge.svg
+[main-build-link]: https://github.com/XYOracleNetwork/sdk-xyo-typechain/actions/workflows/build.yml
 
 [npm-badge]: https://img.shields.io/npm/v/@xyo-network/sdk-xyo-typechain.svg
 [npm-link]: https://www.npmjs.com/package/@xyo-network/sdk-xyo-typechain
