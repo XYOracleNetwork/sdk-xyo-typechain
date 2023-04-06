@@ -1,8 +1,10 @@
 ignores: [
   "@xylabs/tsconfig",
   "@typechain/ethers-v5",
+  "@types/jest",
   "@ethersproject/abi",
   "@ethersproject/bytes",
   "@ethersproject/providers",
+  "jest",
   "typescript"
 ]
