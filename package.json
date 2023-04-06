@@ -57,8 +57,7 @@
   },
   "sideEffects": false,
   "scripts": {
-    "build": "yarn xy clean && yarn xy build",
-    "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn build && yarn version apply --all && workspaces foreach -pt npm publish"
+    "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn version apply --all && workspaces foreach -pt npm publish"
   },
   "version": "2.1.5",
   "packageManager": "yarn@3.5.0",

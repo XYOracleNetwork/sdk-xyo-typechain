@@ -55,11 +55,11 @@
     "access": "public"
   },
   "scripts": {
-    "package-clean": "rimraf ./build && rimraf ./dist && rimraf ./src && rimraf ./node_modules && rimraf ./lib",
+    "package-clean": "rimraf dist && rimraf src",
     "package-compile": "yarn generate:sdk && yarn compile:sdk",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/world-solidity/build/contracts/**/*.json",
-    "compile:sdk": "rimraf dist && tsc -p .tsconfig.build.cjs.json && tsc -p .tsconfig.build.esm.json",
+    "compile:sdk": "yarn package-compile-esm && yarn package-compile-cjs",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,

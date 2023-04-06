@@ -29,7 +29,7 @@
     "access": "public"
   },
   "scripts": {
-    "package-clean": "rimraf ./build && rimraf ./lib",
+    "package-clean": "rimraf build",
     "package-compile": "rimraf build && truffle compile --config truffle-config.cjs",
     "package-recompile": "yarn package-clean && yarn package-compile"
   },

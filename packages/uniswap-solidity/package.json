@@ -30,7 +30,7 @@
   },
   "license": "LGPL-3.0",
   "scripts": {
-    "package-clean": "rimraf ./src && rimraf ./build && rimraf ./src && rimraf ./lib",
+    "package-clean": "rimraf src && rimraf build",
     "package-compile": "rimraf build && yarn copy-contracts && truffle compile --config truffle-config.cjs",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src"
