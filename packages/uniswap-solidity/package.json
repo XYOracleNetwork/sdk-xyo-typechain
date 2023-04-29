@@ -20,10 +20,10 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^2.16.5",
+    "@xylabs/ts-scripts-yarn3": "^2.17.3",
     "copyfiles": "^2.4.1",
     "rimraf": "^4.4.1",
-    "truffle": "^5.8.1"
+    "truffle": "^5.8.4"
   },
   "publishConfig": {
     "access": "public"
