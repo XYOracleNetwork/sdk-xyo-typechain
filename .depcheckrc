@@ -5,6 +5,11 @@ ignores: [
   "@ethersproject/abi",
   "@ethersproject/bytes",
   "@ethersproject/providers",
+  "@typescript-eslint/parser",
+  "@typescript-eslint/eslint-plugin",
+  "eslint-import-resolver-typescript",
+  "eslint-plugin-deprecation",
+  "eslint-plugin-import",
   "jest",
   "typescript"
 ]
