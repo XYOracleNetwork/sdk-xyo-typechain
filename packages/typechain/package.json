@@ -5,7 +5,7 @@
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@xyo-network/solidity": "workspace:^"
+    "@xyo-network/solidity": "workspace:~"
   },
   "author": {
     "email": "support@xyo.network",
@@ -24,32 +24,30 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@typechain/ethers-v5": "^10.2.0",
-    "@xylabs/ts-scripts-yarn3": "^2.17.6",
+    "@typechain/ethers-v5": "^10.2.1",
+    "@xylabs/ts-scripts-yarn3": "~3.0.79",
     "ethers": "^5.7.2",
     "rimraf": "^4.4.1",
-    "typechain": "^8.1.1",
-    "typescript": "^5.0.4"
+    "typechain": "^8.3.1",
+    "typescript": "^5.2.2"
   },
-  "browser": "dist/esm/index.js",
   "docs": "dist/docs.json",
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
+        "import": "./dist/node/index.cjs",
+        "require": "./dist/node/index.js"
       },
       "browser": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
-      },
-      "default": "./dist/esm/index.js"
+        "import": "./dist/browser/index.cjs",
+        "require": "./dist/browser/index.js"
+      }
     },
     "./package.json": "./package.json"
   },
-  "main": "dist/cjs/index.js",
-  "module": "dist/esm/index.js",
-  "types": "types.d.ts",
+  "main": "./dist/node/index.cjs",
+  "module": "./dist/node/index.js",
+  "types": "./dist/node/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
@@ -59,9 +57,10 @@
     "package-compile": "yarn generate:sdk && yarn compile:sdk",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/solidity/build/contracts/**/*.json",
-    "compile:sdk": "yarn package-compile-esm && yarn package-compile-cjs",
+    "compile:sdk": "yarn package-compile-only",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "2.1.6"
+  "version": "2.1.6",
+  "type": "module"
 }
