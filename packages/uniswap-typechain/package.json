@@ -30,7 +30,7 @@
     "ethers": "^5.7.2",
     "rimraf": "^4.4.1",
     "typechain": "^8.1.1",
-    "typescript": "^5.0.4"
+    "typescript": "^5.2.2"
   },
   "browser": "dist/esm/index.js",
   "docs": "dist/docs.json",
