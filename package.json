@@ -63,7 +63,7 @@
   "scripts": {
     "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn version apply --all && workspaces foreach -pt npm publish"
   },
-  "version": "2.1.6",
+  "version": "2.2.0",
   "packageManager": "yarn@3.6.3",
   "volta": {
     "node": "18.13.0",
