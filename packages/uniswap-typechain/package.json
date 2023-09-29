@@ -28,7 +28,7 @@
     "@typechain/ethers-v5": "^10.2.0",
     "@xylabs/ts-scripts-yarn3": "^2.17.6",
     "ethers": "^5.7.2",
-    "rimraf": "^4.4.1",
+    "rimraf": "^5.0.5",
     "typechain": "^8.1.1",
     "typescript": "^5.0.4"
   },
