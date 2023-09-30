@@ -5,3 +5,7 @@ test
 .pnp.*
 .yarn/*
 .eslintcache
+tsconfig.*
+yarn.lock
+packages
+*.spec.*

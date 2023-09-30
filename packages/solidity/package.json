@@ -20,7 +20,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "~3.0.79",
+    "@xylabs/ts-scripts-yarn3": "~3.0.80",
     "rimraf": "^4.4.1",
     "truffle": "^5.11.5"
   },
@@ -34,5 +34,5 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "sideEffects": false,
-  "version": "2.2.0"
+  "version": "2.2.1"
 }

@@ -29,9 +29,9 @@
     "@types/jest": "^29.5.5",
     "@typescript-eslint/eslint-plugin": "^6.7.3",
     "@typescript-eslint/parser": "^6.7.3",
-    "@xylabs/eslint-config": "3.0.79",
-    "@xylabs/ts-scripts-yarn3": "~3.0.79",
-    "@xylabs/tsconfig": "~3.0.79",
+    "@xylabs/eslint-config": "3.0.80",
+    "@xylabs/ts-scripts-yarn3": "~3.0.80",
+    "@xylabs/tsconfig": "~3.0.80",
     "eslint": "^8.50.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-deprecation": "^2.0.0",
@@ -43,12 +43,24 @@
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/node/index.cjs",
-        "require": "./dist/node/index.js"
+        "require": {
+          "types": "./dist/node/index.d.cts",
+          "default": "./dist/node/index.cjs"
+        },
+        "import": {
+          "types": "./dist/node/index.d.ts",
+          "default": "./dist/node/index.js"
+        }
       },
       "browser": {
-        "import": "./dist/browser/index.cjs",
-        "require": "./dist/browser/index.js"
+        "require": {
+          "types": "./dist/browser/index.d.cts",
+          "default": "./dist/browser/index.cjs"
+        },
+        "import": {
+          "types": "./dist/browser/index.d.ts",
+          "default": "./dist/browser/index.js"
+        }
       }
     },
     "./package.json": "./package.json"
@@ -63,7 +75,7 @@
   "scripts": {
     "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn version apply --all && workspaces foreach -pt npm publish"
   },
-  "version": "2.2.0",
+  "version": "2.2.1",
   "packageManager": "yarn@3.6.3",
   "volta": {
     "node": "18.13.0",

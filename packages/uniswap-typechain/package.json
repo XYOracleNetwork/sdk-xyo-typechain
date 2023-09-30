@@ -26,7 +26,7 @@
   ],
   "devDependencies": {
     "@typechain/ethers-v5": "^11.1.1",
-    "@xylabs/ts-scripts-yarn3": "~3.0.79",
+    "@xylabs/ts-scripts-yarn3": "~3.0.80",
     "ethers": "^5.7.2",
     "rimraf": "^4.4.1",
     "typechain": "^8.3.1",
@@ -36,12 +36,24 @@
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/node/index.cjs",
-        "require": "./dist/node/index.js"
+        "require": {
+          "types": "./dist/node/index.d.cts",
+          "default": "./dist/node/index.cjs"
+        },
+        "import": {
+          "types": "./dist/node/index.d.ts",
+          "default": "./dist/node/index.js"
+        }
       },
       "browser": {
-        "import": "./dist/browser/index.cjs",
-        "require": "./dist/browser/index.js"
+        "require": {
+          "types": "./dist/browser/index.d.cts",
+          "default": "./dist/browser/index.cjs"
+        },
+        "import": {
+          "types": "./dist/browser/index.d.ts",
+          "default": "./dist/browser/index.js"
+        }
       }
     },
     "./package.json": "./package.json"
@@ -61,6 +73,6 @@
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "2.2.0",
+  "version": "2.2.1",
   "type": "module"
 }
