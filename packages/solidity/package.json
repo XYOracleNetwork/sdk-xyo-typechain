@@ -1,7 +1,7 @@
 {
   "name": "@xyo-network/solidity",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.3"
+    "@openzeppelin/contracts": "^4.9.3"
   },
   "author": {
     "email": "support@xyo.network",
