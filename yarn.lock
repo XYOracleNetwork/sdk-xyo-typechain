@@ -4032,7 +4032,7 @@ __metadata:
     "@xyo-network/solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^4.4.1
-    typechain: ^8.1.1
+    typechain: ^8.3.1
     typescript: ^5.0.4
   languageName: unknown
   linkType: soft
@@ -4062,7 +4062,7 @@ __metadata:
     "@xyo-network/uniswap-solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^4.4.1
-    typechain: ^8.1.1
+    typechain: ^8.3.1
     typescript: ^5.0.4
   languageName: unknown
   linkType: soft
@@ -4091,7 +4091,7 @@ __metadata:
     "@xyo-network/world-solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^4.4.1
-    typechain: ^8.1.1
+    typechain: ^8.3.1
     typescript: ^5.0.4
   languageName: unknown
   linkType: soft
@@ -17996,9 +17996,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typechain@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "typechain@npm:8.1.1"
+"typechain@npm:^8.3.1":
+  version: 8.3.1
+  resolution: "typechain@npm:8.3.1"
   dependencies:
     "@types/prettier": ^2.1.1
     debug: ^4.3.1
@@ -18014,7 +18014,7 @@ __metadata:
     typescript: ">=4.3.0"
   bin:
     typechain: dist/cli/cli.js
-  checksum: 77984239d9728befe5a484c4e1b55c8f194696fc8a78c44754f8e25ca8fd6d0208ddfcd9e71c90c1c35ac0689f5c3053107b54fdc2aab691c980614f6daf209b
+  checksum: c1e11ab1452d0c83be0c34a8b900b156b0c6654b95f7e7bb18dd98c0decd6009ffa1316e393f4e8def187af1bea3e931a13503815cc37155c0c945b7ae5b5215
   languageName: node
   linkType: hard
 
