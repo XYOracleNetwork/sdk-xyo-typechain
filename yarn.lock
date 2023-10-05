@@ -3976,10 +3976,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^2.17.6":
-  version: 2.17.6
-  resolution: "@xylabs/tsconfig@npm:2.17.6"
-  checksum: 47a5eb8de90a5b91fc761eae753efe0f8cd37eb3d0eb5af0f5bd6d6de884a7696d5dd6f0b872f7b84a2be89ac13e9e4e81a0077c6042a3bbc5742ca6c0818edb
+"@xylabs/tsconfig@npm:^3.0.88":
+  version: 3.0.88
+  resolution: "@xylabs/tsconfig@npm:3.0.88"
+  checksum: 7a717a3f96ccc2560891c55a4987f2922ffb832cf59bb523359f2e4457ea1035abc8296e38c4ec4356f9bc3bd31b9926fb8b782b44c160ade5845a9a2ae2e625
   languageName: node
   linkType: hard
 
@@ -3995,7 +3995,7 @@ __metadata:
     "@typescript-eslint/parser": ^5.59.2
     "@xylabs/eslint-config": 2.17.6
     "@xylabs/ts-scripts-yarn3": ^2.17.6
-    "@xylabs/tsconfig": ^2.17.6
+    "@xylabs/tsconfig": ^3.0.88
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
     "@xyo-network/world-typechain": "workspace:^"
