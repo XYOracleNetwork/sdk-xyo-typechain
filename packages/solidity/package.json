@@ -1,7 +1,7 @@
 {
   "name": "@xyo-network/solidity",
   "dependencies": {
-    "@openzeppelin/contracts": "^4.8.3"
+    "@openzeppelin/contracts": "^4.9.3"
   },
   "author": {
     "email": "support@xyo.network",
@@ -20,9 +20,9 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^2.17.6",
-    "rimraf": "^4.4.1",
-    "truffle": "^5.8.4"
+    "@xylabs/ts-scripts-yarn3": "^2.19.12",
+    "rimraf": "^5.0.5",
+    "truffle": "^5.11.5"
   },
   "publishConfig": {
     "access": "public"
@@ -34,5 +34,5 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "sideEffects": false,
-  "version": "2.2.4"
+  "version": "2.2.5"
 }
