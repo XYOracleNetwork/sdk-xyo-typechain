@@ -34,5 +34,5 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "sideEffects": false,
-  "version": "2.2.8"
+  "version": "2.2.9"
 }
