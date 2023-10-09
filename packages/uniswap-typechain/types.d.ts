@@ -1,3 +1,3 @@
 /* eslint-disable import/no-internal-modules */
-export * from './dist/types'
-export * from './dist/types/common'
+export * from './dist/node'
+export * from './dist/node/common'

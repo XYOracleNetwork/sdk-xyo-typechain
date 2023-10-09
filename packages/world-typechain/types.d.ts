@@ -1,8 +1,8 @@
 /* eslint-disable import/no-internal-modules */
-export * from './dist/types'
-export * from './dist/types/common'
+export type * from './dist/node'
+export type * from './dist/node/common'
 
-import {
+import type {
   AuctionStartedEvent,
   BidPlacedEvent,
   GeotokenMintedEvent,
@@ -11,7 +11,7 @@ import {
   RefundedCurrentBidEvent,
   TokensBurnedEvent,
   TokensFlowedEvent,
-} from './dist/types/IXyoWorldMinter.d'
+} from './dist/node/IXyoWorldMinter'
 
 export namespace XyoWorldMinterEvents {
   export type AuctionStarted = AuctionStartedEvent
@@ -24,7 +24,7 @@ export namespace XyoWorldMinterEvents {
   export type TokensFlowed = TokensFlowedEvent
 }
 
-import {
+import type {
   ApprovalEvent,
   ApprovalForAllEvent,
   DataSetEvent,
@@ -36,7 +36,7 @@ import {
   MinterSetEvent,
   SafeMintedEvent,
   TransferEvent,
-} from './dist/types/IXyoWorldGeotokens.d'
+} from './dist/node/IXyoWorldGeotokens'
 
 export namespace XyoWorldGeotokensEvents {
   export type Approval = ApprovalEvent

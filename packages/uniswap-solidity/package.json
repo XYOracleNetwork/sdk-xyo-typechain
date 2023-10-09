@@ -20,7 +20,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^2.19.12",
+    "@xylabs/ts-scripts-yarn3": "^3.1.2",
     "copyfiles": "^2.4.1",
     "rimraf": "^5.0.5",
     "truffle": "^5.11.5"
@@ -36,5 +36,5 @@
     "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src"
   },
   "sideEffects": false,
-  "version": "2.2.5"
+  "version": "2.2.6"
 }
