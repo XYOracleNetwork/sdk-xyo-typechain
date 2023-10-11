@@ -3344,9 +3344,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config@npm:3.1.2":
-  version: 3.1.2
-  resolution: "@xylabs/eslint-config@npm:3.1.2"
+"@xylabs/eslint-config@npm:3.1.9":
+  version: 3.1.9
+  resolution: "@xylabs/eslint-config@npm:3.1.9"
   dependencies:
     "@typescript-eslint/eslint-plugin": ^6.7.3
     "@typescript-eslint/parser": ^6.7.3
@@ -3369,7 +3369,7 @@ __metadata:
     typescript: ^5.2.2
   peerDependencies:
     eslint: ^8.23.0
-  checksum: 9ce37fd4797c7ef972b437c2abf564f1ed050c495a90c33e072d432c4efce829b17b8add0e284cffc2a7c610a7d7a91321c1c40e17c99c1492f53fa95d2a3129
+  checksum: 7a7f402a0cb151f7308592870721b24aff7526c29189594f886231374d950abee3e81f1eeefb036e4bd8f6b5793088a6b9d703930a1f28338fabc03efd4b65db
   languageName: node
   linkType: hard
 
@@ -3491,7 +3491,7 @@ __metadata:
     "@types/jest": ^29.5.5
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
-    "@xylabs/eslint-config": 3.1.2
+    "@xylabs/eslint-config": 3.1.9
     "@xylabs/ts-scripts-yarn3": ^3.1.2
     "@xylabs/tsconfig": ^3.1.2
     "@xyo-network/typechain": "workspace:^"
