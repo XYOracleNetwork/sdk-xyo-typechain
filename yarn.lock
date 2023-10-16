@@ -3373,9 +3373,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "@xylabs/ts-scripts-yarn3@npm:3.1.2"
+"@xylabs/ts-scripts-yarn3@npm:^3.1.11":
+  version: 3.1.11
+  resolution: "@xylabs/ts-scripts-yarn3@npm:3.1.11"
   dependencies:
     "@rollup/plugin-commonjs": ^25.0.4
     "@rollup/plugin-json": ^6.0.0
@@ -3384,9 +3384,11 @@ __metadata:
     "@types/yargs": ^17.0.26
     "@typescript-eslint/eslint-plugin": ^6.7.3
     "@typescript-eslint/parser": ^6.7.3
-    "@xylabs/tsconfig": ~3.1.2
+    "@xylabs/tsconfig": ~3.1.11
+    async-mutex: ^0.4.0
     chalk: ^4.1.2
     cosmiconfig: ^8.3.6
+    cosmiconfig-typescript-loader: ^5.0.0
     cpy: ^8.1.2
     depcheck: ^1.4.6
     eslint: ^8.50.0
@@ -3470,14 +3472,21 @@ __metadata:
     xy: dist/bin/xy.js
     xy-ts: src/bin/xy-ts.ts
     yarn3only: dist/bin/yarn3only.js
-  checksum: 6cc50722a6774d344e5b0f4b78662b1aaec27e783a728c7fa06c5fc244082ae9bc8a801eaca98856a0bdb3b69294aa322977458352efaeba625c17da736ff598
+  checksum: d26561b6af593a8994de731a7b9e22d9591cec8259d5979a7796c705fa29228c1b86615a547a43e3c5661ef533b8fc9b70785422b29cd6ef8729c4e714701f0f
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^3.1.2, @xylabs/tsconfig@npm:~3.1.2":
+"@xylabs/tsconfig@npm:^3.1.2":
   version: 3.1.2
   resolution: "@xylabs/tsconfig@npm:3.1.2"
   checksum: b98e1ee446fb3da798101837f687476daa252b0861d442e75a6ec7df425afcff7b505fd8c0bf8812490199208b0fa27a4333e7fd8bfb2f581a01b7422d1ee3c7
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.1.11":
+  version: 3.1.11
+  resolution: "@xylabs/tsconfig@npm:3.1.11"
+  checksum: 28e7fdd2a21132bec517d8fe956f27e8922bf03406e68fced755d792c449972ad82381061e77af83da8ebdd3e208da6d69c7defe65e9b0534f1ebd3f27fe7db1
   languageName: node
   linkType: hard
 
@@ -3492,7 +3501,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     "@xylabs/eslint-config": 3.1.2
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     "@xylabs/tsconfig": ^3.1.2
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
@@ -3511,7 +3520,7 @@ __metadata:
   resolution: "@xyo-network/solidity@workspace:packages/solidity"
   dependencies:
     "@openzeppelin/contracts": ^4.9.3
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     rimraf: ^5.0.5
     truffle: ^5.11.5
   languageName: unknown
@@ -3526,7 +3535,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     "@xyo-network/solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^5.0.5
@@ -3540,7 +3549,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
     "@uniswap/v3-core": ^1.0.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     copyfiles: ^2.4.1
     rimraf: ^5.0.5
     truffle: ^5.11.5
@@ -3556,7 +3565,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     "@xyo-network/uniswap-solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^5.0.5
@@ -3570,7 +3579,7 @@ __metadata:
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
     "@openzeppelin/contracts": ^4.9.3
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     rimraf: ^5.0.5
     truffle: ^5.11.5
   languageName: unknown
@@ -3585,7 +3594,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.11
     "@xyo-network/world-solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^5.0.5
@@ -4328,6 +4337,15 @@ __metadata:
   version: 1.0.1
   resolution: "async-limiter@npm:1.0.1"
   checksum: 2b849695b465d93ad44c116220dee29a5aeb63adac16c1088983c339b0de57d76e82533e8e364a93a9f997f28bbfc6a92948cefc120652bd07f3b59f8d75cf2b
+  languageName: node
+  linkType: hard
+
+"async-mutex@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "async-mutex@npm:0.4.0"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 813a71728b35a4fbfd64dba719f04726d9133c67b577fcd951b7028c4a675a13ee34e69beb82d621f87bf81f5d4f135c4c44be0448550c7db728547244ef71fc
   languageName: node
   linkType: hard
 
@@ -5760,6 +5778,19 @@ __metadata:
     object-assign: ^4
     vary: ^1
   checksum: ced838404ccd184f61ab4fdc5847035b681c90db7ac17e428f3d81d69e2989d2b680cc254da0e2554f5ed4f8a341820a1ce3d1c16b499f6e2f47a1b9b07b5006
+  languageName: node
+  linkType: hard
+
+"cosmiconfig-typescript-loader@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "cosmiconfig-typescript-loader@npm:5.0.0"
+  dependencies:
+    jiti: ^1.19.1
+  peerDependencies:
+    "@types/node": "*"
+    cosmiconfig: ">=8.2"
+    typescript: ">=4"
+  checksum: 7b614313f2cc2ecbe17270de570a511aa7c974bf14a749d7ed4f4d0f4a9ed02ee7ae87d710e294204abb00bb6bb0cca53795208bb1435815d143b43c6626ec74
   languageName: node
   linkType: hard
 
@@ -10408,6 +10439,15 @@ __metadata:
   bin:
     jest: bin/jest.js
   checksum: 17ca8d67504a7dbb1998cf3c3077ec9031ba3eb512da8d71cb91bcabb2b8995c4e4b292b740cb9bf1cbff5ce3e110b3f7c777b0cefb6f41ab05445f248d0ee0b
+  languageName: node
+  linkType: hard
+
+"jiti@npm:^1.19.1":
+  version: 1.20.0
+  resolution: "jiti@npm:1.20.0"
+  bin:
+    jiti: bin/jiti.js
+  checksum: 7924062b5675142e3e272a27735be84b7bfc0a0eb73217fc2dcafa034f37c4f7b4b9ffc07dd98bcff0f739a8811ce1544db205ae7e97b1c86f0df92c65ce3c72
   languageName: node
   linkType: hard
 

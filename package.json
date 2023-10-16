@@ -30,7 +30,7 @@
     "@typescript-eslint/eslint-plugin": "^6.7.5",
     "@typescript-eslint/parser": "^6.7.5",
     "@xylabs/eslint-config": "3.1.2",
-    "@xylabs/ts-scripts-yarn3": "^3.1.2",
+    "@xylabs/ts-scripts-yarn3": "^3.1.11",
     "@xylabs/tsconfig": "^3.1.2",
     "eslint": "^8.51.0",
     "eslint-import-resolver-typescript": "^3.6.1",
