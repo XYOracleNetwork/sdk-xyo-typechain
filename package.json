@@ -27,7 +27,7 @@
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@types/jest": "^29.5.5",
-    "@typescript-eslint/eslint-plugin": "^6.7.5",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
     "@typescript-eslint/parser": "^6.7.5",
     "@xylabs/eslint-config": "3.1.2",
     "@xylabs/ts-scripts-yarn3": "^3.1.2",
