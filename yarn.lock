@@ -1786,7 +1786,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.13, @jridgewell/sourcemap-codec@npm:^1.4.14":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
   version: 1.4.15
   resolution: "@jridgewell/sourcemap-codec@npm:1.4.15"
   checksum: b881c7e503db3fc7f3c1f35a1dd2655a188cc51a3612d76efc8a6eb74728bef5606e6758ee77423e564092b4a518aba569bbb21c9bac5ab7a35b0c6ae7e344c8
@@ -2169,26 +2169,26 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-commonjs@npm:^25.0.4":
-  version: 25.0.5
-  resolution: "@rollup/plugin-commonjs@npm:25.0.5"
+"@rollup/plugin-commonjs@npm:^25.0.7":
+  version: 25.0.7
+  resolution: "@rollup/plugin-commonjs@npm:25.0.7"
   dependencies:
     "@rollup/pluginutils": ^5.0.1
     commondir: ^1.0.1
     estree-walker: ^2.0.2
     glob: ^8.0.3
     is-reference: 1.2.1
-    magic-string: ^0.27.0
+    magic-string: ^0.30.3
   peerDependencies:
     rollup: ^2.68.0||^3.0.0||^4.0.0
   peerDependenciesMeta:
     rollup:
       optional: true
-  checksum: 37cb6ce5188448250c2a97775c5879814119ff9fb3576d35089b7c00fed1a2b46b78d74a1377027cca26d0d984cfe99f450bfc0da561d596447ab6064adb4f08
+  checksum: 052e11839a9edc556eda5dcc759ab816dcc57e9f0f905a1e6e14fff954eaa6b1e2d0d544f5bd18d863993c5eba43d8ac9c19d9bb53b1c3b1213f32cfc9d50b2e
   languageName: node
   linkType: hard
 
-"@rollup/plugin-json@npm:^6.0.0":
+"@rollup/plugin-json@npm:^6.0.1":
   version: 6.0.1
   resolution: "@rollup/plugin-json@npm:6.0.1"
   dependencies:
@@ -2202,7 +2202,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rollup/plugin-typescript@npm:^11.1.4":
+"@rollup/plugin-typescript@npm:^11.1.5":
   version: 11.1.5
   resolution: "@rollup/plugin-typescript@npm:11.1.5"
   dependencies:
@@ -3006,7 +3006,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.7.2":
+"@types/node@npm:*":
   version: 20.8.4
   resolution: "@types/node@npm:20.8.4"
   dependencies:
@@ -3026,6 +3026,15 @@ __metadata:
   version: 12.20.55
   resolution: "@types/node@npm:12.20.55"
   checksum: e4f86785f4092706e0d3b0edff8dca5a13b45627e4b36700acd8dfe6ad53db71928c8dee914d4276c7fd3b6ccd829aa919811c9eb708a2c8e4c6eb3701178c37
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.8.6":
+  version: 20.8.6
+  resolution: "@types/node@npm:20.8.6"
+  dependencies:
+    undici-types: ~5.25.1
+  checksum: ccfb7ac482c5a96edeb239893c5c099f5257fcc2ed9ae62fefdfbc782b79e16dbc2af9a85b379665237bf759904b44ca2be68e75d239e0297882aad42f61905c
   languageName: node
   linkType: hard
 
@@ -3136,7 +3145,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17.0.26, @types/yargs@npm:^17.0.8":
+"@types/yargs@npm:^17.0.28, @types/yargs@npm:^17.0.8":
   version: 17.0.28
   resolution: "@types/yargs@npm:17.0.28"
   dependencies:
@@ -3373,40 +3382,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "@xylabs/ts-scripts-yarn3@npm:3.1.2"
+"@xylabs/ts-scripts-yarn3@npm:^3.1.12":
+  version: 3.1.12
+  resolution: "@xylabs/ts-scripts-yarn3@npm:3.1.12"
   dependencies:
-    "@rollup/plugin-commonjs": ^25.0.4
-    "@rollup/plugin-json": ^6.0.0
-    "@rollup/plugin-typescript": ^11.1.4
-    "@types/node": ^20.7.2
-    "@types/yargs": ^17.0.26
-    "@typescript-eslint/eslint-plugin": ^6.7.3
-    "@typescript-eslint/parser": ^6.7.3
-    "@xylabs/tsconfig": ~3.1.2
+    "@rollup/plugin-commonjs": ^25.0.7
+    "@rollup/plugin-json": ^6.0.1
+    "@rollup/plugin-typescript": ^11.1.5
+    "@types/node": ^20.8.6
+    "@types/yargs": ^17.0.28
+    "@typescript-eslint/eslint-plugin": ^6.7.5
+    "@typescript-eslint/parser": ^6.7.5
+    "@xylabs/tsconfig": ~3.1.12
+    async-mutex: ^0.4.0
     chalk: ^4.1.2
     cosmiconfig: ^8.3.6
+    cosmiconfig-typescript-loader: ^5.0.0
     cpy: ^8.1.2
     depcheck: ^1.4.6
-    eslint: ^8.50.0
+    eslint: ^8.51.0
     eslint-config-prettier: ^9.0.0
-    eslint-plugin-prettier: ^5.0.0
+    eslint-plugin-prettier: ^5.0.1
     eslint-plugin-sonarjs: ^0.21.0
     glob: ^10.3.10
     jest: ^29.7.0
-    jest-extended: ^4.0.1
+    jest-extended: ^4.0.2
     jest-mock-extended: ^3.0.5
     jest-sorted: ^1.0.14
     license-checker: ^25.0.1
     lodash: ^4.17.21
     node-cmd: ^5.0.0
-    npm-check-updates: ^16.14.4
+    npm-check-updates: ^16.14.6
     npm-package-json-lint: ^7.0.0
     npm-package-json-lint-config-default: ^6.0.0
     parse-git-config: ^3.0.0
     prettier: ^3.0.3
-    publint: ^0.2.3
+    publint: ^0.2.4
     reflect-metadata: ^0.1.13
     rimraf: ^4.4.1
     rollup: ^3.29.4
@@ -3419,7 +3430,7 @@ __metadata:
     tsc-prog: ^2.3.0
     tslib: ^2.6.2
     tsup: ^7.2.0
-    typedoc: ^0.25.1
+    typedoc: ^0.25.2
     types-package-json: ^2.0.39
     yargs: ^17.7.2
   peerDependencies:
@@ -3470,14 +3481,21 @@ __metadata:
     xy: dist/bin/xy.js
     xy-ts: src/bin/xy-ts.ts
     yarn3only: dist/bin/yarn3only.js
-  checksum: 6cc50722a6774d344e5b0f4b78662b1aaec27e783a728c7fa06c5fc244082ae9bc8a801eaca98856a0bdb3b69294aa322977458352efaeba625c17da736ff598
+  checksum: 9f56757671cd20727e11fa6a201916d4bbad51b806dff2be6b636b85b509bdfa6facf7c12c0b3d8c8d4a19bea7740320950d9eca4f05431673d4cfa4f3cae105
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^3.1.2, @xylabs/tsconfig@npm:~3.1.2":
+"@xylabs/tsconfig@npm:^3.1.2":
   version: 3.1.2
   resolution: "@xylabs/tsconfig@npm:3.1.2"
   checksum: b98e1ee446fb3da798101837f687476daa252b0861d442e75a6ec7df425afcff7b505fd8c0bf8812490199208b0fa27a4333e7fd8bfb2f581a01b7422d1ee3c7
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.1.12":
+  version: 3.1.12
+  resolution: "@xylabs/tsconfig@npm:3.1.12"
+  checksum: 51bba0fb62461416b459f17bc21db3ded4964c87380b21f1a2a6974a5645b351a9d3a237f8f513829fd8978c3c6bf73c1e63598faac26bb0405bad9069b89a79
   languageName: node
   linkType: hard
 
@@ -3492,7 +3510,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": ^6.7.5
     "@typescript-eslint/parser": ^6.7.5
     "@xylabs/eslint-config": 3.1.2
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xylabs/tsconfig": ^3.1.2
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
@@ -3511,7 +3529,7 @@ __metadata:
   resolution: "@xyo-network/solidity@workspace:packages/solidity"
   dependencies:
     "@openzeppelin/contracts": ^4.9.3
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     rimraf: ^5.0.5
     truffle: ^5.11.5
   languageName: unknown
@@ -3526,7 +3544,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xyo-network/solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^5.0.5
@@ -3540,7 +3558,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
     "@uniswap/v3-core": ^1.0.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     copyfiles: ^2.4.1
     rimraf: ^5.0.5
     truffle: ^5.11.5
@@ -3556,7 +3574,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xyo-network/uniswap-solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^5.0.5
@@ -3570,7 +3588,7 @@ __metadata:
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
     "@openzeppelin/contracts": ^4.9.3
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     rimraf: ^5.0.5
     truffle: ^5.11.5
   languageName: unknown
@@ -3585,7 +3603,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@typechain/ethers-v5": ^10.2.1
-    "@xylabs/ts-scripts-yarn3": ^3.1.2
+    "@xylabs/ts-scripts-yarn3": ^3.1.12
     "@xyo-network/world-solidity": "workspace:^"
     ethers: ^5.7.2
     rimraf: ^5.0.5
@@ -4328,6 +4346,15 @@ __metadata:
   version: 1.0.1
   resolution: "async-limiter@npm:1.0.1"
   checksum: 2b849695b465d93ad44c116220dee29a5aeb63adac16c1088983c339b0de57d76e82533e8e364a93a9f997f28bbfc6a92948cefc120652bd07f3b59f8d75cf2b
+  languageName: node
+  linkType: hard
+
+"async-mutex@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "async-mutex@npm:0.4.0"
+  dependencies:
+    tslib: ^2.4.0
+  checksum: 813a71728b35a4fbfd64dba719f04726d9133c67b577fcd951b7028c4a675a13ee34e69beb82d621f87bf81f5d4f135c4c44be0448550c7db728547244ef71fc
   languageName: node
   linkType: hard
 
@@ -5763,6 +5790,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cosmiconfig-typescript-loader@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "cosmiconfig-typescript-loader@npm:5.0.0"
+  dependencies:
+    jiti: ^1.19.1
+  peerDependencies:
+    "@types/node": "*"
+    cosmiconfig: ">=8.2"
+    typescript: ">=4"
+  checksum: 7b614313f2cc2ecbe17270de570a511aa7c974bf14a749d7ed4f4d0f4a9ed02ee7ae87d710e294204abb00bb6bb0cca53795208bb1435815d143b43c6626ec74
+  languageName: node
+  linkType: hard
+
 "cosmiconfig@npm:^7.0.0, cosmiconfig@npm:^7.0.1":
   version: 7.1.0
   resolution: "cosmiconfig@npm:7.1.0"
@@ -6956,6 +6996,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-prettier@npm:^5.0.1":
+  version: 5.0.1
+  resolution: "eslint-plugin-prettier@npm:5.0.1"
+  dependencies:
+    prettier-linter-helpers: ^1.0.0
+    synckit: ^0.8.5
+  peerDependencies:
+    "@types/eslint": ">=8.0.0"
+    eslint: ">=8.0.0"
+    prettier: ">=3.0.0"
+  peerDependenciesMeta:
+    "@types/eslint":
+      optional: true
+    eslint-config-prettier:
+      optional: true
+  checksum: c2261033b97bafe99ccb7cc47c2fac6fa85b8bbc8b128042e52631f906b69e12afed2cdd9d7e3021cc892ee8dd4204a3574e1f32a0b718b4bb3b440944b6983b
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-simple-import-sort@npm:^10.0.0":
   version: 10.0.0
   resolution: "eslint-plugin-simple-import-sort@npm:10.0.0"
@@ -7085,7 +7144,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.50.0, eslint@npm:^8.51.0":
+"eslint@npm:^8.51.0":
   version: 8.51.0
   resolution: "eslint@npm:8.51.0"
   dependencies:
@@ -7988,10 +8047,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fp-and-or@npm:^0.1.3":
-  version: 0.1.3
-  resolution: "fp-and-or@npm:0.1.3"
-  checksum: d556ad1fb0abd0115a5815b0f8c78439a690dbe317d5b37e8ad897784254d606d4fecd31e91e81790e713407bdccb675676f48bfa4ff1f278fbae7a9370c21b1
+"fp-and-or@npm:^0.1.4":
+  version: 0.1.4
+  resolution: "fp-and-or@npm:0.1.4"
+  checksum: 780969ef7e86e6822d7e5f27d9c3bcbb7fe1206dbdc8af76482a9213d9c812f8d9dfda8d8d3988f94f6cbc898e7a86ec5ab5700ef53b0760b3bf226a2a52e7e0
   languageName: node
   linkType: hard
 
@@ -10089,9 +10148,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jest-extended@npm:^4.0.1":
-  version: 4.0.1
-  resolution: "jest-extended@npm:4.0.1"
+"jest-extended@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "jest-extended@npm:4.0.2"
   dependencies:
     jest-diff: ^29.0.0
     jest-get-type: ^29.0.0
@@ -10100,7 +10159,7 @@ __metadata:
   peerDependenciesMeta:
     jest:
       optional: true
-  checksum: a5d6a9153c7b7fe48602bb3381f46bbbbb034bc2722497d0fde6b0eac81b8fbda1e69fb59ca72ec545fea7959e065a96500620a1cf0aba77a719455ff5f93da8
+  checksum: afdc255eec7caa173f9e805e94562273d8b8aa4c7ab9b396668f018c18ea5236270a6ac499ca84b8c60e90ccbe9ccb4aebf998daef13aec9542c426df1df6079
   languageName: node
   linkType: hard
 
@@ -10408,6 +10467,15 @@ __metadata:
   bin:
     jest: bin/jest.js
   checksum: 17ca8d67504a7dbb1998cf3c3077ec9031ba3eb512da8d71cb91bcabb2b8995c4e4b292b740cb9bf1cbff5ce3e110b3f7c777b0cefb6f41ab05445f248d0ee0b
+  languageName: node
+  linkType: hard
+
+"jiti@npm:^1.19.1":
+  version: 1.20.0
+  resolution: "jiti@npm:1.20.0"
+  bin:
+    jiti: bin/jiti.js
+  checksum: 7924062b5675142e3e272a27735be84b7bfc0a0eb73217fc2dcafa034f37c4f7b4b9ffc07dd98bcff0f739a8811ce1544db205ae7e97b1c86f0df92c65ce3c72
   languageName: node
   linkType: hard
 
@@ -11254,12 +11322,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.27.0":
-  version: 0.27.0
-  resolution: "magic-string@npm:0.27.0"
+"magic-string@npm:^0.30.3":
+  version: 0.30.5
+  resolution: "magic-string@npm:0.30.5"
   dependencies:
-    "@jridgewell/sourcemap-codec": ^1.4.13
-  checksum: 273faaa50baadb7a2df6e442eac34ad611304fc08fe16e24fe2e472fd944bfcb73ffb50d2dc972dc04e92784222002af46868cb9698b1be181c81830fd95a13e
+    "@jridgewell/sourcemap-codec": ^1.4.15
+  checksum: da10fecff0c0a7d3faf756913ce62bd6d5e7b0402be48c3b27bfd651b90e29677e279069a63b764bcdc1b8ecdcdb898f29a5c5ec510f2323e8d62ee057a6eb18
   languageName: node
   linkType: hard
 
@@ -12741,16 +12809,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"npm-check-updates@npm:^16.14.4":
-  version: 16.14.5
-  resolution: "npm-check-updates@npm:16.14.5"
+"npm-check-updates@npm:^16.14.6":
+  version: 16.14.6
+  resolution: "npm-check-updates@npm:16.14.6"
   dependencies:
     chalk: ^5.3.0
     cli-table3: ^0.6.3
     commander: ^10.0.1
     fast-memoize: ^2.5.2
     find-up: 5.0.0
-    fp-and-or: ^0.1.3
+    fp-and-or: ^0.1.4
     get-stdin: ^8.0.0
     globby: ^11.0.4
     hosted-git-info: ^5.1.0
@@ -12768,11 +12836,11 @@ __metadata:
     prompts-ncu: ^3.0.0
     rc-config-loader: ^4.1.3
     remote-git-tags: ^3.0.0
-    rimraf: ^5.0.1
+    rimraf: ^5.0.5
     semver: ^7.5.4
     semver-utils: ^1.1.4
     source-map-support: ^0.5.21
-    spawn-please: ^2.0.1
+    spawn-please: ^2.0.2
     strip-ansi: ^7.1.0
     strip-json-comments: ^5.0.1
     untildify: ^4.0.0
@@ -12780,7 +12848,7 @@ __metadata:
   bin:
     ncu: build/src/bin/cli.js
     npm-check-updates: build/src/bin/cli.js
-  checksum: d15bd903349f782e3251d2fb823abc2532687794cd05e5337ea4721bf3327863b445db3b9f8797404a3ae84124759970e0cebe53e33f74392211770dc7984d4e
+  checksum: 40006cc306dac0c10067a88d3a80d943ed9eb81524eb34ce1210d3e042994ea1671fcb3cd5bc48bdde8cebf4296253491ba7177301c6a1a6cac674e86b40b09e
   languageName: node
   linkType: hard
 
@@ -14156,7 +14224,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"publint@npm:^0.2.3":
+"publint@npm:^0.2.4":
   version: 0.2.4
   resolution: "publint@npm:0.2.4"
   dependencies:
@@ -16251,7 +16319,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rimraf@npm:^5.0.1, rimraf@npm:^5.0.5":
+"rimraf@npm:^5.0.5":
   version: 5.0.5
   resolution: "rimraf@npm:5.0.5"
   dependencies:
@@ -16951,12 +17019,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spawn-please@npm:^2.0.1":
-  version: 2.0.1
-  resolution: "spawn-please@npm:2.0.1"
+"spawn-please@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "spawn-please@npm:2.0.2"
   dependencies:
     cross-spawn: ^7.0.3
-  checksum: b14b6214c1aa1b5c5bccfd59dc13ea1b3293fe13fea2c8f63948dbf9929c5eab2b791def61481924fd2b97ef069e43bac311206a26db75b2b7a558a37068aa75
+  checksum: 96c975181070bb757a16a9b7e4cde119679ace1a1a12890f9b343c98f58a06e27d9e1ed9f5332b09887b33af32fd8aecdcb0effd830df7b2698fafb42187894b
   languageName: node
   linkType: hard
 
@@ -18279,7 +18347,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:^0.25.1":
+"typedoc@npm:^0.25.2":
   version: 0.25.2
   resolution: "typedoc@npm:0.25.2"
   dependencies:
