@@ -31,7 +31,7 @@
     "@typescript-eslint/parser": "^6.7.5",
     "@xylabs/eslint-config": "3.1.2",
     "@xylabs/ts-scripts-yarn3": "^3.1.2",
-    "@xylabs/tsconfig": "^3.1.2",
+    "@xylabs/tsconfig": "^3.1.12",
     "eslint": "^8.51.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-deprecation": "^2.0.0",

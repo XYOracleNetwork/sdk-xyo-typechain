@@ -3474,7 +3474,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^3.1.2, @xylabs/tsconfig@npm:~3.1.2":
+"@xylabs/tsconfig@npm:^3.1.12":
+  version: 3.1.12
+  resolution: "@xylabs/tsconfig@npm:3.1.12"
+  checksum: 51bba0fb62461416b459f17bc21db3ded4964c87380b21f1a2a6974a5645b351a9d3a237f8f513829fd8978c3c6bf73c1e63598faac26bb0405bad9069b89a79
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.1.2":
   version: 3.1.2
   resolution: "@xylabs/tsconfig@npm:3.1.2"
   checksum: b98e1ee446fb3da798101837f687476daa252b0861d442e75a6ec7df425afcff7b505fd8c0bf8812490199208b0fa27a4333e7fd8bfb2f581a01b7422d1ee3c7
@@ -3493,7 +3500,7 @@ __metadata:
     "@typescript-eslint/parser": ^6.7.5
     "@xylabs/eslint-config": 3.1.2
     "@xylabs/ts-scripts-yarn3": ^3.1.2
-    "@xylabs/tsconfig": ^3.1.2
+    "@xylabs/tsconfig": ^3.1.12
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
     "@xyo-network/world-typechain": "workspace:^"
