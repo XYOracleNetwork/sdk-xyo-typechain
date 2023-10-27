@@ -3098,7 +3098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^6.7.3, @typescript-eslint/eslint-plugin@npm:^6.8.0, @typescript-eslint/eslint-plugin@npm:^6.9.0":
+"@typescript-eslint/eslint-plugin@npm:^6.8.0, @typescript-eslint/eslint-plugin@npm:^6.9.0":
   version: 6.9.0
   resolution: "@typescript-eslint/eslint-plugin@npm:6.9.0"
   dependencies:
@@ -3123,7 +3123,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^6.7.3, @typescript-eslint/parser@npm:^6.8.0, @typescript-eslint/parser@npm:^6.9.0":
+"@typescript-eslint/parser@npm:^6.8.0, @typescript-eslint/parser@npm:^6.9.0":
   version: 6.9.0
   resolution: "@typescript-eslint/parser@npm:6.9.0"
   dependencies:
@@ -3304,12 +3304,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config@npm:3.1.9":
-  version: 3.1.9
-  resolution: "@xylabs/eslint-config@npm:3.1.9"
+"@xylabs/eslint-config@npm:3.1.13":
+  version: 3.1.13
+  resolution: "@xylabs/eslint-config@npm:3.1.13"
   dependencies:
-    "@typescript-eslint/eslint-plugin": ^6.7.3
-    "@typescript-eslint/parser": ^6.7.3
+    "@typescript-eslint/eslint-plugin": ^6.8.0
+    "@typescript-eslint/parser": ^6.8.0
     eslint-config-prettier: ^9.0.0
     eslint-import-resolver-typescript: ^3.6.1
     eslint-plugin-deprecation: ^2.0.0
@@ -3317,7 +3317,7 @@ __metadata:
     eslint-plugin-json-es: ^1.5.7
     eslint-plugin-md: ^1.0.19
     eslint-plugin-no-secrets: ^0.8.9
-    eslint-plugin-prettier: ^5.0.0
+    eslint-plugin-prettier: ^5.0.1
     eslint-plugin-simple-import-sort: ^10.0.0
     eslint-plugin-sort-keys-fix: ^1.1.2
     eslint-plugin-workspaces: ^0.9.0
@@ -3329,7 +3329,7 @@ __metadata:
     typescript: ^5.2.2
   peerDependencies:
     eslint: ^8.23.0
-  checksum: 7a7f402a0cb151f7308592870721b24aff7526c29189594f886231374d950abee3e81f1eeefb036e4bd8f6b5793088a6b9d703930a1f28338fabc03efd4b65db
+  checksum: 6162844a92cf734fc48ce48a335071f908cf33105a9ec12c4ffb97d2dc056e9c6f87c8a7da75e1c032e873dc58526ba5fb9777e351c1663cb6427bbefe5133ea
   languageName: node
   linkType: hard
 
@@ -3453,7 +3453,7 @@ __metadata:
     "@types/jest": ^29.5.6
     "@typescript-eslint/eslint-plugin": ^6.9.0
     "@typescript-eslint/parser": ^6.9.0
-    "@xylabs/eslint-config": 3.1.9
+    "@xylabs/eslint-config": 3.1.13
     "@xylabs/ts-scripts-yarn3": ^3.1.13
     "@xylabs/tsconfig": ^3.1.13
     "@xyo-network/typechain": "workspace:~"
@@ -6943,7 +6943,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-prettier@npm:^5.0.0, eslint-plugin-prettier@npm:^5.0.1":
+"eslint-plugin-prettier@npm:^5.0.1":
   version: 5.0.1
   resolution: "eslint-plugin-prettier@npm:5.0.1"
   dependencies:
