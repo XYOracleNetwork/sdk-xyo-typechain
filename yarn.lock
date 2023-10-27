@@ -3443,6 +3443,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain":
+  version: 0.0.0-use.local
+  resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
+  dependencies:
+    "@ethersproject/abi": ^5.7.0
+    "@ethersproject/bytes": ^5.7.0
+    "@ethersproject/contracts": ^5.7.0
+    "@ethersproject/providers": ^5.7.2
+    "@typechain/ethers-v5": ^10.2.1
+    "@xylabs/ts-scripts-yarn3": ^3.1.13
+    "@xyo-network/solidity": "workspace:~"
+    ethers: ^5.7.2
+    rimraf: ^5.0.5
+    typechain: ^8.3.2
+    typescript: ^5.2.2
+  languageName: unknown
+  linkType: soft
+
 "@xyo-network/sdk-xyo-typechain@workspace:.":
   version: 0.0.0-use.local
   resolution: "@xyo-network/sdk-xyo-typechain@workspace:."

@@ -45,18 +45,6 @@
         "require": "./dist/browser/index.cjs"
       }
     },
-    "./oz": {
-      "node": {
-        "types": "./dist/node/oz/index.d.ts",
-        "import": "./dist/node/oz/index.js",
-        "require": "./dist/node/oz/index.cjs"
-      },
-      "browser": {
-        "types": "./dist/browser/oz/index.d.ts",
-        "import": "./dist/browser/oz/index.js",
-        "require": "./dist/browser/oz/index.cjs"
-      }
-    },
     "./package.json": "./package.json"
   },
   "main": "dist/node/index.cjs",
@@ -67,14 +55,13 @@
   "license": "LGPL-3.0-only",
   "scripts": {
     "package-clean": "rimraf dist && rimraf src",
-    "package-compile": "yarn generate:oz && yarn generate:sdk && yarn compile:sdk",
+    "package-compile": "yarn generate:sdk && yarn compile:sdk",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/solidity/build/contracts/**/*.json",
-    "generate:oz": "typechain --out-dir=./src/oz --target=ethers-v5 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
     "compile:sdk": "yarn package-compile-only",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "2.2.10",
+  "version": "2.2.11",
   "type": "module"
 }

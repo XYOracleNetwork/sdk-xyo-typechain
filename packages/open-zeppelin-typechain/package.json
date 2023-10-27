@@ -1,11 +1,11 @@
 {
-  "name": "@xyo-network/world-typechain",
+  "name": "@xyo-network/open-zeppelin-typechain",
   "dependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@xyo-network/world-solidity": "workspace:~"
+    "@xyo-network/solidity": "workspace:~"
   },
   "author": {
     "email": "support@xyo.network",
@@ -32,14 +32,15 @@
     "typescript": "^5.2.2"
   },
   "docs": "dist/docs.json",
-  "license": "LGPL-3.0-only",
   "exports": {
     ".": {
       "node": {
+        "types": "./dist/node/index.d.ts",
         "import": "./dist/node/index.js",
         "require": "./dist/node/index.cjs"
       },
       "browser": {
+        "types": "./dist/browser/index.d.ts",
         "import": "./dist/browser/index.js",
         "require": "./dist/browser/index.cjs"
       }
@@ -48,15 +49,15 @@
   },
   "main": "dist/node/index.cjs",
   "module": "dist/node/index.js",
-  "types": "dist/node/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
+  "license": "LGPL-3.0-only",
   "scripts": {
     "package-clean": "rimraf dist && rimraf src",
     "package-compile": "yarn generate:sdk && yarn compile:sdk",
     "package-recompile": "yarn package-clean && yarn package-compile",
-    "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/world-solidity/build/contracts/**/*.json",
+    "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
     "compile:sdk": "yarn package-compile-only",
     "lint-pkg": "npmPkgJsonLint ."
   },
