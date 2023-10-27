@@ -20,14 +20,14 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^3.1.2",
+    "@xylabs/ts-scripts-yarn3": "^3.1.13",
     "rimraf": "^5.0.5",
     "truffle": "^5.11.5"
   },
   "publishConfig": {
     "access": "public"
   },
-  "license": "LGPL-3.0",
+  "license": "LGPL-3.0-only",
   "scripts": {
     "package-clean": "rimraf build",
     "package-compile": "rimraf build && truffle compile --config truffle-config.cjs",

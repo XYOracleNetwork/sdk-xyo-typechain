@@ -9,10 +9,10 @@
 [![codeclimate-badge][]][codeclimate-link]
 [![snyk-badge][]][snyk-link]
 
-> The XYO Foundation provides this source code available in our efforts to
+> The XYO Foundation provides this source code in our efforts to
 > advance the understanding of the XYO Protocol and its possible uses.
 > We continue to maintain this software in the interest of developer education.
-> Usage of this source code is not intended for production.
+
 
 ## Table of Contents
 -   [Title](#sdk-xyo-typechain)

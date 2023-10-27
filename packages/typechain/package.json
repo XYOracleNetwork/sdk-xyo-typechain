@@ -5,7 +5,7 @@
     "@ethersproject/bytes": "^5.7.0",
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
-    "@xyo-network/solidity": "workspace:^"
+    "@xyo-network/solidity": "workspace:~"
   },
   "author": {
     "email": "support@xyo.network",
@@ -25,38 +25,52 @@
   ],
   "devDependencies": {
     "@typechain/ethers-v5": "^10.2.1",
-    "@xylabs/ts-scripts-yarn3": "^3.1.2",
+    "@xylabs/ts-scripts-yarn3": "^3.1.13",
     "ethers": "^5.7.2",
     "rimraf": "^5.0.5",
-    "typechain": "^8.3.1",
+    "typechain": "^8.3.2",
     "typescript": "^5.2.2"
   },
   "docs": "dist/docs.json",
   "exports": {
     ".": {
       "node": {
+        "types": "./dist/node/index.d.ts",
         "import": "./dist/node/index.js",
         "require": "./dist/node/index.cjs"
       },
       "browser": {
+        "types": "./dist/browser/index.d.ts",
         "import": "./dist/browser/index.js",
         "require": "./dist/browser/index.cjs"
+      }
+    },
+    "./oz": {
+      "node": {
+        "types": "./dist/node/oz/index.d.ts",
+        "import": "./dist/node/oz/index.js",
+        "require": "./dist/node/oz/index.cjs"
+      },
+      "browser": {
+        "types": "./dist/browser/oz/index.d.ts",
+        "import": "./dist/browser/oz/index.js",
+        "require": "./dist/browser/oz/index.cjs"
       }
     },
     "./package.json": "./package.json"
   },
   "main": "dist/node/index.cjs",
   "module": "dist/node/index.js",
-  "types": "dist/node/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
-  "license": "LGPL-3.0",
+  "license": "LGPL-3.0-only",
   "scripts": {
     "package-clean": "rimraf dist && rimraf src",
-    "package-compile": "yarn generate:sdk && yarn compile:sdk",
+    "package-compile": "yarn generate:oz && yarn generate:sdk && yarn compile:sdk",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@xyo-network/solidity/build/contracts/**/*.json",
+    "generate:oz": "typechain --out-dir=./src/oz --target=ethers-v5 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
     "compile:sdk": "yarn package-compile-only",
     "lint-pkg": "npmPkgJsonLint ."
   },

@@ -12,7 +12,7 @@
     "email": "support@xyo.network",
     "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues"
   },
-  "license": "LGPL-3.0",
+  "license": "LGPL-3.0-only",
   "repository": {
     "type": "git",
     "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
@@ -21,7 +21,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^3.1.2",
+    "@xylabs/ts-scripts-yarn3": "^3.1.13",
     "rimraf": "^5.0.5",
     "truffle": "^5.11.5"
   },
