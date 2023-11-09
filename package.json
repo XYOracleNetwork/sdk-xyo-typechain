@@ -29,7 +29,7 @@
     "@types/jest": "^29.5.6",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
-    "@xylabs/eslint-config": "3.1.9",
+    "@xylabs/eslint-config": "3.1.21",
     "@xylabs/ts-scripts-yarn3": "^3.1.13",
     "@xylabs/tsconfig": "^3.1.13",
     "eslint": "^8.52.0",
