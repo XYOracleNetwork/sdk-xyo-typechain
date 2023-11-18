@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 import "../interfaces/IRandomSlots.sol";
 import "../interfaces/chains/IBurnableErc20.sol";
@@ -14,10 +14,12 @@ import "../libraries/MinimumBidFee.sol";
 import "../libraries/QuadKey.sol";
 import "../libraries/TimeConstants.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 import "./Auction.sol";
 
 contract XyoWorldMinter is Auction, IXyoWorldMinter {
-    using SafeMath for uint256;
+    using Math for uint256;
+
     using SafeERC20 for IBurnableErc20;
     using DutchAuction for XyoWorldMinter;
     using BidFee for XyoWorldMinter;
@@ -107,11 +109,9 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
 
     event MinterTransferred(address newMinter, uint256 amount);
 
-    function transferToNewMinter(address newMinter)
-        public
-        onlyCreator
-        returns (bool)
-    {
+    function transferToNewMinter(
+        address newMinter
+    ) public onlyCreator returns (bool) {
         uint256 amount = _currency.balanceOf(address(this));
         _currency.safeTransfer(newMinter, amount);
         _geotokens.setMinter(newMinter);
@@ -132,11 +132,11 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         uint256 tokenCount,
         address feeReceiver
     ) internal returns (uint256) {
-        uint256 fee = SafeMath.div(tokenCount, 10); //take 10%
+        uint256 fee = tokenCount / 10; //take 10%
         if (fee > 0) {
             _currency.safeTransfer(feeReceiver, fee);
             emit MintingFeeSent(feeReceiver, id, fee);
-            return SafeMath.sub(tokenCount, fee); //returns the balance
+            return tokenCount - fee; //returns the balance
         }
         return tokenCount;
     }
@@ -163,12 +163,13 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
             if (!_geotokens.exists(targetId)) {
                 break;
             }
-            uint256 tokensToDeposit = baseTokens
-                .mul(_mintingPriceTokenFlowMicroPercent[x])
-                .div(PercentConstants.MICRO_PERCENT_DIV);
+            uint256 tokensToDeposit = baseTokens.mulDiv(
+                _mintingPriceTokenFlowMicroPercent[x],
+                PercentConstants.MICRO_PERCENT_DIV
+            );
             _geotokens.depositErc20(targetId, _currency, tokensToDeposit);
             emit TokensFlowed(targetId, id, tokensToDeposit);
-            remainingTokens = remainingTokens.sub(tokensToDeposit);
+            remainingTokens = remainingTokens - tokensToDeposit;
             if (targetId == rootId) {
                 //we reached the top
                 break;
@@ -376,10 +377,10 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         );
     }
 
-    function _makeChildrenAvailable(uint256 id, uint256 initialStartingBid)
-        internal
-        returns (bool)
-    {
+    function _makeChildrenAvailable(
+        uint256 id,
+        uint256 initialStartingBid
+    ) internal returns (bool) {
         for (uint8 i = 0; i < 4; i++) {
             uint256 childId = QuadKey.child(id, i);
             if (!started(childId)) {
@@ -397,21 +398,18 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         return _randomSlots[slot].odds;
     }
 
-    function randomSlotWeight(uint256 slot)
-        public
-        view
-        override
-        returns (int16)
-    {
+    function randomSlotWeight(
+        uint256 slot
+    ) public view override returns (int16) {
         return _randomSlots[slot].weight;
     }
 
-    function _refundCurrentBid(uint256 id, uint256 fee)
-        internal
-        returns (uint256)
-    {
+    function _refundCurrentBid(
+        uint256 id,
+        uint256 fee
+    ) internal returns (uint256) {
         if (hasBid(id)) {
-            uint256 refundAmount = _auctions[id].bid.add(fee);
+            uint256 refundAmount = _auctions[id].bid + fee;
             currency().safeTransfer(_auctions[id].bidder, refundAmount);
             emit RefundedCurrentBid(_auctions[id].bidder, id, refundAmount);
             _auctions[id].bidder = address(0);
@@ -420,11 +418,9 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         return 0;
     }
 
-    function _generateAuctionLengthInMinutes(uint256 id)
-        internal
-        view
-        returns (uint32)
-    {
+    function _generateAuctionLengthInMinutes(
+        uint256 id
+    ) internal view returns (uint32) {
         return this._randomDelay(_saleDelayMinutesBase, id);
     }
 
@@ -448,10 +444,10 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         return started(id) && expired(id) && hasBid(id) && !hasMinted(id);
     }
 
-    function _mintWithFee(uint256 id, address feeReceiver)
-        private
-        returns (bool)
-    {
+    function _mintWithFee(
+        uint256 id,
+        address feeReceiver
+    ) private returns (bool) {
         require(started(id), "Auction not Started");
 
         uint256 price = 0;
@@ -491,11 +487,10 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         return _mintWithFee(id, msg.sender);
     }
 
-    function start(uint256 initialStartingBid, address geotokenZeroOwner)
-        public
-        override
-        returns (bool)
-    {
+    function start(
+        uint256 initialStartingBid,
+        address geotokenZeroOwner
+    ) public override returns (bool) {
         require(msg.sender == _owner, "Can only be started by owner");
         _geotokens.safeMint(geotokenZeroOwner, QuadKey.createKey(0, 0));
         _restoreStateStep0();
@@ -523,7 +518,7 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
 
     function _bid(uint256 id, uint256 bidAmount) private returns (bool) {
         uint256 fee = this.bidFee(id, bidAmount);
-        uint256 totalCost = bidAmount.add(fee);
+        uint256 totalCost = bidAmount + fee;
         currency().safeTransferFrom(msg.sender, address(this), totalCost);
 
         _refundCurrentBid(id, fee);
@@ -558,7 +553,8 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         if (startChildren) {
             _makeChildrenAvailable(
                 id,
-                amount.mul(_childStartingBidPercent).div(
+                amount.mulDiv(
+                    _childStartingBidPercent,
                     PercentConstants.PERCENT_DIV
                 )
             );
@@ -571,12 +567,10 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         return 8;
     }
 
-    function bidFee(uint256 id, uint256 bidAmount)
-        public
-        view
-        override
-        returns (uint256)
-    {
+    function bidFee(
+        uint256 id,
+        uint256 bidAmount
+    ) public view override returns (uint256) {
         return this._bidFee(id, bidAmount);
     }
 
@@ -588,30 +582,22 @@ contract XyoWorldMinter is Auction, IXyoWorldMinter {
         return this._minimumBid(id);
     }
 
-    function dutchAuctionActive(uint256 id)
-        public
-        view
-        override
-        returns (bool)
-    {
+    function dutchAuctionActive(
+        uint256 id
+    ) public view override returns (bool) {
         return this._dutchAuctionActive(id);
     }
 
-    function dutchAuctionPrice(uint256 id)
-        public
-        view
-        override
-        returns (uint256)
-    {
+    function dutchAuctionPrice(
+        uint256 id
+    ) public view override returns (uint256) {
         return this._dutchAuctionPrice(id);
     }
 
-    function calcDutchAuctionPrice(uint256 basePrice, uint256 age)
-        public
-        pure
-        override
-        returns (uint256)
-    {
+    function calcDutchAuctionPrice(
+        uint256 basePrice,
+        uint256 age
+    ) public pure override returns (uint256) {
         return DutchAuction._calcDutchAuctionPrice(basePrice, age);
     }
 

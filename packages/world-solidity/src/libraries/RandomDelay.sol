@@ -9,7 +9,7 @@ library RandomDelay {
     uint8 constant SALE_DAYS_BASE = 0x07;
 
     function _random(uint256 seed) private view returns (bytes32) {
-        bytes memory part1 = abi.encode(block.difficulty);
+        bytes memory part1 = abi.encode(block.prevrandao);
         bytes memory part2 = abi.encode(seed);
         for (uint256 i = 0; i < 32; i++) {
             part1[i] = part1[i] ^ part2[i];

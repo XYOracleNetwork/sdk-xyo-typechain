@@ -1,14 +1,13 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 abstract contract DataStore {
     mapping(uint256 => mapping(uint256 => uint256)) private _data;
 
-    function _getData(uint256 id, uint256 slot)
-        internal
-        view
-        returns (uint256)
-    {
+    function _getData(
+        uint256 id,
+        uint256 slot
+    ) internal view returns (uint256) {
         return _data[id][slot];
     }
 

@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "../interfaces/IAuction.sol";
 
 abstract contract Auction is IAuction {
-    using SafeMath for uint256;
-
     struct AuctionData {
         uint32 startTime; //informational
         uint32 endTime; // if this is in the future, it is a live auction
@@ -21,43 +18,27 @@ abstract contract Auction is IAuction {
         return _auctions[id].bidder;
     }
 
-    function currentBid(uint256 id)
-        public
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function currentBid(
+        uint256 id
+    ) public view virtual override returns (uint256) {
         return _auctions[id].bid;
     }
 
-    function startingBid(uint256 id)
-        public
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function startingBid(
+        uint256 id
+    ) public view virtual override returns (uint256) {
         return _auctions[id].startingBid;
     }
 
-    function startTime(uint256 id)
-        public
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function startTime(
+        uint256 id
+    ) public view virtual override returns (uint256) {
         return _auctions[id].startTime;
     }
 
-    function endTime(uint256 id)
-        public
-        view
-        virtual
-        override
-        returns (uint256)
-    {
+    function endTime(
+        uint256 id
+    ) public view virtual override returns (uint256) {
         return _auctions[id].endTime;
     }
 

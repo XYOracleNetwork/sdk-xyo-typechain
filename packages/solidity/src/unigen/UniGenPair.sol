@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 import "../erc20/contracts/Erc20Store.sol";
 import "./IUniGenPair.sol";
 
 contract UniGenPair is IUniGenPair, Erc20Store {
-    using SafeMath for uint256;
     using SafeERC20 for IERC20;
+    using Math for uint256;
 
     mapping(address => uint256) private _stakeBlock;
     mapping(address => uint256) private _pending;
@@ -82,7 +82,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
 
     function _withdraw(uint256 amount) internal returns (uint256) {
         _target.safeTransfer(msg.sender, amount);
-        _pendingTotal = _pendingTotal.sub(amount);
+        _pendingTotal = _pendingTotal - amount;
         return amount;
     }
 
@@ -123,7 +123,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function _generations() internal view returns (uint256) {
-        return _blocksPassed().div(_frequency);
+        return _blocksPassed() / _frequency;
     }
 
     function pendingFor(address addr) external view returns (uint256) {
@@ -144,18 +144,18 @@ contract UniGenPair is IUniGenPair, Erc20Store {
 
     function _generate() internal returns (uint256) {
         uint256 amount = _calcGeneratedAmount();
-        _pending[msg.sender] = amount.add(_pending[msg.sender]);
-        _pendingTotal = _pendingTotal.add(amount);
+        _pending[msg.sender] = amount + _pending[msg.sender];
+        _pendingTotal = _pendingTotal + amount;
         _stakeBlock[msg.sender] = block.number;
         return amount;
     }
 
     function _calcGeneratedFractionalAmount() internal view returns (uint256) {
-        return _generations().mul(_sourceBalance()).div(_ratio);
+        return _generations().mulDiv(_sourceBalance(), _ratio);
     }
 
     function _calcGeneratedStandardAmount() internal view returns (uint256) {
-        return _ratio.mul(_sourceBalance()).mul(_generations());
+        return _ratio.mulDiv(_sourceBalance(), _generations());
     }
 
     function _calcGeneratedAmount() internal view returns (uint256) {

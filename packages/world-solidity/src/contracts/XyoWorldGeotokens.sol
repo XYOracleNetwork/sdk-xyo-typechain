@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.19;
 
 import "../interfaces/chains/IXyoWorldGeotokens.sol";
 import "./Erc20Store.sol";
@@ -53,19 +53,16 @@ contract XyoWorldGeotokens is
     }
 
     function exists(uint256 id) public view override returns (bool) {
-        return _exists(id);
+        return _ownerOf(id) != address(0);
     }
 
     function isMinter(address account) public view override returns (bool) {
         return minter() == account;
     }
 
-    function setMinter(address newMinter)
-        public
-        override
-        onlyMinter
-        returns (bool)
-    {
+    function setMinter(
+        address newMinter
+    ) public override onlyMinter returns (bool) {
         _minter = newMinter;
         emit MinterSet(newMinter);
         return true;
@@ -75,36 +72,30 @@ contract XyoWorldGeotokens is
         return _minter;
     }
 
-    function mint(address to, uint256 id)
-        public
-        override
-        onlyMinter
-        returns (bool)
-    {
+    function mint(
+        address to,
+        uint256 id
+    ) public override onlyMinter returns (bool) {
         require(QuadKey.valid(id), "Id not valid");
         _mint(to, id);
         emit Minted(to, id);
         return true;
     }
 
-    function safeMint(address to, uint256 id)
-        public
-        override
-        onlyMinter
-        returns (bool)
-    {
+    function safeMint(
+        address to,
+        uint256 id
+    ) public override onlyMinter returns (bool) {
         require(QuadKey.valid(id), "Id not valid");
         _safeMint(to, id);
         emit SafeMinted(to, id);
         return true;
     }
 
-    function data(uint256 id, uint256 slot)
-        public
-        view
-        override
-        returns (uint256)
-    {
+    function data(
+        uint256 id,
+        uint256 slot
+    ) public view override returns (uint256) {
         return _getData(id, slot);
     }
 
@@ -139,12 +130,10 @@ contract XyoWorldGeotokens is
         return result;
     }
 
-    function balanceErc20(uint256 id, IERC20 token)
-        public
-        view
-        override
-        returns (uint256)
-    {
+    function balanceErc20(
+        uint256 id,
+        IERC20 token
+    ) public view override returns (uint256) {
         return _balanceErc20(id, token);
     }
 
@@ -180,7 +169,7 @@ contract XyoWorldGeotokens is
         uint8 childrenExist = 0;
         for (uint8 i = 0; i < 4; i++) {
             uint256 childId = QuadKey.child(id, i);
-            if (_exists(childId)) {
+            if (exists(childId)) {
                 childrenExist += 1;
             }
         }
