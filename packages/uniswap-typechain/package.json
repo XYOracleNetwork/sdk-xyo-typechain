@@ -25,8 +25,8 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@typechain/ethers-v5": "^10.2.1",
-    "@xylabs/ts-scripts-yarn3": "^3.1.13",
+    "@typechain/ethers-v5": "^11.1.2",
+    "@xylabs/ts-scripts-yarn3": "^3.2.2",
     "ethers": "^5.7.2",
     "rimraf": "^5.0.5",
     "typechain": "^8.3.2",
