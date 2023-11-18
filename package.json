@@ -40,7 +40,7 @@
     "typescript": "^5.2.2"
   },
   "resolutions": {
-    "solc": "0.8.20"
+    "solc": "0.8.23"
   },
   "exports": {
     ".": {

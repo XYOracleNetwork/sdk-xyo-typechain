@@ -12398,6 +12398,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"n@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "n@npm:9.2.0"
+  bin:
+    n: bin/n
+  checksum: 273bfea765304851d87474b8001af6291445d02e0786575e488f128764d94aa2c5a7e1fc8902b9dca0687189bb2169b42dd481ed4af27be7cb90c102aeb86026
+  conditions: "!os=win32"
+  languageName: node
+  linkType: hard
+
 "nano-base32@npm:^1.0.1":
   version: 1.0.1
   resolution: "nano-base32@npm:1.0.1"
@@ -16830,20 +16840,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:0.8.20":
-  version: 0.8.20
-  resolution: "solc@npm:0.8.20"
+"solc@npm:0.8.23":
+  version: 0.8.23
+  resolution: "solc@npm:0.8.23"
   dependencies:
     command-exists: ^1.2.8
     commander: ^8.1.0
     follow-redirects: ^1.12.1
     js-sha3: 0.8.0
     memorystream: ^0.3.1
+    n: ^9.2.0
     semver: ^5.5.0
     tmp: 0.0.33
   bin:
     solcjs: solc.js
-  checksum: 8ff85f5e4aeda2018a97d1383284ed982ccc93fe528e1e78e3a8897e8da69848c7d44a8b1562e2ca9082b72c7a547827543eda6bcb12210e6a191e9e64baa5c8
+  checksum: aded3d9b7db2a465c471cfd90522ce87a2a7d110c4820a66dcf80857ac2a7421d6168793b5ae17826ba8d005219af1f36f2ad6ab5574e7cabd9f72bbba3150d2
   languageName: node
   linkType: hard
 
