@@ -15,10 +15,10 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     mapping(address => uint256) private _pending;
 
     //the source ERC20 to be used
-    IERC20 private immutable _source;
+    IERC20 private immutable _sourceToken;
 
     //the target ERC20 to be used
-    IERC20 private immutable _target;
+    IERC20 private immutable _targetToken;
 
     uint256 private _pendingTotal;
 
@@ -32,47 +32,49 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     bool private immutable _fractional;
 
     constructor(
-        IERC20 sourceToken,
-        IERC20 targetToken,
+        IERC20 sourceTokenAddress,
+        IERC20 targetTokenAddress,
         uint256 frequency,
         uint256 ratio,
         bool fractional
     ) {
-        _source = sourceToken;
-        _target = targetToken;
+        _sourceToken = sourceTokenAddress;
+        _targetToken = targetTokenAddress;
         _frequency = frequency;
         _ratio = ratio;
         _fractional = fractional;
         _pendingTotal = 0;
     }
 
-    function source() external view returns (IERC20) {
-        return _source;
+    function sourceToken() external view returns (IERC20) {
+        return _sourceToken;
     }
 
-    function target() external view returns (IERC20) {
-        return _target;
+    function targetToken() external view returns (IERC20) {
+        return _targetToken;
     }
 
     function stake(uint256 amount) external returns (uint256) {
-        return _depositErc20(uint256(uint160(msg.sender)), _source, amount);
+        return
+            _depositErc20(uint256(uint160(msg.sender)), _sourceToken, amount);
     }
 
     function unstake(uint256 amount) external returns (uint256) {
-        return _withdrawErc20(uint256(uint160(msg.sender)), _source, amount);
+        return
+            _withdrawErc20(uint256(uint160(msg.sender)), _sourceToken, amount);
     }
 
     function unstakeAll() external returns (uint256) {
         return
             _withdrawErc20(
                 uint256(uint160(msg.sender)),
-                _source,
+                _sourceToken,
                 _sourceBalance()
             );
     }
 
     function _deposit(uint256 amount) internal returns (uint256) {
-        _target.safeTransferFrom(msg.sender, address(this), amount);
+        _targetToken.safeTransferFrom(msg.sender, address(this), amount);
         return amount;
     }
 
@@ -81,7 +83,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function _withdraw(uint256 amount) internal returns (uint256) {
-        _target.safeTransfer(msg.sender, amount);
+        _targetToken.safeTransfer(msg.sender, amount);
         _pendingTotal = _pendingTotal - amount;
         return amount;
     }
@@ -99,7 +101,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function _sourceBalance() internal view returns (uint256) {
-        return _balanceErc20(uint256(uint160(msg.sender)), _source);
+        return _balanceErc20(uint256(uint160(msg.sender)), _sourceToken);
     }
 
     function targetBalance() external view returns (uint256) {
@@ -107,7 +109,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function _targetBalance() internal view returns (uint256) {
-        return _balanceErc20(uint256(uint160(msg.sender)), _target);
+        return _balanceErc20(uint256(uint160(msg.sender)), _targetToken);
     }
 
     function targetBalanceFor(address addr) external view returns (uint256) {
@@ -115,7 +117,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function _targetBalanceFor(address addr) internal view returns (uint256) {
-        return _balanceErc20(uint256(uint160(addr)), _target);
+        return _balanceErc20(uint256(uint160(addr)), _targetToken);
     }
 
     function _blocksPassed() internal view returns (uint256) {
@@ -135,7 +137,7 @@ contract UniGenPair is IUniGenPair, Erc20Store {
     }
 
     function available() external view returns (uint256) {
-        return _target.balanceOf(address(this));
+        return _targetToken.balanceOf(address(this));
     }
 
     function generate() external returns (uint256) {

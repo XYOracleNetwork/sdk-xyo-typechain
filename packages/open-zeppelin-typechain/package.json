@@ -24,9 +24,9 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@typechain/ethers-v5": "^11.1.2",
+    "@typechain/ethers-v6": "^0.5.1",
     "@xylabs/ts-scripts-yarn3": "^3.2.2",
-    "ethers": "^5.7.2",
+    "ethers": "^6.8.1",
     "rimraf": "^5.0.5",
     "typechain": "^8.3.2",
     "typescript": "^5.2.2"
@@ -57,7 +57,7 @@
     "package-clean": "rimraf dist && rimraf src",
     "package-compile": "yarn generate:sdk && yarn compile:sdk",
     "package-recompile": "yarn package-clean && yarn package-compile",
-    "generate:sdk": "typechain --out-dir=./src --target=ethers-v5 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
+    "generate:sdk": "typechain --out-dir=./src --target=ethers-v6 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
     "compile:sdk": "yarn package-compile-only",
     "lint-pkg": "npmPkgJsonLint ."
   },

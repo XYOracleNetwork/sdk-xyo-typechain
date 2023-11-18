@@ -1,10 +1,7 @@
 ignores: [
   "@xylabs/tsconfig",
-  "@typechain/ethers-v5",
+  "@typechain/ethers-v6",
   "@types/jest",
-  "@ethersproject/abi",
-  "@ethersproject/bytes",
-  "@ethersproject/providers",
   "@typescript-eslint/parser",
   "@typescript-eslint/eslint-plugin",
   "eslint-import-resolver-typescript",

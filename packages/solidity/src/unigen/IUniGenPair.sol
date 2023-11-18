@@ -7,10 +7,10 @@ import "../erc20/contracts/Erc20Store.sol";
 
 interface IUniGenPair {
     /* Address of the source token */
-    function source() external returns (IERC20);
+    function sourceToken() external returns (IERC20);
 
     /* Address of the target token */
-    function target() external returns (IERC20);
+    function targetToken() external returns (IERC20);
 
     /* Stake source tokens from caller's account */
     function stake(uint256 amount) external returns (uint256);
