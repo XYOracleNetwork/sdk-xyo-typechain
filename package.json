@@ -59,10 +59,17 @@
   },
   "sideEffects": false,
   "scripts": {
+    "build": "yarn xy clean && yarn compile",
     "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
-    "deploy": "yarn xy clean && yarn compile && yarn workspaces foreach --all version patch --deferred && yarn version apply --all && workspaces foreach -pt npm publish"
+    "deploy": "yarn deploy-patch",
+    "deploy-major": "yarn workspaces foreach --all version major --deferred && yarn deploy-common",
+    "deploy-minor": "yarn workspaces foreach --all version minor --deferred && yarn deploy-common",
+    "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common",
+    "deploy-common": "yarn build && yarn version apply --all && yarn workspaces foreach -pAtv npm publish",
+    "deploy-next-major": "yarn workspaces foreach --all version major --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
+    "deploy-next": "yarn workspaces foreach --all version minor --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next"
   },
-  "version": "3.0.2",
+  "version": "3.0.5",
   "packageManager": "yarn@4.0.2",
   "volta": {
     "node": "20.9.0",
