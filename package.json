@@ -1,6 +1,7 @@
 {
   "name": "@xyo-network/sdk-xyo-typechain",
   "dependencies": {
+    "@xyo-network/open-zeppelin-typechain": "workspace:~",
     "@xyo-network/typechain": "workspace:~",
     "@xyo-network/uniswap-typechain": "workspace:~",
     "@xyo-network/world-typechain": "workspace:~"
@@ -24,21 +25,18 @@
   ],
   "devDependencies": {
     "@types/jest": "^29.5.8",
-    "@typescript-eslint/eslint-plugin": "^6.11.0",
-    "@typescript-eslint/parser": "^6.11.0",
-    "@xylabs/eslint-config": "3.2.2",
-    "@xylabs/ts-scripts-yarn3": "^3.2.2",
-    "@xylabs/tsconfig": "^3.2.2",
+    "@typescript-eslint/eslint-plugin": "^6.12.0",
+    "@typescript-eslint/parser": "^6.12.0",
+    "@xylabs/eslint-config": "3.2.7",
+    "@xylabs/ts-scripts-yarn3": "^3.2.7",
+    "@xylabs/tsconfig": "^3.2.7",
     "eslint": "^8.54.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-import": "^2.29.0",
     "jest": "^29.7.0",
+    "solc": "0.8.23",
     "typescript": "^5.2.2"
-  },
-  "resolutions": {
-    "ethers": "^6.8.1",
-    "solc": "0.8.23"
   },
   "exports": {
     ".": {
@@ -61,13 +59,14 @@
   },
   "sideEffects": false,
   "scripts": {
-    "deploy": "yarn xy clean && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn version apply --all && workspaces foreach -pt npm publish"
+    "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
+    "deploy": "yarn xy clean && yarn compile && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn version apply --all && workspaces foreach -pt npm publish"
   },
-  "version": "3.0.0",
-  "packageManager": "yarn@3.5.0",
+  "version": "3.0.1",
+  "packageManager": "yarn@4.0.2",
   "volta": {
-    "node": "18.13.0",
-    "yarn": "3.4.1"
+    "node": "20.9.0",
+    "yarn": "4.0.2"
   },
   "type": "module"
 }

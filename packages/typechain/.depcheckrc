@@ -1,5 +1,4 @@
 ignores: [
-  "@xyo-network/solidity",
   "@xylabs/tsconfig",
   "@typechain/ethers-v6",
   "ethers",

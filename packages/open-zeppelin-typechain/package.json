@@ -1,7 +1,6 @@
 {
   "name": "@xyo-network/open-zeppelin-typechain",
   "dependencies": {
-    "@xyo-network/solidity": "workspace:~",
     "ethers": "^6.8.1"
   },
   "author": {
@@ -22,7 +21,7 @@
   ],
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^3.2.2",
+    "@xylabs/ts-scripts-yarn3": "^3.2.7",
     "ethers": "^6.8.1",
     "rimraf": "^5.0.5",
     "typechain": "^8.3.2",
@@ -52,13 +51,12 @@
   "license": "LGPL-3.0-only",
   "scripts": {
     "package-clean": "rimraf dist && rimraf src",
-    "package-compile": "yarn generate:sdk && yarn compile:sdk",
+    "package-compile": "yarn generate:sdk && yarn package-compile-only",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "generate:sdk": "typechain --out-dir=./src --target=ethers-v6 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
-    "compile:sdk": "yarn package-compile-only",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
-  "version": "3.0.0",
+  "version": "3.0.1",
   "type": "module"
 }
