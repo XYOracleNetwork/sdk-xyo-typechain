@@ -1,11 +1,8 @@
 {
   "name": "@xyo-network/typechain",
   "dependencies": {
-    "@ethersproject/abi": "^5.7.0",
-    "@ethersproject/bytes": "^5.7.0",
-    "@ethersproject/contracts": "^5.7.0",
-    "@ethersproject/providers": "^5.7.2",
-    "@xyo-network/solidity": "workspace:~"
+    "@xyo-network/solidity": "workspace:~",
+    "ethers": "^6.8.1"
   },
   "author": {
     "email": "support@xyo.network",

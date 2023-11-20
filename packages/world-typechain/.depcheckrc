@@ -1,11 +1,7 @@
 ignores: [
   "@xyo-network/world-solidity",
   "@xylabs/tsconfig",
-  "@typechain/ethers-v5",
-  "@ethersproject/abi",
-  "@ethersproject/bytes",
-  "@ethersproject/providers",
-  "@ethersproject/contracts",
+  "@typechain/ethers-v6",
   "ethers",
   "rimraf"
 ]
