@@ -37,6 +37,7 @@
     "typescript": "^5.2.2"
   },
   "resolutions": {
+    "ethers": "^6.8.1",
     "solc": "0.8.23"
   },
   "exports": {
