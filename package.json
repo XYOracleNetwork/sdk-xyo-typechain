@@ -60,9 +60,9 @@
   "sideEffects": false,
   "scripts": {
     "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
-    "deploy": "yarn xy clean && yarn compile && yarn workspaces foreach --all version patch --deferred && yarn xy build && yarn version apply --all && workspaces foreach -pt npm publish"
+    "deploy": "yarn xy clean && yarn compile && yarn workspaces foreach --all version patch --deferred && yarn version apply --all && workspaces foreach -pt npm publish"
   },
-  "version": "3.0.1",
+  "version": "3.0.2",
   "packageManager": "yarn@4.0.2",
   "volta": {
     "node": "20.9.0",
