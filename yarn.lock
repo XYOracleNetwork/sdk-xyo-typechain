@@ -3449,9 +3449,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config@npm:3.2.7":
-  version: 3.2.7
-  resolution: "@xylabs/eslint-config@npm:3.2.7"
+"@xylabs/eslint-config@npm:3.2.8":
+  version: 3.2.8
+  resolution: "@xylabs/eslint-config@npm:3.2.8"
   dependencies:
     "@typescript-eslint/eslint-plugin": "npm:^6.11.0"
     "@typescript-eslint/parser": "npm:^6.11.0"
@@ -3474,7 +3474,7 @@ __metadata:
     typescript: "npm:^5.2.2"
   peerDependencies:
     eslint: ^8.23.0
-  checksum: b05941af26a5a741b52a2e38615efe9f46df22f3adbfd6977ff32d8ee5285d5cec4fdde13e7e2442540e7f8130073200b2b0a1a7432c86aae29c81759b50609d
+  checksum: 023d1f8c54e64363787fd72d033ee29dc560c13be69ee14a26504152af41f15ceca5d05bd49121eebbcb9ebdf7ce29791df026456adb5f18ed78db53a29f532d
   languageName: node
   linkType: hard
 
@@ -3608,7 +3608,7 @@ __metadata:
     "@types/jest": "npm:^29.5.8"
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
-    "@xylabs/eslint-config": "npm:3.2.7"
+    "@xylabs/eslint-config": "npm:3.2.8"
     "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
     "@xylabs/tsconfig": "npm:^3.2.7"
     "@xyo-network/open-zeppelin-typechain": "workspace:~"
