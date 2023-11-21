@@ -3478,9 +3478,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^3.2.7":
-  version: 3.2.7
-  resolution: "@xylabs/ts-scripts-yarn3@npm:3.2.7"
+"@xylabs/ts-scripts-yarn3@npm:^3.2.8":
+  version: 3.2.8
+  resolution: "@xylabs/ts-scripts-yarn3@npm:3.2.8"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^25.0.7"
     "@rollup/plugin-json": "npm:^6.0.1"
@@ -3489,7 +3489,7 @@ __metadata:
     "@types/yargs": "npm:^17.0.31"
     "@typescript-eslint/eslint-plugin": "npm:^6.11.0"
     "@typescript-eslint/parser": "npm:^6.11.0"
-    "@xylabs/tsconfig": "npm:~3.2.7"
+    "@xylabs/tsconfig": "npm:~3.2.8"
     async-mutex: "npm:^0.4.0"
     chalk: "npm:^4.1.2"
     cosmiconfig: "npm:^8.3.6"
@@ -3577,14 +3577,21 @@ __metadata:
     xy: dist/bin/xy.js
     xy-ts: src/bin/xy-ts.ts
     yarn3only: dist/bin/yarn3only.js
-  checksum: b7338c58fdad373b07375a60a01ace8fa68a9f68a2fd9898f4ac03a48ef13bba3b2045ea2bd3947cd90ba642684cdd9e0f5a17b41c4fd9eaf30fefcfe9464b45
+  checksum: 944f8ff94603a0e6c3b8760f38da70683480a4406b3a764f98382b7f2c580a0aadd55d9dfd82aa6e2aa9b21b90322176175f3ac22876fad3c82a7ba1741adf54
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^3.2.7, @xylabs/tsconfig@npm:~3.2.7":
+"@xylabs/tsconfig@npm:^3.2.7":
   version: 3.2.7
   resolution: "@xylabs/tsconfig@npm:3.2.7"
   checksum: 38c49f37510a89b67a1a74d2cf791f93e632be345260649bd4200c147a04d9b1f64044be39043e0988dafa454b171447168583b93a6a4dfa81a4284e9893791d
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.2.8":
+  version: 3.2.8
+  resolution: "@xylabs/tsconfig@npm:3.2.8"
+  checksum: 6e12d477f33304c53d1d69b5e5efc0d15018d58ded99f2b0e078bd6d6e86b0e1b4be8d40b4ffbd3fddf54dad3219860f5d17e7e07c4585bb73e9299e530ed47c
   languageName: node
   linkType: hard
 
@@ -3593,7 +3600,7 @@ __metadata:
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
@@ -3609,7 +3616,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
     "@xylabs/eslint-config": "npm:3.2.7"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     "@xylabs/tsconfig": "npm:^3.2.7"
     "@xyo-network/open-zeppelin-typechain": "workspace:~"
     "@xyo-network/typechain": "workspace:~"
@@ -3630,7 +3637,7 @@ __metadata:
   resolution: "@xyo-network/solidity@workspace:packages/solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.0.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     rimraf: "npm:^5.0.5"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3641,7 +3648,7 @@ __metadata:
   resolution: "@xyo-network/typechain@workspace:packages/typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
@@ -3654,7 +3661,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
     "@uniswap/v3-core": "npm:^1.0.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     copyfiles: "npm:^2.4.1"
     rimraf: "npm:^5.0.5"
     truffle: "npm:^5.11.5"
@@ -3666,7 +3673,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     "@xyo-network/uniswap-solidity": "workspace:~"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
@@ -3680,7 +3687,7 @@ __metadata:
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.0.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     rimraf: "npm:^5.0.5"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3691,7 +3698,7 @@ __metadata:
   resolution: "@xyo-network/world-typechain@workspace:packages/world-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.8"
     "@xyo-network/world-solidity": "workspace:~"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
