@@ -2217,9 +2217,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-android-arm-eabi@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-android-arm-eabi@npm:4.5.1"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-android-arm64@npm:4.5.0":
   version: 4.5.0
   resolution: "@rollup/rollup-android-arm64@npm:4.5.0"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-android-arm64@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-android-arm64@npm:4.5.1"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
@@ -2231,9 +2245,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-darwin-arm64@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-darwin-arm64@npm:4.5.1"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-darwin-x64@npm:4.5.0":
   version: 4.5.0
   resolution: "@rollup/rollup-darwin-x64@npm:4.5.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-darwin-x64@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-darwin-x64@npm:4.5.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
@@ -2245,9 +2273,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-linux-arm-gnueabihf@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-linux-arm-gnueabihf@npm:4.5.1"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-linux-arm64-gnu@npm:4.5.0":
   version: 4.5.0
   resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.5.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-arm64-gnu@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-linux-arm64-gnu@npm:4.5.1"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
@@ -2259,9 +2301,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-linux-arm64-musl@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-linux-arm64-musl@npm:4.5.1"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-linux-x64-gnu@npm:4.5.0":
   version: 4.5.0
   resolution: "@rollup/rollup-linux-x64-gnu@npm:4.5.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-linux-x64-gnu@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-linux-x64-gnu@npm:4.5.1"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
@@ -2273,9 +2329,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-linux-x64-musl@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-linux-x64-musl@npm:4.5.1"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-win32-arm64-msvc@npm:4.5.0":
   version: 4.5.0
   resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.5.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-arm64-msvc@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-win32-arm64-msvc@npm:4.5.1"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
@@ -2287,9 +2357,23 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/rollup-win32-ia32-msvc@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-win32-ia32-msvc@npm:4.5.1"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
 "@rollup/rollup-win32-x64-msvc@npm:4.5.0":
   version: 4.5.0
   resolution: "@rollup/rollup-win32-x64-msvc@npm:4.5.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@rollup/rollup-win32-x64-msvc@npm:4.5.1":
+  version: 4.5.1
+  resolution: "@rollup/rollup-win32-x64-msvc@npm:4.5.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -3086,7 +3170,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^20.9.2":
+"@types/node@npm:*":
   version: 20.9.2
   resolution: "@types/node@npm:20.9.2"
   dependencies:
@@ -3113,6 +3197,15 @@ __metadata:
   version: 12.20.55
   resolution: "@types/node@npm:12.20.55"
   checksum: 1f916a06fff02faadb09a16ed6e31820ce170798b202ef0b14fc244bfbd721938c54a3a99836e185e4414ca461fe96c5bb5c67c3d248f153555b7e6347f061dd
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^20.9.4":
+  version: 20.9.4
+  resolution: "@types/node@npm:20.9.4"
+  dependencies:
+    undici-types: "npm:~5.26.4"
+  checksum: d567855b48e453b443499c17fc6c939d154732b54319a05b9b31db6e475e6458f053838635b201b1bb493d349d9b1af0aecc58b28fd6062e564e9fbf593199eb
   languageName: node
   linkType: hard
 
@@ -3234,7 +3327,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17.0.31, @types/yargs@npm:^17.0.8":
+"@types/yargs@npm:^17.0.32":
+  version: 17.0.32
+  resolution: "@types/yargs@npm:17.0.32"
+  dependencies:
+    "@types/yargs-parser": "npm:*"
+  checksum: 1e2b2673847011ce43607df690d392f137d95a2d6ea85aa319403eadda2ef4277365efd4982354d8843f2611ef3846c88599660aaeb537fa9ccddae83c2a89de
+  languageName: node
+  linkType: hard
+
+"@types/yargs@npm:^17.0.8":
   version: 17.0.31
   resolution: "@types/yargs@npm:17.0.31"
   dependencies:
@@ -3478,18 +3580,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^3.2.7":
-  version: 3.2.7
-  resolution: "@xylabs/ts-scripts-yarn3@npm:3.2.7"
+"@xylabs/ts-scripts-yarn3@npm:^3.2.10":
+  version: 3.2.10
+  resolution: "@xylabs/ts-scripts-yarn3@npm:3.2.10"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^25.0.7"
     "@rollup/plugin-json": "npm:^6.0.1"
     "@rollup/plugin-typescript": "npm:^11.1.5"
-    "@types/node": "npm:^20.9.2"
-    "@types/yargs": "npm:^17.0.31"
-    "@typescript-eslint/eslint-plugin": "npm:^6.11.0"
-    "@typescript-eslint/parser": "npm:^6.11.0"
-    "@xylabs/tsconfig": "npm:~3.2.7"
+    "@types/node": "npm:^20.9.4"
+    "@types/yargs": "npm:^17.0.32"
+    "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
+    "@typescript-eslint/parser": "npm:^6.12.0"
+    "@xylabs/tsconfig": "npm:~3.2.10"
     async-mutex: "npm:^0.4.0"
     chalk: "npm:^4.1.2"
     cosmiconfig: "npm:^8.3.6"
@@ -3516,7 +3618,7 @@ __metadata:
     publint: "npm:^0.2.5"
     reflect-metadata: "npm:^0.1.13"
     rimraf: "npm:^4.4.1"
-    rollup: "npm:^4.5.0"
+    rollup: "npm:^4.5.1"
     rollup-plugin-exclude-dependencies-from-bundle: "npm:^1.1.23"
     rollup-plugin-node-externals: "npm:^6.1.2"
     supertest: "npm:^6.3.3"
@@ -3577,14 +3679,21 @@ __metadata:
     xy: dist/bin/xy.js
     xy-ts: src/bin/xy-ts.ts
     yarn3only: dist/bin/yarn3only.js
-  checksum: b7338c58fdad373b07375a60a01ace8fa68a9f68a2fd9898f4ac03a48ef13bba3b2045ea2bd3947cd90ba642684cdd9e0f5a17b41c4fd9eaf30fefcfe9464b45
+  checksum: 734085bd552a0e804e7525f628f071c1b105356b0e3d1146994bd2f2bd7544c7761497683eb037cde4570978dc3766c3ea08fac095ade99ecd4ef5378c2c7eb0
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^3.2.7, @xylabs/tsconfig@npm:~3.2.7":
+"@xylabs/tsconfig@npm:^3.2.7":
   version: 3.2.7
   resolution: "@xylabs/tsconfig@npm:3.2.7"
   checksum: 38c49f37510a89b67a1a74d2cf791f93e632be345260649bd4200c147a04d9b1f64044be39043e0988dafa454b171447168583b93a6a4dfa81a4284e9893791d
+  languageName: node
+  linkType: hard
+
+"@xylabs/tsconfig@npm:~3.2.10":
+  version: 3.2.10
+  resolution: "@xylabs/tsconfig@npm:3.2.10"
+  checksum: 17d3866c8220a2dbf3a29974934498992851165d2fa5192120cd106fdc76c2fbdd5988423ce98e87ae13f5c2e09a47cd457cbbb95b92aa344ab44dbc28624b5a
   languageName: node
   linkType: hard
 
@@ -3593,7 +3702,7 @@ __metadata:
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
@@ -3609,7 +3718,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^6.12.0"
     "@typescript-eslint/parser": "npm:^6.12.0"
     "@xylabs/eslint-config": "npm:3.2.7"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     "@xylabs/tsconfig": "npm:^3.2.7"
     "@xyo-network/open-zeppelin-typechain": "workspace:~"
     "@xyo-network/typechain": "workspace:~"
@@ -3630,7 +3739,7 @@ __metadata:
   resolution: "@xyo-network/solidity@workspace:packages/solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.0.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     rimraf: "npm:^5.0.5"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3641,7 +3750,7 @@ __metadata:
   resolution: "@xyo-network/typechain@workspace:packages/typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
@@ -3654,7 +3763,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
     "@uniswap/v3-core": "npm:^1.0.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     copyfiles: "npm:^2.4.1"
     rimraf: "npm:^5.0.5"
     truffle: "npm:^5.11.5"
@@ -3666,7 +3775,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     "@xyo-network/uniswap-solidity": "workspace:~"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
@@ -3680,7 +3789,7 @@ __metadata:
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.0.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     rimraf: "npm:^5.0.5"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3691,7 +3800,7 @@ __metadata:
   resolution: "@xyo-network/world-typechain@workspace:packages/world-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
+    "@xylabs/ts-scripts-yarn3": "npm:^3.2.10"
     "@xyo-network/world-solidity": "workspace:~"
     ethers: "npm:^6.8.1"
     rimraf: "npm:^5.0.5"
@@ -16716,7 +16825,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rollup@npm:^4.0.2, rollup@npm:^4.5.0":
+"rollup@npm:^4.0.2":
   version: 4.5.0
   resolution: "rollup@npm:4.5.0"
   dependencies:
@@ -16763,6 +16872,56 @@ __metadata:
   bin:
     rollup: dist/bin/rollup
   checksum: 71f058e5eb63b42db9b38a43c3feca3b77511d22f127639ea04c94b18d61211bc7da25599920f5b3ca64cf67b26c3661a666cff947d834107853f568fa1e2f48
+  languageName: node
+  linkType: hard
+
+"rollup@npm:^4.5.1":
+  version: 4.5.1
+  resolution: "rollup@npm:4.5.1"
+  dependencies:
+    "@rollup/rollup-android-arm-eabi": "npm:4.5.1"
+    "@rollup/rollup-android-arm64": "npm:4.5.1"
+    "@rollup/rollup-darwin-arm64": "npm:4.5.1"
+    "@rollup/rollup-darwin-x64": "npm:4.5.1"
+    "@rollup/rollup-linux-arm-gnueabihf": "npm:4.5.1"
+    "@rollup/rollup-linux-arm64-gnu": "npm:4.5.1"
+    "@rollup/rollup-linux-arm64-musl": "npm:4.5.1"
+    "@rollup/rollup-linux-x64-gnu": "npm:4.5.1"
+    "@rollup/rollup-linux-x64-musl": "npm:4.5.1"
+    "@rollup/rollup-win32-arm64-msvc": "npm:4.5.1"
+    "@rollup/rollup-win32-ia32-msvc": "npm:4.5.1"
+    "@rollup/rollup-win32-x64-msvc": "npm:4.5.1"
+    fsevents: "npm:~2.3.2"
+  dependenciesMeta:
+    "@rollup/rollup-android-arm-eabi":
+      optional: true
+    "@rollup/rollup-android-arm64":
+      optional: true
+    "@rollup/rollup-darwin-arm64":
+      optional: true
+    "@rollup/rollup-darwin-x64":
+      optional: true
+    "@rollup/rollup-linux-arm-gnueabihf":
+      optional: true
+    "@rollup/rollup-linux-arm64-gnu":
+      optional: true
+    "@rollup/rollup-linux-arm64-musl":
+      optional: true
+    "@rollup/rollup-linux-x64-gnu":
+      optional: true
+    "@rollup/rollup-linux-x64-musl":
+      optional: true
+    "@rollup/rollup-win32-arm64-msvc":
+      optional: true
+    "@rollup/rollup-win32-ia32-msvc":
+      optional: true
+    "@rollup/rollup-win32-x64-msvc":
+      optional: true
+    fsevents:
+      optional: true
+  bin:
+    rollup: dist/bin/rollup
+  checksum: dbbd4d7b8b0f6814d58b24149d2883ecdfbc2a35f8b206ff8d7d2a6e28666cb385bd0b340b338d70f9493455aafed3be6e7fc5273ff786713d4ac41d37480fb0
   languageName: node
   linkType: hard
 
