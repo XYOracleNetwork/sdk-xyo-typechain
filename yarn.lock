@@ -3594,7 +3594,7 @@ __metadata:
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
     "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
-    ethers: "npm:^6.8.1"
+    ethers: "npm:^6.9.0"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
     typescript: "npm:^5.2.2"
@@ -3642,7 +3642,7 @@ __metadata:
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
     "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
-    ethers: "npm:^6.8.1"
+    ethers: "npm:^6.9.0"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
     typescript: "npm:^5.2.2"
@@ -3668,7 +3668,7 @@ __metadata:
     "@typechain/ethers-v6": "npm:^0.5.1"
     "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
     "@xyo-network/uniswap-solidity": "workspace:~"
-    ethers: "npm:^6.8.1"
+    ethers: "npm:^6.9.0"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
     typescript: "npm:^5.2.2"
@@ -3693,7 +3693,7 @@ __metadata:
     "@typechain/ethers-v6": "npm:^0.5.1"
     "@xylabs/ts-scripts-yarn3": "npm:^3.2.7"
     "@xyo-network/world-solidity": "workspace:~"
-    ethers: "npm:^6.8.1"
+    ethers: "npm:^6.9.0"
     rimraf: "npm:^5.0.5"
     typechain: "npm:^8.3.2"
     typescript: "npm:^5.2.2"
@@ -7598,9 +7598,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^6.8.1":
-  version: 6.8.1
-  resolution: "ethers@npm:6.8.1"
+"ethers@npm:^6.9.0":
+  version: 6.9.0
+  resolution: "ethers@npm:6.9.0"
   dependencies:
     "@adraffy/ens-normalize": "npm:1.10.0"
     "@noble/curves": "npm:1.2.0"
@@ -7609,7 +7609,7 @@ __metadata:
     aes-js: "npm:4.0.0-beta.5"
     tslib: "npm:2.4.0"
     ws: "npm:8.5.0"
-  checksum: 22d17fb038fd48aa23d4c43f4b0a8c20aa1c74676724adb94b52f363f42044b7d14dfa086dd2f881f172f79fcb7108ff161e672e323dcebef9d9ed4d373f072f
+  checksum: a48f268aa934900d90e34fd6b607db3d774ce58c73d249697f68398afa673b483fda19c6fa91eb91784fdfbaa07eb4c753b245c2123c5d2072f8dc1897cd556d
   languageName: node
   linkType: hard
 
