@@ -26,7 +26,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.8",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
-    "@typescript-eslint/parser": "^6.12.0",
+    "@typescript-eslint/parser": "^6.13.2",
     "@xylabs/eslint-config": "3.2.7",
     "@xylabs/ts-scripts-yarn3": "^3.2.7",
     "@xylabs/tsconfig": "^3.2.7",
