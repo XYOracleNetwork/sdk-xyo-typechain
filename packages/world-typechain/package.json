@@ -21,7 +21,7 @@
   ],
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^3.2.7",
+    "@xylabs/ts-scripts-yarn3": "^3.2.29",
     "@xyo-network/world-solidity": "workspace:~",
     "ethers": "^6.8.1",
     "rimraf": "^5.0.5",
