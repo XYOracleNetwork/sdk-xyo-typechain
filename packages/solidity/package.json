@@ -1,7 +1,7 @@
 {
   "name": "@xyo-network/solidity",
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.0"
+    "@openzeppelin/contracts": "^5.0.1"
   },
   "author": {
     "email": "support@xyo.network",
@@ -20,7 +20,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^3.2.7",
+    "@xylabs/ts-scripts-yarn3": "^3.4.1",
     "rimraf": "^5.0.5",
     "truffle": "^5.11.5"
   },
