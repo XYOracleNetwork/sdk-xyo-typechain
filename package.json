@@ -1,10 +1,10 @@
 {
   "name": "@xyo-network/sdk-xyo-typechain",
   "dependencies": {
-    "@xyo-network/open-zeppelin-typechain": "workspace:~",
-    "@xyo-network/typechain": "workspace:~",
-    "@xyo-network/uniswap-typechain": "workspace:~",
-    "@xyo-network/world-typechain": "workspace:~"
+    "@xyo-network/open-zeppelin-typechain": "workspace:^",
+    "@xyo-network/typechain": "workspace:^",
+    "@xyo-network/uniswap-typechain": "workspace:^",
+    "@xyo-network/world-typechain": "workspace:^"
   },
   "author": {
     "email": "support@xyo.network",
@@ -25,35 +25,38 @@
   ],
   "devDependencies": {
     "@types/jest": "^29.5.12",
-    "@xylabs/eslint-config": "3.4.1",
-    "@xylabs/ts-scripts-yarn3": "^3.4.1",
-    "@xylabs/tsconfig": "^3.4.1",
-    "eslint": "^8.56.0",
+    "@xylabs/eslint-config": "3.15.13",
+    "@xylabs/ts-scripts-yarn3": "^3.15.13",
+    "@xylabs/tsconfig": "^3.15.13",
+    "eslint": "^9.8.0",
     "eslint-import-resolver-typescript": "^3.6.1",
-    "eslint-plugin-deprecation": "^2.0.0",
+    "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-import": "^2.29.1",
     "jest": "^29.7.0",
-    "solc": "0.8.24",
-    "typescript": "^5.3.3"
+    "solc": "0.8.26",
+    "typescript": "^5.5.4"
   },
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/node/index.js",
+        "import": "./dist/node/index.mjs",
         "require": "./dist/node/index.cjs"
       },
       "browser": {
-        "import": "./dist/browser/index.js",
+        "import": "./dist/browser/index.mjs",
         "require": "./dist/browser/index.cjs"
       }
     },
     "./package.json": "./package.json"
   },
   "main": "dist/node/index.cjs",
-  "module": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
   "types": "dist/node/index.d.ts",
   "publishConfig": {
     "access": "public"
+  },
+  "resolutions": {
+    "eslint": "^8"
   },
   "sideEffects": false,
   "scripts": {
@@ -68,7 +71,7 @@
     "deploy-next": "yarn workspaces foreach --all version minor --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next"
   },
   "version": "3.0.5",
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.3.1",
   "volta": {
     "node": "20.9.0",
     "yarn": "4.0.2"

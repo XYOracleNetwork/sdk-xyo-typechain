@@ -1,7 +1,7 @@
 {
   "name": "@xyo-network/world-typechain",
   "dependencies": {
-    "ethers": "^6.11.1"
+    "ethers": "^6.13.2"
   },
   "author": {
     "email": "support@xyo.network",
@@ -21,30 +21,30 @@
   ],
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^3.4.1",
-    "@xyo-network/world-solidity": "workspace:~",
-    "ethers": "^6.11.1",
-    "rimraf": "^5.0.5",
+    "@xylabs/ts-scripts-yarn3": "^3.15.13",
+    "@xyo-network/world-solidity": "workspace:^",
+    "ethers": "^6.13.2",
+    "rimraf": "^5.0.10",
     "typechain": "^8.3.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.5.4"
   },
   "docs": "dist/docs.json",
   "license": "LGPL-3.0-only",
   "exports": {
     ".": {
       "node": {
-        "import": "./dist/node/index.js",
+        "import": "./dist/node/index.mjs",
         "require": "./dist/node/index.cjs"
       },
       "browser": {
-        "import": "./dist/browser/index.js",
+        "import": "./dist/browser/index.mjs",
         "require": "./dist/browser/index.cjs"
       }
     },
     "./package.json": "./package.json"
   },
   "main": "dist/node/index.cjs",
-  "module": "dist/node/index.js",
+  "module": "dist/node/index.mjs",
   "types": "dist/node/index.d.ts",
   "publishConfig": {
     "access": "public"
@@ -53,7 +53,7 @@
     "package-clean": "rimraf dist && rimraf src",
     "package-compile": "yarn generate:sdk && yarn package-compile-only",
     "package-recompile": "yarn package-clean && yarn package-compile",
-    "generate:sdk": "typechain --out-dir=./src --target=ethers-v6 ../world-solidity/build/contracts/**/*.json",
+    "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../world-solidity/build/contracts/**/*.json",
     "lint-pkg": "npmPkgJsonLint ."
   },
   "sideEffects": false,
