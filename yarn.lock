@@ -3732,6 +3732,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/tsconfig@npm:^3.15.16":
+  version: 3.15.16
+  resolution: "@xylabs/tsconfig@npm:3.15.16"
+  checksum: 10/69f39d91a005a953eb0595e420b865a0fb192fda43da646d2a7dec29e7506c5d4ebc8e8cba85be3eb06a3a172e216921295a979922162216a1e892b8f5dc2667
+  languageName: node
+  linkType: hard
+
 "@xyo-network/open-zeppelin-typechain@workspace:^, @xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
@@ -3756,7 +3763,7 @@ __metadata:
     "@xylabs/eslint-config": "npm:3.15.13"
     "@xylabs/eslint-config-flat": "npm:^3.15.13"
     "@xylabs/ts-scripts-yarn3": "npm:^3.15.13"
-    "@xylabs/tsconfig": "npm:^3.15.13"
+    "@xylabs/tsconfig": "npm:^3.15.16"
     "@xyo-network/open-zeppelin-typechain": "workspace:^"
     "@xyo-network/typechain": "workspace:^"
     "@xyo-network/uniswap-typechain": "workspace:^"
