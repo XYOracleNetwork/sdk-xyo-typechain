@@ -3574,9 +3574,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config@npm:3.15.13":
-  version: 3.15.13
-  resolution: "@xylabs/eslint-config@npm:3.15.13"
+"@xylabs/eslint-config@npm:3.15.16":
+  version: 3.15.16
+  resolution: "@xylabs/eslint-config@npm:3.15.16"
   dependencies:
     "@stylistic/eslint-plugin": "npm:^2.6.1"
     "@typescript-eslint/eslint-plugin": "npm:^8.0.0"
@@ -3606,7 +3606,7 @@ __metadata:
   peerDependenciesMeta:
     eslint:
       optional: true
-  checksum: 10/6c8d112e0ea54f2aab55bf0515da536d4b6d12571e42f8786181c42b7a50391778fa8ae65d8cbfb2f6ac20695d49b2075e74aafce1cae33c3fea4ffb745b0807
+  checksum: 10/d3173cc7ada8dd28eb6745e1e7f5af8a9c847a8987ac16ac18c594e3c4784a61a3696eec98f617f8292b340c5b3d6f8ebda7be94cdd7be3265ff9aca46ebb065
   languageName: node
   linkType: hard
 
@@ -3753,7 +3753,7 @@ __metadata:
     "@types/jest": "npm:^29.5.12"
     "@typescript-eslint/eslint-plugin": "npm:^8.0.0"
     "@typescript-eslint/parser": "npm:^8.0.0"
-    "@xylabs/eslint-config": "npm:3.15.13"
+    "@xylabs/eslint-config": "npm:3.15.16"
     "@xylabs/eslint-config-flat": "npm:^3.15.13"
     "@xylabs/ts-scripts-yarn3": "npm:^3.15.13"
     "@xylabs/tsconfig": "npm:^3.15.13"
