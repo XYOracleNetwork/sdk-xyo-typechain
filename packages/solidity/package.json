@@ -20,7 +20,7 @@
     "packages/**/*"
   ],
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^3.15.13",
+    "@xylabs/ts-scripts-yarn3": "^3.15.16",
     "rimraf": "^5.0.10",
     "truffle": "^5.11.5"
   },
