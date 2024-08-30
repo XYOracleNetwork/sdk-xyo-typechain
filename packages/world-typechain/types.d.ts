@@ -1,6 +1,6 @@
 /* eslint-disable import/no-internal-modules */
-export type * from './dist/node/index.d.ts'
-export type * from './dist/node/common.d.ts'
+export * from './dist/node/index.d.ts'
+export * from './dist/node/common.d.ts'
 
 import type {
   AuctionStartedEvent,
