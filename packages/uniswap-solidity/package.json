@@ -1,40 +1,41 @@
 {
   "name": "@xyo-network/uniswap-solidity",
-  "dependencies": {
-    "@uniswap/v3-core": "^1.0.1"
-  },
-  "author": {
-    "email": "support@xyo.network",
-    "name": "XYO Development Team",
-    "url": "https://xyo.network"
-  },
+  "version": "3.2.0",
   "bugs": {
-    "email": "support@xyo.network",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues"
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
+    "email": "support@xyo.network"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
+  "license": "LGPL-3.0-only",
+  "author": {
+    "name": "XYO Development Team",
+    "email": "support@xyo.network",
+    "url": "https://xyo.network"
+  },
+  "sideEffects": false,
   "workspaces": [
     "packages/**/*"
   ],
+  "scripts": {
+    "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src",
+    "package-build": "yarn copy-contracts && truffle compile --config truffle-config.cjs",
+    "package-clean": "rimraf src && rimraf build",
+    "package-compile": "yarn copy-contracts && truffle compile --config truffle-config.cjs",
+    "package-recompile": "yarn package-clean && yarn package-compile"
+  },
+  "dependencies": {
+    "@uniswap/v3-core": "^1.0.1"
+  },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^3.15.13",
+    "@xylabs/ts-scripts-yarn3": "^4.0.7",
     "copyfiles": "^2.4.1",
     "rimraf": "^5.0.10",
     "truffle": "^5.11.5"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "license": "LGPL-3.0-only",
-  "scripts": {
-    "package-clean": "rimraf src && rimraf build",
-    "package-compile": "yarn copy-contracts && truffle compile --config truffle-config.cjs",
-    "package-recompile": "yarn package-clean && yarn package-compile",
-    "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src"
-  },
-  "sideEffects": false,
-  "version": "3.1.0"
+  }
 }

@@ -1,84 +1,83 @@
 {
   "name": "@xyo-network/sdk-xyo-typechain",
+  "version": "3.2.0",
+  "bugs": {
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
+    "email": "support@xyo.network"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
+  },
+  "license": "LGPL-3.0-or-later",
+  "author": {
+    "name": "XYO Development Team",
+    "email": "support@xyo.network",
+    "url": "https://xyo.network"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": {
+        "types": "./dist/node/index.d.ts",
+        "import": "./dist/node/index.mjs"
+      },
+      "browser": {
+        "types": "./dist/browser/index.d.ts",
+        "import": "./dist/browser/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "module": "dist/node/index.mjs",
+  "types": "dist/node/index.d.ts",
+  "workspaces": [
+    "packages/**/*"
+  ],
+  "scripts": {
+    "build": "yarn xy clean && yarn compile",
+    "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
+    "deploy": "yarn deploy-patch",
+    "deploy-common": "yarn build && yarn version apply --all && yarn workspaces foreach -pAtv npm publish",
+    "deploy-major": "yarn workspaces foreach --all version major --deferred && yarn deploy-common",
+    "deploy-minor": "yarn workspaces foreach --all version minor --deferred && yarn deploy-common",
+    "deploy-next": "yarn workspaces foreach --all version minor --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
+    "deploy-next-major": "yarn workspaces foreach --all version major --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
+    "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common"
+  },
   "dependencies": {
     "@xyo-network/open-zeppelin-typechain": "workspace:^",
     "@xyo-network/typechain": "workspace:^",
     "@xyo-network/uniswap-typechain": "workspace:^",
     "@xyo-network/world-typechain": "workspace:^"
   },
-  "author": {
-    "email": "support@xyo.network",
-    "name": "XYO Development Team",
-    "url": "https://xyo.network"
-  },
-  "bugs": {
-    "email": "support@xyo.network",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
-  },
-  "license": "LGPL-3.0-or-later",
-  "workspaces": [
-    "packages/**/*"
-  ],
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^2.6.1",
+    "@stylistic/eslint-plugin": "^2.7.1",
     "@types/jest": "^29.5.12",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "@xylabs/eslint-config": "3.15.13",
-    "@xylabs/eslint-config-flat": "^3.15.13",
-    "@xylabs/ts-scripts-yarn3": "^3.15.13",
-    "@xylabs/tsconfig": "^3.15.13",
-    "eslint": "^9.8.0",
-    "eslint-import-resolver-typescript": "^3.6.1",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "@xylabs/eslint-config": "3.15.16",
+    "@xylabs/eslint-config-flat": "^4.0.7",
+    "@xylabs/ts-scripts-yarn3": "^4.0.7",
+    "@xylabs/tsconfig": "^4.0.7",
+    "eslint": "^9.9.1",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-sonarjs": "^1.0.4",
+    "eslint-plugin-sonarjs": "^2.0.1",
     "eslint-plugin-workspaces": "^0.10.1",
     "jest": "^29.7.0",
     "solc": "0.8.26",
     "typescript": "^5.5.4"
   },
-  "exports": {
-    ".": {
-      "node": {
-        "import": "./dist/node/index.mjs",
-        "require": "./dist/node/index.cjs"
-      },
-      "browser": {
-        "import": "./dist/browser/index.mjs",
-        "require": "./dist/browser/index.cjs"
-      }
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/node/index.cjs",
-  "module": "dist/node/index.mjs",
-  "types": "dist/node/index.d.ts",
-  "publishConfig": {
-    "access": "public"
-  },
-  "sideEffects": false,
-  "scripts": {
-    "build": "yarn xy clean && yarn compile",
-    "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
-    "deploy": "yarn deploy-patch",
-    "deploy-major": "yarn workspaces foreach --all version major --deferred && yarn deploy-common",
-    "deploy-minor": "yarn workspaces foreach --all version minor --deferred && yarn deploy-common",
-    "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common",
-    "deploy-common": "yarn build && yarn version apply --all && yarn workspaces foreach -pAtv npm publish",
-    "deploy-next-major": "yarn workspaces foreach --all version major --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
-    "deploy-next": "yarn workspaces foreach --all version minor --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next"
-  },
-  "version": "3.1.0",
   "packageManager": "yarn@4.3.1",
   "volta": {
     "node": "20.9.0",
     "yarn": "4.0.2"
   },
-  "type": "module"
+  "publishConfig": {
+    "access": "public"
+  }
 }

@@ -1,61 +1,61 @@
 {
   "name": "@xyo-network/open-zeppelin-typechain",
-  "dependencies": {
-    "ethers": "^6.13.2"
-  },
-  "author": {
-    "email": "support@xyo.network",
-    "name": "XYO Development Team",
-    "url": "https://xyo.network"
-  },
+  "version": "3.2.0",
   "bugs": {
-    "email": "support@xyo.network",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues"
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
+    "email": "support@xyo.network"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
+  "license": "LGPL-3.0-only",
+  "author": {
+    "name": "XYO Development Team",
+    "email": "support@xyo.network",
+    "url": "https://xyo.network"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "node": {
+        "types": "./dist/node/index.d.ts",
+        "import": "./dist/node/index.mjs"
+      },
+      "browser": {
+        "types": "./dist/browser/index.d.ts",
+        "import": "./dist/browser/index.mjs"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "module": "dist/node/index.mjs",
+  "types": "./dist/node/index.d.ts",
   "workspaces": [
     "packages/**/*"
   ],
+  "scripts": {
+    "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
+    "lint-pkg": "npmPkgJsonLint .",
+    "package-build": "yarn generate:sdk && yarn package-compile-only",
+    "package-clean": "rimraf dist && rimraf src",
+    "package-compile": "yarn generate:sdk && yarn package-compile-only",
+    "package-recompile": "yarn package-clean && yarn package-compile"
+  },
+  "dependencies": {
+    "ethers": "^6.13.2"
+  },
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^3.15.13",
+    "@xylabs/ts-scripts-yarn3": "^4.0.7",
     "ethers": "^6.13.2",
     "rimraf": "^5.0.10",
     "typechain": "^8.3.2",
     "typescript": "^5.5.4"
   },
-  "docs": "dist/docs.json",
-  "exports": {
-    ".": {
-      "node": {
-        "import": "./dist/node/index.mjs",
-        "require": "./dist/node/index.cjs"
-      },
-      "browser": {
-        "import": "./dist/browser/index.mjs",
-        "require": "./dist/browser/index.cjs"
-      }
-    },
-    "./package.json": "./package.json"
-  },
-  "main": "dist/node/index.cjs",
-  "module": "dist/node/index.mjs",
-  "types": "./dist/browser/index.d.ts",
   "publishConfig": {
     "access": "public"
   },
-  "license": "LGPL-3.0-only",
-  "scripts": {
-    "package-clean": "rimraf dist && rimraf src",
-    "package-compile": "yarn generate:sdk && yarn package-compile-only",
-    "package-recompile": "yarn package-clean && yarn package-compile",
-    "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
-    "lint-pkg": "npmPkgJsonLint ."
-  },
-  "sideEffects": false,
-  "version": "3.1.0",
-  "type": "module"
+  "docs": "dist/docs.json"
 }

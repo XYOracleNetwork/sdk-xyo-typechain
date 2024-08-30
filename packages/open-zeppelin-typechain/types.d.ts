@@ -1,3 +1,2 @@
-/* eslint-disable import/no-internal-modules */
-export type * from './dist/node'
-export * from './dist/node/common'
+/* eslint-disable import-x/no-internal-modules */
+export type * from './dist/node/index.d.ts'

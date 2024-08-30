@@ -1,38 +1,39 @@
 {
   "name": "@xyo-network/world-solidity",
-  "dependencies": {
-    "@openzeppelin/contracts": "^5.0.2"
-  },
-  "author": {
-    "email": "support@xyo.network",
-    "name": "XYO Development Team",
-    "url": "https://xyo.network"
-  },
+  "version": "3.2.0",
   "bugs": {
-    "email": "support@xyo.network",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues"
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
+    "email": "support@xyo.network"
   },
-  "license": "LGPL-3.0-only",
   "repository": {
     "type": "git",
-    "url": "https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
+    "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
+  "license": "LGPL-3.0-only",
+  "author": {
+    "name": "XYO Development Team",
+    "email": "support@xyo.network",
+    "url": "https://xyo.network"
+  },
+  "sideEffects": false,
   "workspaces": [
     "packages/**/*"
   ],
+  "scripts": {
+    "package-build": "truffle compile --config truffle-config.cjs",
+    "package-clean": "rimraf build",
+    "package-compile": "truffle compile --config truffle-config.cjs",
+    "package-recompile": "yarn package-clean && yarn package-compile"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^3.15.13",
+    "@xylabs/ts-scripts-yarn3": "^4.0.7",
     "rimraf": "^5.0.10",
     "truffle": "^5.11.5"
   },
   "publishConfig": {
     "access": "public"
-  },
-  "scripts": {
-    "package-clean": "rimraf build",
-    "package-compile": "truffle compile --config truffle-config.cjs",
-    "package-recompile": "yarn package-clean && yarn package-compile"
-  },
-  "sideEffects": false,
-  "version": "3.1.0"
+  }
 }
