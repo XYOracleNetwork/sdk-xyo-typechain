@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/open-zeppelin-typechain",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -38,9 +38,9 @@
   "scripts": {
     "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
     "lint-pkg": "npmPkgJsonLint .",
-    "package-build": "yarn generate:sdk && yarn package-compile-only",
+    "package-build": "yarn generate:sdk && yarn package-build-only",
     "package-clean": "rimraf dist && rimraf src",
-    "package-compile": "yarn generate:sdk && yarn package-compile-only",
+    "package-compile": "yarn generate:sdk && yarn package-build-only",
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "dependencies": {
