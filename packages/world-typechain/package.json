@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/world-typechain",
-  "version": "3.2.1",
+  "version": "3.2.2",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -20,18 +20,28 @@
   "exports": {
     ".": {
       "node": {
-        "types": "./dist/node/index.d.ts",
+        "types": "./types.d.ts",
         "import": "./dist/node/index.mjs"
       },
       "browser": {
-        "types": "./dist/browser/index.d.ts",
+        "types": "./types.d.ts",
         "import": "./dist/browser/index.mjs"
+      }
+    },
+    "./common": {
+      "node": {
+        "types": "./dist/common.d.ts",
+        "import": "./dist/node/common.mjs"
+      },
+      "browser": {
+        "types": "./dist/common.d.ts",
+        "import": "./dist/browser/common.mjs"
       }
     },
     "./package.json": "./package.json"
   },
-  "module": "dist/node/index.mjs",
-  "types": "dist/node/index.d.ts",
+  "module": "./dist/node/index.mjs",
+  "types": "./types.d.ts",
   "workspaces": [
     "packages/**/*"
   ],
