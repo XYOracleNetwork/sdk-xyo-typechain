@@ -18,7 +18,8 @@ export default [
     ...typescriptConfig,
     rules: {
       ...typescriptConfig.rules,
-      '@typescript-eslint/consistent-type-imports': ['warn']
+      '@typescript-eslint/consistent-type-imports': ['warn'],
+      'unicorn/no-abusive-eslint-disable': ['off'],
     },
   },
   {
