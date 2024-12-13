@@ -116,7 +116,7 @@ contract StakedXyoChain is IStakedXyoChain, XyoChain, TransferStake {
             "Staking: stake has not been added"
         );
         require(
-            _accountStakes[msg.sender][slot].removeBlock == 0,
+            _accountStakes[msg.sender][slot].removeBlock > 0,
             "Staking: stake has already been removed"
         );
         require(
