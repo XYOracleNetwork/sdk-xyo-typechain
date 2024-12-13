@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/open-zeppelin-typechain",
-  "version": "3.2.3",
+  "version": "3.3.0",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
