@@ -1,4 +1,5 @@
 ignores: [
   "rimraf",
-  "@openzeppelin/contracts"
+  "@openzeppelin/contracts",
+  "@openzeppelin/contracts-upgradeable"
 ]

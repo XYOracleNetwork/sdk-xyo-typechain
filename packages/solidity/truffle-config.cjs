@@ -43,9 +43,7 @@ module.exports = {
   contracts_directory: './src',
 
   // Set default mocha options here, use special reporters etc.
-  mocha: {
-    // timeout: 100000
-  },
+  mocha: { /* timeout: 100000 */ },
 
   /**
    * Networks define how you connect to your ethereum client and let you set the
