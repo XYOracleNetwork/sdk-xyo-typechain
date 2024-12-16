@@ -17,7 +17,7 @@ interface IAddressStakingProperties {
 
     function pendingByStaker(address staker) external view returns (uint256);
 
-    function withdrawnByStalker(address staker) external view returns (uint256);
+    function withdrawnByStaker(address staker) external view returns (uint256);
 
     // ============ Volatile [By Address Staked] ============
     function activeByAddressStaked(

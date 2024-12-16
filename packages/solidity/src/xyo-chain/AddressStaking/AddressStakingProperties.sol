@@ -34,9 +34,7 @@ abstract contract AddressStakingProperties is
         return AddressStakingLibrary._calcPendingStake(_accountStakes[staker]);
     }
 
-    function withdrawnByStalker(
-        address staker
-    ) external view returns (uint256) {
+    function withdrawnByStaker(address staker) external view returns (uint256) {
         return
             AddressStakingLibrary._calcWithdrawnStake(_accountStakes[staker]);
     }
