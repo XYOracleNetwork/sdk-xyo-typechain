@@ -41,7 +41,7 @@
     "./package.json": "./package.json"
   },
   "module": "./dist/node/index.mjs",
-  "types": "./types/index.d.ts",
+  "types": "./index.d.ts",
   "workspaces": [
     "packages/**/*"
   ],
