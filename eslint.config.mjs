@@ -9,7 +9,7 @@ import {   typescriptConfig,
 
 export default [
   {
-    ignores: ['**/*/truffle-config.cjs', '.yarn/**', 'jest.config.cjs', '**/dist/**', 'dist', 'build/**', 'node_modules/**', 'public', '.storybook', 'storybook-static', 'eslint.config.mjs', '**/docs/**/*.js'],
+    ignores: ['**/*/truffle-config.cjs', '.yarn/**', '**/dist/**', 'dist', 'build/**', 'node_modules/**', 'public', '.storybook', 'storybook-static', 'eslint.config.mjs', '**/docs/**/*.js'],
   },
   unicornConfig,
   workspacesConfig,
