@@ -68,7 +68,7 @@
     "eslint-plugin-sonarjs": "^3.0.1",
     "eslint-plugin-workspaces": "^0.10.1",
     "solc": "0.8.28",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "packageManager": "yarn@4.5.3",
   "volta": {
