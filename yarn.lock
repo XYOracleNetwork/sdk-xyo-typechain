@@ -2717,12 +2717,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts-upgradeable@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "@openzeppelin/contracts-upgradeable@npm:5.1.0"
+"@openzeppelin/contracts-upgradeable@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@openzeppelin/contracts-upgradeable@npm:5.2.0"
   peerDependencies:
-    "@openzeppelin/contracts": 5.1.0
-  checksum: 10/f6897c8fec137c13f21f392e1b76a627e917ab60aa354cb1ca24e697c15c14d1407530cf8c1ba991a471d93edde3005b09a3ab940d578e72a895d1e7c708c84a
+    "@openzeppelin/contracts": 5.2.0
+  checksum: 10/202f8a0fe118d1b5b838867224b183b8fcef814e9e45c575deb99859a031ef89ca0e778f0e3cf14b18494d5b867bbe0c8ea9d064a4410c53afb20d7b470c7479
   languageName: node
   linkType: hard
 
@@ -4549,7 +4549,7 @@ __metadata:
   resolution: "@xyo-network/solidity@workspace:packages/solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.1.0"
-    "@openzeppelin/contracts-upgradeable": "npm:^5.1.0"
+    "@openzeppelin/contracts-upgradeable": "npm:^5.2.0"
     "@xylabs/ts-scripts-yarn3": "npm:^4.2.4"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
