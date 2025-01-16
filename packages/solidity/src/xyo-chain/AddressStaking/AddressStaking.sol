@@ -35,4 +35,10 @@ contract AddressStaking is
     function withdrawStake(uint256 slot) public returns (bool) {
         return _withdrawStake(slot, this.minWithdrawalBlocks());
     }
+
+    function getStake(
+        uint256 slot
+    ) public view returns (AddressStakingLibrary.Stake memory) {
+        return _getStake(slot);
+    }
 }
