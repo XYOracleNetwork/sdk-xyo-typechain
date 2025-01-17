@@ -37,8 +37,9 @@ contract AddressStaking is
     }
 
     function getStake(
+        address staker,
         uint256 slot
     ) public view returns (AddressStakingLibrary.Stake memory) {
-        return _getStake(slot);
+        return _getStake(staker, slot);
     }
 }

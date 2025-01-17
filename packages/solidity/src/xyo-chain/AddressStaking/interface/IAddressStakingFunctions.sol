@@ -11,6 +11,7 @@ interface IAddressStakingFunctions {
     function withdrawStake(uint256 slot) external returns (bool);
 
     function getStake(
+        address staker,
         uint256 slot
     ) external view returns (AddressStakingLibrary.Stake memory);
 }

@@ -96,8 +96,9 @@ abstract contract AddressStakingInternal is
     }
 
     function _getStake(
+        address staker,
         uint256 slot
     ) internal view returns (AddressStakingLibrary.Stake memory) {
-        return _accountStakes[msg.sender][slot];
+        return _accountStakes[staker][slot];
     }
 }
