@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/world-solidity",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
