@@ -10,6 +10,8 @@ contract XyoChain is IXyoChain {
     // The public key of the chain (must match the chain id)
     uint256 private __chainSigningPrivateKey;
 
+    uint256 private __firstBlockHash;
+
     // The chain id from which the chain is forked (zero if it is a genesis chain)
     address private __forkedChainId;
 
@@ -24,20 +26,23 @@ contract XyoChain is IXyoChain {
         uint256 _chainSigningPrivateKey,
         address _forkedChainId,
         uint256 _forkedAtLastBlockNumber,
-        uint256 _forkedAtLastHash
+        uint256 _forkedAtLastHash,
+        uint256 _firstBlockHash
     ) {
         __chainSigningAddress = _chainSigningAddress;
         __chainSigningPrivateKey = _chainSigningPrivateKey;
         __forkedChainId = _forkedChainId;
         __forkedAtBlockNumber = _forkedAtLastBlockNumber;
         __forkedAtHash = _forkedAtLastHash;
+        __firstBlockHash = _firstBlockHash;
         emit ChainCreated(
             address(this),
             _chainSigningAddress,
             _chainSigningPrivateKey,
             _forkedChainId,
             _forkedAtLastBlockNumber,
-            _forkedAtLastHash
+            _forkedAtLastHash,
+            _firstBlockHash
         );
     }
 
@@ -51,6 +56,10 @@ contract XyoChain is IXyoChain {
 
     function chainSigningPrivateKey() external view returns (uint256) {
         return __chainSigningPrivateKey;
+    }
+
+    function firstBlockHash() external view returns (uint256) {
+        return __firstBlockHash;
     }
 
     function forkedChainId() external view returns (address) {

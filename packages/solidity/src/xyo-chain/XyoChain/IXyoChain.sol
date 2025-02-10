@@ -8,6 +8,7 @@ interface IXyoChain {
     function forkedChainId() external view returns (address);
     function forkedAtBlockNumber() external view returns (uint256);
     function forkedAtHash() external view returns (uint256);
+    function firstBlockHash() external view returns (uint256);
 
     // This is when a chain is created
     event ChainCreated(
@@ -16,6 +17,7 @@ interface IXyoChain {
         uint256 chainSigningPrivateKey,
         address indexed forkedChainId,
         uint256 forkedAtLastBlockNumber,
-        uint256 forkedAtLastHash
+        uint256 forkedAtLastHash,
+        uint256 firstBlockHash
     );
 }
