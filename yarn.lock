@@ -4417,7 +4417,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.31.0"
     eslint-plugin-prettier: "npm:^5.2.3"
     eslint-plugin-simple-import-sort: "npm:^12.1.1"
-    eslint-plugin-sonarjs: "npm:^3.0.1"
+    eslint-plugin-sonarjs: "npm:^3.0.2"
     eslint-plugin-workspaces: "npm:^0.10.1"
     solc: "npm:0.8.28"
     typescript: "npm:^5.7.3"
@@ -7796,6 +7796,25 @@ __metadata:
   peerDependencies:
     eslint: ^8.0.0 || ^9.0.0
   checksum: 10/ffb04d1e010bb2dd21b5c80e40f138514f098ab7599ec9b6b19f7b980ab7828b4226fd96516bf0468264beea401496371b574a6dfb5ddcc2b95c183c3d86a843
+  languageName: node
+  linkType: hard
+
+"eslint-plugin-sonarjs@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "eslint-plugin-sonarjs@npm:3.0.2"
+  dependencies:
+    "@eslint-community/regexpp": "npm:4.12.1"
+    builtin-modules: "npm:3.3.0"
+    bytes: "npm:3.1.2"
+    functional-red-black-tree: "npm:1.0.1"
+    jsx-ast-utils: "npm:3.3.5"
+    minimatch: "npm:9.0.5"
+    scslre: "npm:0.3.0"
+    semver: "npm:7.7.1"
+    typescript: "npm:^5"
+  peerDependencies:
+    eslint: ^8.0.0 || ^9.0.0
+  checksum: 10/971ed06ff2a7f24c561f9be212f89764cec9e279f6d18157df69f7f49fff56b5f7259ea00cbfb16ad261d1ed0f1eb179dd46ba760f78f95cc2c95bff37737974
   languageName: node
   linkType: hard
 
@@ -16024,6 +16043,15 @@ __metadata:
   bin:
     semver: bin/semver.js
   checksum: 10/36b1fbe1a2b6f873559cd57b238f1094a053dbfd997ceeb8757d79d1d2089c56d1321b9f1069ce263dc64cfa922fa1d2ad566b39426fe1ac6c723c1487589e10
+  languageName: node
+  linkType: hard
+
+"semver@npm:7.7.1":
+  version: 7.7.1
+  resolution: "semver@npm:7.7.1"
+  bin:
+    semver: bin/semver.js
+  checksum: 10/4cfa1eb91ef3751e20fc52e47a935a0118d56d6f15a837ab814da0c150778ba2ca4f1a4d9068b33070ea4273629e615066664c2cfcd7c272caf7a8a0f6518b2c
   languageName: node
   linkType: hard
 
