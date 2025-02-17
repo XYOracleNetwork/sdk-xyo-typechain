@@ -6600,18 +6600,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-import-resolver-typescript@npm:3.7.0":
-  version: 3.7.0
-  resolution: "eslint-import-resolver-typescript@npm:3.7.0"
+"eslint-import-resolver-typescript@npm:3.8.0":
+  version: 3.8.0
+  resolution: "eslint-import-resolver-typescript@npm:3.8.0"
   dependencies:
     "@nolyfill/is-core-module": "npm:1.0.39"
     debug: "npm:^4.3.7"
     enhanced-resolve: "npm:^5.15.0"
-    fast-glob: "npm:^3.3.2"
-    get-tsconfig: "npm:^4.7.5"
+    get-tsconfig: "npm:^4.10.0"
     is-bun-module: "npm:^1.0.2"
-    is-glob: "npm:^4.0.3"
     stable-hash: "npm:^0.0.4"
+    tinyglobby: "npm:^0.2.10"
   peerDependencies:
     eslint: "*"
     eslint-plugin-import: "*"
@@ -6621,7 +6620,7 @@ __metadata:
       optional: true
     eslint-plugin-import-x:
       optional: true
-  checksum: 10/8158730c11e562c56ed9bf7236dc75bce35b6992dc32c39ac2f4177ab77fca97b95999850204a6458054243607b54aee88c028a61fed4184f24f425fa1afff01
+  checksum: 10/62d9b3dda939cf9abc56701a9ccba2f74e8bb1a203009118d57dd2fcc03603ad737078925b27eda56cf69ec0b1900a91aee8954cbdb8940ad726d395eb4fe8d6
   languageName: node
   linkType: hard
 
@@ -8109,7 +8108,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"get-tsconfig@npm:^4.7.3, get-tsconfig@npm:^4.7.5":
+"get-tsconfig@npm:^4.10.0, get-tsconfig@npm:^4.7.3":
   version: 4.10.0
   resolution: "get-tsconfig@npm:4.10.0"
   dependencies:
@@ -16077,7 +16076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.9":
+"tinyglobby@npm:^0.2.10, tinyglobby@npm:^0.2.9":
   version: 0.2.10
   resolution: "tinyglobby@npm:0.2.10"
   dependencies:
