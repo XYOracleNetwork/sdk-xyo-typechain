@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import "./XyoChain/XyoChain.sol";
 import "./AddressStaking/AddressStaking.sol";
+import "./XyoChain/BlockReward.sol";
 
 contract StakedXyoChain is XyoChain, AddressStaking {
     // ========== CONSTRUCTOR ==========
@@ -10,11 +11,7 @@ contract StakedXyoChain is XyoChain, AddressStaking {
     constructor(
         address _chainSigningAddress, // The address of the privateKey supplied
         uint256 _chainSigningPrivateKey, // The private key that is used to cosign the chain for continuity in XYO
-        uint256 _initialReward,
-        uint256 _stepSize,
-        uint256 _stepFactorNumerator,
-        uint256 _stepFactorDenominator,
-        uint256 _minRewardPerBlock,
+        BlockReward.Config memory _blockRewardConfig,
         address _forkFromChainId, // The chain id from which the chain is forked (zero if it is a genesis chain)
         uint256 _forkFromLastBlockNumber,
         uint256 _forkFromLastHash,
@@ -24,11 +21,7 @@ contract StakedXyoChain is XyoChain, AddressStaking {
         XyoChain(
             _chainSigningAddress,
             _chainSigningPrivateKey,
-            _initialReward,
-            _stepSize,
-            _stepFactorNumerator,
-            _stepFactorDenominator,
-            _minRewardPerBlock,
+            _blockRewardConfig,
             _forkFromChainId,
             _forkFromLastBlockNumber,
             _forkFromLastHash

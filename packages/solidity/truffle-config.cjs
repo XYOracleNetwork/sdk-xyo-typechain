@@ -28,7 +28,8 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      version: '0.8.23', // Fetch exact version from solc-bin (default: truffle's version)
+      version: '0.8.28', // Fetch exact version from solc-bin (default: truffle's version)
+      /*
       settings: {
         viaIR: true, // Enable viaIR (default: false)
       },
@@ -37,6 +38,7 @@ module.exports = {
         runs: 200
       },
       evmVersion: "london"
+      */
     },
   },
 
