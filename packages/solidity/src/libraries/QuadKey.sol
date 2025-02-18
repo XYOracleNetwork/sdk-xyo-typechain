@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 //each level is represented by two bits
-//the zoom of the key is defeined by the first byte
+//the zoom of the key is defined by the first byte
 
 library QuadKey {
     uint256 constant QUADKEY_ZOOM_BYTE = 31;
