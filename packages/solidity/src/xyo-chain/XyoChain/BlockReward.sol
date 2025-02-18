@@ -12,7 +12,7 @@ library BlockReward {
 
     function calc(
         uint256 blockNumber,
-        Config calldata config
+        Config memory config
     ) public pure returns (uint256) {
         uint256 step = blockNumber / config.stepSize;
         uint256 poweredNumerator = config.stepFactorNumerator ** step;

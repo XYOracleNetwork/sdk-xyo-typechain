@@ -2,7 +2,6 @@
 pragma solidity ^0.8.20;
 
 import "./IXyoChain.sol";
-import "./BlockReward.sol";
 
 contract XyoChain is IXyoChain {
     // The signing address (from _privateKey)
@@ -78,8 +77,23 @@ contract XyoChain is IXyoChain {
 
     function calcBlockRewardPure(
         uint256 blockNumber,
-        BlockReward.Config calldata config
+        BlockReward.Config memory config
     ) public pure returns (uint256) {
         return BlockReward.calc(blockNumber, config);
+    }
+
+    function calc(
+        uint256 blockNumber,
+        BlockRewardConfig memory config
+    ) internal pure returns (uint256) {
+        uint256 step = blockNumber / config.stepSize;
+        uint256 poweredNumerator = config.stepFactorNumerator ** step;
+        uint256 poweredDenominator = config.stepFactorDenominator ** step;
+        uint256 calcReward = (config.initialReward * poweredNumerator) /
+            poweredDenominator;
+        if (calcReward < config.minRewardPerBlock) {
+            return config.minRewardPerBlock;
+        }
+        return calcReward;
     }
 }

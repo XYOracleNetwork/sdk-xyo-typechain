@@ -2,6 +2,14 @@
 pragma solidity ^0.8.20;
 import "./BlockReward.sol";
 
+struct BlockRewardConfig {
+    uint256 initialReward;
+    uint256 stepSize;
+    uint256 stepFactorNumerator;
+    uint256 stepFactorDenominator;
+    uint256 minRewardPerBlock;
+}
+
 interface IXyoChain {
     function chainId() external view returns (address);
     function chainSigningAddress() external view returns (address);
