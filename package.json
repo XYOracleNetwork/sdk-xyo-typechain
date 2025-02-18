@@ -47,7 +47,7 @@
     "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common"
   },
   "resolutions": {
-    "eslint-import-resolver-typescript": "3.7.0"
+    "eslint-import-resolver-typescript": "3.8.1"
   },
   "dependencies": {
     "@xyo-network/open-zeppelin-typechain": "workspace:^",
@@ -64,7 +64,7 @@
     "@xylabs/ts-scripts-yarn3": "^5.0.24",
     "@xylabs/tsconfig": "^5.0.24",
     "eslint": "^9.20.1",
-    "eslint-import-resolver-typescript": "^3.8.0",
+    "eslint-import-resolver-typescript": "^3.8.1",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-simple-import-sort": "^12.1.1",
