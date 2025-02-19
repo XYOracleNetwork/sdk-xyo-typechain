@@ -7,6 +7,7 @@ struct BlockRewardConfig {
     uint256 stepFactorNumerator;
     uint256 stepFactorDenominator;
     uint256 minRewardPerBlock;
+    uint256 genesisReward;
 }
 
 interface IXyoChainRewards {
