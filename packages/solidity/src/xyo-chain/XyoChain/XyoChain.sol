@@ -19,12 +19,12 @@ contract XyoChain is IXyoChain {
     // The last hash from which the chain is forked (zero if it is a genesis chain)
     uint256 private __forkedAtHash;
 
-    BlockReward.Config private __blockRewardConfig;
+    BlockRewardConfig private __blockRewardConfig;
 
     constructor(
         address _chainSigningAddress,
         uint256 _chainSigningPrivateKey,
-        BlockReward.Config memory _blockRewardConfig,
+        BlockRewardConfig memory _blockRewardConfig,
         address _forkedChainId,
         uint256 _forkedAtLastBlockNumber,
         uint256 _forkedAtLastHash
@@ -72,17 +72,17 @@ contract XyoChain is IXyoChain {
     function calcBlockReward(
         uint256 blockNumber
     ) public view returns (uint256) {
-        return BlockReward.calc(blockNumber, __blockRewardConfig);
+        return internalBlockRewardCalc(blockNumber, __blockRewardConfig);
     }
 
     function calcBlockRewardPure(
         uint256 blockNumber,
-        BlockReward.Config memory config
+        BlockRewardConfig memory config
     ) public pure returns (uint256) {
-        return BlockReward.calc(blockNumber, config);
+        return internalBlockRewardCalc(blockNumber, config);
     }
 
-    function calc(
+    function internalBlockRewardCalc(
         uint256 blockNumber,
         BlockRewardConfig memory config
     ) internal pure returns (uint256) {

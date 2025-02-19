@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
-import "./BlockReward.sol";
 
 struct BlockRewardConfig {
     uint256 initialReward;
@@ -19,7 +18,7 @@ interface IXyoChain {
     function forkedAtHash() external view returns (uint256);
     function calcBlockRewardPure(
         uint256 blockNumber,
-        BlockReward.Config calldata config
+        BlockRewardConfig calldata config
     ) external pure returns (uint256);
 
     function calcBlockReward(
