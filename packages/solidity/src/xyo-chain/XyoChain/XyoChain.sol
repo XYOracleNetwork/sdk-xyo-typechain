@@ -2,6 +2,7 @@
 pragma solidity ^0.8.20;
 
 import "./IXyoChain.sol";
+import "./IXyoChainRewards.sol";
 
 contract XyoChain is IXyoChain {
     // The signing address (from _privateKey)
@@ -19,29 +20,30 @@ contract XyoChain is IXyoChain {
     // The last hash from which the chain is forked (zero if it is a genesis chain)
     uint256 private __forkedAtHash;
 
-    BlockRewardConfig private __blockRewardConfig;
+    IXyoChainRewards private __rewardsContract;
 
     constructor(
         address _chainSigningAddress,
         uint256 _chainSigningPrivateKey,
-        BlockRewardConfig memory _blockRewardConfig,
         address _forkedChainId,
         uint256 _forkedAtLastBlockNumber,
-        uint256 _forkedAtLastHash
+        uint256 _forkedAtLastHash,
+        IXyoChainRewards _rewardsContract
     ) {
         __chainSigningAddress = _chainSigningAddress;
         __chainSigningPrivateKey = _chainSigningPrivateKey;
-        __blockRewardConfig = _blockRewardConfig;
         __forkedChainId = _forkedChainId;
         __forkedAtBlockNumber = _forkedAtLastBlockNumber;
         __forkedAtHash = _forkedAtLastHash;
+        __rewardsContract = _rewardsContract;
         emit ChainCreated(
             address(this),
             _chainSigningAddress,
             _chainSigningPrivateKey,
             _forkedChainId,
             _forkedAtLastBlockNumber,
-            _forkedAtLastHash
+            _forkedAtLastHash,
+            _rewardsContract
         );
     }
 
@@ -69,31 +71,7 @@ contract XyoChain is IXyoChain {
         return __forkedAtHash;
     }
 
-    function calcBlockReward(
-        uint256 blockNumber
-    ) public view returns (uint256) {
-        return internalBlockRewardCalc(blockNumber, __blockRewardConfig);
-    }
-
-    function calcBlockRewardPure(
-        uint256 blockNumber,
-        BlockRewardConfig memory config
-    ) public pure returns (uint256) {
-        return internalBlockRewardCalc(blockNumber, config);
-    }
-
-    function internalBlockRewardCalc(
-        uint256 blockNumber,
-        BlockRewardConfig memory config
-    ) internal pure returns (uint256) {
-        uint256 step = blockNumber / config.stepSize;
-        uint256 poweredNumerator = config.stepFactorNumerator ** step;
-        uint256 poweredDenominator = config.stepFactorDenominator ** step;
-        uint256 calcReward = (config.initialReward * poweredNumerator) /
-            poweredDenominator;
-        if (calcReward < config.minRewardPerBlock) {
-            return config.minRewardPerBlock;
-        }
-        return calcReward;
+    function rewardsContract() external view returns (IXyoChainRewards) {
+        return __rewardsContract;
     }
 }
