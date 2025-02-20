@@ -2063,6 +2063,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stylistic/eslint-plugin@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "@stylistic/eslint-plugin@npm:4.0.1"
+  dependencies:
+    "@typescript-eslint/utils": "npm:^8.23.0"
+    eslint-visitor-keys: "npm:^4.2.0"
+    espree: "npm:^10.3.0"
+    estraverse: "npm:^5.3.0"
+    picomatch: "npm:^4.0.2"
+  peerDependencies:
+    eslint: ">=9.0.0"
+  checksum: 10/32616032e45e9166840828c3f4e041b16d425a7803c8cf9519798dbc522b6d8eca110749f62b90c3c5635c55a729ff4b0519604acf96ee12a90d2fe1cd6c5494
+  languageName: node
+  linkType: hard
+
 "@swc/core-darwin-arm64@npm:1.10.16":
   version: 1.10.16
   resolution: "@swc/core-darwin-arm64@npm:1.10.16"
@@ -3032,7 +3047,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/utils@npm:8.24.1, @typescript-eslint/utils@npm:^8.1.0, @typescript-eslint/utils@npm:^8.13.0":
+"@typescript-eslint/utils@npm:8.24.1, @typescript-eslint/utils@npm:^8.1.0, @typescript-eslint/utils@npm:^8.13.0, @typescript-eslint/utils@npm:^8.23.0":
   version: 8.24.1
   resolution: "@typescript-eslint/utils@npm:8.24.1"
   dependencies:
@@ -3416,7 +3431,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@xyo-network/sdk-xyo-typechain@workspace:."
   dependencies:
-    "@stylistic/eslint-plugin": "npm:^3.1.0"
+    "@stylistic/eslint-plugin": "npm:^4.0.1"
     "@typescript-eslint/eslint-plugin": "npm:^8.24.1"
     "@typescript-eslint/parser": "npm:^8.24.1"
     "@xylabs/eslint-config": "npm:3.15.16"
