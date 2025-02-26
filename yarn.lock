@@ -3226,9 +3226,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config-flat@npm:^5.0.24":
-  version: 5.0.24
-  resolution: "@xylabs/eslint-config-flat@npm:5.0.24"
+"@xylabs/eslint-config-flat@npm:^5.0.25":
+  version: 5.0.25
+  resolution: "@xylabs/eslint-config-flat@npm:5.0.25"
   dependencies:
     "@eslint/json": "npm:^0.10.0"
     "@stylistic/eslint-plugin": "npm:^3.1.0"
@@ -3244,7 +3244,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^56.0.1"
     eslint-plugin-workspaces: "npm:^0.10.1"
     jsonc-eslint-parser: "npm:^2.4.0"
-  checksum: 10/d3d648c4bcc15108fb72eb7885aa7748fd3e0a0adb08a093a856811227dfdfb6fdf1b13befa54c9ac0e60e210588d824c7db8449d0c0930b8cda38b3c98dc652
+  checksum: 10/736495b8b31b060c9d97b7f1879b7acaeabb1bfa54d49feb3d3ff702b80e1af96aa004a4d6386efcdd201f5f4e75f728bd370d30013437048f39cf568cde9867
   languageName: node
   linkType: hard
 
@@ -3420,7 +3420,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.24.1"
     "@typescript-eslint/parser": "npm:^8.24.1"
     "@xylabs/eslint-config": "npm:3.15.16"
-    "@xylabs/eslint-config-flat": "npm:^5.0.24"
+    "@xylabs/eslint-config-flat": "npm:^5.0.25"
     "@xylabs/ts-scripts-yarn3": "npm:^5.0.24"
     "@xylabs/tsconfig": "npm:^5.0.24"
     "@xyo-network/open-zeppelin-typechain": "workspace:^"
