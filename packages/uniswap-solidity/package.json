@@ -30,7 +30,7 @@
     "@uniswap/v3-core": "^1.0.1"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^5.0.24",
+    "@xylabs/ts-scripts-yarn3": "^5.0.25",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"
