@@ -56,7 +56,7 @@
     "@xyo-network/world-typechain": "workspace:^"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^3.1.0",
+    "@stylistic/eslint-plugin": "^4.1.0",
     "@typescript-eslint/eslint-plugin": "^8.24.1",
     "@typescript-eslint/parser": "^8.24.1",
     "@xylabs/eslint-config": "3.15.16",
