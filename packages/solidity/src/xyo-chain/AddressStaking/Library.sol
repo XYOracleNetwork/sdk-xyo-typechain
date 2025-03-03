@@ -56,7 +56,7 @@ library AddressStakingLibrary {
     function _calcActiveStake(
         AddressStakingLibrary.Stake[] memory stakes
     ) internal pure returns (uint256) {
-        uint total = 0;
+        uint256 total = 0;
         for (uint i = 0; i < stakes.length; i++) {
             total += _activeStakeAmount(stakes[i]);
         }
@@ -66,7 +66,7 @@ library AddressStakingLibrary {
     function _calcPendingStake(
         AddressStakingLibrary.Stake[] memory stakes
     ) internal pure returns (uint256) {
-        uint total = 0;
+        uint256 total = 0;
         for (uint i = 0; i < stakes.length; i++) {
             total += _pendingStakeAmount(stakes[i]);
         }
@@ -76,7 +76,7 @@ library AddressStakingLibrary {
     function _calcWithdrawnStake(
         AddressStakingLibrary.Stake[] memory stakes
     ) internal pure returns (uint256) {
-        uint total = 0;
+        uint256 total = 0;
         for (uint i = 0; i < stakes.length; i++) {
             total += _withdrawnStakeAmount(stakes[i]);
         }

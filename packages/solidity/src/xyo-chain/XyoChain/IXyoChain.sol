@@ -5,8 +5,6 @@ import "./IXyoChainRewards.sol";
 
 interface IXyoChain {
     function chainId() external view returns (address);
-    function chainSigningAddress() external view returns (address);
-    function chainSigningPrivateKey() external view returns (uint256);
     function forkedChainId() external view returns (address);
     function forkedAtBlockNumber() external view returns (uint256);
     function forkedAtHash() external view returns (uint256);
@@ -19,8 +17,6 @@ interface IXyoChain {
     // This is when a chain is created
     event ChainCreated(
         address indexed chainId,
-        address indexed chainSigningAddress,
-        uint256 chainSigningPrivateKey,
         address indexed forkedChainId,
         uint256 forkedAtLastBlockNumber,
         uint256 forkedAtLastHash,

@@ -5,12 +5,6 @@ import "./IXyoChain.sol";
 import "./IXyoChainRewards.sol";
 
 contract XyoChain is IXyoChain {
-    // The signing address (from _privateKey)
-    address private __chainSigningAddress;
-
-    // The public key of the chain (must match the chain id)
-    uint256 private __chainSigningPrivateKey;
-
     // The chain id from which the chain is forked (zero if it is a genesis chain)
     address private __forkedChainId;
 
@@ -23,23 +17,17 @@ contract XyoChain is IXyoChain {
     IXyoChainRewards private __rewardsContract;
 
     constructor(
-        address _chainSigningAddress,
-        uint256 _chainSigningPrivateKey,
         address _forkedChainId,
         uint256 _forkedAtLastBlockNumber,
         uint256 _forkedAtLastHash,
         IXyoChainRewards _rewardsContract
     ) {
-        __chainSigningAddress = _chainSigningAddress;
-        __chainSigningPrivateKey = _chainSigningPrivateKey;
         __forkedChainId = _forkedChainId;
         __forkedAtBlockNumber = _forkedAtLastBlockNumber;
         __forkedAtHash = _forkedAtLastHash;
         __rewardsContract = _rewardsContract;
         emit ChainCreated(
             address(this),
-            _chainSigningAddress,
-            _chainSigningPrivateKey,
             _forkedChainId,
             _forkedAtLastBlockNumber,
             _forkedAtLastHash,
@@ -49,14 +37,6 @@ contract XyoChain is IXyoChain {
 
     function chainId() external view returns (address) {
         return address(this);
-    }
-
-    function chainSigningAddress() external view returns (address) {
-        return __chainSigningAddress;
-    }
-
-    function chainSigningPrivateKey() external view returns (uint256) {
-        return __chainSigningPrivateKey;
     }
 
     function forkedChainId() external view returns (address) {

@@ -9,8 +9,6 @@ contract StakedXyoChain is XyoChain, AddressStaking {
     // ========== CONSTRUCTOR ==========
 
     constructor(
-        address _chainSigningAddress, // The address of the privateKey supplied
-        uint256 _chainSigningPrivateKey, // The private key that is used to cosign the chain for continuity in XYO
         address _forkFromChainId, // The chain id from which the chain is forked (zero if it is a genesis chain)
         uint256 _forkFromLastBlockNumber,
         uint256 _forkFromLastHash,
@@ -19,8 +17,6 @@ contract StakedXyoChain is XyoChain, AddressStaking {
         address _stakingTokenAddress // The token that is used for staking
     )
         XyoChain(
-            _chainSigningAddress,
-            _chainSigningPrivateKey,
             _forkFromChainId,
             _forkFromLastBlockNumber,
             _forkFromLastHash,
