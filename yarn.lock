@@ -3109,9 +3109,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^5.0.39":
-  version: 5.0.39
-  resolution: "@xylabs/ts-scripts-yarn3@npm:5.0.39"
+"@xylabs/ts-scripts-yarn3@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@xylabs/ts-scripts-yarn3@npm:5.1.7"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^28.0.2"
     "@rollup/plugin-json": "npm:^6.1.0"
@@ -3119,8 +3119,8 @@ __metadata:
     "@swc/core": "npm:^1.11.5"
     "@types/node": "npm:^22.13.5"
     "@types/yargs": "npm:^17.0.33"
-    "@xylabs/tsconfig": "npm:^5.0.39"
-    "@xylabs/tsconfig-dom": "npm:^5.0.39"
+    "@xylabs/tsconfig": "npm:^5.1.7"
+    "@xylabs/tsconfig-dom": "npm:^5.1.7"
     async-mutex: "npm:^0.5.0"
     chalk: "npm:^5.4.1"
     cosmiconfig: "npm:^9.0.0"
@@ -3130,6 +3130,7 @@ __metadata:
     depcheck: "npm:^1.4.7"
     esbuild: "npm:0.24.2"
     eslint: "npm:^9.21.0"
+    find-up: "npm:^7.0.0"
     glob: "npm:^11.0.1"
     jsonc-eslint-parser: "npm:^2.4.0"
     license-checker: "npm:^25.0.1"
@@ -3185,7 +3186,9 @@ __metadata:
     package-copy-assets-cjs: dist/bin/package/copy-assets-cjs.mjs
     package-copy-assets-esm: dist/bin/package/copy-assets-esm.mjs
     package-deps: dist/bin/package/deps.mjs
+    package-fix: dist/bin/package/fix.mjs
     package-gen-docs: dist/bin/package/gen-docs.mjs
+    package-lint: dist/bin/package/lint.mjs
     package-publint: dist/bin/package/publint.mjs
     package-recompile: dist/bin/package/recompile.mjs
     rebuild: dist/bin/rebuild.mjs
@@ -3201,16 +3204,16 @@ __metadata:
     xy: dist/bin/xy.mjs
     xy-ts: src/bin/xy-ts.ts
     yarn3only: dist/bin/yarn3only.mjs
-  checksum: 10/7068dce1ca8ef5d68126df3780f37c6ccd0076097db6d4d640b7d4ce954427e2c96c28cac89d2fed8092e095ccf7e02f3feb81b85d9635c5fecb59dd509f26d7
+  checksum: 10/94d0bd84c76ed1d80cecc8a33d175e59ab98ec53b414ad173dc5c3e676c3095cf2ac9d839b6c33f943c1c3c32ebd409e5b4550da41b19e361717276b088091b4
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig-dom@npm:^5.0.39":
-  version: 5.0.39
-  resolution: "@xylabs/tsconfig-dom@npm:5.0.39"
+"@xylabs/tsconfig-dom@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@xylabs/tsconfig-dom@npm:5.1.7"
   dependencies:
-    "@xylabs/tsconfig": "npm:^5.0.39"
-  checksum: 10/c2c8095178a5e53e6a3b85922ad6c1241a1a95708487995d7cb4b10d37964b7db9f945077ea2ba17b8f291cb649f3dfbbf1fa9343bfae5883707fe2e85a95849
+    "@xylabs/tsconfig": "npm:^5.1.7"
+  checksum: 10/866c81a013ba431de3bc20382c81bea776e73bfda8d7cff2f255706d8cd81667e76ff5e50fa1d57aa335afcf828b766877518a91227e01f493957da6aa45539f
   languageName: node
   linkType: hard
 
@@ -3221,12 +3224,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/tsconfig@npm:^5.1.7":
+  version: 5.1.7
+  resolution: "@xylabs/tsconfig@npm:5.1.7"
+  checksum: 10/3b27dca7bbaf5f91d66ea8307fe43b600458cf59b6e82a63bec1c5148683abfd80e7955d08ca1459d91469825b0fc31f39ad89786cb36f03f52c5c09ded8153b
+  languageName: node
+  linkType: hard
+
 "@xyo-network/open-zeppelin-typechain@workspace:^, @xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
     typechain: "npm:^8.3.2"
@@ -3243,7 +3253,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.26.0"
     "@xylabs/eslint-config": "npm:3.15.16"
     "@xylabs/eslint-config-flat": "npm:^5.0.39"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     "@xylabs/tsconfig": "npm:^5.0.39"
     "@xyo-network/open-zeppelin-typechain": "workspace:^"
     "@xyo-network/typechain": "workspace:^"
@@ -3267,7 +3277,7 @@ __metadata:
   dependencies:
     "@openzeppelin/contracts": "npm:^5.2.0"
     "@openzeppelin/contracts-upgradeable": "npm:^5.2.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3278,7 +3288,7 @@ __metadata:
   resolution: "@xyo-network/typechain@workspace:packages/typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     "@xyo-network/solidity": "workspace:^"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
@@ -3292,7 +3302,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
     "@uniswap/v3-core": "npm:^1.0.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     copyfiles: "npm:^2.4.1"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
@@ -3304,7 +3314,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     "@xyo-network/uniswap-solidity": "workspace:^"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
@@ -3318,7 +3328,7 @@ __metadata:
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.2.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3329,7 +3339,7 @@ __metadata:
   resolution: "@xyo-network/world-typechain@workspace:packages/world-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^5.0.39"
+    "@xylabs/ts-scripts-yarn3": "npm:^5.1.7"
     "@xyo-network/world-solidity": "workspace:^"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
@@ -7467,6 +7477,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"find-up@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "find-up@npm:7.0.0"
+  dependencies:
+    locate-path: "npm:^7.2.0"
+    path-exists: "npm:^5.0.0"
+    unicorn-magic: "npm:^0.1.0"
+  checksum: 10/7e6b08fbc05a10677e25e74bb0a020054a86b31d1806c5e6a9e32e75472bbf177210bc16e5f97453be8bda7ae2e3d97669dbb2901f8c30b39ce53929cbea6746
+  languageName: node
+  linkType: hard
+
 "find-workspaces@npm:^0.3.0":
   version: 0.3.1
   resolution: "find-workspaces@npm:0.3.1"
@@ -9819,6 +9840,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"locate-path@npm:^7.2.0":
+  version: 7.2.0
+  resolution: "locate-path@npm:7.2.0"
+  dependencies:
+    p-locate: "npm:^6.0.0"
+  checksum: 10/1c6d269d4efec555937081be964e8a9b4a136319c79ca1d45ac6382212a8466113c75bd89e44521ca8ecd1c47fb08523b56eee5c0712bc7d14fec5f729deeb42
+  languageName: node
+  linkType: hard
+
 "lodash-es@npm:^4.2.1":
   version: 4.17.21
   resolution: "lodash-es@npm:4.17.21"
@@ -11682,6 +11712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"p-limit@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "p-limit@npm:4.0.0"
+  dependencies:
+    yocto-queue: "npm:^1.0.0"
+  checksum: 10/01d9d70695187788f984226e16c903475ec6a947ee7b21948d6f597bed788e3112cc7ec2e171c1d37125057a5f45f3da21d8653e04a3a793589e12e9e80e756b
+  languageName: node
+  linkType: hard
+
 "p-locate@npm:^2.0.0":
   version: 2.0.0
   resolution: "p-locate@npm:2.0.0"
@@ -11715,6 +11754,15 @@ __metadata:
   dependencies:
     p-limit: "npm:^3.0.2"
   checksum: 10/1623088f36cf1cbca58e9b61c4e62bf0c60a07af5ae1ca99a720837356b5b6c5ba3eb1b2127e47a06865fee59dd0453cad7cc844cda9d5a62ac1a5a51b7c86d3
+  languageName: node
+  linkType: hard
+
+"p-locate@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "p-locate@npm:6.0.0"
+  dependencies:
+    p-limit: "npm:^4.0.0"
+  checksum: 10/2bfe5234efa5e7a4e74b30a5479a193fdd9236f8f6b4d2f3f69e3d286d9a7d7ab0c118a2a50142efcf4e41625def635bd9332d6cbf9cc65d85eb0718c579ab38
   languageName: node
   linkType: hard
 
@@ -11927,6 +11975,13 @@ __metadata:
   version: 4.0.0
   resolution: "path-exists@npm:4.0.0"
   checksum: 10/505807199dfb7c50737b057dd8d351b82c033029ab94cb10a657609e00c1bc53b951cfdbccab8de04c5584d5eff31128ce6afd3db79281874a5ef2adbba55ed1
+  languageName: node
+  linkType: hard
+
+"path-exists@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "path-exists@npm:5.0.0"
+  checksum: 10/8ca842868cab09423994596eb2c5ec2a971c17d1a3cb36dbf060592c730c725cd524b9067d7d2a1e031fef9ba7bd2ac6dc5ec9fb92aa693265f7be3987045254
   languageName: node
   linkType: hard
 
@@ -18152,6 +18207,13 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10/f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"yocto-queue@npm:^1.0.0":
+  version: 1.2.0
+  resolution: "yocto-queue@npm:1.2.0"
+  checksum: 10/6154113e60285f75c9d59c65056ea3842d3d5c999a4c692568155dcc5b9c038850374eae1f04507090eeee8129b8110d9c7259d1aa9fe323957fd46892b655fc
   languageName: node
   linkType: hard
 
