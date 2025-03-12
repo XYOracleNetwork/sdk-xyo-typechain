@@ -61,7 +61,7 @@
     "@typescript-eslint/parser": "^8.26.0",
     "@xylabs/eslint-config": "3.15.16",
     "@xylabs/eslint-config-flat": "^5.0.39",
-    "@xylabs/ts-scripts-yarn3": "^5.0.39",
+    "@xylabs/ts-scripts-yarn3": "^6.0.5",
     "@xylabs/tsconfig": "^5.0.39",
     "eslint": "^9.21.0",
     "eslint-import-resolver-typescript": "^3.8.3",
