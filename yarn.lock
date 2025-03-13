@@ -3256,7 +3256,7 @@ __metadata:
     eslint-plugin-simple-import-sort: "npm:^12.1.1"
     eslint-plugin-sonarjs: "npm:^3.0.2"
     eslint-plugin-workspaces: "npm:^0.10.1"
-    solc: "npm:0.8.28"
+    solc: "npm:0.8.29"
     typescript: "npm:^5.8.2"
   languageName: unknown
   linkType: soft
@@ -15182,9 +15182,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solc@npm:0.8.28":
-  version: 0.8.28
-  resolution: "solc@npm:0.8.28"
+"solc@npm:0.8.29":
+  version: 0.8.29
+  resolution: "solc@npm:0.8.29"
   dependencies:
     command-exists: "npm:^1.2.8"
     commander: "npm:^8.1.0"
@@ -15195,7 +15195,7 @@ __metadata:
     tmp: "npm:0.0.33"
   bin:
     solcjs: solc.js
-  checksum: 10/2ed06cb9d3507d3da7c5a5a7fb8c8ee08ff4c3a14d863625f9c666ad5f1194ff3f6dad635f67ef1726f197505aefa7038e4930b267d67a3c94d0af155dd08718
+  checksum: 10/03f3f27cf4869b022a143f7518ba43acb07bec0422644ef6196eaf34be7617f9380c8508db9602989b845d849690dbb61cc0e2078f9f7c6c49d3ddd965e4888d
   languageName: node
   linkType: hard
 
