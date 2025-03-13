@@ -62,7 +62,7 @@
     "@xylabs/eslint-config": "3.15.16",
     "@xylabs/eslint-config-flat": "^5.0.39",
     "@xylabs/ts-scripts-yarn3": "^5.0.39",
-    "@xylabs/tsconfig": "^5.0.39",
+    "@xylabs/tsconfig": "^6.0.8",
     "eslint": "^9.21.0",
     "eslint-import-resolver-typescript": "^3.8.3",
     "eslint-plugin-import": "^2.31.0",
