@@ -20,18 +20,18 @@
   "exports": {
     ".": {
       "node": {
-        "types": "./dist/node/index.d.ts",
+        "types": "./dist/types/index.d.ts",
         "import": "./dist/node/index.mjs"
       },
       "browser": {
-        "types": "./dist/browser/index.d.ts",
+        "types": "./dist/types/index.d.ts",
         "import": "./dist/browser/index.mjs"
       }
     },
     "./package.json": "./package.json"
   },
   "module": "dist/node/index.mjs",
-  "types": "dist/node/index.d.ts",
+  "types": "dist/types/index.d.ts",
   "workspaces": [
     "packages/**/*"
   ],
@@ -57,20 +57,14 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.26.0",
-    "@typescript-eslint/parser": "^8.26.0",
-    "@xylabs/eslint-config": "3.15.16",
-    "@xylabs/eslint-config-flat": "^5.0.39",
-    "@xylabs/ts-scripts-yarn3": "^5.0.39",
-    "@xylabs/tsconfig": "^5.0.39",
-    "eslint": "^9.21.0",
-    "eslint-import-resolver-typescript": "^3.8.3",
-    "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-prettier": "^5.2.3",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-sonarjs": "^3.0.2",
-    "eslint-plugin-workspaces": "^0.10.1",
-    "solc": "0.8.28",
+    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/parser": "^8.26.1",
+    "@xylabs/eslint-config-flat": "^6.0.8",
+    "@xylabs/ts-scripts-yarn3": "^6.0.8",
+    "@xylabs/tsconfig": "^6.0.8",
+    "eslint": "^9.22.0",
+    "eslint-import-resolver-typescript": "^3.8.6",
+    "solc": "0.8.29",
     "typescript": "^5.8.2"
   },
   "packageManager": "yarn@4.6.0",

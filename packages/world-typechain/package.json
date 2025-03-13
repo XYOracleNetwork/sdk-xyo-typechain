@@ -19,28 +19,16 @@
   "type": "module",
   "exports": {
     ".": {
-      "node": {
-        "types": "./types.d.ts",
-        "import": "./dist/node/index.mjs"
-      },
-      "browser": {
-        "types": "./types.d.ts",
-        "import": "./dist/browser/index.mjs"
-      }
+      "types": "./types.d.ts",
+      "import": "./dist/neutral/index.mjs"
     },
     "./common": {
-      "node": {
-        "types": "./dist/common.d.ts",
-        "import": "./dist/node/common.mjs"
-      },
-      "browser": {
-        "types": "./dist/common.d.ts",
-        "import": "./dist/browser/common.mjs"
-      }
+      "types": "./dist/types/common.d.ts",
+      "import": "./dist/neutral/common.mjs"
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/node/index.mjs",
+  "module": "./dist/neutral/index.mjs",
   "types": "./types.d.ts",
   "workspaces": [
     "packages/**/*"
@@ -58,7 +46,7 @@
   },
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^5.0.39",
+    "@xylabs/ts-scripts-yarn3": "^6.0.8",
     "@xyo-network/world-solidity": "workspace:^",
     "ethers": "^6.13.5",
     "rimraf": "^6.0.1",

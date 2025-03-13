@@ -16,6 +16,7 @@
     "url": "https://xyo.network"
   },
   "sideEffects": false,
+  "type": "module",
   "workspaces": [
     "packages/**/*"
   ],
@@ -30,7 +31,7 @@
     "@uniswap/v3-core": "^1.0.1"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^5.0.39",
+    "@xylabs/ts-scripts-yarn3": "^6.0.8",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"

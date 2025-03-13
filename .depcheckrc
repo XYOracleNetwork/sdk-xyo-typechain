@@ -3,8 +3,5 @@ ignores: [
   "@typechain/ethers-v6",
   "@typescript-eslint/parser",
   "@typescript-eslint/eslint-plugin",
-  "eslint-import-resolver-typescript",
-  "eslint-plugin-deprecation",
-  "eslint-plugin-import",
   "typescript"
 ]

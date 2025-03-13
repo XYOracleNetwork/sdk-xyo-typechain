@@ -1,11 +1,10 @@
-// eslint.config.mjs
-
-
-import {   typescriptConfig,
+import {
+  typescriptConfig,
   unicornConfig,
   workspacesConfig,
   rulesConfig,
-  importConfig } from '@xylabs/eslint-config-flat'
+  importConfig
+} from '@xylabs/eslint-config-flat'
 
 export default [
   {
@@ -14,19 +13,11 @@ export default [
   unicornConfig,
   workspacesConfig,
   rulesConfig,
+  typescriptConfig,
+  importConfig,
   {
-    ...typescriptConfig,
     rules: {
-      ...typescriptConfig.rules,
-      '@typescript-eslint/consistent-type-imports': ['warn'],
-      'unicorn/no-abusive-eslint-disable': ['off'],
-    },
-  },
-  {
-    ...importConfig,
-    rules: {
-      ...importConfig.rules,
-      'import-x/no-cycle': ['warn', { maxDepth: 5 }]
+      'unicorn/no-abusive-eslint-disable': ['off']
     }
   }
 ]
