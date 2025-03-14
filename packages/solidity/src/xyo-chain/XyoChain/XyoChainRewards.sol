@@ -44,10 +44,11 @@ contract XyoChainRewards is IXyoChainRewards {
         if (blockNumber == 0) {
             return config.genesisReward;
         }
-        uint256 step = blockNumber / config.stepSize;
-        if (step == 0) {
+        if (blockNumber <= config.stepSize) {
             return config.initialReward;
         }
+
+        uint256 step = blockNumber / config.stepSize;
 
         uint256 previousStepBlockNumber = (step - 1) * config.stepSize;
         uint256 previousStepReward = calcBlockRewardPure(
