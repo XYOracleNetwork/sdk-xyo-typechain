@@ -50,7 +50,7 @@ contract XyoChainRewards is IXyoChainRewards {
 
         uint256 step = blockNumber / config.stepSize;
 
-        uint256 previousStepBlockNumber = (step - 1) * config.stepSize;
+        uint256 previousStepBlockNumber = step * config.stepSize - 1;
         uint256 previousStepReward = calcBlockRewardPure(
             previousStepBlockNumber,
             config

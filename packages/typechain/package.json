@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/typechain",
-  "version": "3.4.13",
+  "version": "3.4.14",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
