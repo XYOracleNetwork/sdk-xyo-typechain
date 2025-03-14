@@ -5,3 +5,5 @@ test
 .pnp.*
 .yarn/*
 .eslintcache
+.deps
+build-info

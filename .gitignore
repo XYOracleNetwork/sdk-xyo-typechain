@@ -14,3 +14,5 @@ lib
 !.yarn/versions
 .tsconfig*
 .eslintcache
+.deps
+build-info

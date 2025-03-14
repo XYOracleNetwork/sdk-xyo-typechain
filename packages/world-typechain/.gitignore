@@ -5,3 +5,5 @@ dist
 *.log
 *.tsconfig.*
 src
+.deps
+build-info

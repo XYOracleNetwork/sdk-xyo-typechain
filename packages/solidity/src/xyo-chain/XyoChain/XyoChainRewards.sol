@@ -45,13 +45,20 @@ contract XyoChainRewards is IXyoChainRewards {
             return config.genesisReward;
         }
         uint256 step = blockNumber / config.stepSize;
-        uint256 poweredNumerator = config.stepFactorNumerator ** step;
-        uint256 poweredDenominator = config.stepFactorDenominator ** step;
-        uint256 calcReward = (config.initialReward * poweredNumerator) /
-            poweredDenominator;
-        if (calcReward < config.minRewardPerBlock) {
+        if (step == 0) {
+            return config.initialReward;
+        }
+
+        uint256 previousStepBlockNumber = (step - 1) * config.stepSize;
+        uint256 previousStepReward = calcBlockRewardPure(
+            previousStepBlockNumber,
+            config
+        );
+        uint256 reward = (config.stepFactorNumerator * previousStepReward) /
+            config.stepFactorDenominator;
+        if (reward < config.minRewardPerBlock) {
             return config.minRewardPerBlock;
         }
-        return calcReward;
+        return reward;
     }
 }
