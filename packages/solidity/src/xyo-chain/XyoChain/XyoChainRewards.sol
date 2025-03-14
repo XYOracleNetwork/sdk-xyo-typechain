@@ -44,7 +44,7 @@ contract XyoChainRewards is IXyoChainRewards {
         if (blockNumber == 0) {
             return config.genesisReward;
         }
-        if (blockNumber <= config.stepSize) {
+        if (blockNumber < config.stepSize) {
             return config.initialReward;
         }
 
