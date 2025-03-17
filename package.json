@@ -59,7 +59,7 @@
     "@stylistic/eslint-plugin": "^4.2.0",
     "@typescript-eslint/eslint-plugin": "^8.26.1",
     "@typescript-eslint/parser": "^8.26.1",
-    "@xylabs/eslint-config-flat": "^6.0.9",
+    "@xylabs/eslint-config-flat": "^6.1.1",
     "@xylabs/ts-scripts-yarn3": "^6.0.9",
     "@xylabs/tsconfig": "^6.0.9",
     "eslint": "^9.22.0",
