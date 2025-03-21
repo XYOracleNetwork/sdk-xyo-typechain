@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.26.1",
+    "@typescript-eslint/eslint-plugin": "^8.27.0",
     "@typescript-eslint/parser": "^8.26.1",
     "@xylabs/eslint-config-flat": "^6.0.9",
     "@xylabs/ts-scripts-yarn3": "^6.0.9",
