@@ -1,3 +1,7 @@
 {
-  "recommendations": ["dbaeumer.vscode-eslint", "juanblanco.solidity"]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "juanblanco.solidity",
+    "kravets.vscode-publint"
+  ]
 }

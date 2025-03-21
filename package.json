@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-xyo-typechain",
-  "version": "3.4.15",
+  "version": "3.4.16",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -46,9 +46,6 @@
     "deploy-next-major": "yarn workspaces foreach --all version major --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
     "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common"
   },
-  "resolutions": {
-    "eslint-import-resolver-typescript": "3.7.0"
-  },
   "dependencies": {
     "@xyo-network/open-zeppelin-typechain": "workspace:^",
     "@xyo-network/typechain": "workspace:^",
@@ -57,17 +54,18 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.26.1",
-    "@typescript-eslint/parser": "^8.26.1",
-    "@xylabs/eslint-config-flat": "^6.0.9",
-    "@xylabs/ts-scripts-yarn3": "^6.0.9",
-    "@xylabs/tsconfig": "^6.0.9",
+    "@typescript-eslint/eslint-plugin": "^8.27.0",
+    "@typescript-eslint/parser": "^8.27.0",
+    "@xylabs/eslint-config-flat": "^6.1.4",
+    "@xylabs/ts-scripts-yarn3": "^6.1.4",
+    "@xylabs/tsconfig": "^6.1.4",
     "eslint": "^9.22.0",
-    "eslint-import-resolver-typescript": "^3.8.7",
+    "eslint-import-resolver-typescript": "^4.2.2",
+    "knip": "^5.46.0",
     "solc": "0.8.29",
     "typescript": "^5.8.2"
   },
-  "packageManager": "yarn@4.6.0",
+  "packageManager": "yarn@4.7.0",
   "volta": {
     "node": "20.9.0",
     "yarn": "4.0.2"

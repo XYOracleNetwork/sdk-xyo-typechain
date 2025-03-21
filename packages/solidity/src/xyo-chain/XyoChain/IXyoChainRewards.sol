@@ -8,6 +8,8 @@ struct BlockRewardConfig {
     uint256 stepFactorDenominator;
     uint256 minRewardPerBlock;
     uint256 genesisReward;
+    // This is a mask to apply to the reward after each step
+    uint256 floorMask;
 }
 
 interface IXyoChainRewards {

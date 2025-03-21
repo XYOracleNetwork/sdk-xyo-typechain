@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/uniswap-solidity",
-  "version": "3.4.15",
+  "version": "3.4.16",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -31,7 +31,7 @@
     "@uniswap/v3-core": "^1.0.1"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^6.0.9",
+    "@xylabs/ts-scripts-yarn3": "^6.1.4",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"
