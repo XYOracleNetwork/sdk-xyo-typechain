@@ -13,7 +13,7 @@ contract XyoChainRewards is IXyoChainRewards {
         uint256 _stepFactorDenominator,
         uint256 _minRewardPerBlock,
         uint256 _genesisReward,
-        uint256 _floorMask
+        uint256 _floorPlaces
     ) {
         __blockRewardConfig = BlockRewardConfig(
             _initialReward,
@@ -22,7 +22,7 @@ contract XyoChainRewards is IXyoChainRewards {
             _stepFactorDenominator,
             _minRewardPerBlock,
             _genesisReward,
-            _floorMask
+            _floorPlaces
         );
     }
 
@@ -55,7 +55,7 @@ contract XyoChainRewards is IXyoChainRewards {
             reward =
                 (config.stepFactorNumerator * reward) /
                 config.stepFactorDenominator;
-            reward = reward & config.floorMask;
+            reward = reward - (reward % (10 ** config.floorPlaces));
         }
         if (reward < config.minRewardPerBlock) {
             return config.minRewardPerBlock;
