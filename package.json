@@ -59,7 +59,7 @@
     "@xylabs/eslint-config-flat": "^6.1.4",
     "@xylabs/ts-scripts-yarn3": "^6.1.4",
     "@xylabs/tsconfig": "^6.1.4",
-    "eslint": "^9.22.0",
+    "eslint": "^9.23.0",
     "eslint-import-resolver-typescript": "^4.2.2",
     "knip": "^5.46.0",
     "solc": "0.8.29",
