@@ -2097,90 +2097,90 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-arm64@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-darwin-arm64@npm:1.11.11"
+"@swc/core-darwin-arm64@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-darwin-arm64@npm:1.11.12"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-darwin-x64@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-darwin-x64@npm:1.11.11"
+"@swc/core-darwin-x64@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-darwin-x64@npm:1.11.12"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm-gnueabihf@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.11.11"
+"@swc/core-linux-arm-gnueabihf@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-linux-arm-gnueabihf@npm:1.11.12"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-gnu@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-linux-arm64-gnu@npm:1.11.11"
+"@swc/core-linux-arm64-gnu@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-linux-arm64-gnu@npm:1.11.12"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-arm64-musl@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-linux-arm64-musl@npm:1.11.11"
+"@swc/core-linux-arm64-musl@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-linux-arm64-musl@npm:1.11.12"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-gnu@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-linux-x64-gnu@npm:1.11.11"
+"@swc/core-linux-x64-gnu@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-linux-x64-gnu@npm:1.11.12"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@swc/core-linux-x64-musl@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-linux-x64-musl@npm:1.11.11"
+"@swc/core-linux-x64-musl@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-linux-x64-musl@npm:1.11.12"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@swc/core-win32-arm64-msvc@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-win32-arm64-msvc@npm:1.11.11"
+"@swc/core-win32-arm64-msvc@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-win32-arm64-msvc@npm:1.11.12"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@swc/core-win32-ia32-msvc@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-win32-ia32-msvc@npm:1.11.11"
+"@swc/core-win32-ia32-msvc@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-win32-ia32-msvc@npm:1.11.12"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@swc/core-win32-x64-msvc@npm:1.11.11":
-  version: 1.11.11
-  resolution: "@swc/core-win32-x64-msvc@npm:1.11.11"
+"@swc/core-win32-x64-msvc@npm:1.11.12":
+  version: 1.11.12
+  resolution: "@swc/core-win32-x64-msvc@npm:1.11.12"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@swc/core@npm:^1.11.10":
-  version: 1.11.11
-  resolution: "@swc/core@npm:1.11.11"
+"@swc/core@npm:^1.11.11":
+  version: 1.11.12
+  resolution: "@swc/core@npm:1.11.12"
   dependencies:
-    "@swc/core-darwin-arm64": "npm:1.11.11"
-    "@swc/core-darwin-x64": "npm:1.11.11"
-    "@swc/core-linux-arm-gnueabihf": "npm:1.11.11"
-    "@swc/core-linux-arm64-gnu": "npm:1.11.11"
-    "@swc/core-linux-arm64-musl": "npm:1.11.11"
-    "@swc/core-linux-x64-gnu": "npm:1.11.11"
-    "@swc/core-linux-x64-musl": "npm:1.11.11"
-    "@swc/core-win32-arm64-msvc": "npm:1.11.11"
-    "@swc/core-win32-ia32-msvc": "npm:1.11.11"
-    "@swc/core-win32-x64-msvc": "npm:1.11.11"
+    "@swc/core-darwin-arm64": "npm:1.11.12"
+    "@swc/core-darwin-x64": "npm:1.11.12"
+    "@swc/core-linux-arm-gnueabihf": "npm:1.11.12"
+    "@swc/core-linux-arm64-gnu": "npm:1.11.12"
+    "@swc/core-linux-arm64-musl": "npm:1.11.12"
+    "@swc/core-linux-x64-gnu": "npm:1.11.12"
+    "@swc/core-linux-x64-musl": "npm:1.11.12"
+    "@swc/core-win32-arm64-msvc": "npm:1.11.12"
+    "@swc/core-win32-ia32-msvc": "npm:1.11.12"
+    "@swc/core-win32-x64-msvc": "npm:1.11.12"
     "@swc/counter": "npm:^0.1.3"
     "@swc/types": "npm:^0.1.19"
   peerDependencies:
@@ -2209,7 +2209,7 @@ __metadata:
   peerDependenciesMeta:
     "@swc/helpers":
       optional: true
-  checksum: 10/35c005637c8f3dac8c9718852057f81d39541b848d36a9b46b9aa5300b5d11e3e7911704da2eb025d36b0e334caf646af37ff98a3dee8d4f0fcc5f21e60f551a
+  checksum: 10/e8c5340367c96774d770c7aabd6e43d0a015895fa6d32d006b2f251b56d68b8b483e23e9e1fead6bcb3d06047eeb7768ab84fa21298cef3a0b644fa0d528d1b5
   languageName: node
   linkType: hard
 
@@ -2768,7 +2768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^22.13.10":
+"@types/node@npm:*":
   version: 22.13.10
   resolution: "@types/node@npm:22.13.10"
   dependencies:
@@ -2797,6 +2797,15 @@ __metadata:
   version: 12.20.55
   resolution: "@types/node@npm:12.20.55"
   checksum: 10/1f916a06fff02faadb09a16ed6e31820ce170798b202ef0b14fc244bfbd721938c54a3a99836e185e4414ca461fe96c5bb5c67c3d248f153555b7e6347f061dd
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^22.13.11":
+  version: 22.13.11
+  resolution: "@types/node@npm:22.13.11"
+  dependencies:
+    undici-types: "npm:~6.20.0"
+  checksum: 10/5e556eda347f3395669bd6fa7a10c77722f06befe0a6b51b97ed7a4bd0f92b24aa867ee611b547614f17dfc5a0bb7946a75263bd1f302bcac3039729d22acab5
   languageName: node
   linkType: hard
 
@@ -3276,18 +3285,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/ts-scripts-yarn3@npm:^6.1.4":
-  version: 6.1.4
-  resolution: "@xylabs/ts-scripts-yarn3@npm:6.1.4"
+"@xylabs/ts-scripts-yarn3@npm:^6.1.5":
+  version: 6.1.5
+  resolution: "@xylabs/ts-scripts-yarn3@npm:6.1.5"
   dependencies:
     "@rollup/plugin-commonjs": "npm:^28.0.3"
     "@rollup/plugin-json": "npm:^6.1.0"
     "@rollup/plugin-typescript": "npm:^12.1.2"
-    "@swc/core": "npm:^1.11.10"
-    "@types/node": "npm:^22.13.10"
+    "@swc/core": "npm:^1.11.11"
+    "@types/node": "npm:^22.13.11"
     "@types/yargs": "npm:^17.0.33"
-    "@xylabs/tsconfig": "npm:^6.1.4"
-    "@xylabs/tsconfig-dom": "npm:^6.1.4"
+    "@xylabs/tsconfig": "npm:^6.1.5"
+    "@xylabs/tsconfig-dom": "npm:^6.1.5"
     async-mutex: "npm:^0.5.0"
     chalk: "npm:^5.4.1"
     cosmiconfig: "npm:^9.0.0"
@@ -3314,13 +3323,13 @@ __metadata:
     rollup-plugin-exclude-dependencies-from-bundle: "npm:^1.1.24"
     rollup-plugin-node-externals: "npm:^8.0.0"
     sort-package-json: "npm:^3.0.0"
-    supertest: "npm:^7.0.0"
+    supertest: "npm:^7.1.0"
     ts-node: "npm:^10.9.2"
     ts-prune: "npm:^0.10.3"
     tsc-prog: "npm:^2.3.0"
     tslib: "npm:^2.8.1"
     tsup: "npm:8.4.0"
-    typedoc: "npm:^0.28.0"
+    typedoc: "npm:^0.28.1"
     types-package-json: "npm:^2.0.39"
     vitest: "npm:^3.0.9"
     yargs: "npm:^17.7.2"
@@ -3343,16 +3352,16 @@ __metadata:
     package-recompile: dist/bin/package/recompile.mjs
     package-relint: dist/bin/package/relint.mjs
     xy: dist/bin/xy.mjs
-  checksum: 10/ad55c3197a8748875b0e7af207cf524e5a4b16e5c16d9d692be9d0e0526005b586381803bf79848cc233f95a87e5e7b4a5a520fdeada401f6c91df17f4470a5f
+  checksum: 10/de73d71b12018fd49b2140a92a2261d6ec904da26bf5f0a7eb7a35d78ba1176d30ac223dce7d2c30fa81e0ff0dcc06d61e3ad01f37379ab69a303ed0fa73ee21
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig-dom@npm:^6.1.4":
-  version: 6.1.4
-  resolution: "@xylabs/tsconfig-dom@npm:6.1.4"
+"@xylabs/tsconfig-dom@npm:^6.1.5":
+  version: 6.1.5
+  resolution: "@xylabs/tsconfig-dom@npm:6.1.5"
   dependencies:
-    "@xylabs/tsconfig": "npm:^6.1.4"
-  checksum: 10/e979d8c0a6279328a8f868ca866370493e66763e27a1fdb3465da2f0c5ec14ba05ce00bd732c80c9fc2e43b14dcc4db31c35cf2320a43c42d4dc0327d68513b4
+    "@xylabs/tsconfig": "npm:^6.1.5"
+  checksum: 10/001fed8e8956f817f4677df73f6a758f07584dd0778b78ca07b0538c00c4590203e19d10efb51106d1b80ad4368258be320229b25120fea40f144f537b0b01b7
   languageName: node
   linkType: hard
 
@@ -3363,12 +3372,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/tsconfig@npm:^6.1.5":
+  version: 6.1.5
+  resolution: "@xylabs/tsconfig@npm:6.1.5"
+  checksum: 10/0b91e2d3ac9f6eb479eaacf8eb944d5c16c0d874751457e2c8c0b79925b81bd3d64e4efc4d786bc0c270a842202345fdb2a5f9a10a977509afd62c17131dd484
+  languageName: node
+  linkType: hard
+
 "@xyo-network/open-zeppelin-typechain@workspace:^, @xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
     typechain: "npm:^8.3.2"
@@ -3384,7 +3400,7 @@ __metadata:
     "@typescript-eslint/eslint-plugin": "npm:^8.27.0"
     "@typescript-eslint/parser": "npm:^8.27.0"
     "@xylabs/eslint-config-flat": "npm:^6.1.4"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     "@xylabs/tsconfig": "npm:^6.1.4"
     "@xyo-network/open-zeppelin-typechain": "workspace:^"
     "@xyo-network/typechain": "workspace:^"
@@ -3404,7 +3420,7 @@ __metadata:
   dependencies:
     "@openzeppelin/contracts": "npm:^5.2.0"
     "@openzeppelin/contracts-upgradeable": "npm:^5.2.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3415,7 +3431,7 @@ __metadata:
   resolution: "@xyo-network/typechain@workspace:packages/typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     "@xyo-network/solidity": "workspace:^"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
@@ -3429,7 +3445,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
     "@uniswap/v3-core": "npm:^1.0.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     copyfiles: "npm:^2.4.1"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
@@ -3441,7 +3457,7 @@ __metadata:
   resolution: "@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     "@xyo-network/uniswap-solidity": "workspace:^"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
@@ -3455,7 +3471,7 @@ __metadata:
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
     "@openzeppelin/contracts": "npm:^5.2.0"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     rimraf: "npm:^6.0.1"
     truffle: "npm:^5.11.5"
   languageName: unknown
@@ -3466,7 +3482,7 @@ __metadata:
   resolution: "@xyo-network/world-typechain@workspace:packages/world-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:^0.5.1"
-    "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
+    "@xylabs/ts-scripts-yarn3": "npm:^6.1.5"
     "@xyo-network/world-solidity": "workspace:^"
     ethers: "npm:^6.13.5"
     rimraf: "npm:^6.0.1"
@@ -13301,13 +13317,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supertest@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "supertest@npm:7.0.0"
+"supertest@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "supertest@npm:7.1.0"
   dependencies:
     methods: "npm:^1.1.2"
     superagent: "npm:^9.0.1"
-  checksum: 10/73bf2a37e13856a1b3e6a37b9df5cec8e506aa0360a5f5ecd989d1f4b0edf168883e306012e81e371d5252c17d4c7bef4ba30633dbf3877cbf52fc7af51cca9b
+  checksum: 10/20069f739a44821dfa4f7f397b9086ef31a358366331138f97945eedb2e231796e7c55b032125d3bd12f9839f089fbb809893dbc0f98edc57e12333b9f42b726
   languageName: node
   linkType: hard
 
@@ -13984,7 +14000,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:^0.28.0":
+"typedoc@npm:^0.28.1":
   version: 0.28.1
   resolution: "typedoc@npm:0.28.1"
   dependencies:
