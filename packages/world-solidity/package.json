@@ -30,7 +30,7 @@
     "@openzeppelin/contracts": "^5.2.0"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^6.1.4",
+    "@xylabs/ts-scripts-yarn3": "^6.1.5",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"
   },
