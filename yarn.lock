@@ -2920,7 +2920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/eslint-plugin@npm:^8.26.1, @typescript-eslint/eslint-plugin@npm:^8.27.0":
+"@typescript-eslint/eslint-plugin@npm:^8.27.0":
   version: 8.27.0
   resolution: "@typescript-eslint/eslint-plugin@npm:8.27.0"
   dependencies:
@@ -2941,7 +2941,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^8.26.1, @typescript-eslint/parser@npm:^8.27.0":
+"@typescript-eslint/parser@npm:^8.27.0":
   version: 8.27.0
   resolution: "@typescript-eslint/parser@npm:8.27.0"
   dependencies:
@@ -3256,23 +3256,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/eslint-config-flat@npm:^6.1.4":
-  version: 6.1.4
-  resolution: "@xylabs/eslint-config-flat@npm:6.1.4"
+"@xylabs/eslint-config-flat@npm:^6.1.5":
+  version: 6.1.5
+  resolution: "@xylabs/eslint-config-flat@npm:6.1.5"
   dependencies:
     "@eslint/json": "npm:^0.11.0"
     "@stylistic/eslint-plugin": "npm:^4.2.0"
-    "@typescript-eslint/eslint-plugin": "npm:^8.26.1"
-    "@typescript-eslint/parser": "npm:^8.26.1"
+    "@typescript-eslint/eslint-plugin": "npm:^8.27.0"
+    "@typescript-eslint/parser": "npm:^8.27.0"
     eslint: "npm:^9.22.0"
-    eslint-plugin-import-x: "npm:^4.8.0"
+    eslint-plugin-import-x: "npm:^4.9.1"
     eslint-plugin-markdown: "npm:^5.1.0"
     eslint-plugin-simple-import-sort: "npm:^12.1.1"
     eslint-plugin-sonarjs: "npm:^3.0.2"
     eslint-plugin-unicorn: "npm:^57.0.0"
     eslint-plugin-workspaces: "npm:^0.10.1"
     jsonc-eslint-parser: "npm:^2.4.0"
-  checksum: 10/b8ae7fe17371ebaa800ba2593fcf20306915ac8aee0c9b1f52b13c9446deb16671722af9d13422026d5161ee7adfbbe8bc9c0b640e43754a5338bb4f75d050bf
+  checksum: 10/1e86f415937cc9859356f635038d5d69c21b0658115015ff2592bab7dd44ce095d86153cc46600ba2778e49f7d05b3b56a6a4487828426f9550cef555415fcb2
   languageName: node
   linkType: hard
 
@@ -3383,7 +3383,7 @@ __metadata:
     "@stylistic/eslint-plugin": "npm:^4.2.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.27.0"
     "@typescript-eslint/parser": "npm:^8.27.0"
-    "@xylabs/eslint-config-flat": "npm:^6.1.4"
+    "@xylabs/eslint-config-flat": "npm:^6.1.5"
     "@xylabs/ts-scripts-yarn3": "npm:^6.1.4"
     "@xylabs/tsconfig": "npm:^6.1.4"
     "@xyo-network/open-zeppelin-typechain": "workspace:^"
@@ -6378,7 +6378,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-import-x@npm:^4.8.0":
+"eslint-plugin-import-x@npm:^4.9.1":
   version: 4.9.1
   resolution: "eslint-plugin-import-x@npm:4.9.1"
   dependencies:
