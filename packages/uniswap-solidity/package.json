@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/uniswap-solidity",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -22,8 +22,8 @@
   ],
   "scripts": {
     "build": "echo \"[build]\" && rimraf dist && yarn copy-contracts && yarn build-v3 && yarn build-v4",
-    "build-v3": "echo \"[build-v3]\" && rimraf build && truffle compile --config truffle-v3-config.cjs && yarn copy-build-v3 && rimraf build",
-    "build-v4": "echo \"[build-v4]\" && rimraf build && truffle compile --config truffle-v4-config.cjs && yarn copy-build-v4 && rimraf build",
+    "build-v3": "echo \"[build-v3]\" && rimraf build && truffle compile --config truffle-v3-config.cjs && yarn copy-build-v3",
+    "build-v4": "echo \"[build-v4]\" && rimraf build && truffle compile --config truffle-v4-config.cjs && yarn copy-build-v4",
     "copy-build-v3": "echo \"[copy-build-v3]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v3",
     "copy-build-v4": "echo \"[copy-build-v4]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v4",
     "copy-contracts": "echo \"[copy-contracts]\" && rimraf src && yarn copy-contracts-v3 & yarn copy-contracts-v4",
@@ -40,7 +40,7 @@
     "@uniswap/v4-core": "^1.0.1"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^6.1.5",
+    "@xylabs/ts-scripts-yarn3": "^6.2.1",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"

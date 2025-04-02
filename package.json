@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/sdk-xyo-typechain",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -54,18 +54,18 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.28.0",
-    "@typescript-eslint/parser": "^8.28.0",
-    "@xylabs/eslint-config-flat": "^6.1.5",
-    "@xylabs/ts-scripts-yarn3": "^6.1.5",
-    "@xylabs/tsconfig": "^6.1.5",
+    "@typescript-eslint/eslint-plugin": "^8.29.0",
+    "@typescript-eslint/parser": "^8.29.0",
+    "@xylabs/eslint-config-flat": "^6.2.1",
+    "@xylabs/ts-scripts-yarn3": "^6.2.1",
+    "@xylabs/tsconfig": "^6.2.1",
     "eslint": "^9.23.0",
-    "eslint-import-resolver-typescript": "^4.2.4",
-    "knip": "^5.46.2",
+    "eslint-import-resolver-typescript": "^4.3.1",
+    "knip": "^5.46.5",
     "solc": "0.8.29",
     "typescript": "^5.8.2"
   },
-  "packageManager": "yarn@4.7.0",
+  "packageManager": "yarn@4.8.1",
   "volta": {
     "node": "20.9.0",
     "yarn": "4.0.2"

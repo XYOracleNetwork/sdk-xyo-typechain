@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/typechain",
-  "version": "3.5.0",
+  "version": "3.5.1",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -42,13 +42,13 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "dependencies": {
-    "ethers": "^6.13.5"
+    "ethers": "^6.13.6"
   },
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^6.1.5",
+    "@xylabs/ts-scripts-yarn3": "^6.2.1",
     "@xyo-network/solidity": "workspace:^",
-    "ethers": "^6.13.5",
+    "ethers": "^6.13.6",
     "rimraf": "^6.0.1",
     "typechain": "^8.3.2",
     "typescript": "^5.8.2"
