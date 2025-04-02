@@ -40,7 +40,7 @@ module.exports = {
     },
   },
 
-  contracts_directory: './src/interfaces',
+  contracts_directory: './src/v3/interfaces',
 
   // Set default mocha options here, use special reporters etc.
   mocha: {

@@ -24,13 +24,14 @@
     "package-build": "truffle compile --config truffle-config.cjs",
     "package-clean": "rimraf build",
     "package-compile": "truffle compile --config truffle-config.cjs",
+    "package-lint": "echo Skipping lint...",
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "dependencies": {
     "@openzeppelin/contracts": "^5.2.0"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^6.1.4",
+    "@xylabs/ts-scripts-yarn3": "^6.1.5",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"
   },

@@ -21,17 +21,26 @@
     "packages/**/*"
   ],
   "scripts": {
-    "copy-contracts": "rimraf src && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src",
-    "package-build": "yarn copy-contracts && truffle compile --config truffle-config.cjs",
-    "package-clean": "rimraf src && rimraf build",
-    "package-compile": "yarn copy-contracts && truffle compile --config truffle-config.cjs",
-    "package-recompile": "yarn package-clean && yarn package-compile"
+    "build": "echo \"[build]\" && rimraf dist && yarn copy-contracts && yarn build-v3 && yarn build-v4",
+    "build-v3": "echo \"[build-v3]\" && rimraf build && truffle compile --config truffle-v3-config.cjs && yarn copy-build-v3 && rimraf build",
+    "build-v4": "echo \"[build-v4]\" && rimraf build && truffle compile --config truffle-v4-config.cjs && yarn copy-build-v4 && rimraf build",
+    "copy-build-v3": "echo \"[copy-build-v3]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v3",
+    "copy-build-v4": "echo \"[copy-build-v4]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v4",
+    "copy-contracts": "echo \"[copy-contracts]\" && rimraf src && yarn copy-contracts-v3 & yarn copy-contracts-v4",
+    "copy-contracts-v3": "echo \"[copy-contracts-v3]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src/v3",
+    "copy-contracts-v4": "echo \"[copy-contracts-v4]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v4-core/src/**/*\" src/v4",
+    "package-build": "echo \"[package-build]\" && yarn build",
+    "package-clean": "echo \"[package-clean]\" && rimraf src && rimraf build && rimraf dist",
+    "package-compile": "echo \"[package-compile]\" && yarn build",
+    "package-lint": "echo \"Skipping lint...\"",
+    "package-recompile": "echo \"[package-recompile]\" && yarn package-clean && yarn package-compile"
   },
   "dependencies": {
-    "@uniswap/v3-core": "^1.0.1"
+    "@uniswap/v3-core": "^1.0.1",
+    "@uniswap/v4-core": "^1.0.1"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^6.1.4",
+    "@xylabs/ts-scripts-yarn3": "^6.1.5",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"

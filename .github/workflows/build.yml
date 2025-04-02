@@ -36,4 +36,4 @@ jobs:
         run: yarn install --network-timeout 1000000
 
       - name: build
-        run: yarn xy build
+        run: yarn build
