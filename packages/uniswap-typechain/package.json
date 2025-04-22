@@ -42,6 +42,14 @@
       "types": "./dist/types/v4/common.d.ts",
       "import": "./dist/neutral/v4/common.mjs"
     },
+    "./v4-periphery": {
+      "types": "./types-v4-periphery.d.ts",
+      "import": "./dist/neutral/v4-periphery/index.mjs"
+    },
+    "./v4-periphery/common": {
+      "types": "./dist/types/v4-periphery/common.d.ts",
+      "import": "./dist/neutral/v4-periphery/common.mjs"
+    },
     "./package.json": "./package.json"
   },
   "module": "./dist/neutral/v3/index.mjs",
@@ -50,9 +58,10 @@
     "packages/**/*"
   ],
   "scripts": {
-    "generate:sdk": "yarn generate:sdk-v3 && yarn generate:sdk-v4",
+    "generate:sdk": "yarn generate:sdk-v3 && yarn generate:sdk-v4 && yarn generate:sdk-v4-periphery",
     "generate:sdk-v3": "typechain --node16-modules --out-dir=./src/v3 --target=ethers-v6 ../uniswap-solidity/dist/contracts/v3/**/*.json",
     "generate:sdk-v4": "typechain --node16-modules --out-dir=./src/v4 --target=ethers-v6 ../uniswap-solidity/dist/contracts/v4/**/*.json",
+    "generate:sdk-v4-periphery": "typechain --node16-modules --out-dir=./src/v4-periphery --target=ethers-v6 ../uniswap-solidity/dist/contracts/v4-periphery/**/*.json",
     "lint-pkg": "npmPkgJsonLint .",
     "package-build": "echo \"[package-build]\" && yarn generate:sdk && yarn package-build-only",
     "package-clean": "echo \"[package-clean]\" && rimraf dist && rimraf src",
