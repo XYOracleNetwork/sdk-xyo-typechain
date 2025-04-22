@@ -21,23 +21,28 @@
     "packages/**/*"
   ],
   "scripts": {
-    "build": "echo \"[build]\" && rimraf dist && yarn copy-contracts && yarn build-v3 && yarn build-v4",
+    "build": "echo \"[build]\" && rimraf dist && yarn copy-contracts && yarn build-v3 && yarn build-v4 && yarn build-v4-periphery",
     "build-v3": "echo \"[build-v3]\" && rimraf build && truffle compile --config truffle-v3-config.cjs && yarn copy-build-v3",
     "build-v4": "echo \"[build-v4]\" && rimraf build && truffle compile --config truffle-v4-config.cjs && yarn copy-build-v4",
+    "build-v4-periphery": "echo \"[build-v4-periphery]\" && rimraf build && truffle compile --config truffle-v4-periphery-config.cjs && yarn copy-build-v4-periphery",
     "copy-build-v3": "echo \"[copy-build-v3]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v3",
     "copy-build-v4": "echo \"[copy-build-v4]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v4",
-    "copy-contracts": "echo \"[copy-contracts]\" && rimraf src && yarn copy-contracts-v3 & yarn copy-contracts-v4",
-    "copy-contracts-v3": "echo \"[copy-contracts-v3]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" src/v3",
-    "copy-contracts-v4": "echo \"[copy-contracts-v4]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v4-core/src/**/*\" src/v4",
+    "copy-build-v4-periphery": "echo \"[copy-build-v4-periphery]\" && copyfiles -u 2 \"build/contracts/**/*\" dist/contracts/v4-periphery",
+    "copy-contracts": "echo \"[copy-contracts]\" && rimraf contracts && yarn copy-contracts-v3 & yarn copy-contracts-v4 && yarn copy-contracts-v4-periphery",
+    "copy-contracts-permit2": "echo \"[copy-contracts-permit2]\" && copyfiles -u 0 \"./permit2/**/*\" ../../node_modules",
+    "copy-contracts-v3": "echo \"[copy-contracts-v3]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v3-core/contracts/**/*\" contracts/v3",
+    "copy-contracts-v4": "echo \"[copy-contracts-v4]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v4-core/src/**/*\" contracts/v4",
+    "copy-contracts-v4-periphery": "echo \"[copy-contracts-v4-periphery]\" && copyfiles -u 6 \"../../node_modules/@uniswap/v4-periphery/src/**/*\" contracts/v4-periphery && yarn copy-contracts-permit2",
     "package-build": "echo \"[package-build]\" && yarn build",
-    "package-clean": "echo \"[package-clean]\" && rimraf src && rimraf build && rimraf dist",
+    "package-clean": "echo \"[package-clean]\" && rimraf contracts && rimraf build && rimraf dist",
     "package-compile": "echo \"[package-compile]\" && yarn build",
     "package-lint": "echo \"Skipping lint...\"",
     "package-recompile": "echo \"[package-recompile]\" && yarn package-clean && yarn package-compile"
   },
   "dependencies": {
     "@uniswap/v3-core": "^1.0.1",
-    "@uniswap/v4-core": "^1.0.1"
+    "@uniswap/v4-core": "^1.0.1",
+    "@uniswap/v4-periphery": "^1.0.1"
   },
   "devDependencies": {
     "@xylabs/ts-scripts-yarn3": "^6.3.4",
