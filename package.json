@@ -54,18 +54,18 @@
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.29.0",
-    "@typescript-eslint/parser": "^8.29.0",
-    "@xylabs/eslint-config-flat": "^6.2.1",
-    "@xylabs/ts-scripts-yarn3": "^6.2.1",
-    "@xylabs/tsconfig": "^6.2.1",
-    "eslint": "^9.23.0",
-    "eslint-import-resolver-typescript": "^4.3.1",
-    "knip": "^5.46.5",
+    "@typescript-eslint/eslint-plugin": "^8.31.0",
+    "@typescript-eslint/parser": "^8.31.0",
+    "@xylabs/eslint-config-flat": "^6.3.4",
+    "@xylabs/ts-scripts-yarn3": "^6.3.4",
+    "@xylabs/tsconfig": "^6.3.4",
+    "eslint": "^9.25.1",
+    "eslint-import-resolver-typescript": "^4.3.4",
+    "knip": "^5.50.5",
     "solc": "0.8.29",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
-  "packageManager": "yarn@4.8.1",
+  "packageManager": "yarn@4.9.1",
   "volta": {
     "node": "20.9.0",
     "yarn": "4.0.2"

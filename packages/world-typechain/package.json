@@ -46,12 +46,12 @@
   },
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^6.2.1",
+    "@xylabs/ts-scripts-yarn3": "^6.3.4",
     "@xyo-network/world-solidity": "workspace:^",
     "ethers": "^6.13.6",
     "rimraf": "^6.0.1",
     "typechain": "^8.3.2",
-    "typescript": "^5.8.2"
+    "typescript": "^5.8.3"
   },
   "publishConfig": {
     "access": "public"
