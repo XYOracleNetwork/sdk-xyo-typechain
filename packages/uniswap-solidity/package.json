@@ -41,11 +41,11 @@
   },
   "dependencies": {
     "@uniswap/v3-core": "^1.0.1",
-    "@uniswap/v4-core": "^1.0.1",
-    "@uniswap/v4-periphery": "^1.0.1"
+    "@uniswap/v4-core": "^1.0.2",
+    "@uniswap/v4-periphery": "^1.0.2"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^6.3.4",
+    "@xylabs/ts-scripts-yarn3": "^6.5.7",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"

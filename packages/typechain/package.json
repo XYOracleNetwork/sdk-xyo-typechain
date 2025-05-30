@@ -42,13 +42,13 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "dependencies": {
-    "ethers": "^6.13.6"
+    "ethers": "^6.14.3"
   },
   "devDependencies": {
     "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^6.3.4",
+    "@xylabs/ts-scripts-yarn3": "^6.5.7",
     "@xyo-network/solidity": "workspace:^",
-    "ethers": "^6.13.6",
+    "ethers": "^6.14.3",
     "rimraf": "^6.0.1",
     "typechain": "^8.3.2",
     "typescript": "^5.8.3"

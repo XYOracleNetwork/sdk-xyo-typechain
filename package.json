@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain.git"
   },
-  "license": "LGPL-3.0-or-later",
+  "license": "LGPL-3.0-only",
   "author": {
     "name": "XYO Development Team",
     "email": "support@xyo.network",
@@ -53,16 +53,16 @@
     "@xyo-network/world-typechain": "workspace:^"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^4.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.31.0",
-    "@typescript-eslint/parser": "^8.31.0",
-    "@xylabs/eslint-config-flat": "^6.3.4",
-    "@xylabs/ts-scripts-yarn3": "^6.3.4",
-    "@xylabs/tsconfig": "^6.3.4",
-    "eslint": "^9.25.1",
-    "eslint-import-resolver-typescript": "^4.3.4",
-    "knip": "^5.50.5",
-    "solc": "0.8.29",
+    "@stylistic/eslint-plugin": "^4.4.0",
+    "@typescript-eslint/eslint-plugin": "^8.33.0",
+    "@typescript-eslint/parser": "^8.33.0",
+    "@xylabs/eslint-config-flat": "^6.5.7",
+    "@xylabs/ts-scripts-yarn3": "^6.5.7",
+    "@xylabs/tsconfig": "^6.5.7",
+    "eslint": "^9.27.0",
+    "eslint-import-resolver-typescript": "^4.4.1",
+    "knip": "^5.59.1",
+    "solc": "0.8.30",
     "typescript": "^5.8.3"
   },
   "packageManager": "yarn@4.9.1",
