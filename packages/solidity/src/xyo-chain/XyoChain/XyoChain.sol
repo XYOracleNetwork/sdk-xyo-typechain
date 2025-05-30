@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.26;
 
 import "./IXyoChain.sol";
 import "./IXyoChainRewards.sol";
@@ -14,13 +14,13 @@ contract XyoChain is IXyoChain {
     // The last hash from which the chain is forked (zero if it is a genesis chain)
     uint256 private __forkedAtHash;
 
-    IXyoChainRewards private __rewardsContract;
+    address private __rewardsContract;
 
     constructor(
         address _forkedChainId,
         uint256 _forkedAtLastBlockNumber,
         uint256 _forkedAtLastHash,
-        IXyoChainRewards _rewardsContract
+        address _rewardsContract
     ) {
         __forkedChainId = _forkedChainId;
         __forkedAtBlockNumber = _forkedAtLastBlockNumber;
@@ -51,7 +51,7 @@ contract XyoChain is IXyoChain {
         return __forkedAtHash;
     }
 
-    function rewardsContract() external view returns (IXyoChainRewards) {
+    function rewardsContract() external view returns (address) {
         return __rewardsContract;
     }
 }

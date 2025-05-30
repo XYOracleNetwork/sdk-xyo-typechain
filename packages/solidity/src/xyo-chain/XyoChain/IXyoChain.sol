@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.26;
 
 import "./IXyoChainRewards.sol";
 
@@ -8,7 +8,7 @@ interface IXyoChain {
     function forkedChainId() external view returns (address);
     function forkedAtBlockNumber() external view returns (uint256);
     function forkedAtHash() external view returns (uint256);
-    function rewardsContract() external view returns (IXyoChainRewards);
+    function rewardsContract() external view returns (address);
 
     /*
         The Genesis block will have a block id of 0 and a block number of 0
@@ -20,6 +20,6 @@ interface IXyoChain {
         address indexed forkedChainId,
         uint256 forkedAtLastBlockNumber,
         uint256 forkedAtLastHash,
-        IXyoChainRewards rewardsContract
+        address rewardsContract
     );
 }
