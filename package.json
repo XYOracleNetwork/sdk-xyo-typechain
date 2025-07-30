@@ -20,18 +20,18 @@
   "exports": {
     ".": {
       "node": {
-        "types": "./dist/types/index.d.ts",
+        "types": "./dist/node/index.d.ts",
         "import": "./dist/node/index.mjs"
       },
       "browser": {
-        "types": "./dist/types/index.d.ts",
+        "types": "./dist/browser/index.d.ts",
         "import": "./dist/browser/index.mjs"
       }
     },
     "./package.json": "./package.json"
   },
   "module": "dist/node/index.mjs",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/node/index.d.ts",
   "workspaces": [
     "packages/**/*"
   ],
@@ -53,15 +53,15 @@
     "@xyo-network/world-typechain": "workspace:^"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "^4.4.0",
+    "@stylistic/eslint-plugin": "^5.2.2",
     "@typescript-eslint/eslint-plugin": "^8.33.0",
-    "@typescript-eslint/parser": "^8.33.0",
-    "@xylabs/eslint-config-flat": "^6.5.7",
-    "@xylabs/ts-scripts-yarn3": "^6.5.7",
-    "@xylabs/tsconfig": "^6.5.7",
-    "eslint": "^9.27.0",
-    "eslint-import-resolver-typescript": "^4.4.1",
-    "knip": "^5.59.1",
+    "@typescript-eslint/parser": "^8.38.0",
+    "@xylabs/eslint-config-flat": "^7.0.2",
+    "@xylabs/ts-scripts-yarn3": "^7.0.2",
+    "@xylabs/tsconfig": "^7.0.2",
+    "eslint": "^9.32.0",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "knip": "^5.62.0",
     "solc": "0.8.30",
     "typescript": "^5.8.3"
   },
