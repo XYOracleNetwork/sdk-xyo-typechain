@@ -45,7 +45,7 @@
     "@uniswap/v4-periphery": "^1.0.3"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^7.0.2",
+    "@xylabs/ts-scripts-yarn3": "^7.0.3",
     "copyfiles": "^2.4.1",
     "rimraf": "^6.0.1",
     "truffle": "^5.11.5"
