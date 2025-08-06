@@ -23,15 +23,17 @@
       "import": "./dist/neutral/index.mjs"
     },
     "./common": {
-      "types": "./dist/types/common.d.ts",
+      "types": "./dist/neutral/common.d.ts",
       "import": "./dist/neutral/common.mjs"
     },
     "./package.json": "./package.json"
   },
   "module": "./dist/neutral/index.mjs",
   "types": "./types.d.ts",
-  "workspaces": [
-    "packages/**/*"
+  "files": [
+    "dist",
+    "src",
+    "types.d.ts"
   ],
   "scripts": {
     "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../world-solidity/build/contracts/**/*.json",
@@ -42,16 +44,16 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "dependencies": {
-    "ethers": "^6.15.0"
+    "ethers": "~6.15.0"
   },
   "devDependencies": {
-    "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^7.0.3",
-    "@xyo-network/world-solidity": "workspace:^",
-    "ethers": "^6.15.0",
-    "rimraf": "^6.0.1",
-    "typechain": "^8.3.2",
-    "typescript": "^5.9.2"
+    "@typechain/ethers-v6": "~0.5.1",
+    "@xylabs/ts-scripts-yarn3": "~7.0.3",
+    "@xyo-network/world-solidity": "workspace:~",
+    "ethers": "~6.15.0",
+    "rimraf": "~6.0.1",
+    "typechain": "~8.3.2",
+    "typescript": "~5.9.2"
   },
   "publishConfig": {
     "access": "public"

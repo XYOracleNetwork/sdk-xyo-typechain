@@ -17,8 +17,9 @@
   },
   "sideEffects": false,
   "type": "module",
-  "workspaces": [
-    "packages/**/*"
+  "files": [
+    "dist",
+    "contracts"
   ],
   "scripts": {
     "build": "echo \"[build]\" && rimraf dist && yarn copy-contracts && yarn build-v3 && yarn build-v4 && yarn build-v4-periphery",
@@ -39,16 +40,14 @@
     "package-lint": "echo \"Skipping lint...\"",
     "package-recompile": "echo \"[package-recompile]\" && yarn package-clean && yarn package-compile"
   },
-  "dependencies": {
-    "@uniswap/v3-core": "^1.0.1",
-    "@uniswap/v4-core": "^1.0.2",
-    "@uniswap/v4-periphery": "^1.0.3"
-  },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "^7.0.3",
-    "copyfiles": "^2.4.1",
-    "rimraf": "^6.0.1",
-    "truffle": "^5.11.5"
+    "@uniswap/v3-core": "~1.0.1",
+    "@uniswap/v4-core": "~1.0.2",
+    "@uniswap/v4-periphery": "~1.0.3",
+    "@xylabs/ts-scripts-yarn3": "~7.0.3",
+    "copyfiles": "~2.4.1",
+    "rimraf": "~6.0.1",
+    "truffle": "~5.11.5"
   },
   "publishConfig": {
     "access": "public"

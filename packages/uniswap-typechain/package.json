@@ -23,7 +23,7 @@
       "import": "./dist/neutral/v3/index.mjs"
     },
     "./common": {
-      "types": "./dist/types/v3/common.d.ts",
+      "types": "./dist/neutral/v3/common.d.ts",
       "import": "./dist/neutral/v3/common.mjs"
     },
     "./v3": {
@@ -31,7 +31,7 @@
       "import": "./dist/neutral/v3/index.mjs"
     },
     "./v3/common": {
-      "types": "./dist/types/v3/common.d.ts",
+      "types": "./dist/neutral/v3/common.d.ts",
       "import": "./dist/neutral/v3/common.mjs"
     },
     "./v4": {
@@ -39,7 +39,7 @@
       "import": "./dist/neutral/v4/index.mjs"
     },
     "./v4/common": {
-      "types": "./dist/types/v4/common.d.ts",
+      "types": "./dist/neutral/v4/common.d.ts",
       "import": "./dist/neutral/v4/common.mjs"
     },
     "./v4-periphery": {
@@ -47,15 +47,19 @@
       "import": "./dist/neutral/v4-periphery/index.mjs"
     },
     "./v4-periphery/common": {
-      "types": "./dist/types/v4-periphery/common.d.ts",
+      "types": "./dist/neutral/v4-periphery/common.d.ts",
       "import": "./dist/neutral/v4-periphery/common.mjs"
     },
     "./package.json": "./package.json"
   },
   "module": "./dist/neutral/v3/index.mjs",
   "types": "./types-v3.d.ts",
-  "workspaces": [
-    "packages/**/*"
+  "files": [
+    "dist",
+    "types.d.ts",
+    "types-v3.d.ts",
+    "types-v4.d.ts",
+    "types-v4-periphery.d.ts"
   ],
   "scripts": {
     "generate:sdk": "yarn generate:sdk-v3 && yarn generate:sdk-v4 && yarn generate:sdk-v4-periphery",
@@ -69,16 +73,16 @@
     "package-recompile": "echo \"[package-recompile]\" && yarn package-clean && yarn package-compile"
   },
   "dependencies": {
-    "ethers": "^6.15.0"
+    "ethers": "~6.15.0"
   },
   "devDependencies": {
-    "@typechain/ethers-v6": "^0.5.1",
-    "@xylabs/ts-scripts-yarn3": "^7.0.3",
-    "@xyo-network/uniswap-solidity": "workspace:^",
-    "ethers": "^6.15.0",
-    "rimraf": "^6.0.1",
-    "typechain": "^8.3.2",
-    "typescript": "^5.9.2"
+    "@typechain/ethers-v6": "~0.5.1",
+    "@xylabs/ts-scripts-yarn3": "~7.0.3",
+    "@xyo-network/uniswap-solidity": "workspace:~",
+    "ethers": "~6.15.0",
+    "rimraf": "~6.0.1",
+    "typechain": "~8.3.2",
+    "typescript": "~5.9.2"
   },
   "publishConfig": {
     "access": "public"
