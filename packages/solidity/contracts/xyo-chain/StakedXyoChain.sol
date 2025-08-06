@@ -5,6 +5,9 @@ import "./XyoChain/XyoChain.sol";
 import "./AddressStaking/AddressStaking.sol";
 import "./XyoChain/IXyoChainRewards.sol";
 
+// Uncomment this line to use console.log
+// import "hardhat/console.sol";
+
 contract StakedXyoChain is XyoChain, AddressStaking {
     // ========== CONSTRUCTOR ==========
 

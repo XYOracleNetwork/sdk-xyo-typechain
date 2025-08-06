@@ -35,7 +35,7 @@
     "types.d.ts"
   ],
   "scripts": {
-    "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../../node_modules/@openzeppelin/contracts/build/contracts/**/*.json",
+    "generate:sdk": "node ./scripts/generate-sdk.mjs",
     "lint-pkg": "npmPkgJsonLint .",
     "package-build": "yarn generate:sdk && yarn package-build-only",
     "package-clean": "rimraf dist && rimraf src",

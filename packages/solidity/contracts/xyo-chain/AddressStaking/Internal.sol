@@ -2,9 +2,9 @@
 pragma solidity ^0.8.20;
 
 import "./Library.sol";
-import "./interface/IAddressStakingEvents.sol";
+import "./interfaces/IAddressStakingEvents.sol";
 import "../TransferStake/Abstract.sol";
-import "./interface/IAddressStakingProperties.sol";
+import "./interfaces/IAddressStakingProperties.sol";
 
 abstract contract AddressStakingInternal is
     IAddressStakingEvents,
