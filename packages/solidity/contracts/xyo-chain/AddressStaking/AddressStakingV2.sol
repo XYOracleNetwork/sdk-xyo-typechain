@@ -1,12 +1,18 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.20;
+pragma solidity ^0.8.24;
 
 import "./AddressStaking.sol";
 import "@openzeppelin/contracts/governance/Governor.sol";
-import "@openzeppelin/contracts/governance/IGovernor.sol";
+import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
+import "@openzeppelin/contracts/utils/math/Math.sol";
 
-abstract contract AddressStakingV2 is AddressStaking, IGovernor {
+abstract contract AddressStakingV2 is
+    Governor,
+    AddressStaking,
+    GovernorCountingSimple
+{
     IGovernor[] __governors; // The governance branches that are allowed to govern the contract
+    mapping(IGovernor => bool) public isGovernor;
 
     // ========== CONSTRUCTOR ==========
 
@@ -16,10 +22,28 @@ abstract contract AddressStakingV2 is AddressStaking, IGovernor {
         IGovernor[] memory _governors // The addresses that are allowed to govern the contract
     ) AddressStaking(_minWithdrawalBlocks, _stakingToken) {
         __governors = _governors;
+        for (uint256 i = 0; i < _governors.length; i++) {
+            isGovernor[__governors[i]] = true;
+        }
     }
 
     // ========== PUBLIC ==========
-    function votingDelay2() public view returns (uint256) {
+
+    /**
+     * @dev Returns the governors that have approval authority
+     */
+    function governors() public view returns (IGovernor[] memory) {
+        return __governors;
+    }
+
+    function getVotes(
+        address account,
+        uint256 /* blockNumber */
+    ) public view override returns (uint256) {
+        return isGovernor[IGovernor(account)] ? 1 : 0;
+    }
+
+    function votingDelay() public view override returns (uint256) {
         uint256 maxDelay = 0;
         for (uint256 i = 0; i < __governors.length; i++) {
             if (__governors[i].votingDelay() > maxDelay) {
@@ -29,13 +53,19 @@ abstract contract AddressStakingV2 is AddressStaking, IGovernor {
         return maxDelay;
     }
 
-    function votingPeriod2() public view returns (uint256) {
+    function votingPeriod() public view override returns (uint256) {
         uint256 maxPeriod = 0;
         for (uint256 i = 0; i < __governors.length; i++) {
             if (__governors[i].votingPeriod() > maxPeriod) {
                 maxPeriod = __governors[i].votingPeriod();
             }
         }
-        return maxPeriod + votingDelay2();
+        return maxPeriod;
+    }
+
+    function quorum(
+        uint256 /* blockNumber */
+    ) public view override returns (uint256) {
+        return __governors.length;
     }
 }
