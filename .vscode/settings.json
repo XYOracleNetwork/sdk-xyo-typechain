@@ -52,6 +52,7 @@
     "hdwallet",
     "IERC",
     "Initializable",
+    "keccak",
     "leveldown",
     "protobuf",
     "rimraf",

@@ -5,14 +5,14 @@ import "./IXyoChainRewards.sol";
 
 interface IXyoChain {
     function chainId() external view returns (address);
-    function forkedChainId() external view returns (address);
-    function forkedAtBlockNumber() external view returns (uint256);
-    function forkedAtHash() external view returns (uint256);
-    function rewardsContract() external view returns (IXyoChainRewards);
 
-    /*
-        The Genesis block will have a block id of 0 and a block number of 0
-    */
+    function forkedChainId() external view returns (address);
+
+    function forkedAtBlockNumber() external view returns (uint256);
+
+    function forkedAtHash() external view returns (uint256);
+
+    function rewardsContract() external view returns (IXyoChainRewards);
 
     // This is when a chain is created
     event ChainCreated(
