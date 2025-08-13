@@ -14,7 +14,6 @@ const require = createRequire(import.meta.url)
 // Resolve the path to the solidity package
 const solidityPath = path.dirname(require.resolve('@openzeppelin/contracts/package.json'))
 
-// Use Node's native glob (introduced in Node.js v16.13.0)
 const files = [`${solidityPath}/build/contracts/**/*.json`]
 
 execSync(
