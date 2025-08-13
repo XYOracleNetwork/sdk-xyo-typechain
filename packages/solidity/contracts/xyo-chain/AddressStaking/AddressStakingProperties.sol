@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./interfaces/IAddressStakingProperties.sol";
-import "./Internal.sol";
+import {IAddressStakingProperties} from "./interfaces/IAddressStakingProperties.sol";
+import {AddressStakingInternal} from "./Internal.sol";
+import {AddressStakingLibrary} from "./Library.sol";
 
 abstract contract AddressStakingProperties is
     IAddressStakingProperties,
