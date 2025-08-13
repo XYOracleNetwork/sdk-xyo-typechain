@@ -50,7 +50,6 @@
     "@typechain/ethers-v6": "~0.5.1",
     "@xylabs/ts-scripts-yarn3": "~7.0.3",
     "ethers": "~6.15.0",
-    "glob": "^11.0.3",
     "rimraf": "~6.0.1",
     "typechain": "~8.3.2",
     "typescript": "~5.9.2"
