@@ -3763,6 +3763,7 @@ __metadata:
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
     "@xyo-network/solidity": "workspace:~"
     ethers: "npm:~6.15.0"
+    glob: "npm:^11.0.3"
     rimraf: "npm:~6.0.1"
     typechain: "npm:~8.3.2"
     typescript: "npm:~5.9.2"

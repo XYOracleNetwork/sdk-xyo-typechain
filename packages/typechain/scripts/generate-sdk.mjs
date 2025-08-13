@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
-import glob from 'glob'
 import { execSync } from 'node:child_process'
+import { glob } from 'glob'
+import fs from 'node:fs'
 import { createRequire } from 'node:module'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -15,12 +16,19 @@ const require = createRequire(import.meta.url)
 // Resolve the path to the solidity package
 const solidityPath = path.dirname(require.resolve('@xyo-network/solidity/package.json'))
 
-const files = await glob(`${solidityPath}/build/contracts/**/*.json`, {
-  ignore: `${solidityPath}/build/contracts/**/*.dbg.json`,
-  windowsPathsNoEscape: true, // Handle Windows paths correctly
-})
+// First, delete any dbg.json files
+const dbgFiles = await glob(`${solidityPath}/artifacts/contracts/**/*.dbg.json`)
+for (const file of dbgFiles) {
+  try {
+    fs.unlinkSync(file)
+  } catch (err) {
+    console.error(`Error deleting ${file}: ${err.message}`)
+  }
+}
+
+const includeFiles = `${solidityPath}/artifacts/contracts/**/*.json`
 
 execSync(
-  `typechain --node16-modules --out-dir=./src --target=ethers-v6 ${files.join(' ')}`,
+  `typechain --node16-modules --out-dir=./src --target=ethers-v6 ${includeFiles}`,
   { stdio: 'inherit' },
 )
