@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./IXyoChain.sol";
-import "./IXyoChainRewards.sol";
+import {IXyoChain} from "./IXyoChain.sol";
+import {IXyoChainRewards} from "./IXyoChainRewards.sol";
 
 contract XyoChain is IXyoChain {
     // The chain id from which the chain is forked (zero if it is a genesis chain)

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./XyoChain/XyoChain.sol";
-import "./AddressStaking/AddressStaking.sol";
-import "./XyoChain/IXyoChainRewards.sol";
+import {XyoChain} from "./XyoChain/XyoChain.sol";
+import {AddressStaking} from "./AddressStaking/AddressStaking.sol";
+import {IXyoChainRewards} from "./XyoChain/IXyoChainRewards.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./IXyoChainRewards.sol";
+import {IXyoChainRewards} from "./IXyoChainRewards.sol";
 
 interface IXyoChain {
     function chainId() external view returns (address);
