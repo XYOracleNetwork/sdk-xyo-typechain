@@ -3,6 +3,11 @@ pragma solidity ^0.8.24;
 
 import {IGovernor, Governor} from "@openzeppelin/contracts/governance/Governor.sol";
 
+/**
+ * @dev Abstract contract that allows multiple governance branches to govern the same contract.
+ * Each governor contract must implement the IGovernor interface.
+ */
+
 abstract contract GovernorGroup is Governor {
     IGovernor[] __governors; // The governance branches that are allowed to govern the contract
     mapping(IGovernor => bool) public isGovernor;
