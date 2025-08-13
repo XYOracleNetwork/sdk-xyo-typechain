@@ -3694,6 +3694,7 @@ __metadata:
     "@typechain/ethers-v6": "npm:~0.5.1"
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
     ethers: "npm:~6.15.0"
+    glob: "npm:^11.0.3"
     rimraf: "npm:~6.0.1"
     typechain: "npm:~8.3.2"
     typescript: "npm:~5.9.2"
