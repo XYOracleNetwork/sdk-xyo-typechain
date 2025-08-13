@@ -18,5 +18,5 @@ abstract contract HouseGovernor is Governor, GovernorCountingSimple {
 
     // ========== PUBLIC ==========
 
-    //TODO: Build House Voting
+    //TODO: Build House Voting - This is one vote per token staked to address 1969196919691969196919691969196919691969
 }
