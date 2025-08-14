@@ -28,8 +28,8 @@ describe('AddressStaking', function () {
     }
   }
 
-  describe('Deployment', function () {
-    it('Should set the right owner', async function () {
+  describe('deploymentTransaction', function () {
+    it('Should be from the correct address', async function () {
       const { sut, owner } = await loadFixture(deployOneYearAddressStakingFixture)
       const deploymentTx = await sut.deploymentTransaction()
       const deployerAddress = deploymentTx?.from
