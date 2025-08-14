@@ -7,33 +7,31 @@ import chai from 'chai'
 
 const { expect } = chai
 
-describe('XL1Governance', function () {
+describe('AddressStaking', function () {
   // We define a fixture to reuse the same setup in every test.
   // We use loadFixture to run this setup once, snapshot that state,
   // and reset Hardhat Network to that snapshot in every test.
-  async function deployOneYearXL1GovernanceFixture() {
-    const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60
-    const ONE_GWEI = 1_000_000_000
-
-    const lockedAmount = ONE_GWEI
-    const unlockTime = (await time.latest()) + ONE_YEAR_IN_SECS
+  async function deployOneYearAddressStakingFixture() {
+    // Deploy a mock ERC20 token to use as staking token
+    const TokenFactory = await ethers.getContractFactory('BurnableErc20')
+    const stakingToken = await TokenFactory.deploy('Test Token', 'TEST', 1_000_000)
+    await stakingToken.deployed()
 
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners()
 
-    const XL1Governance = await ethers.getContractFactory('XL1Governance')
-    const lock = await XL1Governance.deploy(unlockTime, { value: lockedAmount })
+    const AddressStaking = await ethers.getContractFactory('AddressStaking')
+    const sut = await AddressStaking.deploy(1, stakingToken.address)
 
     return {
-      lock, unlockTime, lockedAmount, owner, otherAccount,
+      sut, owner, otherAccount,
     }
   }
 
   describe('Deployment', function () {
     it('Should set the right owner', async function () {
-      const { lock, owner } = await loadFixture(deployOneYearXL1GovernanceFixture)
-
-      expect(await lock.owner()).to.equal(owner.address)
+      const { sut, owner } = await loadFixture(deployOneYearAddressStakingFixture)
+      expect(await sut.owner()).to.equal(owner.address)
     })
   })
 })
