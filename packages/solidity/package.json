@@ -26,7 +26,8 @@
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile",
     "package-lint": "echo Skipping lint...",
-    "package-recompile": "yarn package-clean && yarn package-compile"
+    "package-recompile": "yarn package-clean && yarn package-compile",
+    "package-test": "hardhat test"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "~2.0.0",
