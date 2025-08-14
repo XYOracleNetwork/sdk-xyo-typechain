@@ -1,0 +1,18 @@
+// .vscode/launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "request": "launch",
+      "name": "Debug Hardhat Tests",
+      "type": "node",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/node_modules/hardhat/internal/cli/cli.js",
+      "args": ["test", "--no-compile", "--network", "hardhat"],
+      "cwd": "${workspaceFolder}/packages/solidity",
+      "console": "integratedTerminal",
+      "runtimeArgs": ["--require", "ts-node/register"],
+      "internalConsoleOptions": "neverOpen"
+    }
+  ]
+}
