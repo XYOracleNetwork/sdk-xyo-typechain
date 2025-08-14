@@ -13,15 +13,15 @@ describe('AddressStaking', function () {
   // and reset Hardhat Network to that snapshot in every test.
   async function deployOneYearAddressStakingFixture() {
     // Deploy a mock ERC20 token to use as staking token
+    const initialSupply = ethers.parseUnits('1000000', 18)
     const TokenFactory = await ethers.getContractFactory('BurnableErc20')
-    const stakingToken = await TokenFactory.deploy('Test Token', 'TEST', 1_000_000)
-    await stakingToken.deployed()
+    const stakingToken = await TokenFactory.deploy('Test Token', 'TEST', initialSupply)
 
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners()
 
     const AddressStaking = await ethers.getContractFactory('AddressStaking')
-    const sut = await AddressStaking.deploy(1, stakingToken.address)
+    const sut = await AddressStaking.deploy(1, stakingToken.target)
 
     return {
       sut, owner, otherAccount,
@@ -31,7 +31,9 @@ describe('AddressStaking', function () {
   describe('Deployment', function () {
     it('Should set the right owner', async function () {
       const { sut, owner } = await loadFixture(deployOneYearAddressStakingFixture)
-      expect(await sut.owner()).to.equal(owner.address)
+      const deploymentTx = await sut.deploymentTransaction()
+      const deployerAddress = deploymentTx?.from
+      expect(deployerAddress).to.equal(owner.address)
     })
   })
 })
