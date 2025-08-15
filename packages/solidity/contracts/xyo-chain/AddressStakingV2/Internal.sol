@@ -16,8 +16,13 @@ abstract contract AddressStakingInternal is
 
     uint256 internal _totalWithdrawnStake;
 
-    //total amount that is staked for a given address
+    uint256 internal _totalSlashedStake;
+
+    //total amount that is actively staked for a given address
     mapping(address => uint256) internal _stakeAmountByAddressStaked;
+
+    //total amount that is pending staked for a given address
+    mapping(address => uint256) internal _pendingAmountByAddressStaked;
 
     //total amount that is staked by a given staker
     mapping(address => uint256) internal _stakeAmountByStaker;
@@ -67,6 +72,7 @@ abstract contract AddressStakingInternal is
         _totalActiveStake -= amount;
         _totalPendingStake += amount;
         _stakeAmountByAddressStaked[staked] -= amount;
+        _pendingAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] -= amount;
 
         emit StakeRemoved(staked, msg.sender, slot, amount);
@@ -89,6 +95,7 @@ abstract contract AddressStakingInternal is
         address staked = _accountStakes[msg.sender][slot].staked;
 
         _accountStakes[msg.sender][slot].withdrawBlock = block.number;
+        _pendingAmountByAddressStaked[staked] -= amount;
         _totalPendingStake -= amount;
         _totalWithdrawnStake += amount;
 
@@ -97,6 +104,37 @@ abstract contract AddressStakingInternal is
         emit StakeWithdrawn(staked, msg.sender, slot, amount);
 
         return true;
+    }
+
+    function _slashStake(
+        address stakedAddress,
+        uint256 amount
+    ) internal returns (uint256) {
+        uint256 atRiskStake = _stakeAmountByAddressStaked[stakedAddress] +
+            _pendingAmountByAddressStaked[stakedAddress];
+        require(atRiskStake >= amount, "Staking: insufficient atRiskStake");
+        uint256 slashRatio = (atRiskStake * 100000) / amount;
+        uint256 totalSlashedAmount = 0;
+        for (uint256 i = 0; i < _accountStakes[stakedAddress].length; i++) {
+            AddressStakingLibrary.Stake storage stake = _accountStakes[
+                stakedAddress
+            ][i];
+            //skip already withdrawn stakes
+            if (stake.withdrawBlock != 0) {
+                continue;
+            }
+            uint256 slashedAmount = (stake.amount * slashRatio) / 100000;
+            stake.amount -= slashedAmount;
+            if (stake.removeBlock != 0) {
+                _totalPendingStake -= slashedAmount;
+            } else {
+                _totalActiveStake -= slashedAmount;
+            }
+            _totalSlashedStake += slashedAmount;
+            totalSlashedAmount += slashedAmount;
+        }
+        emit StakeSlashed(stakedAddress, totalSlashedAmount);
+        return totalSlashedAmount;
     }
 
     function _getStake(
