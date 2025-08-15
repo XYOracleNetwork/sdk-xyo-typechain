@@ -1,18 +1,7 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import { deployTestERC20 } from '../helpers/index.js'
+import { deployAddressStakingV2 } from '../helpers/index.js'
 import chai from 'chai'
 const { expect } = chai
-
-async function deployAddressStakingV2Fixture() {
-  const { token } = await deployTestERC20()
-  const minWithdrawalBlocks = 3
-
-  const Staking = await ethers.getContractFactory('AddressStakingV2')
-  const staking = await Staking.deploy(minWithdrawalBlocks, await token.getAddress())
-  await staking.waitForDeployment()
-
-  return { staking, token }
-}
 
 describe('AddressStakingV2', function () {
   const stakeAmount = ethers.parseUnits('1000', 18)
@@ -25,7 +14,7 @@ describe('AddressStakingV2', function () {
   describe('addStake()', function () {
     it('should allow a staker to add a stake', async function () {
       const [staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2Fixture)
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, stakeAmount)
       const tx = await staking.connect(staker).addStake(staker.address, stakeAmount)
@@ -34,7 +23,7 @@ describe('AddressStakingV2', function () {
 
     it('should revert if amount is zero', async function () {
       const [staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2Fixture)
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await token.mint(staker.address, stakeAmount)
       await token.connect(staker).approve(await staking.getAddress(), stakeAmount)
@@ -44,6 +33,4 @@ describe('AddressStakingV2', function () {
       ).to.be.revertedWith('Staking: amount must be greater than 0')
     })
   })
-
-  // Additional tests for removeStake, withdrawStake, slashStake, etc. can follow this same structure
 })
