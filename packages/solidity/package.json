@@ -31,6 +31,7 @@
   ],
   "scripts": {
     "package-build": "yarn package-clean && yarn package-compile",
+    "package-coverage": "hardhat coverage",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile && hardhat typechain",
     "package-lint": "echo Skipping lint...",
