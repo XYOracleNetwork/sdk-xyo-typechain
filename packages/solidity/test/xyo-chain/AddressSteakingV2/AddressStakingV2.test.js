@@ -277,7 +277,7 @@ describe('AddressStakingV2', () => {
     })
 
     describe('pendingByStaker', () => {
-      it('should reflect correct after stake removal', async () => {
+      it('should reflect correct amount after stake removal', async () => {
         const [_, staker] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
