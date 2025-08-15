@@ -3,22 +3,44 @@ import { deployBridgeableToken } from '../helpers/index.js'
 import chai from 'chai'
 const { expect } = chai
 
-async function expectMintToSucceed(token, caller, recipient, amount) {
-  const tx = await token.connect(caller).mint(recipient.address, amount)
-  await tx.wait()
-
-  const balance = await token.balanceOf(recipient.address)
-  expect(balance).to.equal(amount)
-}
-
-async function expectMintToRevert(token, caller, recipient, amount) {
-  await expect(
-    token.connect(caller).mint(recipient.address, amount),
-  ).to.be.reverted
-}
-
 describe('BridgeableToken', () => {
   const amount = ethers.parseUnits('1000000', 18)
+  const expectMintToSucceed = async (token, caller, recipient, amount) => {
+    const tx = await token.connect(caller).mint(recipient.address, amount)
+    await tx.wait()
+    const balance = await token.balanceOf(recipient.address)
+    expect(balance).to.equal(amount)
+  }
+
+  const expectMintToRevert = async (token, caller, recipient, amount) => {
+    await expect(token.connect(caller).mint(recipient.address, amount)).to.be.reverted
+  }
+
+  const mintToOwner = async (token, owner, amount) => {
+    await token.connect(owner).mint(owner.address, amount)
+  }
+
+  const expectBridgeToSucceed = async ({
+    token, id, from, to, amount,
+  }) => {
+    const tx = await token.connect(from).bridge(amount, to.address)
+    const receipt = await tx.wait()
+
+    const record = await token.bridges(id)
+    expect(record.from).to.equal(from.address)
+    expect(record.destination).to.equal(to.address)
+    expect(record.amount).to.equal(amount)
+    expect(record.timepoint).to.equal(receipt.blockNumber)
+
+    const event = receipt.logs.find(log => log.fragment.name === 'BridgeInitiated')
+    expect(event.args.id).to.equal(BigInt(id))
+    expect(event.args.from).to.equal(from.address)
+    expect(event.args.destination).to.equal(to.address)
+    expect(event.args.amount).to.equal(amount)
+
+    const balance = await token.balanceOf(from.address)
+    expect(balance).to.equal(0n)
+  }
 
   describe('owner', () => {
     it('should initially be set to the deployer', async () => {
@@ -44,7 +66,7 @@ describe('BridgeableToken', () => {
         await expectMintToSucceed(token, owner, receiver, amount)
       })
 
-      it('should not allow other addresses to mint', async () => {
+      it('should not allow non-owner to mint', async () => {
         const [_, receiver, minter] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
         await expectMintToRevert(token, minter, receiver, amount)
@@ -59,7 +81,7 @@ describe('BridgeableToken', () => {
         await expectMintToSucceed(token, newOwner, receiver, amount)
       })
 
-      it('should not allow the old owner to mint', async () => {
+      it('should not allow previous owner to mint', async () => {
         const [_, newOwner, receiver] = await ethers.getSigners()
         const { token, owner: originalOwner } = await loadFixture(deployBridgeableToken)
         await token.transferOwnership(newOwner.address)
@@ -69,76 +91,52 @@ describe('BridgeableToken', () => {
   })
 
   describe('bridge', () => {
-    it('should allow the owner to bridge tokens and emit event', async () => {
-      const [owner, destination] = await ethers.getSigners()
-      const { token } = await loadFixture(deployBridgeableToken)
+    describe('when called by owner', () => {
+      it('should bridge tokens and emit event', async () => {
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployBridgeableToken)
 
-      // Mint some tokens to owner first
-      await token.mint(owner.address, amount)
+        await mintToOwner(token, owner, amount)
+        await expectBridgeToSucceed({
+          token, id: 0, from: owner, to: destination, amount,
+        })
+      })
 
-      const tx = await token.bridge(amount, destination.address)
-      const receipt = await tx.wait()
+      it('should increment bridge ID after each bridge', async () => {
+        const [owner, destination1, destination2] = await ethers.getSigners()
+        const { token } = await loadFixture(deployBridgeableToken)
 
-      // Expect event emitted
-      const event = receipt.logs.find(log =>
-        log.fragment.name === 'BridgeInitiated')
+        await mintToOwner(token, owner, amount * 2n)
+        await token.bridge(amount, destination1.address)
+        await token.bridge(amount, destination2.address)
 
-      expect(event.args.id).to.equal(0n)
-      expect(event.args.from).to.equal(owner.address)
-      expect(event.args.destination).to.equal(destination.address)
-      expect(event.args.amount).to.equal(amount)
+        expect(await token.nextBridgeId()).to.equal(2n)
 
-      // Expect bridge recorded
-      const bridgeRecord = await token.bridges(0)
-      expect(bridgeRecord.from).to.equal(owner.address)
-      expect(bridgeRecord.destination).to.equal(destination.address)
-      expect(bridgeRecord.amount).to.equal(amount)
-      expect(bridgeRecord.timepoint).to.equal(receipt.blockNumber)
+        expect((await token.bridges(0)).destination).to.equal(destination1.address)
+        expect((await token.bridges(1)).destination).to.equal(destination2.address)
+      })
 
-      // Token balance should now be 0
-      expect(await token.balanceOf(owner.address)).to.equal(0)
+      it('should revert if trying to bridge more than balance', async () => {
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployBridgeableToken)
+
+        await mintToOwner(token, owner, amount / 2n)
+
+        await expect(token.bridge(amount, destination.address)).to.be.reverted
+      })
     })
 
-    it('should increment bridge ID after each bridge', async () => {
-      const [owner, destination1, destination2] = await ethers.getSigners()
-      const { token } = await loadFixture(deployBridgeableToken)
+    describe('when called by non-owner', () => {
+      it('should revert', async () => {
+        const [owner, attacker, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployBridgeableToken)
 
-      await token.mint(owner.address, amount * 2n)
+        await mintToOwner(token, owner, amount)
 
-      await token.bridge(amount, destination1.address)
-      await token.bridge(amount, destination2.address)
-
-      const nextId = await token.nextBridgeId()
-      expect(nextId).to.equal(2n)
-
-      const record0 = await token.bridges(0)
-      const record1 = await token.bridges(1)
-
-      expect(record0.destination).to.equal(destination1.address)
-      expect(record1.destination).to.equal(destination2.address)
-    })
-
-    it('should revert if called by non-owner', async () => {
-      const [owner, attacker, destination] = await ethers.getSigners()
-      const { token } = await loadFixture(deployBridgeableToken)
-
-      // Mint to owner, but attempt bridge from attacker
-      await token.mint(owner.address, amount)
-      await expect(
-        token.connect(attacker).bridge(amount, destination.address),
-      ).to.be.reverted
-    })
-
-    it('should revert if trying to bridge more than balance', async () => {
-      const [owner, destination] = await ethers.getSigners()
-      const { token } = await loadFixture(deployBridgeableToken)
-
-      // Mint less than we try to bridge
-      await token.mint(owner.address, amount / 2n)
-
-      await expect(
-        token.bridge(amount, destination.address),
-      ).to.be.reverted
+        await expect(
+          token.connect(attacker).bridge(amount, destination.address),
+        ).to.be.reverted
+      })
     })
   })
 })
