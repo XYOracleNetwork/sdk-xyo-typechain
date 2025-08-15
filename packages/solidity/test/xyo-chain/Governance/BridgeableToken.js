@@ -11,5 +11,12 @@ describe('BridgeableToken', function () {
       const owner = await token.owner()
       expect(owner).to.equal(deployer.address)
     })
+    it('Can be changed after deployment', async function () {
+      const { token } = await loadFixture(deployBridgeableToken)
+      const [_, newOwner] = await ethers.getSigners()
+      await token.transferOwnership(newOwner.address)
+      const owner = await token.owner()
+      expect(owner).to.equal(newOwner.address)
+    })
   })
 })
