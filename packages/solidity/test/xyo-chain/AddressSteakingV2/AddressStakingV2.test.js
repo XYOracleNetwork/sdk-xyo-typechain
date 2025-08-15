@@ -11,6 +11,15 @@ describe('AddressStakingV2', () => {
     await token.connect(staker).approve(await stakingContract.getAddress(), amount)
   }
 
+  describe('stakingTokenAddress', () => {
+    it('should return staking token address', async () => {
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const tokenAddress = await token.getAddress()
+      const stakingTokenAddress = await staking.stakingTokenAddress()
+      await expect(stakingTokenAddress).to.equal(tokenAddress)
+    })
+  })
+
   describe('addStake', () => {
     it('should allow a staker to add a stake', async () => {
       const [_, staker] = await ethers.getSigners()
