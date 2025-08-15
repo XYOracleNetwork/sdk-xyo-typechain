@@ -14,7 +14,7 @@ describe('AddressStaking', function () {
   async function deployOneYearAddressStakingFixture() {
     // Deploy a mock ERC20 token to use as staking token
     const initialSupply = ethers.parseUnits('1000000', 18)
-    const TokenFactory = await ethers.getContractFactory('BurnableErc20')
+    const TokenFactory = await ethers.getContractFactory('BridgeableToken')
     const stakingToken = await TokenFactory.deploy('Test Token', 'TEST', initialSupply)
 
     // Contracts are deployed using the first signer/account by default
