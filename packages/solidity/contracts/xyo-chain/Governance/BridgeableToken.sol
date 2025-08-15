@@ -16,7 +16,7 @@ contract BridgeableToken is ERC20, Ownable {
         address from;
         address destination;
         uint256 amount;
-        uint48 timepoint; // block.timestamp (or block.number if you prefer)
+        uint256 timepoint;
     }
 
     uint256 public nextBridgeId; // starts at 0
@@ -44,7 +44,7 @@ contract BridgeableToken is ERC20, Ownable {
             from: _msgSender(),
             destination: destination,
             amount: amount,
-            timepoint: uint48(block.timestamp)
+            timepoint: block.number
         });
 
         emit BridgeInitiated(id, _msgSender(), destination, amount);
