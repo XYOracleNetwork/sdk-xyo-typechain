@@ -1,4 +1,4 @@
-import '@nomicfoundation/hardhat-toolbox-mocha-ethers'
+import '@nomicfoundation/hardhat-ethers'
 import '@typechain/hardhat'
 
 const config = {
