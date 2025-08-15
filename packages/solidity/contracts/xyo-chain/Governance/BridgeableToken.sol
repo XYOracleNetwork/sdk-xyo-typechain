@@ -24,9 +24,8 @@ contract BridgeableToken is ERC20, Ownable {
 
     constructor(
         string memory name_,
-        string memory symbol_,
-        address initialOwner
-    ) ERC20(name_, symbol_) Ownable(initialOwner) {}
+        string memory symbol_
+    ) ERC20(name_, symbol_) Ownable(msg.sender) {}
 
     function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
