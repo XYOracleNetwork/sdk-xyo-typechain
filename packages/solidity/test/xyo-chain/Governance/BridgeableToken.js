@@ -3,6 +3,20 @@ import { deployBridgeableToken } from '../helpers/index.js'
 import chai from 'chai'
 const { expect } = chai
 
+async function expectMintToSucceed(token, caller, recipient, amount) {
+  const tx = await token.connect(caller).mint(recipient.address, amount)
+  await tx.wait()
+
+  const balance = await token.balanceOf(recipient.address)
+  expect(balance).to.equal(amount)
+}
+
+async function expectMintToRevert(token, caller, recipient, amount) {
+  await expect(
+    token.connect(caller).mint(recipient.address, amount),
+  ).to.be.reverted
+}
+
 describe('BridgeableToken', function () {
   describe('owner', function () {
     it('should initially be set to the deployer', async function () {
@@ -19,49 +33,37 @@ describe('BridgeableToken', function () {
       expect(owner).to.equal(newOwner.address)
     })
   })
+
   describe('mint', function () {
     const amount = ethers.parseUnits('1000000', 18)
+
     describe('with original owner', function () {
       it('should allow owner to mint', async function () {
         const [_, receiver] = await ethers.getSigners()
-        const { token } = await loadFixture(deployBridgeableToken)
-        await token.mint(receiver.address, amount)
+        const { token, owner } = await loadFixture(deployBridgeableToken)
+        await expectMintToSucceed(token, owner, receiver, amount)
       })
+
       it('should not allow other addresses to mint', async function () {
         const [_, receiver, minter] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
-        const contract = token.connect(minter)
-        await expect(
-          contract.mint(receiver.address, amount),
-        ).to.be.reverted
+        await expectMintToRevert(token, minter, receiver, amount)
       })
     })
+
     describe('after ownership transfer', function () {
-      it('Should allow the new owner to mint', async function () {
-        const [originalOwner, newOwner, receiver] = await ethers.getSigners()
+      it('should allow the new owner to mint', async function () {
+        const [_, newOwner, receiver] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
-
-        // Transfer ownership
         await token.transferOwnership(newOwner.address)
-
-        // Connect as new owner and mint
-        await token.connect(newOwner).mint(receiver.address, amount)
-
-        const balance = await token.balanceOf(receiver.address)
-        expect(balance).to.equal(amount)
+        await expectMintToSucceed(token, newOwner, receiver, amount)
       })
 
-      it('Should not allow the old owner to mint after ownership transfer', async function () {
-        const [originalOwner, newOwner, receiver] = await ethers.getSigners()
-        const { token } = await loadFixture(deployBridgeableToken)
-
-        // Transfer ownership
+      it('should not allow the old owner to mint after ownership transfer', async function () {
+        const [_, newOwner, receiver] = await ethers.getSigners()
+        const { token, owner: originalOwner } = await loadFixture(deployBridgeableToken)
         await token.transferOwnership(newOwner.address)
-
-        // Try to mint as the old owner
-        await expect(
-          token.connect(originalOwner).mint(receiver.address, amount),
-        ).to.be.reverted
+        await expectMintToRevert(token, originalOwner, receiver, amount)
       })
     })
   })
