@@ -1,0 +1,10 @@
+export const deployBridgeableToken = async (name = 'Test Token', symbol = 'TEST') => {
+  // Deploy a BridgeableToken token to use as staking token
+  const TokenFactory = await ethers.getContractFactory('BridgeableToken')
+  const token = await TokenFactory.deploy(name, symbol)
+
+  // Contracts are deployed using the first signer/account by default
+  const [owner] = await ethers.getSigners()
+
+  return { token, owner }
+}
