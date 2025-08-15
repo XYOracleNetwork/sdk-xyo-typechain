@@ -11,7 +11,9 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false
+    "noEmit": false,
+    "allowImportingTsExtensions": false,
+    "emitDeclarationOnly": false
   },
   "extends": "@xylabs/tsconfig"
 }

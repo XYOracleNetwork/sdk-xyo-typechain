@@ -1,4 +1,5 @@
-import '@nomicfoundation/hardhat-toolbox'
+import '@nomicfoundation/hardhat-toolbox-mocha-ethers'
+import '@typechain/hardhat'
 
 const config = {
   solidity: {
@@ -12,6 +13,11 @@ const config = {
     },
   },
   paths: { sources: './contracts' },
+  typechain: {
+    target: 'ethers-v6', // <-- generate Ethers v6 bindings
+    outDir: 'typechain-types', // where types go
+    // alwaysGenerateOverloads: true, // optional
+  },
 }
 
 export default config
