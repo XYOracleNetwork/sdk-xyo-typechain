@@ -211,11 +211,12 @@ describe('AddressStakingV2', () => {
 
     describe('active', () => {
       it('should reflect correct amount after staking', async () => {
-        const [_, staker] = await ethers.getSigners()
+        const [_, staker, staked1, staked2] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staked1.address, amount / 2n)
+        await staking.connect(staker).addStake(staked2.address, amount / 2n)
 
         const globalActive = await staking.active()
 
@@ -224,32 +225,64 @@ describe('AddressStakingV2', () => {
     })
 
     describe('activeByStaker', () => {
-      it('should reflect correct amount after staking', async () => {
-        const [_, staker] = await ethers.getSigners()
-        const { staking, token } = await loadFixture(deployAddressStakingV2)
+      describe('for staker address', () => {
+        it('should reflect correct amount after staking', async () => {
+          const [_, staker, staked1, staked2] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-        await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
 
-        const activeForStaker = await staking.activeByStaker(staker.address)
+          const activeForStaker = await staking.activeByStaker(staker.address)
 
-        expect(activeForStaker).to.equal(amount)
+          expect(activeForStaker).to.equal(amount)
+        })
+      })
+      describe('for non-staker address', () => {
+        it('should return 0', async () => {
+          const [_, staker, staked1, staked2, other] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+
+          const activeForStaker = await staking.activeByStaker(other.address)
+
+          expect(activeForStaker).to.equal(0)
+        })
       })
     })
 
     describe('activeByAddressStaked', () => {
-      it('should reflect correct amount after staking', async () => {
-        const [_, staker] = await ethers.getSigners()
-        const { staking, token } = await loadFixture(deployAddressStakingV2)
+      describe('for staked address', () => {
+        it('should reflect correct amount after staking', async () => {
+          const [_, staker, staked1, staked2] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-        await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
 
-        const activeForTarget = await staking.activeByAddressStaked(staker.address)
-        const globalActive = await staking.active()
+          const activeForTarget = await staking.activeByAddressStaked(staked1.address)
 
-        expect(activeForTarget).to.equal(amount)
-        expect(globalActive).to.equal(amount)
+          expect(activeForTarget).to.equal(amount / 2n)
+        })
+      })
+      describe('for non-staked address', () => {
+        it('should return 0', async () => {
+          const [_, staker, staked1, staked2, other] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+
+          const activeForTarget = await staking.activeByAddressStaked(other.address)
+
+          expect(activeForTarget).to.equal(0)
+        })
       })
     })
 
