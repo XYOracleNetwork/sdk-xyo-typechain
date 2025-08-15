@@ -1,5 +1,7 @@
 import '@nomicfoundation/hardhat-ethers'
+import '@nomicfoundation/hardhat-toolbox'
 import '@typechain/hardhat'
+import '@nomicfoundation/hardhat-verify'
 
 const config = {
   solidity: {
