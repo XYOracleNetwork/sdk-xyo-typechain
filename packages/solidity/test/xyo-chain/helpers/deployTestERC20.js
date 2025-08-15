@@ -1,7 +1,9 @@
 export const deployTestERC20 = async (name = 'Test Token', symbol = 'TEST') => {
-  const [deployer] = await ethers.getSigners()
-  const Token = await ethers.getContractFactory('ERC20')
-  const token = await Token.deploy(name, symbol)
-  await token.waitForDeployment()
-  return { token, deployer }
+  const TokenFactory = await ethers.getContractFactory('BridgeableToken')
+  const token = await TokenFactory.deploy(name, symbol)
+
+  // Contracts are deployed using the first signer/account by default
+  const [owner] = await ethers.getSigners()
+
+  return { token, owner }
 }
