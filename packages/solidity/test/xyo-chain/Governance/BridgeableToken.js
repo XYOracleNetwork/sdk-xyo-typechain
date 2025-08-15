@@ -5,10 +5,11 @@ const { expect } = chai
 
 describe('BridgeableToken', function () {
   describe('owner', function () {
-    it('Should be from the correct address', async function () {
-      const { token, owner } = await loadFixture(deployBridgeableToken)
-      const tokenOwner = await token.owner()
-      expect(tokenOwner).to.equal(owner.address)
+    it('Should initially be set to the deployer', async function () {
+      const { token } = await loadFixture(deployBridgeableToken)
+      const [deployer] = await ethers.getSigners()
+      const owner = await token.owner()
+      expect(owner).to.equal(deployer.address)
     })
   })
 })
