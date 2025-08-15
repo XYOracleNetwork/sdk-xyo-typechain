@@ -19,6 +19,65 @@ describe('AddressStakingV2', () => {
       await expect(stakingTokenAddress).to.equal(tokenAddress)
     })
   })
+  describe('AddressStakingProperties', () => {
+    const amount = ethers.parseUnits('1000', 18)
+
+    it('should return correct minWithdrawalBlocks', async () => {
+      const { staking, minWithdrawalBlocks } = await loadFixture(deployAddressStakingV2)
+      const result = await staking.minWithdrawalBlocks()
+      expect(result).to.equal(minWithdrawalBlocks)
+    })
+
+    it('should reflect correct activeByStaker and activeByAddressStaked after staking', async () => {
+      const [_, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staker.address, amount)
+
+      const activeForStaker = await staking.activeByStaker(staker.address)
+      const activeForTarget = await staking.activeByAddressStaked(staker.address)
+      const globalActive = await staking.active()
+
+      expect(activeForStaker).to.equal(amount)
+      expect(activeForTarget).to.equal(amount)
+      expect(globalActive).to.equal(amount)
+    })
+
+    it('should reflect pendingByStaker and pending after stake removal', async () => {
+      const [_, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).removeStake(0)
+
+      const pendingForStaker = await staking.pendingByStaker(staker.address)
+      const globalPending = await staking.pending()
+
+      expect(pendingForStaker).to.equal(amount)
+      expect(globalPending).to.equal(amount)
+    })
+
+    it('should reflect withdrawnByStaker and withdrawn after withdrawal', async () => {
+      const [_, staker] = await ethers.getSigners()
+      const {
+        staking, token, minWithdrawalBlocks,
+      } = await loadFixture(deployAddressStakingV2)
+
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).removeStake(0)
+      await advanceBlocks(minWithdrawalBlocks)
+      await staking.connect(staker).withdrawStake(0)
+
+      const withdrawnForStaker = await staking.withdrawnByStaker(staker.address)
+      const globalWithdrawn = await staking.withdrawn()
+
+      expect(withdrawnForStaker).to.equal(amount)
+      expect(globalWithdrawn).to.equal(amount)
+    })
+  })
 
   describe('addStake', () => {
     it('should allow a staker to add a stake', async () => {
