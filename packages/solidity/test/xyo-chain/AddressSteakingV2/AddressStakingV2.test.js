@@ -58,6 +58,18 @@ describe('AddressStakingV2', () => {
         staking.connect(staker).removeStake(0),
       ).to.be.revertedWith('Staking: not removable')
     })
+
+    it('should revert if non-existent stake is removed', async () => {
+      const [staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staker.address, amount)
+
+      await expect(
+        staking.connect(staker).removeStake(1),
+      ).to.be.reverted
+    })
   })
 
   describe('withdrawStake', () => {
