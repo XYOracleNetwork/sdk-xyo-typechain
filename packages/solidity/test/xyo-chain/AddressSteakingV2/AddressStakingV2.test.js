@@ -1,5 +1,5 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import { deployAddressStakingV2 } from '../helpers/index.js'
+import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
 import chai from 'chai'
 const { expect } = chai
 
@@ -85,9 +85,7 @@ describe('AddressStakingV2', () => {
       await staking.connect(staker).removeStake(0)
 
       // Mine required number of blocks
-      for (let i = 0; i < minWithdrawalBlocks; i++) {
-        await ethers.provider.send('evm_mine', [])
-      }
+      await advanceBlocks(minWithdrawalBlocks)
 
       const tx = await staking.connect(staker).withdrawStake(0)
       await expect(tx).to.emit(staking, 'StakeWithdrawn')
