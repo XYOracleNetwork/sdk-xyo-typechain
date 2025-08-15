@@ -8,7 +8,7 @@ import {AddressStakingLibrary} from "./Library.sol";
 import {AddressStakingInternal} from "./Internal.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-contract AddressStaking is
+contract AddressStakingV2 is
     IAddressStaking,
     TransferStake,
     AddressStakingProperties,

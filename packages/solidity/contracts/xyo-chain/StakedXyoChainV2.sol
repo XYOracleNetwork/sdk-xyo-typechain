@@ -2,14 +2,14 @@
 pragma solidity ^0.8.24;
 
 import {XyoChain} from "./XyoChain/XyoChain.sol";
-import {AddressStaking} from "./AddressStakingV2/AddressStaking.sol";
+import {AddressStakingV2} from "./AddressStakingV2/AddressStakingV2.sol";
 import {IXyoChainRewards} from "./XyoChain/IXyoChainRewards.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-contract StakedXyoChainV2 is XyoChain, AddressStaking {
+contract StakedXyoChainV2 is XyoChain, AddressStakingV2 {
     // ========== CONSTRUCTOR ==========
 
     constructor(
@@ -26,6 +26,6 @@ contract StakedXyoChainV2 is XyoChain, AddressStaking {
             _forkFromLastHash,
             _rewardsContract
         )
-        AddressStaking(_minWithdrawalBlocks, _stakingTokenAddress)
+        AddressStakingV2(_minWithdrawalBlocks, _stakingTokenAddress)
     {}
 }
