@@ -18,7 +18,11 @@
   "sideEffects": false,
   "type": "module",
   "exports": {
-    "import": "./typechain-types/index.ts"
+    ".": {
+      "import": "./typechain-types/index.ts"
+    },
+    "./package.json": "./package.json",
+    "./README.md": "./README.md"
   },
   "files": [
     "contracts/",
