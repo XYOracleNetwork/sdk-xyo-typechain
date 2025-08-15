@@ -59,7 +59,7 @@ describe('BridgeableToken', function () {
         await expectMintToSucceed(token, newOwner, receiver, amount)
       })
 
-      it('should not allow the old owner to mint after ownership transfer', async function () {
+      it('should not allow the old owner to mint', async function () {
         const [_, newOwner, receiver] = await ethers.getSigners()
         const { token, owner: originalOwner } = await loadFixture(deployBridgeableToken)
         await token.transferOwnership(newOwner.address)
