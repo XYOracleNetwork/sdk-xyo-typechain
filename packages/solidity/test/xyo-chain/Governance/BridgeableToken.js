@@ -17,7 +17,7 @@ describe('BridgeableToken', () => {
   }
 
   const mintToOwner = async (token, owner, amount) => {
-    await token.connect(owner).mint(owner.address, amount)
+    await expectMintToSucceed(token, owner, owner, amount)
   }
 
   const expectBridgeToSucceed = async ({
