@@ -46,7 +46,7 @@
     "ethers": "~6.15.0"
   },
   "devDependencies": {
-    "@openzeppelin/contracts": "^5.4.0",
+    "@openzeppelin/contracts": "~5.4.0",
     "@typechain/ethers-v6": "~0.5.1",
     "@xylabs/ts-scripts-yarn3": "~7.0.3",
     "ethers": "~6.15.0",

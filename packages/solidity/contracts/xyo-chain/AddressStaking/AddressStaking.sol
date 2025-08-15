@@ -36,6 +36,12 @@ contract AddressStaking is
         return _withdrawStake(slot, this.minWithdrawalBlocks());
     }
 
+    function stakedAddresses(
+        uint256 /*minStake*/
+    ) external pure returns (uint256) {
+        return 0; //TODO
+    }
+
     function getStake(
         address staker,
         uint256 slot

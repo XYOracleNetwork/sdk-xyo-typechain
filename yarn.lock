@@ -1819,7 +1819,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@openzeppelin/contracts@npm:^5.4.0, @openzeppelin/contracts@npm:~5.4.0":
+"@openzeppelin/contracts@npm:~5.4.0":
   version: 5.4.0
   resolution: "@openzeppelin/contracts@npm:5.4.0"
   checksum: 10/4f7f926ebd98279ba8223cae5d2cd38e0806e60e3e3a615c9d739ffab870ffab7a1e85f47092faa123c0f26d1699ca15252adea8bcdcaf360b21781acc93b218
@@ -3672,13 +3672,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xylabs/tsconfig@npm:^7.1.0":
-  version: 7.1.0
-  resolution: "@xylabs/tsconfig@npm:7.1.0"
-  checksum: 10/e16faa355c9d00f256ed1b990a95f3927f58f5690806e25fb3cd3c6f584f0ea66ed4115abd0620ff6531a8bfc2daa65192397a3b77ecfc6394be3a488fc2edac
-  languageName: node
-  linkType: hard
-
 "@xylabs/tsconfig@npm:~7.0.3":
   version: 7.0.3
   resolution: "@xylabs/tsconfig@npm:7.0.3"
@@ -3686,11 +3679,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@xylabs/tsconfig@npm:~7.1.0":
+  version: 7.1.3
+  resolution: "@xylabs/tsconfig@npm:7.1.3"
+  checksum: 10/4be0b73a651123aa813154eb7e27d59e0df5921adb3bbceb44c7b430a929741a0e161143c1106b1a3465f85aca13ae0462e65dba7fcc7bd5eee014810bb02a4e
+  languageName: node
+  linkType: hard
+
 "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain, @xyo-network/open-zeppelin-typechain@workspace:~":
   version: 0.0.0-use.local
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
   dependencies:
-    "@openzeppelin/contracts": "npm:^5.4.0"
+    "@openzeppelin/contracts": "npm:~5.4.0"
     "@typechain/ethers-v6": "npm:~0.5.1"
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
     ethers: "npm:~6.15.0"
@@ -3739,7 +3739,7 @@ __metadata:
     "@typechain/ethers-v6": "npm:~0.5.0"
     "@typechain/hardhat": "npm:~9.0.0"
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
-    "@xylabs/tsconfig": "npm:^7.1.0"
+    "@xylabs/tsconfig": "npm:~7.1.0"
     chai: "npm:~4.2.0"
     ethers: "npm:~6.4.0"
     hardhat: "npm:~2.26.2"
@@ -3751,7 +3751,7 @@ __metadata:
     typechain: "npm:~8.3.0"
     typescript: "npm:~5.8.3"
   peerDependencies:
-    ethers: ^6
+    ethers: ~6
   languageName: unknown
   linkType: soft
 
@@ -3763,7 +3763,7 @@ __metadata:
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
     "@xyo-network/solidity": "workspace:~"
     ethers: "npm:~6.15.0"
-    glob: "npm:^11.0.3"
+    glob: "npm:~11.0.3"
     rimraf: "npm:~6.0.1"
     typechain: "npm:~8.3.2"
     typescript: "npm:~5.9.2"
@@ -8109,7 +8109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^11.0.0, glob@npm:^11.0.3":
+"glob@npm:^11.0.0, glob@npm:^11.0.3, glob@npm:~11.0.3":
   version: 11.0.3
   resolution: "glob@npm:11.0.3"
   dependencies:
@@ -14891,6 +14891,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript@npm:>=5, typescript@npm:~5.9.2":
+  version: 5.9.2
+  resolution: "typescript@npm:5.9.2"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/cc2fe6c822819de5d453fa25aa9f32096bf70dde215d481faa1ad84a283dfb264e33988ed8f6d36bc803dd0b16dbe943efa311a798ef76d5b3892a05dfbfd628
+  languageName: node
+  linkType: hard
+
 "typescript@npm:~5.8.3":
   version: 5.8.3
   resolution: "typescript@npm:5.8.3"
@@ -14898,6 +14908,16 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 10/65c40944c51b513b0172c6710ee62e951b70af6f75d5a5da745cb7fab132c09ae27ffdf7838996e3ed603bb015dadd099006658046941bd0ba30340cc563ae92
+  languageName: node
+  linkType: hard
+
+"typescript@patch:typescript@npm%3A>=5#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A~5.9.2#optional!builtin<compat/typescript>":
+  version: 5.9.2
+  resolution: "typescript@patch:typescript@npm%3A5.9.2#optional!builtin<compat/typescript>::version=5.9.2&hash=5786d5"
+  bin:
+    tsc: bin/tsc
+    tsserver: bin/tsserver
+  checksum: 10/bd810ab13e8e557225a8b5122370385440b933e4e077d5c7641a8afd207fdc8be9c346e3c678adba934b64e0e70b0acf5eef9493ea05170a48ce22bef845fdc7
   languageName: node
   linkType: hard
 
