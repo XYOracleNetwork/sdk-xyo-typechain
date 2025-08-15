@@ -16,7 +16,7 @@ describe('AddressStaking', function () {
     const sut = await AddressStaking.deploy(1, token.target)
 
     return {
-      sut, owner, otherAccount, stakingToken: token,
+      sut, owner, otherAccount, token,
     }
   }
 
