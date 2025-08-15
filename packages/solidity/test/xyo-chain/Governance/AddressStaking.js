@@ -6,17 +6,17 @@ const { expect } = chai
 
 describe('AddressStaking', function () {
   async function deployOneYearAddressStakingFixture() {
-    // Deploy a BridgeableToken token to use as staking token
-    const { token: stakingToken, owner: tokenOwner } = await deployBridgeableToken()
+    // Deploy a BridgeableToken token to use as the staking token
+    const { token } = await deployBridgeableToken()
 
     // Contracts are deployed using the first signer/account by default
     const [owner, otherAccount] = await ethers.getSigners()
 
     const AddressStaking = await ethers.getContractFactory('AddressStaking')
-    const sut = await AddressStaking.deploy(1, stakingToken.target)
+    const sut = await AddressStaking.deploy(1, token.target)
 
     return {
-      sut, owner, otherAccount, stakingToken,
+      sut, owner, otherAccount, stakingToken: token,
     }
   }
 
