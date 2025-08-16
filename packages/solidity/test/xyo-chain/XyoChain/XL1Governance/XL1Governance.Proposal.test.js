@@ -33,7 +33,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const values = [amount]
     const calldatas = [transferCalldata]
     const description = `Proposal to transfer ${amount} tokens to ${await recipient.getAddress()}`
-    const descriptionHash = ethers.id(description)
+    const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
 
     // Add subGovernor as governor so they can vote and propose
     const subGovernorAddress = await subGovernor.getAddress()
@@ -50,11 +50,11 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
       descriptionHash,
     )
     // Submit the proposal
-    await expect(xl1Governance.propose(targets, values, calldatas, descriptionHash))
+    await expect(xl1Governance.propose(targets, values, calldatas, description))
       .to.emit(xl1Governance, 'ProposalCreated')
       .withArgs(
       // We don't know the proposalId ahead of time, so we can use anyValue
-        anyValue,
+        proposalId,
         await deployer.getAddress(), // proposer
         targets,
         values,
@@ -62,7 +62,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
         calldatas,
         anyValue, // voteStart
         anyValue, // voteEnd
-        descriptionHash,
+        description,
       )
     const proposalState = await xl1Governance.state(proposalId)
 
