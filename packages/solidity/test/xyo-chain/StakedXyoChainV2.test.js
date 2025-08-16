@@ -7,12 +7,12 @@ describe('StakedXyoChainV2', () => {
   it('should deploy successfully and return correct initial values', async () => {
     const {
       chain,
-      rewards,
-      token,
-      forkedChainId,
       forkedAtBlockNumber,
       forkedAtHash,
+      forkedChainId,
       minWithdrawalBlocks,
+      rewards,
+      token,
     } = await loadFixture(deployStakedXyoChainV2)
 
     expect(await chain.forkedChainId()).to.equal(forkedChainId)
@@ -27,13 +27,12 @@ describe('StakedXyoChainV2', () => {
     const {
       rewards,
       rewardConfig: {
-        initialReward,
-        stepSize,
-        stepFactorNumerator,
-        stepFactorDenominator,
-        _minRewardPerBlock,
-        genesisReward,
         floorPlaces,
+        genesisReward,
+        initialReward,
+        stepFactorDenominator,
+        stepFactorNumerator,
+        stepSize,
       },
     } = await loadFixture(deployStakedXyoChainV2)
 
@@ -41,7 +40,6 @@ describe('StakedXyoChainV2', () => {
     expect(await rewards.calcBlockReward(0)).to.equal(genesisReward)
 
     // Validate block reward after one step
-    const expectedStep1
       = ((initialReward * stepFactorNumerator) / stepFactorDenominator)
         - (((initialReward * stepFactorNumerator) / stepFactorDenominator)
           % 10n ** floorPlaces)
