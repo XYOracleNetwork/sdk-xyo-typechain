@@ -2,20 +2,26 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import chai from 'chai'
 const { expect } = chai
 import {
+  advanceBlocks,
   deployXL1Governance, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
 } from '../helpers/index.js'
 
 describe('XL1Governance', () => {
-  it('should return the current block number as clock()', async () => {
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
-    const currentBlock = await ethers.provider.getBlockNumber()
-
-    expect(await xl1Governance.clock()).to.equal(currentBlock)
+  describe('clock', () => {
+    it('should return the current block number as clock()', async () => {
+      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      for (let index = 0; index < 5; index++) {
+        const currentBlock = await ethers.provider.getBlockNumber()
+        expect(await xl1Governance.clock()).to.equal(currentBlock)
+        await advanceBlocks(1)
+      }
+    })
   })
-
-  it('should return the correct CLOCK_MODE string', async () => {
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
-    expect(await xl1Governance.CLOCK_MODE()).to.equal('mode=blocknumber&from=default')
+  describe('CLOCK_MODE', () => {
+    it('should return the clock mode', async () => {
+      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      expect(await xl1Governance.CLOCK_MODE()).to.equal('mode=blocknumber&from=default')
+    })
   })
 
   it('should have a quorum equal to the number of governors', async () => {
