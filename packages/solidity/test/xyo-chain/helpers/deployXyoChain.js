@@ -1,4 +1,10 @@
-import { deployXyoChainRewards } from './XyoChainRewards.test.js'
+import { deployXyoChainRewards } from './deployXyoChainRewards.js'
+
+const defaultForkParams = {
+  forkedChainId: '0x0000000000000000000000000000000000000001',
+  forkedAtBlockNumber: 12_345n,
+  forkedAtHash: 0xab_cd_efn,
+}
 
 export const deployXyoChain = async (forkParamsOverrides = {}, rewardsConfigOverrides = {}) => {
   const forkParams = { ...defaultForkParams, ...forkParamsOverrides }
