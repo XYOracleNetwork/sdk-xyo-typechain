@@ -13,7 +13,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const { subGovernor } = await loadFixture(subGovernorFixture)
     const { token, owner } = await loadFixture(deployTestERC20)
 
-    const [_, recipient] = await ethers.getSigners()
+    const [_, proposer, recipient] = await ethers.getSigners()
     const amount = 1000n
 
     // Transfer tokens to the governance contract so it can transfer them out
@@ -50,12 +50,11 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
       descriptionHash,
     )
     // Submit the proposal
-    await expect(xl1Governance.propose(targets, values, calldatas, description))
+    await expect(xl1Governance.connect(proposer).propose(targets, values, calldatas, description))
       .to.emit(xl1Governance, 'ProposalCreated')
       .withArgs(
-      // We don't know the proposalId ahead of time, so we can use anyValue
         proposalId,
-        await deployer.getAddress(), // proposer
+        await proposer.getAddress(),
         targets,
         values,
         [anyValue],
