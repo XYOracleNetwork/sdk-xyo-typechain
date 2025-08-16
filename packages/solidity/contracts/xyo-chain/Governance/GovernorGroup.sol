@@ -78,6 +78,12 @@ abstract contract GovernorGroup is Governor {
     }
 
     function governorCount() public view returns (uint256) {
-        return __governors.length;
+        uint256 count;
+        for (uint256 i = 0; i < __governors.length; i++) {
+            if (isGovernor[__governors[i]]) {
+                count++;
+            }
+        }
+        return count;
     }
 }
