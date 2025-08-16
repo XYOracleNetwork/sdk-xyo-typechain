@@ -2,7 +2,7 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import chai from 'chai'
 const { expect } = chai
 import {
-  deployXL1Governance, DefaultVotingDelay, DefaultVotingPeriod,
+  deployXL1Governance, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
 } from '../helpers/index.js'
 
 describe('XL1Governance', () => {
@@ -51,14 +51,14 @@ describe('XL1Governance', () => {
     it('should return voting delay', async () => {
       const { xl1Governance } = await loadFixture(deployXL1Governance)
 
-      expect(await xl1Governance.votingDelay()).to.equal(DefaultVotingDelay)
+      expect(await xl1Governance.votingDelay()).to.equal(XL1GovernanceDefaultVotingDelay)
     })
   })
   describe('votingPeriod', () => {
     it('should return voting period', async () => {
       const { xl1Governance } = await loadFixture(deployXL1Governance)
 
-      expect(await xl1Governance.votingPeriod()).to.equal(DefaultVotingPeriod)
+      expect(await xl1Governance.votingPeriod()).to.equal(XL1GovernanceDefaultVotingPeriod)
     })
   })
 })

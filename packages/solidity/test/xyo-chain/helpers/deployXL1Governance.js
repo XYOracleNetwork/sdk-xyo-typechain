@@ -1,7 +1,7 @@
-export const DefaultVotingDelay = 1
-export const DefaultVotingPeriod = 5
+export const XL1GovernanceDefaultVotingDelay = 1
+export const XL1GovernanceDefaultVotingPeriod = 5
 
-export const deployXL1Governance = async (votingDelay = DefaultVotingDelay, votingPeriod = DefaultVotingPeriod) => {
+export const deployXL1Governance = async (votingDelay = XL1GovernanceDefaultVotingDelay, votingPeriod = XL1GovernanceDefaultVotingPeriod) => {
   const [deployer] = await ethers.getSigners()
 
   const XL1Governance = await ethers.getContractFactory('XL1Governance')
