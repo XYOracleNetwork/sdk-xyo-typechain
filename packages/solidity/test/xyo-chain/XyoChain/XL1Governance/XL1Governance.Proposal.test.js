@@ -12,7 +12,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const { subGovernor } = await loadFixture(subGovernorFixture)
     const { token, owner } = await loadFixture(deployTestERC20)
 
-    const recipient = (await ethers.getSigners())[1]
+    const [_, recipient] = await ethers.getSigners()
     const amount = 1000n
 
     // Transfer tokens to the governance contract so it can transfer them out
@@ -29,7 +29,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     ])
 
     const targets = [await token.getAddress()]
-    const values = [0]
+    const values = [amount]
     const calldatas = [transferCalldata]
     const description = 'Proposal to transfer tokens to recipient'
 
@@ -42,7 +42,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     await advanceBlocks(await xl1Governance.votingDelay())
 
     // Vote in favor
-    await xl1Governance.castVote(proposalId, 1) // 1 = FOR
+    await xl1Governance.castVote(proposalId, 1n) // 1 = FOR
 
     // Move past voting period
     await advanceBlocks(await xl1Governance.votingPeriod())
