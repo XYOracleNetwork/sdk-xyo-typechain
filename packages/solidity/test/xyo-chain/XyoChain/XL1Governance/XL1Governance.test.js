@@ -4,7 +4,7 @@ const { expect } = chai
 import {
   advanceBlocks,
   deployXL1Governance, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
-} from '../helpers/index.js'
+} from '../../helpers/index.js'
 
 describe('XL1Governance', () => {
   describe('clock', () => {
