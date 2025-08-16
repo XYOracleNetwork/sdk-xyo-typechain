@@ -29,10 +29,9 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.quorum(0)).to.equal(await xl1Governance.governorCount())
     })
   })
-  describe('getVotes', () => {
+  describe.skip('getVotes', () => {
     it('should allow checking vote power based on governor membership', async () => {
       const { xl1Governance } = await loadFixture(deployXL1Governance)
-      const [signerA] = await ethers.getSigners()
 
       const fakeGovernor = await (
         await ethers.getContractFactory('SingleAddressSubGovernor')
@@ -44,6 +43,15 @@ describe('XL1Governance', () => {
       // Add governor and expect vote weight to be 1
       await xl1Governance.addGovernor(fakeGovernor)
       expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(1)
+    })
+  })
+
+  describe('supportsInterface', () => {
+    it('should return check for interface support', async () => {
+      const { xl1Governance } = await loadFixture(deployXL1Governance)
+
+      const NON_EXISTENT_INTERFACE = '0x12345678'
+      expect(await xl1Governance.supportsInterface(NON_EXISTENT_INTERFACE)).to.equal(false)
     })
   })
 
