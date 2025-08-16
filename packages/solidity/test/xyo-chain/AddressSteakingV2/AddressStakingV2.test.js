@@ -103,11 +103,15 @@ describe('AddressStakingV2', () => {
     })
     it('should revert if non-existent stake is withdrawn', async () => {
       const [staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const {
+        staking, token, minWithdrawalBlocks,
+      } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
       await staking.connect(staker).addStake(staker.address, amount)
       await staking.connect(staker).removeStake(0)
+
+      await advanceBlocks(minWithdrawalBlocks)
 
       await expect(
         staking.connect(staker).withdrawStake(1),
@@ -245,6 +249,38 @@ describe('AddressStakingV2', () => {
 
         expect(globalActive).to.equal(amount)
       })
+      it('should reflect correct amount after removal', async () => {
+        const [_, staker, staked1, staked2] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked1.address, amount / 2n)
+        await staking.connect(staker).addStake(staked2.address, amount / 2n)
+
+        await staking.connect(staker).removeStake(0)
+
+        const globalActive = await staking.active()
+
+        expect(globalActive).to.equal(amount / 2n)
+      })
+      it('should reflect correct amount after withdraw', async () => {
+        const [_, staker, staked1, staked2] = await ethers.getSigners()
+        const {
+          staking, token, minWithdrawalBlocks,
+        } = await loadFixture(deployAddressStakingV2)
+
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked1.address, amount / 2n)
+        await staking.connect(staker).addStake(staked2.address, amount / 2n)
+
+        await staking.connect(staker).removeStake(0)
+        await advanceBlocks(minWithdrawalBlocks)
+        await staking.connect(staker).withdrawStake(0)
+
+        const globalActive = await staking.active()
+
+        expect(globalActive).to.equal(amount / 2n)
+      })
     })
 
     describe('activeByStaker', () => {
@@ -260,6 +296,36 @@ describe('AddressStakingV2', () => {
           const activeForStaker = await staking.activeByStaker(staker.address)
 
           expect(activeForStaker).to.equal(amount)
+        })
+        it('should reflect correct amount after removal', async () => {
+          const [_, staker, staked1, staked2] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).removeStake(0)
+
+          const activeForStaker = await staking.activeByStaker(staker.address)
+
+          expect(activeForStaker).to.equal(amount / 2n)
+        })
+        it('should reflect correct amount after withdraw', async () => {
+          const [_, staker, staked1, staked2] = await ethers.getSigners()
+          const {
+            staking, token, minWithdrawalBlocks,
+          } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).removeStake(0)
+          await advanceBlocks(minWithdrawalBlocks)
+          await staking.connect(staker).withdrawStake(0)
+
+          const activeForStaker = await staking.activeByStaker(staker.address)
+
+          expect(activeForStaker).to.equal(amount / 2n)
         })
       })
       describe('for non-staker address', () => {
@@ -291,6 +357,36 @@ describe('AddressStakingV2', () => {
           const activeForTarget = await staking.activeByAddressStaked(staked1.address)
 
           expect(activeForTarget).to.equal(amount / 2n)
+        })
+        it('should reflect correct amount after removal', async () => {
+          const [_, staker, staked1, staked2] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).removeStake(0)
+
+          const activeForTarget = await staking.activeByAddressStaked(staked1.address)
+
+          expect(activeForTarget).to.equal(0n)
+        })
+        it('should reflect correct amount after withdraw', async () => {
+          const [_, staker, staked1, staked2] = await ethers.getSigners()
+          const {
+            staking, token, minWithdrawalBlocks,
+          } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked1.address, amount / 2n)
+          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).removeStake(0)
+          await advanceBlocks(minWithdrawalBlocks)
+          await staking.connect(staker).withdrawStake(0)
+
+          const activeForTarget = await staking.activeByAddressStaked(staked1.address)
+
+          expect(activeForTarget).to.equal(0n)
         })
       })
       describe('for non-staked address', () => {
