@@ -8,39 +8,37 @@ import {
 
 describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
-    const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
+    const [_, proposer, recipient] = await ethers.getSigners()
+    const proposerAddress = await proposer.getAddress()
+    const recipientAddress = await recipient.getAddress()
+    const { xl1Governance } = await loadFixture(deployXL1Governance)
     const subGovernorFixture = () => deploySingleAddressSubGovernor(xl1Governance)
     const { subGovernor } = await loadFixture(subGovernorFixture)
     const { token, owner } = await loadFixture(deployTestERC20)
 
-    const [_, proposer, recipient] = await ethers.getSigners()
-    const amount = 1000n
+    // Add subGovernor as governor so they can vote on proposals
+    const subGovernorAddress = await subGovernor.getAddress()
+    expect(await xl1Governance.governorCount()).to.equal(0)
+    await xl1Governance.addFirstGovernor(subGovernorAddress)
+    expect(await xl1Governance.governorCount()).to.equal(1)
+    expect(await xl1Governance.isGovernor(subGovernorAddress)).to.equal(true)
 
-    // Transfer tokens to the governance contract so it can transfer them out
+    // Transfer tokens to the governance contract so it can execute
+    // a proposal to transfer tokens if approved
+    const amount = 1000n
     await token.mint(owner.address, amount)
     await token.transfer(await xl1Governance.getAddress(), amount)
 
     // Confirm that the governance contract holds the tokens
     expect(await token.balanceOf(await xl1Governance.getAddress())).to.equal(amount)
 
-    // Encode call to transfer ERC-20 tokens
-    const transferCalldata = token.interface.encodeFunctionData('transfer', [
-      await recipient.getAddress(),
-      amount,
-    ])
-
+    // Encode call to transfer tokens from the governance contract to the recipient
+    const transferCalldata = token.interface.encodeFunctionData('transfer', [recipientAddress, amount])
     const targets = [await token.getAddress()]
     const values = [amount]
     const calldatas = [transferCalldata]
-    const description = `Proposal to transfer ${amount} tokens to ${await recipient.getAddress()}`
+    const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
     const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
-
-    // Add subGovernor as governor so they can vote and propose
-    const subGovernorAddress = await subGovernor.getAddress()
-    expect(await xl1Governance.governorCount()).to.equal(0)
-    await xl1Governance.addFirstGovernor(subGovernorAddress)
-    expect(await xl1Governance.governorCount()).to.equal(1)
-    expect(await xl1Governance.isGovernor(subGovernorAddress)).to.equal(true)
 
     // Get the proposal ID
     const proposalId = await xl1Governance.getProposalId(
@@ -54,7 +52,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
       .to.emit(xl1Governance, 'ProposalCreated')
       .withArgs(
         proposalId,
-        await proposer.getAddress(),
+        proposerAddress,
         targets,
         values,
         [anyValue],
@@ -64,12 +62,13 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
         description,
       )
     const proposalState = await xl1Governance.state(proposalId)
+    expect(proposalState).to.equal(0n) // ProposalState.Pending
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
 
     // Vote in favor
-    await xl1Governance.castVote(proposalId, 1n) // 1 = FOR
+    await subGovernor.castVote(proposalId, 1n) // 1 = FOR
 
     // Move past voting period
     await advanceBlocks(await xl1Governance.votingPeriod())
