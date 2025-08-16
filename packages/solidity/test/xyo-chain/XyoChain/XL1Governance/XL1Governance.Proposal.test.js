@@ -1,3 +1,4 @@
+/* eslint-disable max-statements */
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
 import chai from 'chai'
@@ -66,6 +67,23 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
+
+    // Submit the proposal to sub-governor
+    await expect(subGovernor.connect(proposer).propose(targets, values, calldatas, description))
+      .to.emit(subGovernor, 'ProposalCreated')
+      .withArgs(
+        proposalId,
+        proposerAddress,
+        targets,
+        values,
+        [anyValue],
+        calldatas,
+        anyValue, // voteStart
+        anyValue, // voteEnd
+        description,
+      )
+    const proposalStateSubGovernor = await subGovernor.state(proposalId)
+    expect(proposalStateSubGovernor).to.equal(0n) // ProposalState.Pending
 
     // Vote in favor
     await subGovernor.castVote(proposalId, 1n) // 1 = FOR

@@ -29,15 +29,6 @@ abstract contract SubGovernor is Governor, GovernorCountingSimple {
         return parentGovernor.votingPeriod();
     }
 
-    function propose(
-        address[] memory,
-        uint256[] memory,
-        bytes[] memory,
-        string memory
-    ) public pure override returns (uint256) {
-        revert("Proposals are not allowed");
-    }
-
     /**
      * @dev Is the proposal failure or not.
      */
