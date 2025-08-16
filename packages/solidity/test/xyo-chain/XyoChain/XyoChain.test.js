@@ -1,4 +1,3 @@
-// test/XyoChain.test.js
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { deployXyoChain } from '../helpers/index.js'
 import chai from 'chai'

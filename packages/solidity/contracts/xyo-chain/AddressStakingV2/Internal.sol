@@ -33,8 +33,12 @@ abstract contract AddressStakingInternal is
     //all the stakers for a given address
     mapping(address => address[]) internal _addressStakers;
 
+    //all addresses that have StakeAdded
+    address[] internal _addressesWithStake;
+
     function _addStake(address staked, uint256 amount) internal returns (bool) {
         require(amount > 0, "Staking: amount must be greater than 0");
+        bool newStakeAddress = _stakeAmountByAddressStaked[staked] == 0;
         _transferStakeFromSender(amount);
         _accountStakes[msg.sender].push(
             AddressStakingLibrary.Stake({
@@ -48,6 +52,9 @@ abstract contract AddressStakingInternal is
         _totalActiveStake += amount;
         _stakeAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] += amount;
+        if (newStakeAddress) {
+            _addressesWithStake.push(staked);
+        }
         emit StakeAdded(
             staked,
             msg.sender,
@@ -142,5 +149,37 @@ abstract contract AddressStakingInternal is
         uint256 slot
     ) internal view returns (AddressStakingLibrary.Stake memory) {
         return _accountStakes[staker][slot];
+    }
+
+    function _stakedAddresses(
+        uint256 minStake
+    ) internal view returns (address[] memory) {
+        address[] memory result = new address[](
+            _stakedAddressesCount(minStake)
+        );
+        uint256 index = 0;
+        for (uint256 i = 0; i < _addressesWithStake.length; i++) {
+            if (
+                _stakeAmountByAddressStaked[_addressesWithStake[i]] >= minStake
+            ) {
+                result[index] = _addressesWithStake[i];
+                index++;
+            }
+        }
+        return result;
+    }
+
+    function _stakedAddressesCount(
+        uint256 minStake
+    ) internal view returns (uint256) {
+        uint256 count = 0;
+        for (uint256 i = 0; i < _addressesWithStake.length; i++) {
+            if (
+                _stakeAmountByAddressStaked[_addressesWithStake[i]] >= minStake
+            ) {
+                count++;
+            }
+        }
+        return count;
     }
 }
