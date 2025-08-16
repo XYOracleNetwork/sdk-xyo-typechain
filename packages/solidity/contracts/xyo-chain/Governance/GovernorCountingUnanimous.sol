@@ -46,6 +46,8 @@ abstract contract GovernorCountingUnanimous is Governor {
         return _proposalVotes[proposalId].hasVoted[account];
     }
 
+    constructor() Governor("GovernorCountingUnanimous") {}
+
     /**
      * @dev Accessor to the internal vote counts.
      */
