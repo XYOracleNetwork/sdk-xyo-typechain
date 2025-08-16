@@ -8,11 +8,16 @@ import {GovernorGroup} from "./GovernorGroup.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
+    uint256 private __votingDelay;
+    uint256 private __votingPeriod;
+
     // ========== CONSTRUCTOR ==========
 
-    constructor() GovernorGroup() {}
+    constructor(uint256 _votingDelay, uint256 _votingPeriod) {
+        __votingDelay = _votingDelay;
+        __votingPeriod = _votingPeriod;
+    }
 
-    // --- REQUIRED: ERC-6372 clock (Governor uses this abstraction) ---
     // Use block number as the governance clock
     function clock() public view override returns (uint48) {
         return SafeCast.toUint48(block.number);
@@ -44,16 +49,16 @@ contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
     }
 
     function votingDelay() public view override returns (uint256) {
-        return 1;
+        return __votingDelay;
     }
 
     function votingPeriod() public view override returns (uint256) {
-        return 20000;
+        return __votingPeriod;
     }
 
     function quorum(
         uint256 /* blockNumber */
-    ) public pure override returns (uint256) {
-        return 1; // only owner’s vote needed
+    ) public view override returns (uint256) {
+        return governorCount();
     }
 }
