@@ -1,4 +1,3 @@
-// test/XyoChainRewards.test.js
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import chai from 'chai'
 const { expect } = chai

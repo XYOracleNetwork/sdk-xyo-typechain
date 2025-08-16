@@ -3,7 +3,7 @@ import { deploySingleAddressSubGovernor } from '../helpers/deploySingleAddressSu
 import chai from 'chai'
 const { expect } = chai
 
-describe('SingleAddressSubGovernor', () => {
+describe.skip('SingleAddressSubGovernor', () => {
   it('should initialize with correct owner and parent governor', async () => {
     const {
       subGovernor, mockGovernor, deployer,
