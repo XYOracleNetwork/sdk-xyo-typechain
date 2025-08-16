@@ -1,6 +1,3 @@
-// helpers/index.js
-
-import { ethers } from 'hardhat'
 import { deployTestERC20 } from './deployTestERC20.js'
 import { deployXyoChainRewards } from './deployXyoChainRewards.js'
 
