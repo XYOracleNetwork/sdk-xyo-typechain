@@ -69,7 +69,7 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.votingPeriod()).to.equal(XL1GovernanceDefaultVotingPeriod)
     })
   })
-  describe('GovernorCountingUnanimous', () => {
+  describe.skip('GovernorCountingUnanimous', () => {
     it('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
       const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
 

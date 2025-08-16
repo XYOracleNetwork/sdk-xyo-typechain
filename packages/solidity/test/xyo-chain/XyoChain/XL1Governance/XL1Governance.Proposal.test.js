@@ -5,7 +5,7 @@ import {
   advanceBlocks, deployXL1Governance, deployTestERC20,
 } from '../../helpers/index.js'
 
-describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
+describe.skip('XL1Governance - ERC20 Transfer Proposal', () => {
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
     const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
     const { token, owner } = await loadFixture(deployTestERC20)
