@@ -47,9 +47,9 @@ contract AddressStakingV2 is
     }
 
     function stakedAddresses(
-        uint256 /*minStake*/
-    ) external pure returns (uint256) {
-        return 0; //TODO
+        uint256 minStake
+    ) external view returns (address[] memory) {
+        return _stakedAddresses(minStake);
     }
 
     function getStake(
