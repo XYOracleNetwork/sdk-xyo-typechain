@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./interfaces/IAddressStaking.sol";
-import "../TransferStake/TransferStake.sol";
-import "./AddressStakingProperties.sol";
-import "./Library.sol";
-import "./Internal.sol";
+import {IAddressStaking} from "./interfaces/IAddressStaking.sol";
+import {TransferStake} from "../TransferStake/TransferStake.sol";
+import {AddressStakingProperties} from "./AddressStakingProperties.sol";
+import {AddressStakingLibrary} from "./Library.sol";
+import {AddressStakingInternal} from "./Internal.sol";
 
 contract AddressStaking is
     IAddressStaking,
@@ -34,6 +34,12 @@ contract AddressStaking is
 
     function withdrawStake(uint256 slot) public returns (bool) {
         return _withdrawStake(slot, this.minWithdrawalBlocks());
+    }
+
+    function stakedAddresses(
+        uint256 /*minStake*/
+    ) external pure returns (uint256) {
+        return 0; //TODO
     }
 
     function getStake(

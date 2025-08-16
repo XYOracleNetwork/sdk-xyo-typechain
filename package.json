@@ -50,9 +50,6 @@
     "deploy-next-major": "yarn workspaces foreach --all version major --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
     "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common"
   },
-  "resolutions": {
-    "typescript": "~5.8.3"
-  },
   "dependencies": {
     "@xyo-network/open-zeppelin-typechain": "workspace:~",
     "@xyo-network/typechain": "workspace:~",

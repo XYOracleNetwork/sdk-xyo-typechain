@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./Library.sol";
-import "./interfaces/IAddressStakingEvents.sol";
-import "../TransferStake/Abstract.sol";
-import "./interfaces/IAddressStakingProperties.sol";
+import {AddressStakingLibrary} from "./Library.sol";
+import {IAddressStakingEvents} from "./interfaces/IAddressStakingEvents.sol";
+import {AbstractTransferStake} from "../TransferStake/Abstract.sol";
+import {IAddressStakingProperties} from "./interfaces/IAddressStakingProperties.sol";
 
 abstract contract AddressStakingInternal is
     IAddressStakingEvents,
@@ -22,7 +22,11 @@ abstract contract AddressStakingInternal is
     //total amount that is staked by a given staker
     mapping(address => uint256) internal _stakeAmountByStaker;
 
+    //all the stakes held by a given address
     mapping(address => AddressStakingLibrary.Stake[]) internal _accountStakes;
+
+    //all the stakers for a given address
+    mapping(address => address[]) internal _addressStakers;
 
     function _addStake(address staked, uint256 amount) internal returns (bool) {
         require(amount > 0, "Staking: amount must be greater than 0");

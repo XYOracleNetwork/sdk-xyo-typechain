@@ -45,6 +45,7 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "cSpell.words": [
+    "calldatas",
     "copyfiles",
     "ethersproject",
     "Geotoken",
@@ -52,9 +53,12 @@
     "hdwallet",
     "IERC",
     "Initializable",
+    "keccak",
     "leveldown",
     "protobuf",
     "rimraf",
+    "Timelock",
+    "timepoint",
     "truffleframework",
     "tsbuildinfo",
     "typechain",

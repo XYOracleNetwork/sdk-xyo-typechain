@@ -17,31 +17,42 @@
   },
   "sideEffects": false,
   "type": "module",
+  "exports": {
+    ".": {
+      "import": "./typechain-types/index.ts"
+    },
+    "./package.json": "./package.json",
+    "./README.md": "./README.md"
+  },
   "files": [
     "contracts/",
-    "artifacts/contracts/"
+    "artifacts/contracts/",
+    "typechain-types/"
   ],
   "scripts": {
-    "package-build": "yarn package-clean && hardhat compile",
+    "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
-    "package-compile": "hardhat compile",
+    "package-compile": "hardhat compile && hardhat typechain",
+    "package-coverage": "hardhat coverage",
     "package-lint": "echo Skipping lint...",
-    "package-recompile": "yarn package-clean && yarn package-compile"
+    "package-recompile": "yarn package-clean && yarn package-compile",
+    "package-test": "hardhat test"
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-chai-matchers": "~2.0.0",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
     "@nomicfoundation/hardhat-ethers": "~3.0.0",
     "@nomicfoundation/hardhat-ignition": "~0.15.0",
     "@nomicfoundation/hardhat-ignition-ethers": "~0.15.0",
     "@nomicfoundation/hardhat-network-helpers": "~1.0.0",
     "@nomicfoundation/hardhat-toolbox": "~6.0.0",
+    "@nomicfoundation/hardhat-toolbox-mocha-ethers": "^3.0.0",
     "@nomicfoundation/hardhat-verify": "~2.0.0",
     "@openzeppelin/contracts": "~5.4.0",
     "@openzeppelin/contracts-upgradeable": "~5.4.0",
     "@typechain/ethers-v6": "~0.5.0",
     "@typechain/hardhat": "~9.0.0",
     "@xylabs/ts-scripts-yarn3": "~7.0.3",
-    "@xylabs/tsconfig": "^7.1.0",
+    "@xylabs/tsconfig": "~7.1.0",
     "chai": "~4.2.0",
     "ethers": "~6.4.0",
     "hardhat": "~2.26.2",
@@ -54,7 +65,7 @@
     "typescript": "~5.8.3"
   },
   "peerDependencies": {
-    "ethers": "^6"
+    "ethers": "~6"
   },
   "publishConfig": {
     "access": "public"

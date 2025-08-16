@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "../Library.sol";
+import {AddressStakingLibrary} from "../Library.sol";
 
 interface IAddressStakingFunctions {
     function addStake(address staked, uint256 amount) external returns (bool);
@@ -14,4 +14,6 @@ interface IAddressStakingFunctions {
         address staker,
         uint256 slot
     ) external view returns (AddressStakingLibrary.Stake memory);
+
+    function stakedAddresses(uint256 minStake) external view returns (uint256);
 }

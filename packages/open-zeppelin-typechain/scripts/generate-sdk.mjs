@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-import glob from 'fast-glob'
 import { execSync } from 'node:child_process'
 import { createRequire } from 'node:module'
 import path from 'node:path'
@@ -15,10 +14,7 @@ const require = createRequire(import.meta.url)
 // Resolve the path to the solidity package
 const solidityPath = path.dirname(require.resolve('@openzeppelin/contracts/package.json'))
 
-const files = glob.sync([
-  `${solidityPath}/build/contracts/**/*.json`,
-  `!${solidityPath}/build/contracts/**/*.dbg.json`,
-])
+const files = [`${solidityPath}/build/contracts/**/*.json`]
 
 execSync(
   `typechain --node16-modules --out-dir=./src --target=ethers-v6 ${files.join(' ')}`,
