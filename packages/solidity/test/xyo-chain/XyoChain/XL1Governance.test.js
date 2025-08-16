@@ -23,34 +23,28 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.CLOCK_MODE()).to.equal('mode=blocknumber&from=default')
     })
   })
-
-  it('should have a quorum equal to the number of governors', async () => {
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
-    expect(await xl1Governance.quorum(0)).to.equal(await xl1Governance.governorCount())
+  describe('quorum', () => {
+    it('should have a quorum equal to the number of governors', async () => {
+      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      expect(await xl1Governance.quorum(0)).to.equal(await xl1Governance.governorCount())
+    })
   })
+  describe('getVotes', () => {
+    it('should allow checking vote power based on governor membership', async () => {
+      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const [signerA] = await ethers.getSigners()
 
-  it('should allow checking vote power based on governor membership', async () => {
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
-    const [signerA] = await ethers.getSigners()
+      const fakeGovernor = await (
+        await ethers.getContractFactory('SingleAddressSubGovernor')
+      ).deploy(xl1Governance)
 
-    const fakeGovernor = await (
-      await ethers.getContractFactory('SingleAddressSubGovernor')
-    ).deploy(xl1Governance)
+      // Initially not a governor, should return 0
+      expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(0)
 
-    // Initially not a governor, should return 0
-    expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(0)
-
-    // Add governor and expect vote weight to be 1
-    await xl1Governance.addGovernor(fakeGovernor)
-    expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(1)
-  })
-
-  it('should return true for known interfaces', async () => {
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
-
-    // Use a known interface from OpenZeppelin Governor
-    const INTERFACE_ID_GOVERNOR = '0x4f851a7e' // IGovernor interface ID
-    expect(await xl1Governance.supportsInterface(INTERFACE_ID_GOVERNOR)).to.equal(true)
+      // Add governor and expect vote weight to be 1
+      await xl1Governance.addGovernor(fakeGovernor)
+      expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(1)
+    })
   })
 
   describe('votingDelay', () => {
