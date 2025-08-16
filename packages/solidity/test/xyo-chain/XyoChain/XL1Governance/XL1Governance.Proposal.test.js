@@ -1,4 +1,5 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
 import chai from 'chai'
 const { expect } = chai
 import {
@@ -7,7 +8,7 @@ import {
 
 describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
+    const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
     const subGovernorFixture = () => deploySingleAddressSubGovernor(xl1Governance)
     const { subGovernor } = await loadFixture(subGovernorFixture)
     const { token, owner } = await loadFixture(deployTestERC20)
@@ -49,7 +50,20 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
       descriptionHash,
     )
     // Submit the proposal
-    await xl1Governance.propose(targets, values, calldatas, descriptionHash)
+    await expect(xl1Governance.propose(targets, values, calldatas, descriptionHash))
+      .to.emit(xl1Governance, 'ProposalCreated')
+      .withArgs(
+      // We don't know the proposalId ahead of time, so we can use anyValue
+        anyValue,
+        await deployer.getAddress(), // proposer
+        targets,
+        values,
+        [anyValue],
+        calldatas,
+        anyValue, // voteStart
+        anyValue, // voteEnd
+        descriptionHash,
+      )
     const proposalState = await xl1Governance.state(proposalId)
 
     // Move past voting delay
