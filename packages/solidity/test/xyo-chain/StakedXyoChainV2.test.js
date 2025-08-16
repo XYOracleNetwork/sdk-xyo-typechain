@@ -40,9 +40,9 @@ describe('StakedXyoChainV2', () => {
     expect(await rewards.calcBlockReward(0)).to.equal(genesisReward)
 
     // Validate block reward after one step
-      = ((initialReward * stepFactorNumerator) / stepFactorDenominator)
-        - (((initialReward * stepFactorNumerator) / stepFactorDenominator)
-          % 10n ** floorPlaces)
+    const expectedStep1 = ((initialReward * stepFactorNumerator) / stepFactorDenominator)
+      - (((initialReward * stepFactorNumerator) / stepFactorDenominator)
+        % 10n ** floorPlaces)
 
     expect(await rewards.calcBlockReward(stepSize)).to.equal(expectedStep1)
   })
