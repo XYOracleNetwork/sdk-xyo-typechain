@@ -45,7 +45,7 @@ contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
         uint256 /* blockNumber */,
         bytes memory /* params */
     ) internal view override returns (uint256) {
-        return 1;
+        return isGovernor[IGovernor(account)] ? 1 : 0;
     }
 
     function votingDelay() public view override returns (uint256) {
