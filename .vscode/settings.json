@@ -67,4 +67,5 @@
     "xylabs",
     "yarnpkg"
   ],
+  "solidity.telemetry": false,
 }
