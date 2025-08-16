@@ -52,6 +52,12 @@ contract AddressStakingV2 is
         return _stakedAddresses(minStake);
     }
 
+    function stakedAddressesCount(
+        uint256 minStake
+    ) external view returns (uint256) {
+        return _stakedAddressesCount(minStake);
+    }
+
     function getStake(
         address staker,
         uint256 slot

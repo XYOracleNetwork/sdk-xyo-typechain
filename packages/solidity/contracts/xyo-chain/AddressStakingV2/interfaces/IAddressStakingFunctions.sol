@@ -23,4 +23,8 @@ interface IAddressStakingFunctions {
     function stakedAddresses(
         uint256 minStake
     ) external view returns (address[] memory);
+
+    function stakedAddressesCount(
+        uint256 minStake
+    ) external view returns (uint256);
 }
