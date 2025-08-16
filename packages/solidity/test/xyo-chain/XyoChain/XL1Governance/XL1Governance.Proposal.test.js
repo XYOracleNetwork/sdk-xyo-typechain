@@ -2,12 +2,14 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import chai from 'chai'
 const { expect } = chai
 import {
-  advanceBlocks, deployXL1Governance, deployTestERC20,
+  advanceBlocks, deployXL1Governance, deploySingleAddressSubGovernor, deployTestERC20,
 } from '../../helpers/index.js'
 
-describe.skip('XL1Governance - ERC20 Transfer Proposal', () => {
+describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
-    const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
+    const { xl1Governance } = await loadFixture(deployXL1Governance)
+    const subGovernorFixture = () => deploySingleAddressSubGovernor(xl1Governance)
+    const { subGovernor } = await loadFixture(subGovernorFixture)
     const { token, owner } = await loadFixture(deployTestERC20)
 
     const recipient = (await ethers.getSigners())[1]
@@ -32,7 +34,7 @@ describe.skip('XL1Governance - ERC20 Transfer Proposal', () => {
     const description = 'Proposal to transfer tokens to recipient'
 
     // Add deployer as governor so they can vote and propose
-    await xl1Governance.addGovernor(xl1Governance)
+    await xl1Governance.addFirstGovernor(await subGovernor.getAddress())
 
     const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
