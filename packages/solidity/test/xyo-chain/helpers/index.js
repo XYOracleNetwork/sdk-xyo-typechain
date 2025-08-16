@@ -1,4 +1,5 @@
 export * from './deployAddressStakingV2.js'
 export * from './deployBridgeableToken.js'
 export * from './deployTestERC20.js'
+export * from './deployXyoChainRewards.js'
 export * from './evmHelpers.js'
