@@ -31,12 +31,26 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const targets = [await token.getAddress()]
     const values = [amount]
     const calldatas = [transferCalldata]
-    const description = 'Proposal to transfer tokens to recipient'
+    const description = `Proposal to transfer ${amount} tokens to ${await recipient.getAddress()}`
+    const descriptionHash = ethers.id(description)
 
-    // Add deployer as governor so they can vote and propose
-    await xl1Governance.addFirstGovernor(await subGovernor.getAddress())
+    // Add subGovernor as governor so they can vote and propose
+    const subGovernorAddress = await subGovernor.getAddress()
+    expect(await xl1Governance.governorCount()).to.equal(0)
+    await xl1Governance.addFirstGovernor(subGovernorAddress)
+    expect(await xl1Governance.governorCount()).to.equal(1)
+    expect(await xl1Governance.isGovernor(subGovernorAddress)).to.equal(true)
 
-    const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
+    // Get the proposal ID
+    const proposalId = await xl1Governance.getProposalId(
+      targets,
+      values,
+      calldatas,
+      descriptionHash,
+    )
+    // Submit the proposal
+    await xl1Governance.propose(targets, values, calldatas, descriptionHash)
+    const proposalState = await xl1Governance.state(proposalId)
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
