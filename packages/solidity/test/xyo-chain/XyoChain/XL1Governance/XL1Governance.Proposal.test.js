@@ -70,7 +70,9 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     expect(await token.balanceOf(xl1GovernanceAddress)).to.equal(amount)
 
     // Propose xl1Governance call token.transfer(recipientAddress, amount) by proposer
-    const { proposalId } = await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
+    const {
+      proposalId, targets, values, calldatas, descriptionHash,
+    } = await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
@@ -91,13 +93,16 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     await subGovernor.castVote(subProposalId, 1n) // 1 = For
 
     // Move past voting period
-    await advanceBlocks(await xl1Governance.votingPeriod())
+    await advanceBlocks(await subGovernor.votingPeriod())
+
+    const state = await subGovernor.state(subProposalId)
+    expect(state).to.equal(4n) // ProposalState.Succeeded
 
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
 
     // Queue and execute the proposal
-    // await xl1Governance.execute(targets, values, calldatas, descriptionHash)
+    await xl1Governance.execute(targets, values, calldatas, descriptionHash)
 
     // Check the recipient received the tokens
     expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
