@@ -104,7 +104,6 @@ describe('XL1Governance', () => {
       const values = [0]
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Proposal with opposition'
-      const descriptionHash = ethers.id(description)
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
@@ -126,7 +125,6 @@ describe('XL1Governance', () => {
       const values = [0]
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Unanimous proposal'
-      const descriptionHash = ethers.id(description)
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
@@ -146,7 +144,6 @@ describe('XL1Governance', () => {
       const values = [0]
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Quorum check'
-      const descriptionHash = ethers.id(description)
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
