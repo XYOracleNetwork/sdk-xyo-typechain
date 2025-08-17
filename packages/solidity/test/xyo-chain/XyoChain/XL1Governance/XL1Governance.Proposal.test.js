@@ -14,8 +14,8 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const targets = [contractAddress]
     const values = [0]
     const calldatas = [functionData]
-    // const description = `Proposal to call ${method} on ${contractAddress} with args ${JSON.stringify(args)}`
-    const description = `Proposal to call ${method} on ${contractAddress}`
+    // NOTE: JSON.stringify(args) not used as it throws here for some reason
+    const description = `Proposal to call ${method} on ${contractAddress} with args ${args}`
     const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
 
     // Get the proposal ID
@@ -42,7 +42,9 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const proposalState = await governor.state(proposalId)
     expect(proposalState).to.equal(0n) // ProposalState.Pending
 
-    return proposalId
+    return {
+      proposalId, description, descriptionHash,
+    }
   }
 
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
@@ -99,7 +101,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     // const proposalState = await xl1Governance.state(proposalId)
     // expect(proposalState).to.equal(0n) // ProposalState.Pending
 
-    const proposalId = await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
+    const { proposalId } = await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
