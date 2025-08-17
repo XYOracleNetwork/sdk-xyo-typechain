@@ -79,8 +79,6 @@ describe('XL1Governance', () => {
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Test unanimous proposal'
 
-      const descriptionHash = ethers.id(description)
-
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
       // Advance to voting start
