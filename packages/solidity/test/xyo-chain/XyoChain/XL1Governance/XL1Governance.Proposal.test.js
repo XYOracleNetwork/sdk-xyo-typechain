@@ -69,64 +69,17 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     // Confirm that the governance contract holds the tokens
     expect(await token.balanceOf(xl1GovernanceAddress)).to.equal(amount)
 
-    // // Encode call to transfer tokens from the governance contract to the recipient
-    // const transferCalldata = token.interface.encodeFunctionData('transfer', [recipientAddress, amount])
-    // const targets = [await token.getAddress()]
-    // const values = [0]
-    // const calldatas = [transferCalldata]
-    // const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
-    // const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
-
-    // // Get the proposal ID
-    // const proposalId = await xl1Governance.getProposalId(
-    //   targets,
-    //   values,
-    //   calldatas,
-    //   descriptionHash,
-    // )
-    // // Submit the proposal
-    // await expect(xl1Governance.connect(proposer).propose(targets, values, calldatas, description))
-    //   .to.emit(xl1Governance, 'ProposalCreated')
-    //   .withArgs(
-    //     proposalId,
-    //     proposerAddress,
-    //     targets,
-    //     values,
-    //     [anyValue],
-    //     calldatas,
-    //     anyValue, // voteStart
-    //     anyValue, // voteEnd
-    //     description,
-    //   )
-    // const proposalState = await xl1Governance.state(proposalId)
-    // expect(proposalState).to.equal(0n) // ProposalState.Pending
-
+    // Propose xl1Governance call token.transfer(recipientAddress, amount) by proposer
     const { proposalId } = await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
 
-    // TODO: Switch to propose to call xl1Governance.castVote(parentId, 1) by subGovernor
+    // Propose subGovernor call xl1Governance.castVote(parentId, 1) by proposer
+    const { proposalId: subProposalId } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, 1n], subGovernor, proposer)
 
-    // Submit the proposal to sub-governor to vote FOR the proposal on the xl1Governance contract
-    await expect(subGovernor.connect(proposer).propose(targets, values, calldatas, description))
-      .to.emit(subGovernor, 'ProposalCreated')
-      .withArgs(
-        proposalId,
-        proposerAddress,
-        targets,
-        values,
-        [anyValue],
-        calldatas,
-        anyValue, // voteStart
-        anyValue, // voteEnd
-        description,
-      )
-    const proposalStateSubGovernor = await subGovernor.state(proposalId)
-    expect(proposalStateSubGovernor).to.equal(0n) // ProposalState.Pending
-
-    // Vote in favor
-    await subGovernor.castVote(proposalId, 1n) // 1 = FOR
+    // Move past voting delay
+    await advanceBlocks(await subGovernor.votingDelay())
 
     // Move past voting period
     await advanceBlocks(await xl1Governance.votingPeriod())
