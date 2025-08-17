@@ -7,6 +7,32 @@ import {
 } from '../../helpers/index.js'
 
 describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
+  const proposeToVoteForParentProposal = async (xl1Governance, subGovernor) => {
+    const castVoteCallData = xl1Governance.interface.encodeFunctionData('castVote', [proposalId, 1])
+    const targets = [xl1GovernanceAddress]
+    const values = [0]
+    const calldatas = [castVoteCallData]
+    const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
+    const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
+
+    // Submit the proposal to sub-governor to vote FOR the proposal on the xl1Governance contract
+    await expect(subGovernor.connect(proposer).propose(targets, values, calldatas, description))
+      .to.emit(subGovernor, 'ProposalCreated')
+      .withArgs(
+        proposalId,
+        proposerAddress,
+        targets,
+        values,
+        [anyValue],
+        calldatas,
+        anyValue, // voteStart
+        anyValue, // voteEnd
+        description,
+      )
+    const proposalStateSubGovernor = await subGovernor.state(proposalId)
+    expect(proposalStateSubGovernor).to.equal(0n) // ProposalState.Pending
+  }
+
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
     const [_, proposer, recipient] = await ethers.getSigners()
     const proposerAddress = await proposer.getAddress()
@@ -32,7 +58,7 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     // Encode call to transfer tokens from the governance contract to the recipient
     const transferCalldata = token.interface.encodeFunctionData('transfer', [recipientAddress, amount])
     const targets = [await token.getAddress()]
-    const values = [amount]
+    const values = [0]
     const calldatas = [transferCalldata]
     const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
     const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
@@ -63,6 +89,8 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
+
+    // TODO: Switch to propose to call xl1Governance.castVote(parentId, 1) by subGovernor
 
     // Submit the proposal to sub-governor to vote FOR the proposal on the xl1Governance contract
     await expect(subGovernor.connect(proposer).propose(targets, values, calldatas, description))
