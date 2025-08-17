@@ -86,17 +86,27 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
       descriptionHash: subProposalDescriptionHash,
     } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, 1n], subGovernor, proposer)
 
+    // Check the subGovernor proposal state
+    expect(await subGovernor.state(subProposalId)).to.equal(0n) // ProposalState.Pending
+
     // Move past voting delay
-    await advanceBlocks(await subGovernor.votingDelay())
+    await advanceBlocks((await subGovernor.votingDelay()) + 1n)
+
+    // Check the subGovernor proposal state
+    expect(await subGovernor.state(subProposalId)).to.equal(1n) // ProposalState.Active
 
     // Vote on the subGovernor's proposal
     await subGovernor.castVote(subProposalId, 1n) // 1 = For
 
     // Move past voting period
-    await advanceBlocks(await subGovernor.votingPeriod())
+    await advanceBlocks(await subGovernor.votingPeriod() + 1n)
 
-    const state = await subGovernor.state(subProposalId)
-    expect(state).to.equal(4n) // ProposalState.Succeeded
+    // Check the subGovernor proposal state
+    expect(await subGovernor.state(subProposalId)).to.equal(4n) // ProposalState.Succeeded
+    const [againstVotes, forVotes, abstainVotes] = await subGovernor.proposalVotes(subProposalId)
+    expect(againstVotes).to.equal(0n)
+    expect(forVotes).to.equal(1n)
+    expect(abstainVotes).to.equal(0n)
 
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
