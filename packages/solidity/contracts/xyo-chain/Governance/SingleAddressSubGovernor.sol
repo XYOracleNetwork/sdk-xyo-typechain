@@ -10,8 +10,10 @@ contract SingleAddressSubGovernor is SubGovernor, Ownable {
     uint256 private constant _OWNER_VOTE_WEIGHT = 1;
 
     constructor(
-        IGovernor _parentGovernor
-    ) SubGovernor(_parentGovernor) Ownable(msg.sender) {}
+        string memory _name,
+        uint256 _votingDelay,
+        uint256 _votingPeriod
+    ) SubGovernor(_name, _votingDelay, _votingPeriod) Ownable(msg.sender) {}
 
     // ------------------------------------------------------------------------
     // Core Governor parameters
@@ -21,13 +23,6 @@ contract SingleAddressSubGovernor is SubGovernor, Ownable {
         uint256 /* blockNumber */
     ) public pure override returns (uint256) {
         return _OWNER_VOTE_WEIGHT; // only owner’s vote needed
-    }
-
-    function getVotes(
-        address account,
-        uint256 /* blockNumber */
-    ) public view override returns (uint256) {
-        return account == owner() ? _OWNER_VOTE_WEIGHT : 0;
     }
 
     // Restrict executor to owner

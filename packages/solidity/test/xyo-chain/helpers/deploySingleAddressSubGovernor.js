@@ -1,17 +1,16 @@
-export const deployMockGovernor = async () => {
-  const MockGovernor = await ethers.getContractFactory('MockGovernor') // TODO: Create this or use an existing implementation
-  const mockGovernor = await MockGovernor.deploy()
-  return { mockGovernor }
-}
+export const SingleAddressSubGovernorDefaultName = 'SingleAddressSubGovernor'
+export const SingleAddressSubGovernorDefaultVotingDelay = 1
+export const SingleAddressSubGovernorDefaultVotingPeriod = 5
 
-export const deploySingleAddressSubGovernor = async () => {
+export const deploySingleAddressSubGovernor = async (
+  name = SingleAddressSubGovernorDefaultName,
+  votingDelay = SingleAddressSubGovernorDefaultVotingDelay,
+  votingPeriod = SingleAddressSubGovernorDefaultVotingPeriod,
+) => {
   const [deployer] = await ethers.getSigners()
-  const { mockGovernor } = await deployMockGovernor()
 
-  const SubGovFactory = await ethers.getContractFactory('SingleAddressSubGovernor')
-  const subGovernor = await SubGovFactory.deploy(await mockGovernor.getAddress())
+  const SingleAddressSubGovernor = await ethers.getContractFactory('SingleAddressSubGovernor')
+  const subGovernor = await SingleAddressSubGovernor.deploy(name, votingDelay, votingPeriod)
 
-  return {
-    subGovernor, mockGovernor, deployer,
-  }
+  return { subGovernor, deployer }
 }
