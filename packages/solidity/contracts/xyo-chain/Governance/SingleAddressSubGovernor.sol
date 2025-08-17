@@ -25,13 +25,6 @@ contract SingleAddressSubGovernor is SubGovernor, Ownable {
         return _OWNER_VOTE_WEIGHT; // only owner’s vote needed
     }
 
-    function getVotes(
-        address account,
-        uint256 /* blockNumber */
-    ) public view override returns (uint256) {
-        return account == owner() ? _OWNER_VOTE_WEIGHT : 0;
-    }
-
     // Restrict executor to owner
     function _executor() internal view override returns (address) {
         return owner();
