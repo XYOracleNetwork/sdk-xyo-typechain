@@ -13,7 +13,11 @@ abstract contract SubGovernor is Governor, GovernorCountingSimple {
 
     // ========== CONSTRUCTOR ==========
 
-    constructor(uint256 _votingDelay, uint256 _votingPeriod) {
+    constructor(
+        string memory _name,
+        uint256 _votingDelay,
+        uint256 _votingPeriod
+    ) Governor(_name) {
         __votingDelay = _votingDelay;
         __votingPeriod = _votingPeriod;
     }

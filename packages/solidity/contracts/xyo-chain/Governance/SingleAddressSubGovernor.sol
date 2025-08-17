@@ -10,8 +10,10 @@ contract SingleAddressSubGovernor is SubGovernor, Ownable {
     uint256 private constant _OWNER_VOTE_WEIGHT = 1;
 
     constructor(
-        IGovernor _parentGovernor
-    ) SubGovernor(_parentGovernor) Ownable(msg.sender) {}
+        string memory _name,
+        uint256 _votingDelay,
+        uint256 _votingPeriod
+    ) SubGovernor(_name, _votingDelay, _votingPeriod) Ownable(msg.sender) {}
 
     // ------------------------------------------------------------------------
     // Core Governor parameters
