@@ -7,20 +7,30 @@ import {
 } from '../../helpers/index.js'
 
 describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
-  const proposeToVoteForParentProposal = async (xl1Governance, subGovernor) => {
-    const castVoteCallData = xl1Governance.interface.encodeFunctionData('castVote', [proposalId, 1])
-    const targets = [xl1GovernanceAddress]
+  const proposeToCallSmartContract = async (contract, method, args, governor, proposer) => {
+    // Encode call to contract from the governance contract
+    const functionData = contract.interface.encodeFunctionData(method, args)
+    const contractAddress = await contract.getAddress()
+    const targets = [contractAddress]
     const values = [0]
-    const calldatas = [castVoteCallData]
-    const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
+    const calldatas = [functionData]
+    // const description = `Proposal to call ${method} on ${contractAddress} with args ${JSON.stringify(args)}`
+    const description = `Proposal to call ${method} on ${contractAddress}`
     const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
 
-    // Submit the proposal to sub-governor to vote FOR the proposal on the xl1Governance contract
-    await expect(subGovernor.connect(proposer).propose(targets, values, calldatas, description))
-      .to.emit(subGovernor, 'ProposalCreated')
+    // Get the proposal ID
+    const proposalId = await governor.getProposalId(
+      targets,
+      values,
+      calldatas,
+      descriptionHash,
+    )
+    // Submit the proposal
+    await expect(governor.connect(proposer).propose(targets, values, calldatas, description))
+      .to.emit(governor, 'ProposalCreated')
       .withArgs(
         proposalId,
-        proposerAddress,
+        await proposer.getAddress(),
         targets,
         values,
         [anyValue],
@@ -29,8 +39,10 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
         anyValue, // voteEnd
         description,
       )
-    const proposalStateSubGovernor = await subGovernor.state(proposalId)
-    expect(proposalStateSubGovernor).to.equal(0n) // ProposalState.Pending
+    const proposalState = await governor.state(proposalId)
+    expect(proposalState).to.equal(0n) // ProposalState.Pending
+
+    return proposalId
   }
 
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
@@ -55,37 +67,39 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     // Confirm that the governance contract holds the tokens
     expect(await token.balanceOf(xl1GovernanceAddress)).to.equal(amount)
 
-    // Encode call to transfer tokens from the governance contract to the recipient
-    const transferCalldata = token.interface.encodeFunctionData('transfer', [recipientAddress, amount])
-    const targets = [await token.getAddress()]
-    const values = [0]
-    const calldatas = [transferCalldata]
-    const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
-    const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
+    // // Encode call to transfer tokens from the governance contract to the recipient
+    // const transferCalldata = token.interface.encodeFunctionData('transfer', [recipientAddress, amount])
+    // const targets = [await token.getAddress()]
+    // const values = [0]
+    // const calldatas = [transferCalldata]
+    // const description = `Proposal to transfer ${amount} tokens to ${recipientAddress}`
+    // const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
 
-    // Get the proposal ID
-    const proposalId = await xl1Governance.getProposalId(
-      targets,
-      values,
-      calldatas,
-      descriptionHash,
-    )
-    // Submit the proposal
-    await expect(xl1Governance.connect(proposer).propose(targets, values, calldatas, description))
-      .to.emit(xl1Governance, 'ProposalCreated')
-      .withArgs(
-        proposalId,
-        proposerAddress,
-        targets,
-        values,
-        [anyValue],
-        calldatas,
-        anyValue, // voteStart
-        anyValue, // voteEnd
-        description,
-      )
-    const proposalState = await xl1Governance.state(proposalId)
-    expect(proposalState).to.equal(0n) // ProposalState.Pending
+    // // Get the proposal ID
+    // const proposalId = await xl1Governance.getProposalId(
+    //   targets,
+    //   values,
+    //   calldatas,
+    //   descriptionHash,
+    // )
+    // // Submit the proposal
+    // await expect(xl1Governance.connect(proposer).propose(targets, values, calldatas, description))
+    //   .to.emit(xl1Governance, 'ProposalCreated')
+    //   .withArgs(
+    //     proposalId,
+    //     proposerAddress,
+    //     targets,
+    //     values,
+    //     [anyValue],
+    //     calldatas,
+    //     anyValue, // voteStart
+    //     anyValue, // voteEnd
+    //     description,
+    //   )
+    // const proposalState = await xl1Governance.state(proposalId)
+    // expect(proposalState).to.equal(0n) // ProposalState.Pending
+
+    const proposalId = await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
 
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
