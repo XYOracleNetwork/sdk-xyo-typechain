@@ -1,10 +1,9 @@
-/* eslint-disable max-statements */
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
 import chai from 'chai'
 const { expect } = chai
 import {
-  advanceBlocks, deployXL1Governance, deploySingleAddressSubGovernor, deployTestERC20,
+  advanceBlocks, deployXL1GovernanceWithSingleAddressSubGovernor, deployTestERC20,
 } from '../../helpers/index.js'
 
 describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
@@ -12,15 +11,11 @@ describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
     const [_, proposer, recipient] = await ethers.getSigners()
     const proposerAddress = await proposer.getAddress()
     const recipientAddress = await recipient.getAddress()
-    const { xl1Governance } = await loadFixture(deployXL1Governance)
-    const subGovernorFixture = () => deploySingleAddressSubGovernor(xl1Governance)
-    const { subGovernor } = await loadFixture(subGovernorFixture)
+    const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
     const { token, owner } = await loadFixture(deployTestERC20)
 
     // Add subGovernor as governor so they can vote on proposals
     const subGovernorAddress = await subGovernor.getAddress()
-    expect(await xl1Governance.governorCount()).to.equal(0)
-    await xl1Governance.addFirstGovernor(subGovernorAddress)
     expect(await xl1Governance.governorCount()).to.equal(1)
     expect(await xl1Governance.isGovernor(subGovernorAddress)).to.equal(true)
 

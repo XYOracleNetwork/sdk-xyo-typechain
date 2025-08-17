@@ -6,7 +6,7 @@ import {
   deployXL1GovernanceWithSingleAddressSubGovernor, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
 } from '../../helpers/index.js'
 
-describe.only('XL1Governance', () => {
+describe('XL1Governance', () => {
   describe('clock', () => {
     it('should return the current block number as clock()', async () => {
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
