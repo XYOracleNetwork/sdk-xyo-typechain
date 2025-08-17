@@ -6,15 +6,20 @@ import {GovernorCountingSimple} from "@openzeppelin/contracts/governance/extensi
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 abstract contract SubGovernor is Governor, GovernorCountingSimple {
-    IGovernor public immutable parentGovernor;
-
-    // Map our proposalId -> parent proposalId (both are uint256)
-    mapping(uint256 => uint256) public parentProposalOf;
+    uint256 private __votingDelay;
+    uint256 private __votingPeriod;
 
     event SubGovernorVoted(uint256 indexed localId, uint8 support);
 
-    constructor(IGovernor _parentGovernor) Governor("SubGovernor") {
-        parentGovernor = _parentGovernor;
+    // ========== CONSTRUCTOR ==========
+
+    constructor(
+        string memory _name,
+        uint256 _votingDelay,
+        uint256 _votingPeriod
+    ) Governor(_name) {
+        __votingDelay = _votingDelay;
+        __votingPeriod = _votingPeriod;
     }
 
     // ------------------------------------------------------------------------
@@ -22,20 +27,11 @@ abstract contract SubGovernor is Governor, GovernorCountingSimple {
     // ------------------------------------------------------------------------
 
     function votingDelay() public view override returns (uint256) {
-        return parentGovernor.votingDelay();
+        return __votingDelay;
     }
 
     function votingPeriod() public view override returns (uint256) {
-        return parentGovernor.votingPeriod();
-    }
-
-    function propose(
-        address[] memory,
-        uint256[] memory,
-        bytes[] memory,
-        string memory
-    ) public pure override returns (uint256) {
-        revert("Proposals are not allowed");
+        return __votingPeriod;
     }
 
     /**
@@ -53,29 +49,6 @@ abstract contract SubGovernor is Governor, GovernorCountingSimple {
         ) = proposalVotes(proposalId);
 
         return againstVotes > forVotes;
-    }
-
-    function relayVoteToParent(uint256 localProposalId) external {
-        uint256 parentId = parentProposalOf[localProposalId];
-        require(parentId != 0, "No parent proposal");
-
-        if (_voteSucceeded(localProposalId)) {
-            parentGovernor.castVote(parentId, 1);
-            emit SubGovernorVoted(localProposalId, 1);
-        } else if (_voteFailed(localProposalId)) {
-            parentGovernor.castVote(parentId, 0);
-            emit SubGovernorVoted(localProposalId, 0);
-        }
-    }
-
-    // Attempts to execute the corresponding parent proposal.
-    function execute(
-        address[] memory,
-        uint256[] memory,
-        bytes[] memory,
-        bytes32
-    ) public payable override returns (uint256) {
-        revert("Execution is not allowed");
     }
 
     // --- REQUIRED: ERC-6372 clock (Governor uses this abstraction) ---

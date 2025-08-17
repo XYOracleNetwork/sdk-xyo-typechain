@@ -22,10 +22,14 @@ abstract contract GovernorGroup is Governor {
 
     // ========== CONSTRUCTOR ==========
 
-    function addFirstGovernor(IGovernor governor) public {
-        require(__governors.length == 0);
-        __governors.push(governor);
-        isGovernor[governor] = true;
+    constructor(
+        string memory _name,
+        IGovernor[] memory _governors // The addresses that are allowed to govern the contract
+    ) Governor(_name) {
+        __governors = _governors;
+        for (uint256 i = 0; i < _governors.length; i++) {
+            isGovernor[__governors[i]] = true;
+        }
     }
 
     function addGovernor(IGovernor governor) public onlyThis {

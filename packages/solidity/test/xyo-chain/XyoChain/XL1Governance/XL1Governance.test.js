@@ -3,13 +3,13 @@ import chai from 'chai'
 const { expect } = chai
 import {
   advanceBlocks,
-  deployXL1Governance, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
+  deployXL1GovernanceWithSingleAddressSubGovernor, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
 } from '../../helpers/index.js'
 
 describe('XL1Governance', () => {
   describe('clock', () => {
     it('should return the current block number as clock()', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       for (let index = 0; index < 5; index++) {
         const currentBlock = await ethers.provider.getBlockNumber()
         expect(await xl1Governance.clock()).to.equal(currentBlock)
@@ -19,19 +19,19 @@ describe('XL1Governance', () => {
   })
   describe('CLOCK_MODE', () => {
     it('should return the clock mode', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       expect(await xl1Governance.CLOCK_MODE()).to.equal('mode=blocknumber&from=default')
     })
   })
   describe('quorum', () => {
     it('should have a quorum equal to the number of governors', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       expect(await xl1Governance.quorum(0)).to.equal(await xl1Governance.governorCount())
     })
   })
   describe.skip('getVotes', () => {
     it('should allow checking vote power based on governor membership', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const fakeGovernor = await (
         await ethers.getContractFactory('SingleAddressSubGovernor')
@@ -48,7 +48,7 @@ describe('XL1Governance', () => {
 
   describe('supportsInterface', () => {
     it('should return check for interface support', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const NON_EXISTENT_INTERFACE = '0x12345678'
       expect(await xl1Governance.supportsInterface(NON_EXISTENT_INTERFACE)).to.equal(false)
@@ -57,21 +57,21 @@ describe('XL1Governance', () => {
 
   describe('votingDelay', () => {
     it('should return voting delay', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       expect(await xl1Governance.votingDelay()).to.equal(XL1GovernanceDefaultVotingDelay)
     })
   })
   describe('votingPeriod', () => {
     it('should return voting period', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1Governance)
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       expect(await xl1Governance.votingPeriod()).to.equal(XL1GovernanceDefaultVotingPeriod)
     })
   })
   describe.skip('GovernorCountingUnanimous', () => {
     it('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
-      const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
+      const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       // Create a dummy proposal
       const targets = [await deployer.getAddress()]
@@ -98,7 +98,7 @@ describe('XL1Governance', () => {
     })
 
     it('should fail proposal if there is an against vote', async () => {
-      const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
+      const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const targets = [await deployer.getAddress()]
       const values = [0]
@@ -120,7 +120,7 @@ describe('XL1Governance', () => {
     })
 
     it('should succeed proposal if no against votes', async () => {
-      const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
+      const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const targets = [await deployer.getAddress()]
       const values = [0]
@@ -140,7 +140,7 @@ describe('XL1Governance', () => {
     })
 
     it('should only reach quorum with enough FOR or ABSTAIN votes', async () => {
-      const { xl1Governance, deployer } = await loadFixture(deployXL1Governance)
+      const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const targets = [await deployer.getAddress()]
       const values = [0]
