@@ -111,6 +111,9 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
 
+    // Assert recipient has not received tokens yet
+    expect(await token.balanceOf(await recipient.getAddress())).to.equal(0n)
+
     // Queue and execute the proposal
     await xl1Governance.execute(targets, values, calldatas, descriptionHash)
 
