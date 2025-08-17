@@ -13,7 +13,12 @@ contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
 
     // ========== CONSTRUCTOR ==========
 
-    constructor(uint256 _votingDelay, uint256 _votingPeriod) {
+    constructor(
+        string memory _name,
+        IGovernor[] memory _governors,
+        uint256 _votingDelay,
+        uint256 _votingPeriod
+    ) GovernorGroup(_name, _governors) {
         __votingDelay = _votingDelay;
         __votingPeriod = _votingPeriod;
     }
