@@ -2,7 +2,7 @@ import { deploySingleAddressSubGovernor } from './deploySingleAddressSubGovernor
 
 export const XL1GovernanceDefaultName = 'XL1Governance'
 export const XL1GovernanceDefaultVotingDelay = 1
-export const XL1GovernanceDefaultVotingPeriod = 5
+export const XL1GovernanceDefaultVotingPeriod = 20
 
 export const deployXL1Governance = async (
   governors,

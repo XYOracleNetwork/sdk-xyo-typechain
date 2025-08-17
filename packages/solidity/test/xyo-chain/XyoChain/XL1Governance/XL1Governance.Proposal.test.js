@@ -6,7 +6,7 @@ import {
   advanceBlocks, deployXL1GovernanceWithSingleAddressSubGovernor, deployTestERC20,
 } from '../../helpers/index.js'
 
-describe.skip('XL1Governance - ERC20 Transfer Proposal', () => {
+describe('XL1Governance - ERC20 Transfer Proposal', () => {
   const proposeToCallSmartContract = async (contract, method, args, governor, proposer) => {
     // Encode call to contract from the governance contract
     const functionData = contract.interface.encodeFunctionData(method, args)
@@ -99,7 +99,7 @@ describe.skip('XL1Governance - ERC20 Transfer Proposal', () => {
     await subGovernor.castVote(subProposalId, 1n) // 1 = For
 
     // Move past voting period
-    await advanceBlocks(await subGovernor.votingPeriod() + 1n)
+    await advanceBlocks(await subGovernor.votingPeriod() + 10n)
 
     // Check the subGovernor proposal state
     expect(await subGovernor.state(subProposalId)).to.equal(4n) // ProposalState.Succeeded
