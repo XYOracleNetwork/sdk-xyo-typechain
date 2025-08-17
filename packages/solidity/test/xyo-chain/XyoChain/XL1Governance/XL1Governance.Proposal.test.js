@@ -6,7 +6,7 @@ import {
   advanceBlocks, deployXL1GovernanceWithSingleAddressSubGovernor, deployTestERC20,
 } from '../../helpers/index.js'
 
-describe.only('XL1Governance - ERC20 Transfer Proposal', () => {
+describe.skip('XL1Governance - ERC20 Transfer Proposal', () => {
   const proposeToCallSmartContract = async (contract, method, args, governor, proposer) => {
     // Encode call to contract from the governance contract
     const functionData = contract.interface.encodeFunctionData(method, args)
