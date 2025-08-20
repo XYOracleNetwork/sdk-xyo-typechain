@@ -3,7 +3,11 @@ import chai from 'chai'
 const { expect } = chai
 import {
   advanceBlocks,
-  deployXL1GovernanceWithSingleAddressSubGovernor, XL1GovernanceDefaultVotingDelay, XL1GovernanceDefaultVotingPeriod,
+  deployTestERC20,
+  deployXL1GovernanceWithSingleAddressSubGovernor,
+  proposeToCallSmartContract,
+  XL1GovernanceDefaultVotingDelay,
+  XL1GovernanceDefaultVotingPeriod,
 } from '../../helpers/index.js'
 
 describe('XL1Governance', () => {
@@ -70,31 +74,77 @@ describe('XL1Governance', () => {
     })
   })
   describe.skip('GovernorCountingUnanimous', () => {
-    it('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
-      const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+    const proposeToTransferTokens = async (xl1Governance, token, owner, recipient, proposer) => {
+      const xl1GovernanceAddress = await xl1Governance.getAddress()
+      const recipientAddress = await recipient.getAddress()
 
-      // Create a dummy proposal
-      const targets = [await deployer.getAddress()]
-      const values = [0]
-      const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
-      const description = 'Test unanimous proposal'
+      // Transfer tokens to the governance contract so it can execute
+      // a proposal to transfer tokens if approved
+      const amount = 1000n
+      await token.mint(owner.address, amount)
+      await token.transfer(xl1GovernanceAddress, amount)
 
-      const descriptionHash = ethers.id(description)
+      // Confirm that the governance contract holds the tokens
+      expect(await token.balanceOf(xl1GovernanceAddress)).to.equal(amount)
 
-      const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
+      // Propose xl1Governance call token.transfer(recipientAddress, amount) by proposer
+      return await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
+    }
+
+    it.skip('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
+      const [_, proposer, recipient] = await ethers.getSigners()
+      const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+      const { token, owner } = await loadFixture(deployTestERC20)
+
+      const { proposalId } = await proposeToTransferTokens(xl1Governance, token, owner, recipient, proposer)
 
       // Advance to voting start
       await advanceBlocks(await xl1Governance.votingDelay())
 
-      // Vote FOR
-      await xl1Governance.castVote(proposalId, 1)
+      // Propose subGovernor call xl1Governance.castVote(parentId, 1) by proposer
+      const {
+        proposalId: subProposalId,
+        targets: subProposalTargets,
+        values: subProposalValues,
+        calldatas: subProposalCalldatas,
+        descriptionHash: subProposalDescriptionHash,
+      } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, 1n], subGovernor, proposer)
 
-      const [against, forVotes, abstain] = await xl1Governance.proposalVotes(proposalId)
-      expect(against).to.equal(0)
-      expect(forVotes).to.equal(1)
-      expect(abstain).to.equal(0)
+      // Check the subGovernor proposal state
+      expect(await subGovernor.state(subProposalId)).to.equal(0n) // ProposalState.Pending
 
-      expect(await xl1Governance.hasVoted(proposalId, await deployer.getAddress())).to.equal(true)
+      // Move past voting delay
+      await advanceBlocks((await subGovernor.votingDelay()) + 1n)
+
+      // Check the subGovernor proposal state
+      expect(await subGovernor.state(subProposalId)).to.equal(1n) // ProposalState.Active
+
+      // Vote on the subGovernor's proposal
+      await subGovernor.castVote(subProposalId, 1n) // 1 = For
+
+      // Move past voting period
+      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+
+      // Check the subGovernor proposal state
+      expect(await subGovernor.state(subProposalId)).to.equal(1n) // ProposalState.Active
+
+      // Vote on the subGovernor's proposal
+      await subGovernor.castVote(subProposalId, 1n) // 1 = For
+
+      // Move past voting period
+      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+
+      // Check the subGovernor proposal state
+      expect(await subGovernor.state(subProposalId)).to.equal(4n) // ProposalState.Succeeded
+      const [againstVotes, forVotes, abstainVotes] = await subGovernor.proposalVotes(subProposalId)
+      expect(againstVotes).to.equal(0n)
+      expect(forVotes).to.equal(1n)
+      expect(abstainVotes).to.equal(0n)
+
+      // Execute the proposal to vote on the xl1Governance
+      await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
+
+      expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(true)
     })
 
     it('should fail proposal if there is an against vote', async () => {
@@ -104,7 +154,6 @@ describe('XL1Governance', () => {
       const values = [0]
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Proposal with opposition'
-      const descriptionHash = ethers.id(description)
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
@@ -126,7 +175,6 @@ describe('XL1Governance', () => {
       const values = [0]
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Unanimous proposal'
-      const descriptionHash = ethers.id(description)
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
@@ -146,7 +194,6 @@ describe('XL1Governance', () => {
       const values = [0]
       const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Quorum check'
-      const descriptionHash = ethers.id(description)
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
 
