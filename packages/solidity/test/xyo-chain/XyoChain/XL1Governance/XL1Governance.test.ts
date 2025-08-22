@@ -1,6 +1,7 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
+import hre from 'hardhat'
+
 import {
   advanceBlocks,
   deployTestERC20,
@@ -9,6 +10,8 @@ import {
   XL1GovernanceDefaultVotingDelay,
   XL1GovernanceDefaultVotingPeriod,
 } from '../../helpers/index.js'
+
+const { ethers } = hre
 
 describe('XL1Governance', () => {
   describe('clock', () => {

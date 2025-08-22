@@ -1,5 +1,9 @@
+import hre from 'hardhat'
+
 import { deployTestERC20 } from './deployTestERC20.js'
 import { deployXyoChainRewards } from './deployXyoChainRewards.js'
+
+const { ethers } = hre
 
 export const deployStakedXyoChainV2 = async ({
   forkedChainId = ethers.ZeroAddress,

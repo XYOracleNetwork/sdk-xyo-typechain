@@ -1,4 +1,7 @@
-import { deployTestERC20 } from '../helpers/index.js'
+import hre from 'hardhat'
+
+import { deployTestERC20 } from './index.js'
+const { ethers } = hre
 
 export const deployAddressStakingV2 = async (minWithdrawalBlocks = 3) => {
   const { token } = await deployTestERC20()

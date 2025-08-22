@@ -15,5 +15,11 @@
     "allowImportingTsExtensions": false,
     "emitDeclarationOnly": false
   },
+  "ts-node": {
+    "esm": true,
+    "experimentalResolver": true,
+    "files": true // only if you have "files", "include" or "exclude" in your config
+  },
+  "include": ["./scripts", "test/**/*.ts", "./typechain-types/**/*.ts", "hardhat.config.cts", "./ignition/**/*.ts"],
   "extends": "@xylabs/tsconfig"
 }

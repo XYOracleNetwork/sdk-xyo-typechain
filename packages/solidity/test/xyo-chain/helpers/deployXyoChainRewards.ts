@@ -1,3 +1,7 @@
+import hre from 'hardhat'
+
+const { ethers } = hre
+
 const defaultConfig = {
   initialReward: 1000n,
   stepSize: 100n,
