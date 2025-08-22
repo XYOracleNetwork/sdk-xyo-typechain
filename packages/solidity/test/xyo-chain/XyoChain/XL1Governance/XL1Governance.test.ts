@@ -7,6 +7,7 @@ import {
   deployTestERC20,
   deployXL1GovernanceWithSingleAddressSubGovernor,
   proposeToCallSmartContract,
+  proposeToTransferTokens,
   XL1GovernanceDefaultVotingDelay,
   XL1GovernanceDefaultVotingPeriod,
 } from '../../helpers/index.js'
@@ -77,29 +78,13 @@ describe('XL1Governance', () => {
     })
   })
   describe.skip('GovernorCountingUnanimous', () => {
-    const proposeToTransferTokens = async (xl1Governance, token, owner, recipient, proposer) => {
-      const xl1GovernanceAddress = await xl1Governance.getAddress()
-      const recipientAddress = await recipient.getAddress()
-
-      // Transfer tokens to the governance contract so it can execute
-      // a proposal to transfer tokens if approved
-      const amount = 1000n
-      await token.mint(owner.address, amount)
-      await token.transfer(xl1GovernanceAddress, amount)
-
-      // Confirm that the governance contract holds the tokens
-      expect(await token.balanceOf(xl1GovernanceAddress)).to.equal(amount)
-
-      // Propose xl1Governance call token.transfer(recipientAddress, amount) by proposer
-      return await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
-    }
-
-    it.skip('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
+    it('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
       const [_, proposer, recipient] = await ethers.getSigners()
       const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       const { token, owner } = await loadFixture(deployTestERC20)
+      const amount = 1000n
 
-      const { proposalId } = await proposeToTransferTokens(xl1Governance, token, owner, recipient, proposer)
+      const { proposalId } = await proposeToTransferTokens(xl1Governance, token, owner, recipient, amount, proposer)
 
       // Advance to voting start
       await advanceBlocks(await xl1Governance.votingDelay())
@@ -150,12 +135,13 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(true)
     })
 
-    it('should fail proposal if there is an against vote', async () => {
+    it.skip('should fail proposal if there is an against vote', async () => {
       const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+      const { token, owner } = await loadFixture(deployTestERC20)
 
       const targets = [await deployer.getAddress()]
       const values = [0]
-      const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
+      const calldatas = [token.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
       const description = 'Proposal with opposition'
 
       const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
@@ -171,7 +157,7 @@ describe('XL1Governance', () => {
       expect(voteSucceeded).to.equal(false)
     })
 
-    it('should succeed proposal if no against votes', async () => {
+    it.skip('should succeed proposal if no against votes', async () => {
       const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const targets = [await deployer.getAddress()]
@@ -190,7 +176,7 @@ describe('XL1Governance', () => {
       expect(voteSucceeded).to.equal(true)
     })
 
-    it('should only reach quorum with enough FOR or ABSTAIN votes', async () => {
+    it.skip('should only reach quorum with enough FOR or ABSTAIN votes', async () => {
       const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const targets = [await deployer.getAddress()]
