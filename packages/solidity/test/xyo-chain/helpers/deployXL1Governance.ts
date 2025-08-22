@@ -1,3 +1,4 @@
+import type { AddressLike } from 'ethers'
 import hre from 'hardhat'
 
 import { deploySingleAddressSubGovernor } from './deploySingleAddressSubGovernor.js'
@@ -9,7 +10,7 @@ export const XL1GovernanceDefaultVotingDelay = 1
 export const XL1GovernanceDefaultVotingPeriod = 20
 
 export const deployXL1Governance = async (
-  governors,
+  governors: AddressLike[],
   name = XL1GovernanceDefaultName,
   votingDelay = XL1GovernanceDefaultVotingDelay,
   votingPeriod = XL1GovernanceDefaultVotingPeriod,
