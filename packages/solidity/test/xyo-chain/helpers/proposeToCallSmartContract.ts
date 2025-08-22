@@ -1,10 +1,20 @@
 import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { expect } from 'chai'
+import type { BaseContract } from 'ethers'
 import hre from 'hardhat'
+
+import type { XL1Governance } from '../../../typechain-types'
 
 const { ethers } = hre
 
-export const proposeToCallSmartContract = async (contract, method, args, governor, proposer) => {
+export const proposeToCallSmartContract = async (
+  contract: BaseContract,
+  method: string,
+  args: ReadonlyArray<unknown>,
+  governor: XL1Governance,
+  proposer: HardhatEthersSigner,
+) => {
   // Encode call to contract from the governance contract
   const functionData = contract.interface.encodeFunctionData(method, args)
   const contractAddress = await contract.getAddress()
