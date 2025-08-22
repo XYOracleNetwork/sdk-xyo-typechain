@@ -57,15 +57,7 @@ describe('XyoChainRewards', () => {
     it('matches calcBlockReward', async () => {
       const { rewards, config } = await loadFixture(deployXyoChainRewards)
       const rewardA = await rewards.calcBlockReward(150)
-      const rewardB = await rewards.calcBlockRewardPure(150, [
-        config.initialReward,
-        config.stepSize,
-        config.stepFactorNumerator,
-        config.stepFactorDenominator,
-        config.minRewardPerBlock,
-        config.genesisReward,
-        config.floorPlaces,
-      ])
+      const rewardB = await rewards.calcBlockRewardPure(150n, config)
       expect(rewardB).to.equal(rewardA)
     })
   })
