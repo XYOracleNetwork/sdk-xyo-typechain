@@ -4,7 +4,7 @@ import { expect } from 'chai'
 import type { BaseContract } from 'ethers'
 import hre from 'hardhat'
 
-import type { XL1Governance } from '../../../typechain-types'
+import type { IGovernor } from '../../../typechain-types/index.js'
 
 const { ethers } = hre
 
@@ -12,7 +12,7 @@ export const proposeToCallSmartContract = async (
   contract: BaseContract,
   method: string,
   args: ReadonlyArray<unknown>,
-  governor: XL1Governance,
+  governor: IGovernor,
   proposer: HardhatEthersSigner,
 ) => {
   // Encode call to contract from the governance contract
