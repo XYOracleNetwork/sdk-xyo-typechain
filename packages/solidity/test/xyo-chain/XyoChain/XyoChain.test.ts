@@ -3,7 +3,7 @@ import { expect } from 'chai'
 
 import { deployXyoChain } from '../helpers/index.js'
 
-describe.only('XyoChain', () => {
+describe('XyoChain', () => {
   describe('chainId', () => {
     it('should return chain id', async () => {
       const { chain } = await loadFixture(deployXyoChain)

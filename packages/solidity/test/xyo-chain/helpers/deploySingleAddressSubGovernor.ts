@@ -1,3 +1,7 @@
+import hre from 'hardhat'
+
+const { ethers } = hre
+
 export const SingleAddressSubGovernorDefaultName = 'SingleAddressSubGovernor'
 export const SingleAddressSubGovernorDefaultVotingDelay = 1
 export const SingleAddressSubGovernorDefaultVotingPeriod = 5

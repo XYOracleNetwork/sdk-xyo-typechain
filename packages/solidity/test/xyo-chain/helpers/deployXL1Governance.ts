@@ -1,4 +1,8 @@
+import hre from 'hardhat'
+
 import { deploySingleAddressSubGovernor } from './deploySingleAddressSubGovernor.js'
+
+const { ethers } = hre
 
 export const XL1GovernanceDefaultName = 'XL1Governance'
 export const XL1GovernanceDefaultVotingDelay = 1

@@ -1,6 +1,7 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import { deployStakedXyoChainV2 } from './helpers/index.js'
 import { expect } from 'chai'
+
+import { deployStakedXyoChainV2 } from './helpers/index.js'
 
 describe('StakedXyoChainV2', () => {
   it('should deploy successfully and return correct initial values', async () => {

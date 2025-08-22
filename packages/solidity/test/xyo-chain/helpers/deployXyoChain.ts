@@ -1,4 +1,8 @@
+import hre from 'hardhat'
+
 import { deployXyoChainRewards } from './deployXyoChainRewards.js'
+
+const { ethers } = hre
 
 const defaultForkParams = {
   forkedChainId: '0x0000000000000000000000000000000000000001',
