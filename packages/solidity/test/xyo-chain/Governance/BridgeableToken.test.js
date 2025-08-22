@@ -1,7 +1,6 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { deployBridgeableToken } from '../helpers/index.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
 
 describe('BridgeableToken', () => {
   const amount = ethers.parseUnits('1000000', 18)

@@ -2,8 +2,7 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import {
   deploySingleAddressSubGovernor, SingleAddressSubGovernorDefaultVotingDelay, SingleAddressSubGovernorDefaultVotingPeriod,
 } from '../helpers/deploySingleAddressSubGovernor.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
 
 describe('SingleAddressSubGovernor', () => {
   it('should return correct vote weight for owner', async () => {

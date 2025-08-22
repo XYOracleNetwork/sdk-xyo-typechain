@@ -1,6 +1,6 @@
 import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
+import { ethers } from 'ethers'
 
 export const proposeToCallSmartContract = async (contract, method, args, governor, proposer) => {
   // Encode call to contract from the governance contract

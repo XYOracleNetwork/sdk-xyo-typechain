@@ -1,7 +1,6 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
 
 describe('AddressStakingV2', () => {
   const amount = ethers.parseUnits('1000', 18)

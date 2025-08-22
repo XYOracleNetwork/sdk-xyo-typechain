@@ -1,6 +1,5 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
 import {
   advanceBlocks, deployXL1GovernanceWithSingleAddressSubGovernor, deployTestERC20, proposeToCallSmartContract,
 } from '../../helpers/index.js'

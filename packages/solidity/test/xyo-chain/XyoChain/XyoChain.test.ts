@@ -1,9 +1,9 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import { deployXyoChain } from '../helpers/index.js'
-import chai from 'chai'
-const { expect } = chai
+import { expect } from 'chai'
 
-describe('XyoChain', () => {
+import { deployXyoChain } from '../helpers/index.js'
+
+describe.only('XyoChain', () => {
   describe('chainId', () => {
     it('should return chain id', async () => {
       const { chain } = await loadFixture(deployXyoChain)
