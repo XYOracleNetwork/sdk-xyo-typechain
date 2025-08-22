@@ -2,6 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {IGovernor, Governor} from "@openzeppelin/contracts/governance/Governor.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 /**
  * @dev Abstract contract that allows multiple governance branches to govern the same contract.
@@ -9,8 +10,9 @@ import {IGovernor, Governor} from "@openzeppelin/contracts/governance/Governor.s
  */
 
 abstract contract GovernorGroup is Governor {
-    IGovernor[] __governors; // The governance branches that are allowed to govern the contract
-    mapping(IGovernor => bool) public isGovernor;
+    using EnumerableSet for EnumerableSet.AddressSet;
+
+    EnumerableSet.AddressSet internal __governors;
 
     modifier onlyThis() {
         require(
@@ -24,32 +26,27 @@ abstract contract GovernorGroup is Governor {
 
     constructor(
         string memory _name,
-        IGovernor[] memory _governors // The addresses that are allowed to govern the contract
+        address[] memory _governors // The addresses that are allowed to govern the contract
     ) Governor(_name) {
-        __governors = _governors;
         for (uint256 i = 0; i < _governors.length; i++) {
-            isGovernor[__governors[i]] = true;
+            __governors.add(_governors[i]);
         }
     }
 
-    function addGovernor(IGovernor governor) public onlyThis {
-        bool isPreviousGovernor = false;
-        for (uint256 i = 0; i < __governors.length; i++) {
-            if (isGovernor[__governors[i]]) {
-                isPreviousGovernor = true;
-                break;
-            }
+    function addGovernor(address governor) public onlyThis {
+        if (!isGovernor(governor)) {
+            __governors.add(governor);
         }
-        if (!isPreviousGovernor) {
-            __governors.push(governor);
-        }
-        isGovernor[governor] = true;
     }
 
-    function removeGovernor(IGovernor governor) public onlyThis {
-        if (isGovernor[governor]) {
-            isGovernor[governor] = false;
+    function removeGovernor(address governor) public onlyThis {
+        if (isGovernor(governor)) {
+            __governors.remove(governor);
         }
+    }
+
+    function isGovernor(address governor) public view returns (bool) {
+        return __governors.contains(governor);
     }
 
     // ========== PUBLIC ==========
@@ -57,37 +54,11 @@ abstract contract GovernorGroup is Governor {
     /**
      * @dev Returns the governors that have approval authority
      */
-    function governors() public view returns (IGovernor[] memory) {
-        // First, count the active governors
-        uint256 activeCount = 0;
-        for (uint256 i = 0; i < __governors.length; i++) {
-            if (isGovernor[__governors[i]]) {
-                activeCount++;
-            }
-        }
-
-        // Create a properly sized array
-        IGovernor[] memory result = new IGovernor[](activeCount);
-
-        // Fill the array with active governors
-        uint256 resultIndex = 0;
-        for (uint256 i = 0; i < __governors.length; i++) {
-            if (isGovernor[__governors[i]]) {
-                result[resultIndex] = __governors[i];
-                resultIndex++;
-            }
-        }
-
-        return result;
+    function governors() public view returns (address[] memory) {
+        return __governors.values();
     }
 
     function governorCount() public view returns (uint256) {
-        uint256 count;
-        for (uint256 i = 0; i < __governors.length; i++) {
-            if (isGovernor[__governors[i]]) {
-                count++;
-            }
-        }
-        return count;
+        return __governors.length();
     }
 }

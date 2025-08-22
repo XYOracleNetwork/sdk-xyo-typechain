@@ -35,7 +35,7 @@ contract BridgeableToken is ERC20, Ownable {
     function bridge(
         uint256 amount,
         address destination
-    ) external onlyOwner returns (uint256 id) {
+    ) external returns (uint256 id) {
         _burn(_msgSender(), amount);
 
         id = nextBridgeId++;

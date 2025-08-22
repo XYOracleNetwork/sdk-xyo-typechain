@@ -6,8 +6,11 @@ import {GovernorCountingUnanimous} from "./GovernorCountingUnanimous.sol";
 import {GovernorGroup} from "./GovernorGroup.sol";
 
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
+    using EnumerableSet for EnumerableSet.AddressSet;
+
     uint256 private __votingDelay;
     uint256 private __votingPeriod;
 
@@ -15,7 +18,7 @@ contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
 
     constructor(
         string memory _name,
-        IGovernor[] memory _governors,
+        address[] memory _governors,
         uint256 _votingDelay,
         uint256 _votingPeriod
     ) GovernorGroup(_name, _governors) {
@@ -50,7 +53,7 @@ contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
         uint256 /* blockNumber */,
         bytes memory /* params */
     ) internal view override returns (uint256) {
-        return isGovernor[IGovernor(account)] ? 1 : 0;
+        return __governors.contains(account) ? 1 : 0;
     }
 
     function votingDelay() public view override returns (uint256) {
