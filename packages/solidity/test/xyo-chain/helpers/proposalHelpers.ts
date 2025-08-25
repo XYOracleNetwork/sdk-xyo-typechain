@@ -11,15 +11,15 @@ import type {
 const { ethers } = hre
 
 export const ProposalState = {
-  Pending: 0,
-  Active: 1,
-  Canceled: 2,
-  Defeated: 3,
-  Succeeded: 4,
-  Queued: 5,
-  Expired: 6,
-  Executed: 7,
-} satisfies Readonly<Record<string, number>>
+  Pending: 0n,
+  Active: 1n,
+  Canceled: 2n,
+  Defeated: 3n,
+  Succeeded: 4n,
+  Queued: 5n,
+  Expired: 6n,
+  Executed: 7n,
+} satisfies Readonly<Record<string, bigint>>
 
 export const proposeToCallSmartContract = async (
   contract: BaseContract,
@@ -60,7 +60,7 @@ export const proposeToCallSmartContract = async (
       description,
     )
   const proposalState = await governor.state(proposalId)
-  expect(proposalState).to.equal(0n) // ProposalState.Pending
+  expect(proposalState).to.equal(ProposalState.Pending)
 
   return {
     proposalId, targets, values, calldatas, description, descriptionHash,
