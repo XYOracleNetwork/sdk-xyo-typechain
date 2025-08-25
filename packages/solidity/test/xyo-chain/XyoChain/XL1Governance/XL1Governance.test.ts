@@ -137,7 +137,7 @@ describe('XL1Governance', () => {
 
     it.skip('should fail proposal if there is an against vote', async () => {
       const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-      const { token, owner } = await loadFixture(deployTestERC20)
+      const { token } = await loadFixture(deployTestERC20)
 
       const targets = [await deployer.getAddress()]
       const values = [0]
