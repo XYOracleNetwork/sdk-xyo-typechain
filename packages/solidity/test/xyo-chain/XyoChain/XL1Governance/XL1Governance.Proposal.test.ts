@@ -60,6 +60,9 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     expect(forVotes).to.equal(1n)
     expect(abstainVotes).to.equal(0n)
 
+    // Verify the subGovernor has not yet voted
+    expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(false)
+
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
 

@@ -88,7 +88,7 @@ describe('XL1Governance', () => {
         proposalId, targets, values, calldatas, descriptionHash,
       } = await proposeToTransferTokens(xl1Governance, token, owner, recipient, amount, proposer)
 
-      // Advance to voting start
+      // Move past voting delay
       await advanceBlocks(await xl1Governance.votingDelay())
 
       // Propose subGovernor call xl1Governance.castVote(parentId, 1) by proposer
@@ -128,20 +128,14 @@ describe('XL1Governance', () => {
       // Execute the proposal to vote on the xl1Governance
       await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
 
-      // Verify the subGovernor has voted
-      expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(true)
+      // Assert recipient has not received tokens yet
+      expect(await token.balanceOf(await recipient.getAddress())).to.equal(0n)
 
-      // // Execute the proposal to vote on the xl1Governance
-      // await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
+      // Queue and execute the proposal
+      await xl1Governance.execute(targets, values, calldatas, descriptionHash)
 
-      // // Assert recipient has not received tokens yet
-      // expect(await token.balanceOf(await recipient.getAddress())).to.equal(0n)
-
-      // // Queue and execute the proposal
-      // await xl1Governance.execute(targets, values, calldatas, descriptionHash)
-
-      // // Check the recipient received the tokens
-      // expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
+      // Check the recipient received the tokens
+      expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
     })
 
     it('should fail proposal if there is an against vote', async () => {
