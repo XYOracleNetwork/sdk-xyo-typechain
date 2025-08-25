@@ -40,7 +40,7 @@ export const voteThroughSubGovernor = async (args: VoteThroughSubGovernorArgs) =
   )
 }
 
-export type VoteType = 'For' | 'Against' | 'Abstain'
+export type VoteType = keyof typeof ProposalVote
 
 export const voteAndFinalizeProposal = async (
   governor: IGovernor,
