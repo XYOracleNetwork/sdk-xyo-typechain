@@ -85,7 +85,7 @@ abstract contract GovernorCountingUnanimous is Governor {
         ProposalVote storage proposalVote = _proposalVotes[proposalId];
 
         //if any of the parties voted against the proposal, it fails
-        return proposalVote.againstVotes == 0;
+        return proposalVote.againstVotes == 0 && proposalVote.forVotes > 0;
     }
 
     /**
