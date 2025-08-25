@@ -124,7 +124,7 @@ describe('XL1Governance', () => {
       expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
     })
 
-    it.only('should correctly pass if all subGovernors vote For', async () => {
+    it.only('should pass if all subGovernors vote For', async () => {
       const voteType: VoteType = 'For'
       const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       const ctx = await createRandomProposal(xl1Governance)
@@ -150,15 +150,32 @@ describe('XL1Governance', () => {
       await validateRandomProposalSucceeded(ctx)
     })
 
-    it('should defeat a proposal with an Against vote', async () => {
-      const [_, proposer] = await ethers.getSigners()
-      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-
+    it.only('should fail if single subGovernor votes Against', async () => {
+      const voteType: VoteType = 'Against'
+      const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       const ctx = await createRandomProposal(xl1Governance)
-      const state = await voteAndFinalizeProposal(xl1Governance, ctx.proposalId, proposer, 'Against')
+      const {
+        proposalId: parentProposalId, targets, values, calldatas, descriptionHash, proposer,
+      } = ctx
 
-      expect(state).to.equal(ProposalState.Defeated)
-      await assertProposalDefeated(xl1Governance, ctx)
+      // Cast vote via subGovernor
+      await voteThroughSubGovernor({
+        parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType,
+      })
+
+      // Move past voting period
+      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+
+      // Verify subGovernor has voted on parent proposal
+      expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
+
+      // Execute the parent proposal
+      await expect(
+        xl1Governance.execute(targets, values, calldatas, descriptionHash),
+      ).to.be.reverted
+
+      // Validate proposal succeeded
+      await validateRandomProposalFailed(ctx)
     })
 
     // it.skip('should succeed proposal if no against votes', async () => {
