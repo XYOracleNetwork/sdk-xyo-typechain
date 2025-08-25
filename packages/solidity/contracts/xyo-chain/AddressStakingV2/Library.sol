@@ -100,6 +100,6 @@ library AddressStakingLibrary {
             stake.addBlock > 0 &&
             stake.removeBlock > 0 &&
             stake.withdrawBlock == 0 &&
-            block.number > (stake.removeBlock + minWithdrawalBlocks);
+            block.number >= (stake.removeBlock + minWithdrawalBlocks);
     }
 }
