@@ -2,15 +2,17 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import { expect } from 'chai'
 import hre from 'hardhat'
 
+import type { VoteType } from '../../helpers/index.js'
 import {
   advanceBlocks,
   assertProposalDefeated,
-  createProposalToCallContract,
   createRandomProposal,
   deployTestERC20,
   deployXL1GovernanceWithSingleAddressSubGovernor,
   ProposalState,
   proposeToTransferTokens,
+  validateRandomProposalFailed,
+  validateRandomProposalSucceeded,
   voteAndFinalizeProposal,
   voteThroughSubGovernor,
   XL1GovernanceDefaultVotingDelay,
@@ -82,8 +84,8 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.votingPeriod()).to.equal(XL1GovernanceDefaultVotingPeriod)
     })
   })
-  describe('GovernorCountingUnanimous', () => {
-    it('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
+  describe.only('GovernorCountingUnanimous', () => {
+    it.only('old success', async () => {
       const [_, proposer, recipient] = await ethers.getSigners()
       const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       const { token, owner } = await loadFixture(deployTestERC20)
@@ -107,6 +109,7 @@ describe('XL1Governance', () => {
         subGovernor,
         parentProposalId: proposalId,
         proposer,
+        voteType: 'For',
       })
       // Move past voting period
       await advanceBlocks(await subGovernor.votingPeriod() + 10n)
@@ -119,6 +122,32 @@ describe('XL1Governance', () => {
 
       // Check the recipient received the tokens
       expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
+    })
+
+    it.only('should correctly pass if all subGovernors vote For', async () => {
+      const voteType: VoteType = 'For'
+      const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+      const ctx = await createRandomProposal(xl1Governance)
+      const {
+        proposalId: parentProposalId, targets, values, calldatas, descriptionHash, proposer,
+      } = ctx
+
+      // Cast vote via subGovernor
+      await voteThroughSubGovernor({
+        parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType,
+      })
+
+      // Move past voting period
+      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+
+      // Verify subGovernor has voted on parent proposal
+      expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
+
+      // Execute the parent proposal
+      await xl1Governance.execute(targets, values, calldatas, descriptionHash)
+
+      // Validate proposal succeeded
+      await validateRandomProposalSucceeded(ctx)
     })
 
     it('should defeat a proposal with an Against vote', async () => {

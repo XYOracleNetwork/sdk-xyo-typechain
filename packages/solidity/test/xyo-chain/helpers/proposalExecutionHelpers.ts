@@ -1,6 +1,6 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { expect } from 'chai'
-import type { BaseContract } from 'ethers'
+import type { BaseContract, BigNumberish } from 'ethers'
 import hre from 'hardhat'
 
 import type { IGovernor } from '../../../typechain-types'
@@ -50,7 +50,7 @@ export interface ProposalExecutionContext {
   descriptionHash: string
   proposalId: bigint
   targets: string[]
-  values: bigint[]
+  values: BigNumberish[]
 }
 
 export const assertProposalExecuted = async (

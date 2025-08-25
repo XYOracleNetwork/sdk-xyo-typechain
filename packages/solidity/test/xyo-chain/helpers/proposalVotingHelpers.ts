@@ -7,21 +7,24 @@ import {
   ProposalState, ProposalVote, proposeToCallSmartContract,
 } from './proposalHelpers.js'
 
+export type VoteType = keyof typeof ProposalVote
+
 export interface VoteThroughSubGovernorArgs {
   parentGovernor: IGovernor
   parentProposalId: bigint
   proposer: HardhatEthersSigner
   subGovernor: IGovernor
+  voteType: VoteType
 }
 
 export const voteThroughSubGovernor = async (args: VoteThroughSubGovernorArgs) => {
   const {
-    parentGovernor, parentProposalId, proposer, subGovernor,
+    parentGovernor, parentProposalId, proposer, subGovernor, voteType,
   } = args
   const subVoteProposal = await proposeToCallSmartContract(
     parentGovernor,
     'castVote',
-    [parentProposalId, ProposalVote.For],
+    [parentProposalId, ProposalVote[voteType]],
     subGovernor,
     proposer,
   )
@@ -39,8 +42,6 @@ export const voteThroughSubGovernor = async (args: VoteThroughSubGovernorArgs) =
     subVoteProposal.descriptionHash,
   )
 }
-
-export type VoteType = keyof typeof ProposalVote
 
 export const voteAndFinalizeProposal = async (
   governor: IGovernor,
