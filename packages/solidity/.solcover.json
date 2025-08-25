@@ -1,0 +1,10 @@
+{
+  "skipFiles": [
+    "contracts/DataStore.sol",
+    "erc20",
+    "erc721",
+    "libraries/QuadKey.sol",
+    "xyo-chain/AddressStaking",
+    "unigen"
+  ]
+}

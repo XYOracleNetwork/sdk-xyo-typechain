@@ -3841,7 +3841,7 @@ __metadata:
     hardhat: "npm:~2.26.2"
     hardhat-gas-reporter: "npm:~2.3.0"
     rimraf: "npm:~6.0.1"
-    solidity-coverage: "npm:~0.8.0"
+    solidity-coverage: "npm:~0.8.16"
     truffle: "npm:~5.11.5"
     ts-node: "npm:~10.9.2"
     typechain: "npm:~8.3.0"
@@ -13837,7 +13837,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"solidity-coverage@npm:~0.8.0":
+"solidity-coverage@npm:~0.8.16":
   version: 0.8.16
   resolution: "solidity-coverage@npm:0.8.16"
   dependencies:
