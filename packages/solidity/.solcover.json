@@ -5,6 +5,9 @@
     "erc721",
     "libraries/QuadKey.sol",
     "xyo-chain/AddressStaking",
+    "xyo-chain/Governance/HouseGovernor.sol",
+    "xyo-chain/Governance/SenateGovernor.sol",
+    "xyo-chain/StakedXyoChain.sol",
     "unigen"
   ]
 }
