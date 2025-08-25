@@ -1,0 +1,41 @@
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
+import { expect } from 'chai'
+
+import type { IGovernor } from '../../../typechain-types'
+import { advanceBlocks } from './evmHelpers'
+import {
+  ProposalState, ProposalVote, proposeToCallSmartContract,
+} from './proposalHelpers'
+
+export interface VoteThroughSubGovernorArgs {
+  parentGovernor: IGovernor
+  parentProposalId: bigint
+  proposer: HardhatEthersSigner
+  subGovernor: IGovernor
+}
+
+export const voteThroughSubGovernor = async (args: VoteThroughSubGovernorArgs) => {
+  const {
+    parentGovernor, parentProposalId, proposer, subGovernor,
+  } = args
+  const subVoteProposal = await proposeToCallSmartContract(
+    parentGovernor,
+    'castVote',
+    [parentProposalId, ProposalVote.For],
+    subGovernor,
+    proposer,
+  )
+
+  await advanceBlocks(await subGovernor.votingDelay() + 1n)
+  await subGovernor.castVote(subVoteProposal.proposalId, ProposalVote.For)
+  await advanceBlocks(await subGovernor.votingPeriod() + 1n)
+
+  expect(await subGovernor.state(subVoteProposal.proposalId)).to.equal(ProposalState.Succeeded)
+
+  await subGovernor.execute(
+    subVoteProposal.targets,
+    subVoteProposal.values,
+    subVoteProposal.calldatas,
+    subVoteProposal.descriptionHash,
+  )
+}
