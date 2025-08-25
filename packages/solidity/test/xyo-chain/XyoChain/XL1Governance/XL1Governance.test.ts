@@ -6,6 +6,7 @@ import {
   advanceBlocks,
   assertProposalDefeated,
   createProposalToCallContract,
+  createRandomProposal,
   deployTestERC20,
   deployXL1GovernanceWithSingleAddressSubGovernor,
   ProposalState,
@@ -120,30 +121,15 @@ describe('XL1Governance', () => {
       expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
     })
 
-    it.only('should defeat a proposal with an Against vote', async () => {
+    it('should defeat a proposal with an Against vote', async () => {
       const [_, proposer] = await ethers.getSigners()
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-      const { token, owner } = await loadFixture(deployTestERC20)
 
-      const amount = 1000n
-      await token.mint(owner.address, amount)
-      await token.transfer(await xl1Governance.getAddress(), amount)
-
-      const ctx = await createProposalToCallContract(
-        token,
-        'transfer',
-        [proposer.address, amount],
-        xl1Governance,
-        proposer,
-      )
-
+      const ctx = await createRandomProposal(xl1Governance)
       const state = await voteAndFinalizeProposal(xl1Governance, ctx.proposalId, proposer, 'Against')
 
       expect(state).to.equal(ProposalState.Defeated)
       await assertProposalDefeated(xl1Governance, ctx)
-
-      // Confirm tokens were not transferred
-      expect(await token.balanceOf(proposer.address)).to.equal(0n)
     })
 
     // it.skip('should succeed proposal if no against votes', async () => {
