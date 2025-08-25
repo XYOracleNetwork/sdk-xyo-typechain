@@ -5,15 +5,10 @@ import hre from 'hardhat'
 import type { VoteType } from '../../helpers/index.js'
 import {
   advanceBlocks,
-  assertProposalDefeated,
   createRandomProposal,
-  deployTestERC20,
   deployXL1GovernanceWithSingleAddressSubGovernor,
-  ProposalState,
-  proposeToTransferTokens,
   validateRandomProposalFailed,
   validateRandomProposalSucceeded,
-  voteAndFinalizeProposal,
   voteThroughSubGovernor,
   XL1GovernanceDefaultVotingDelay,
   XL1GovernanceDefaultVotingPeriod,
@@ -84,136 +79,69 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.votingPeriod()).to.equal(XL1GovernanceDefaultVotingPeriod)
     })
   })
-  describe.only('GovernorCountingUnanimous', () => {
-    it.only('old success', async () => {
-      const [_, proposer, recipient] = await ethers.getSigners()
-      const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-      const { token, owner } = await loadFixture(deployTestERC20)
-      const amount = 1000n
+  describe('GovernorCountingUnanimous', () => {
+    describe('with single subGovernor', () => {
+      it('should pass if subGovernor votes For', async () => {
+        const voteType: VoteType = 'For'
+        const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+        const ctx = await createRandomProposal(xl1Governance)
+        const {
+          proposalId: parentProposalId, targets, values, calldatas, descriptionHash, proposer,
+        } = ctx
 
-      // Propose the transfer
-      const {
-        proposalId, targets, values, calldatas, descriptionHash,
-      } = await proposeToTransferTokens(
-        xl1Governance,
-        token,
-        owner,
-        recipient,
-        amount,
-        proposer,
-      )
+        // Cast vote via subGovernor
+        await voteThroughSubGovernor({
+          parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType,
+        })
 
-      // Cast vote via subGovernor
-      await voteThroughSubGovernor({
-        parentGovernor: xl1Governance,
-        subGovernor,
-        parentProposalId: proposalId,
-        proposer,
-        voteType: 'For',
-      })
-      // Move past voting period
-      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+        // Move past voting period
+        await advanceBlocks(await subGovernor.votingPeriod() + 10n)
 
-      // Verify subGovernor has voted on parent proposal
-      expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(true)
+        // Verify subGovernor has voted on parent proposal
+        expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
 
-      // Execute the parent proposal to transfer tokens
-      await xl1Governance.execute(targets, values, calldatas, descriptionHash)
+        // Execute the parent proposal
+        await xl1Governance.execute(targets, values, calldatas, descriptionHash)
 
-      // Check the recipient received the tokens
-      expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
-    })
-
-    it.only('should pass if all subGovernors vote For', async () => {
-      const voteType: VoteType = 'For'
-      const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-      const ctx = await createRandomProposal(xl1Governance)
-      const {
-        proposalId: parentProposalId, targets, values, calldatas, descriptionHash, proposer,
-      } = ctx
-
-      // Cast vote via subGovernor
-      await voteThroughSubGovernor({
-        parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType,
+        // Validate proposal succeeded
+        await validateRandomProposalSucceeded(ctx)
       })
 
-      // Move past voting period
-      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+      it('should not pass if subGovernor votes Against', async () => {
+        const voteType: VoteType = 'Against'
+        const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+        const ctx = await createRandomProposal(xl1Governance)
+        const {
+          proposalId: parentProposalId, targets, values, calldatas, descriptionHash, proposer,
+        } = ctx
 
-      // Verify subGovernor has voted on parent proposal
-      expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
+        // Cast vote via subGovernor
+        await voteThroughSubGovernor({
+          parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType,
+        })
 
-      // Execute the parent proposal
-      await xl1Governance.execute(targets, values, calldatas, descriptionHash)
+        // Move past voting period
+        await advanceBlocks(await subGovernor.votingPeriod() + 10n)
 
-      // Validate proposal succeeded
-      await validateRandomProposalSucceeded(ctx)
-    })
+        // Verify subGovernor has voted on parent proposal
+        expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
 
-    it.only('should fail if single subGovernor votes Against', async () => {
-      const voteType: VoteType = 'Against'
-      const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-      const ctx = await createRandomProposal(xl1Governance)
-      const {
-        proposalId: parentProposalId, targets, values, calldatas, descriptionHash, proposer,
-      } = ctx
+        // Execute the parent proposal
+        await expect(
+          xl1Governance.execute(targets, values, calldatas, descriptionHash),
+        ).to.be.reverted
 
-      // Cast vote via subGovernor
-      await voteThroughSubGovernor({
-        parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType,
+        // Validate proposal succeeded
+        await validateRandomProposalFailed(ctx)
       })
-
-      // Move past voting period
-      await advanceBlocks(await subGovernor.votingPeriod() + 10n)
-
-      // Verify subGovernor has voted on parent proposal
-      expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
-
-      // Execute the parent proposal
-      await expect(
-        xl1Governance.execute(targets, values, calldatas, descriptionHash),
-      ).to.be.reverted
-
-      // Validate proposal succeeded
-      await validateRandomProposalFailed(ctx)
     })
-
-    // it.skip('should succeed proposal if no against votes', async () => {
-    //   const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-
-    //   const targets = [await deployer.getAddress()]
-    //   const values = [0]
-    //   const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
-    //   const description = 'Unanimous proposal'
-
-    //   const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
-
-    //   await advanceBlocks(await xl1Governance.votingDelay())
-
-    //   // Cast FOR vote
-    //   await xl1Governance.castVote(proposalId, 1)
-
-    //   const voteSucceeded = await xl1Governance.callStatic._voteSucceeded(proposalId)
-    //   expect(voteSucceeded).to.equal(true)
-    // })
-
-    // it.skip('should only reach quorum with enough FOR or ABSTAIN votes', async () => {
-    //   const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
-
-    //   const targets = [await deployer.getAddress()]
-    //   const values = [0]
-    //   const calldatas = [deployer.interface.encodeFunctionData('balanceOf', [await deployer.getAddress()])]
-    //   const description = 'Quorum check'
-
-    //   const proposalId = await xl1Governance.propose(targets, values, calldatas, description)
-
-    //   await advanceBlocks(await xl1Governance.votingDelay())
-
-    //   // Cast ABSTAIN vote
-    //   await xl1Governance.castVote(proposalId, 2)
-
-    //   const quorumReached = await xl1Governance.callStatic._quorumReached(proposalId)
-    //   expect(quorumReached).to.equal(true)
-    // })
+    describe.skip('with multiple subGovernors', () => {
+      it.skip('should succeed proposal if no against votes', async () => {
+        await Promise.reject(new Error('Not implemented'))
+      })
+      it.skip('should only reach quorum with enough FOR or ABSTAIN votes', async () => {
+        await Promise.reject(new Error('Not implemented'))
+      })
+    })
   })
 })
