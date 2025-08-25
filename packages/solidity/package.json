@@ -33,7 +33,7 @@
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile && hardhat typechain",
-    "package-coverage": "hardhat coverage",
+    "package-coverage": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true hardhat coverage --solcoverjs ./.solcover.json",
     "package-lint": "echo Skipping lint...",
     "package-recompile": "yarn package-clean && yarn package-compile",
     "package-test": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' hardhat test"
@@ -60,7 +60,7 @@
     "hardhat": "~2.26.2",
     "hardhat-gas-reporter": "~2.3.0",
     "rimraf": "~6.0.1",
-    "solidity-coverage": "~0.8.0",
+    "solidity-coverage": "~0.8.16",
     "truffle": "~5.11.5",
     "ts-node": "~10.9.2",
     "typechain": "~8.3.0",

@@ -1,7 +1,9 @@
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
 import hre from 'hardhat'
 
+import type { AddressStakingV2, BridgeableToken } from '../../../typechain-types/index.js'
 import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
 
 const { ethers } = hre
@@ -9,7 +11,7 @@ const { ethers } = hre
 describe('AddressStakingV2', () => {
   const amount = ethers.parseUnits('1000', 18)
 
-  const mintAndApprove = async (token, staker, stakingContract, amount) => {
+  const mintAndApprove = async (token: BridgeableToken, staker: HardhatEthersSigner, stakingContract: AddressStakingV2, amount: bigint) => {
     await token.mint(staker.address, amount)
     await token.connect(staker).approve(await stakingContract.getAddress(), amount)
   }
