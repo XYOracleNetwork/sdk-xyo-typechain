@@ -96,3 +96,5 @@ export const proposeToTransferTokens = async (
   // Propose xl1Governance call token.transfer(recipientAddress, amount) by proposer
   return await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
 }
+
+

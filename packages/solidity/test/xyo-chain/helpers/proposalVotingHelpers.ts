@@ -39,3 +39,22 @@ export const voteThroughSubGovernor = async (args: VoteThroughSubGovernorArgs) =
     subVoteProposal.descriptionHash,
   )
 }
+
+export type VoteType = 'For' | 'Against' | 'Abstain'
+
+export const voteAndFinalizeProposal = async (
+  governor: IGovernor,
+  proposalId: bigint,
+  voter: HardhatEthersSigner,
+  vote: VoteType,
+) => {
+  await advanceBlocks(await governor.votingDelay())
+
+  const voteValue = ProposalVote[vote]
+  await governor.connect(voter).castVote(proposalId, voteValue)
+
+  await advanceBlocks(await governor.votingPeriod() + 1n)
+  const finalState = await governor.state(proposalId)
+
+  return finalState
+}
