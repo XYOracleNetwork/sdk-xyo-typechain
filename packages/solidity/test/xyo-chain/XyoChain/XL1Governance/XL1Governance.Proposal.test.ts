@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import hre from 'hardhat'
 
 import {
-  advanceBlocks, deployTestERC20, deployXL1GovernanceWithSingleAddressSubGovernor, ProposalState, proposeToCallSmartContract,
+  advanceBlocks, deployTestERC20, deployXL1GovernanceWithSingleAddressSubGovernor, ProposalState, ProposalVote, proposeToCallSmartContract,
   proposeToTransferTokens,
 } from '../../helpers/index.js'
 
@@ -29,14 +29,14 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     // Move past voting delay
     await advanceBlocks(await xl1Governance.votingDelay())
 
-    // Propose subGovernor call xl1Governance.castVote(parentId, 1) by proposer
+    // Propose subGovernor call xl1Governance.castVote(parentId, ProposalVote.For) by proposer
     const {
       proposalId: subProposalId,
       targets: subProposalTargets,
       values: subProposalValues,
       calldatas: subProposalCalldatas,
       descriptionHash: subProposalDescriptionHash,
-    } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, 1n], subGovernor, proposer)
+    } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, ProposalVote.For], subGovernor, proposer)
 
     // Check the subGovernor proposal state
     expect(await subGovernor.state(subProposalId)).to.equal(ProposalState.Pending)
@@ -48,7 +48,7 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     expect(await subGovernor.state(subProposalId)).to.equal(ProposalState.Active)
 
     // Vote on the subGovernor's proposal
-    await subGovernor.castVote(subProposalId, 1n) // 1 = For
+    await subGovernor.castVote(subProposalId, ProposalVote.For)
 
     // Move past voting period
     await advanceBlocks(await subGovernor.votingPeriod() + 10n)

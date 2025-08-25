@@ -21,6 +21,12 @@ export const ProposalState = {
   Executed: 7n,
 } satisfies Readonly<Record<string, bigint>>
 
+export const ProposalVote = {
+  Against: 0n,
+  For: 1n,
+  Abstain: 2n,
+} satisfies Readonly<Record<string, bigint>>
+
 export const proposeToCallSmartContract = async (
   contract: BaseContract,
   method: string,

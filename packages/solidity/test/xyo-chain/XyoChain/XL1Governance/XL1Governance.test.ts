@@ -7,6 +7,7 @@ import {
   deployTestERC20,
   deployXL1GovernanceWithSingleAddressSubGovernor,
   ProposalState,
+  ProposalVote,
   proposeToCallSmartContract,
   proposeToTransferTokens,
   XL1GovernanceDefaultVotingDelay,
@@ -38,22 +39,22 @@ describe('XL1Governance', () => {
       expect(await xl1Governance.quorum(0)).to.equal(await xl1Governance.governorCount())
     })
   })
-  describe.skip('getVotes', () => {
-    it('should allow checking vote power based on governor membership', async () => {
-      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+  // describe.skip('getVotes', () => {
+  //   it('should allow checking vote power based on governor membership', async () => {
+  //     const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
-      const fakeGovernor = await (
-        await ethers.getContractFactory('SingleAddressSubGovernor')
-      ).deploy(xl1Governance)
+  //     const fakeGovernor = await (
+  //       await ethers.getContractFactory('SingleAddressSubGovernor')
+  //     ).deploy(xl1Governance)
 
-      // Initially not a governor, should return 0
-      expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(0)
+  //     // Initially not a governor, should return 0
+  //     expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(0)
 
-      // Add governor and expect vote weight to be 1
-      await xl1Governance.addGovernor(fakeGovernor)
-      expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(1)
-    })
-  })
+  //     // Add governor and expect vote weight to be 1
+  //     await xl1Governance.addGovernor(fakeGovernor)
+  //     expect(await xl1Governance.getVotes(await fakeGovernor.getAddress(), 0)).to.equal(1)
+  //   })
+  // })
 
   describe('supportsInterface', () => {
     it('should return check for interface support', async () => {
@@ -79,7 +80,7 @@ describe('XL1Governance', () => {
     })
   })
   describe('GovernorCountingUnanimous', () => {
-    it.only('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
+    it('should correctly count votes and reflect in proposalVotes and hasVoted', async () => {
       const [_, proposer, recipient] = await ethers.getSigners()
       const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       const { token, owner } = await loadFixture(deployTestERC20)
@@ -92,14 +93,14 @@ describe('XL1Governance', () => {
       // Move past voting delay
       await advanceBlocks(await xl1Governance.votingDelay())
 
-      // Propose subGovernor call xl1Governance.castVote(parentId, 1) by proposer
+      // Propose subGovernor call xl1Governance.castVote(parentId, ProposalVote.For) by proposer
       const {
         proposalId: subProposalId,
         targets: subProposalTargets,
         values: subProposalValues,
         calldatas: subProposalCalldatas,
         descriptionHash: subProposalDescriptionHash,
-      } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, 1n], subGovernor, proposer)
+      } = await proposeToCallSmartContract(xl1Governance, 'castVote', [proposalId, ProposalVote.For], subGovernor, proposer)
 
       // Check the subGovernor proposal state
       expect(await subGovernor.state(subProposalId)).to.equal(ProposalState.Pending)
@@ -111,7 +112,7 @@ describe('XL1Governance', () => {
       expect(await subGovernor.state(subProposalId)).to.equal(ProposalState.Active)
 
       // Vote on the subGovernor's proposal
-      await subGovernor.castVote(subProposalId, 1n) // 1 = For
+      await subGovernor.castVote(subProposalId, ProposalVote.For)
 
       // Move past voting period
       await advanceBlocks(await subGovernor.votingPeriod() + 10n)
@@ -149,7 +150,7 @@ describe('XL1Governance', () => {
       await advanceBlocks(await xl1Governance.votingDelay())
 
       // Cast AGAINST vote
-      await xl1Governance.castVote(proposalId, 0)
+      await xl1Governance.castVote(proposalId, ProposalVote.Against)
 
       expect(await xl1Governance.hasVoted(proposalId, await deployer.getAddress())).to.equal(true)
 
