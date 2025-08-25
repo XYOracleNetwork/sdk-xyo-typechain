@@ -14,6 +14,10 @@ abstract contract AddressStakingProperties is
     constructor(
         uint256 _minWithdrawalBlocks // The minimum number of blocks that must pass before a pending stake can be withdrawn
     ) {
+        require(
+            _minWithdrawalBlocks > 0,
+            "Staking: invalid minWithdrawalBlocks"
+        );
         __minWithdrawalBlocks = _minWithdrawalBlocks;
     }
 
