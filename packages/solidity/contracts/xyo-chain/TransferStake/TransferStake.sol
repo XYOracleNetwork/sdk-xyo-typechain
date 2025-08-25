@@ -38,4 +38,13 @@ contract TransferStake is AbstractTransferStake {
         emit StakeOut(msg.sender, amount);
         return true;
     }
+
+    function _burnStake(
+        address _address,
+        uint256 amount
+    ) internal override returns (bool) {
+        IERC20(__stakingTokenAddress).transfer(address(0), amount);
+        emit StakeBurned(_address, amount);
+        return true;
+    }
 }

@@ -140,6 +140,7 @@ abstract contract AddressStakingInternal is
             _totalSlashedStake += slashedAmount;
             totalSlashedAmount += slashedAmount;
         }
+        _burnStake(stakedAddress, amount);
         emit StakeSlashed(stakedAddress, totalSlashedAmount);
         return totalSlashedAmount;
     }
