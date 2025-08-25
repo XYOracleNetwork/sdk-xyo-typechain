@@ -121,7 +121,8 @@ abstract contract AddressStakingInternal is
             _pendingAmountByAddressStaked[stakedAddress];
         require(atRiskStake >= amount, "Staking: insufficient atRiskStake");
         uint256 slashRatio = (atRiskStake * 100000) / amount;
-        uint256 totalSlashedAmount = 0;
+        uint256 totalSlashedAmountActive = 0;
+        uint256 totalSlashedAmountPending = 0;
         for (uint256 i = 0; i < _accountStakes[stakedAddress].length; i++) {
             AddressStakingLibrary.Stake storage stake = _accountStakes[
                 stakedAddress
@@ -134,13 +135,23 @@ abstract contract AddressStakingInternal is
             stake.amount -= slashedAmount;
             if (stake.removeBlock != 0) {
                 _totalPendingStake -= slashedAmount;
+                totalSlashedAmountPending += slashedAmount;
             } else {
                 _totalActiveStake -= slashedAmount;
+                totalSlashedAmountActive += slashedAmount;
             }
-            _totalSlashedStake += slashedAmount;
-            totalSlashedAmount += slashedAmount;
         }
-        _burnStake(stakedAddress, amount);
+        uint256 totalSlashedAmount = totalSlashedAmountPending +
+            totalSlashedAmountActive;
+        _totalSlashedStake += totalSlashedAmount;
+        _burnStake(stakedAddress, totalSlashedAmount);
+
+        _stakeAmountByAddressStaked[stakedAddress] -= totalSlashedAmountActive;
+
+        _pendingAmountByAddressStaked[
+            stakedAddress
+        ] -= totalSlashedAmountPending;
+
         emit StakeSlashed(stakedAddress, totalSlashedAmount);
         return totalSlashedAmount;
     }
