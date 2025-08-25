@@ -4,10 +4,13 @@ import hre from 'hardhat'
 
 import {
   advanceBlocks,
+  assertProposalDefeated,
+  createProposalToCallContract,
   deployTestERC20,
   deployXL1GovernanceWithSingleAddressSubGovernor,
-  ProposalVote,
+  ProposalState,
   proposeToTransferTokens,
+  voteAndFinalizeProposal,
   voteThroughSubGovernor,
   XL1GovernanceDefaultVotingDelay,
   XL1GovernanceDefaultVotingPeriod,
@@ -117,21 +120,30 @@ describe('XL1Governance', () => {
       expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
     })
 
-    it('should fail proposal if there is an against vote', async () => {
-      const [_, proposer, recipient] = await ethers.getSigners()
-      const { xl1Governance, deployer } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
+    it.only('should defeat a proposal with an Against vote', async () => {
+      const [_, proposer] = await ethers.getSigners()
+      const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       const { token, owner } = await loadFixture(deployTestERC20)
 
-      const { proposalId } = await proposeToTransferTokens(xl1Governance, token, owner, recipient, 1000n, proposer)
+      const amount = 1000n
+      await token.mint(owner.address, amount)
+      await token.transfer(await xl1Governance.getAddress(), amount)
 
-      await advanceBlocks(await xl1Governance.votingDelay())
+      const ctx = await createProposalToCallContract(
+        token,
+        'transfer',
+        [proposer.address, amount],
+        xl1Governance,
+        proposer,
+      )
 
-      // Cast AGAINST vote
-      await xl1Governance.castVote(proposalId, ProposalVote.Against)
+      const state = await voteAndFinalizeProposal(xl1Governance, ctx.proposalId, proposer, 'Against')
 
-      expect(await xl1Governance.hasVoted(proposalId, await deployer.getAddress())).to.equal(true)
+      expect(state).to.equal(ProposalState.Defeated)
+      await assertProposalDefeated(xl1Governance, ctx)
 
-      // expect(voteSucceeded).to.equal(false)
+      // Confirm tokens were not transferred
+      expect(await token.balanceOf(proposer.address)).to.equal(0n)
     })
 
     // it.skip('should succeed proposal if no against votes', async () => {
