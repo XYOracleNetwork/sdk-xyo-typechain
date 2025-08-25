@@ -2,8 +2,8 @@ import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signer
 import { expect } from 'chai'
 
 import type { IGovernor } from '../../../typechain-types'
-import { advanceBlocks } from './evmHelpers'
-import { ProposalState } from './proposalHelpers'
+import { advanceBlocks } from './evmHelpers.js'
+import { ProposalState } from './proposalHelpers.js'
 
 export interface PassAndExecuteProposalArgs {
   calldatas: string[]

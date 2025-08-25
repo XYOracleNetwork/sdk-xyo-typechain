@@ -2,10 +2,10 @@ import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signer
 import { expect } from 'chai'
 
 import type { IGovernor } from '../../../typechain-types'
-import { advanceBlocks } from './evmHelpers'
+import { advanceBlocks } from './evmHelpers.js'
 import {
   ProposalState, ProposalVote, proposeToCallSmartContract,
-} from './proposalHelpers'
+} from './proposalHelpers.js'
 
 export interface VoteThroughSubGovernorArgs {
   parentGovernor: IGovernor
