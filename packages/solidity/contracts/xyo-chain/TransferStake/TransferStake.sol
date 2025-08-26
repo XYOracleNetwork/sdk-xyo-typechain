@@ -5,6 +5,10 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {AbstractTransferStake} from "./Abstract.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
+interface IBurnable {
+    function burn(uint256 amount) external;
+}
+
 contract TransferStake is AbstractTransferStake {
     using SafeERC20 for IERC20;
     address private __stakingTokenAddress;
@@ -43,7 +47,7 @@ contract TransferStake is AbstractTransferStake {
         address _address,
         uint256 amount
     ) internal override returns (bool) {
-        IERC20(__stakingTokenAddress).transfer(address(0), amount);
+        IBurnable(__stakingTokenAddress).burn(amount);
         emit StakeBurned(_address, amount);
         return true;
     }
