@@ -5,13 +5,20 @@ import {AddressStakingLibrary} from "./Library.sol";
 import {IAddressStakingEvents} from "./interfaces/IAddressStakingEvents.sol";
 import {AbstractTransferStake} from "../TransferStake/Abstract.sol";
 import {IAddressStakingProperties} from "./interfaces/IAddressStakingProperties.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
 abstract contract AddressStakingInternal is
     IAddressStakingEvents,
     AbstractTransferStake
 {
+    using EnumerableSet for EnumerableSet.AddressSet;
     uint256 internal _maxStakersPerAddress;
     address internal _unlimitedStakerAddress;
+
+    // the minimum stake that is required for an address to vote
+    uint256 internal _minStake;
+
+    EnumerableSet.AddressSet internal _addressesWithMinStake;
 
     /**** Global staking totals ****/
     uint256 internal _totalActiveStake;
@@ -102,6 +109,12 @@ abstract contract AddressStakingInternal is
         if (newStakeAddress) {
             _stakedAddresses.push(staked);
         }
+        if (
+            !_addressesWithMinStake.contains(staked) &&
+            _stakeAmountByAddressStaked[staked] >= _minStake
+        ) {
+            _addressesWithMinStake.add(staked);
+        }
         emit StakeAdded(staked, msg.sender, stake.id, amount);
         return true;
     }
@@ -138,6 +151,13 @@ abstract contract AddressStakingInternal is
         _stakeAmountByAddressStaked[staked] -= amount;
         _pendingAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] -= amount;
+
+        if (
+            _addressesWithMinStake.contains(staked) &&
+            _stakeAmountByAddressStaked[staked] < _minStake
+        ) {
+            _addressesWithMinStake.remove(staked);
+        }
 
         emit StakeRemoved(staked, msg.sender, id, amount);
         return true;
@@ -237,31 +257,19 @@ abstract contract AddressStakingInternal is
         return stakes;
     }
 
-    function _stakedAddressesWithMinStake(
-        uint256 minStake
-    ) internal view returns (address[] memory) {
-        address[] memory result = new address[](
-            _stakedAddressesCount(minStake)
-        );
-        uint256 index = 0;
-        for (uint256 i = 0; i < _stakedAddresses.length; i++) {
-            if (_stakeAmountByAddressStaked[_stakedAddresses[i]] >= minStake) {
-                result[index] = _stakedAddresses[i];
-                index++;
-            }
-        }
-        return result;
+    function _stakedAddressesWithMinStake()
+        internal
+        view
+        returns (address[] memory)
+    {
+        return _addressesWithMinStake.values();
     }
 
-    function _stakedAddressesCount(
-        uint256 minStake
-    ) internal view returns (uint256) {
-        uint256 count = 0;
-        for (uint256 i = 0; i < _stakedAddresses.length; i++) {
-            if (_stakeAmountByAddressStaked[_stakedAddresses[i]] >= minStake) {
-                count++;
-            }
-        }
-        return count;
+    function _stakedAddressesWithMinStakeCount()
+        internal
+        view
+        returns (uint256)
+    {
+        return _addressesWithMinStake.length();
     }
 }

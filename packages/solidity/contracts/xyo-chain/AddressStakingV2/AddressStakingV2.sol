@@ -20,7 +20,8 @@ contract AddressStakingV2 is
         uint256 _minWithdrawalBlocks, // The minimum number of blocks that must pass before a pending stake can be withdrawn
         address _stakingToken, // The token that is used for staking
         uint256 maxStakersPerAddress_,
-        address unlimitedStakerAddress_
+        address unlimitedStakerAddress_,
+        uint256 minStake_
     )
         TransferStake(_stakingToken)
         AddressStakingProperties(_minWithdrawalBlocks)
@@ -28,6 +29,7 @@ contract AddressStakingV2 is
     {
         _unlimitedStakerAddress = unlimitedStakerAddress_;
         _maxStakersPerAddress = maxStakersPerAddress_;
+        _minStake = minStake_;
     }
 
     // ========== PUBLIC ==========
@@ -51,16 +53,20 @@ contract AddressStakingV2 is
         return _slashStake(stakedAddress, amount);
     }
 
-    function stakedAddresses(
-        uint256 minStake
-    ) external view returns (address[] memory) {
-        return _stakedAddressesWithMinStake(minStake);
+    function stakedAddressesWithMinStake()
+        external
+        view
+        returns (address[] memory)
+    {
+        return _stakedAddressesWithMinStake();
     }
 
-    function stakedAddressesCount(
-        uint256 minStake
-    ) external view returns (uint256) {
-        return _stakedAddressesCount(minStake);
+    function stakedAddressesWithMinStakeCount()
+        external
+        view
+        returns (uint256)
+    {
+        return _stakedAddressesWithMinStakeCount();
     }
 
     function getStake(

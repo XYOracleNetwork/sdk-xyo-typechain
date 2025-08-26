@@ -20,11 +20,10 @@ interface IAddressStakingFunctions {
         uint256 slot
     ) external view returns (AddressStakingLibrary.Stake memory);
 
-    function stakedAddresses(
-        uint256 minStake
-    ) external view returns (address[] memory);
+    function stakedAddressesWithMinStake()
+        external
+        view
+        returns (address[] memory);
 
-    function stakedAddressesCount(
-        uint256 minStake
-    ) external view returns (uint256);
+    function stakedAddressesWithMinStakeCount() external view returns (uint256);
 }

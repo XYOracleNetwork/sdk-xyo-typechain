@@ -155,7 +155,7 @@ describe('AddressStakingV2', () => {
   describe('stakedAddresses', () => {
     it('should be 0 (stubbed)', async () => {
       const { staking } = await loadFixture(deployAddressStakingV2)
-      const result = await staking.stakedAddressesCount(1000)
+      const result = await staking.stakedAddressesWithMinStakeCount()
       expect(result).to.equal(0)
     })
   })

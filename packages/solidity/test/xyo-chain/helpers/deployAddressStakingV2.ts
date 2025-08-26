@@ -12,6 +12,7 @@ export const deployAddressStakingV2 = async (minWithdrawalBlocks = 3) => {
     await token.getAddress(),
     10,
     NETWORK_STAKING_ADDRESS,
+    1_000_000n * 10n ** 18n, /// 1,000,000 XYO
   )
   await staking.waitForDeployment()
   return {

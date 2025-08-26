@@ -32,6 +32,7 @@ export const deployStakedXyoChainV2 = async ({
     await token.getAddress(),
     10,
     NETWORK_STAKING_ADDRESS,
+    1_000_000n * 10n ** 18n, /// 1,000,000 XYO
   )
 
   return {
