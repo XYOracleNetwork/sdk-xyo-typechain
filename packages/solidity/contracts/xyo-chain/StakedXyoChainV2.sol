@@ -18,7 +18,9 @@ contract StakedXyoChainV2 is XyoChain, AddressStakingV2 {
         uint256 _forkFromLastHash,
         IXyoChainRewards _rewardsContract,
         uint256 _minWithdrawalBlocks, // The minimum number of blocks that must pass before a pending stake can be withdrawn
-        address _stakingTokenAddress // The token that is used for staking
+        address _stakingTokenAddress, // The token that is used for staking
+        uint256 _maxStakersPerAddress,
+        address _unlimitedStakerAddress //a single address that can be staked by an unlimited number of stakers - to be used for an unslashable address
     )
         XyoChain(
             _forkFromChainId,
@@ -26,6 +28,11 @@ contract StakedXyoChainV2 is XyoChain, AddressStakingV2 {
             _forkFromLastHash,
             _rewardsContract
         )
-        AddressStakingV2(_minWithdrawalBlocks, _stakingTokenAddress)
+        AddressStakingV2(
+            _minWithdrawalBlocks,
+            _stakingTokenAddress,
+            _maxStakersPerAddress,
+            _unlimitedStakerAddress
+        )
     {}
 }

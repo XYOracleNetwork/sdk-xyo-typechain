@@ -18,12 +18,17 @@ contract AddressStakingV2 is
 
     constructor(
         uint256 _minWithdrawalBlocks, // The minimum number of blocks that must pass before a pending stake can be withdrawn
-        address _stakingToken // The token that is used for staking
+        address _stakingToken, // The token that is used for staking
+        uint256 maxStakersPerAddress_,
+        address unlimitedStakerAddress_
     )
         TransferStake(_stakingToken)
         AddressStakingProperties(_minWithdrawalBlocks)
         Ownable(msg.sender)
-    {}
+    {
+        _unlimitedStakerAddress = unlimitedStakerAddress_;
+        _maxStakersPerAddress = maxStakersPerAddress_;
+    }
 
     // ========== PUBLIC ==========
 

@@ -10,6 +10,9 @@ abstract contract AddressStakingInternal is
     IAddressStakingEvents,
     AbstractTransferStake
 {
+    uint256 internal _maxStakersPerAddress;
+    address internal _unlimitedStakerAddress;
+
     /**** Global staking totals ****/
     uint256 internal _totalActiveStake;
 
@@ -42,6 +45,27 @@ abstract contract AddressStakingInternal is
     //all addresses that have been staked
     address[] internal _stakedAddresses;
 
+    function _getLowestStakeSlot(
+        address staked
+    ) internal view returns (uint256) {
+        uint256 lowestAmount = type(uint256).max;
+        uint256 lowestIndex = type(uint256).max;
+        for (uint256 i = 0; i < _addressStakes[staked].length; i++) {
+            AddressStakingLibrary.Stake memory stake = _allStakes[
+                _addressStakes[staked][i]
+            ];
+            if (stake.amount < lowestAmount) {
+                lowestAmount = stake.amount;
+                lowestIndex = i;
+            }
+        }
+        require(
+            lowestIndex != type(uint256).max,
+            "Staking: no active stakes found"
+        );
+        return lowestIndex;
+    }
+
     function _addStake(address staked, uint256 amount) internal returns (bool) {
         require(amount > 0, "Staking: amount must be greater than 0");
         bool newStakeAddress = _stakeAmountByAddressStaked[staked] == 0;
@@ -59,6 +83,19 @@ abstract contract AddressStakingInternal is
 
         _allStakes.push(stake);
         _stakerStakes[msg.sender].push(stake.id);
+        if (
+            _addressStakes[staked].length < _maxStakersPerAddress ||
+            _unlimitedStakerAddress == staked
+        ) {
+            //add the stake id
+            _addressStakes[staked].push(stake.id);
+        } else {
+            //replace the stake id after removing/withdrawing lowest stake
+            uint256 lowestSlot = _getLowestStakeSlot(staked);
+            _removeStake(_addressStakes[staked][lowestSlot]);
+            _withdrawStake(_addressStakes[staked][lowestSlot], 0);
+            _addressStakes[staked][lowestSlot] = stake.id;
+        }
         _totalActiveStake += amount;
         _stakeAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] += amount;
