@@ -10,6 +10,7 @@ abstract contract AddressStakingInternal is
     IAddressStakingEvents,
     AbstractTransferStake
 {
+    /**** Global staking totals ****/
     uint256 internal _totalActiveStake;
 
     uint256 internal _totalPendingStake;
@@ -18,6 +19,7 @@ abstract contract AddressStakingInternal is
 
     uint256 internal _totalSlashedStake;
 
+    /**** Address relative staking totals ****/
     //total amount that is actively staked for a given address
     mapping(address => uint256) internal _stakeAmountByAddressStaked;
 
@@ -27,88 +29,111 @@ abstract contract AddressStakingInternal is
     //total amount that is staked by a given staker
     mapping(address => uint256) internal _stakeAmountByStaker;
 
-    //all the stakes held by a given address
-    mapping(address => AddressStakingLibrary.Stake[]) internal _accountStakes;
+    /**** Stake Mappings ****/
 
-    //all the stakers for a given address
-    mapping(address => address[]) internal _addressStakers;
+    AddressStakingLibrary.Stake[] internal _allStakes;
 
-    //all addresses that have StakeAdded
-    address[] internal _addressesWithStake;
+    //all the stake ids held by a given staker
+    mapping(address => uint256[]) internal _stakerStakes;
+
+    //all the stake ids for a given staked address
+    mapping(address => uint256[]) internal _addressStakes;
+
+    //all addresses that have been staked
+    address[] internal _stakedAddresses;
 
     function _addStake(address staked, uint256 amount) internal returns (bool) {
         require(amount > 0, "Staking: amount must be greater than 0");
         bool newStakeAddress = _stakeAmountByAddressStaked[staked] == 0;
         _transferStakeFromSender(amount);
-        _accountStakes[msg.sender].push(
-            AddressStakingLibrary.Stake({
-                staked: staked,
-                amount: amount,
-                addBlock: block.number,
-                removeBlock: 0,
-                withdrawBlock: 0
-            })
-        );
+
+        AddressStakingLibrary.Stake memory stake = AddressStakingLibrary.Stake({
+            id: _allStakes.length,
+            staker: msg.sender,
+            staked: staked,
+            amount: amount,
+            addBlock: block.number,
+            removeBlock: 0,
+            withdrawBlock: 0
+        });
+
+        _allStakes.push(stake);
+        _stakerStakes[msg.sender].push(stake.id);
         _totalActiveStake += amount;
         _stakeAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] += amount;
         if (newStakeAddress) {
-            _addressesWithStake.push(staked);
+            _stakedAddresses.push(staked);
         }
-        emit StakeAdded(
-            staked,
-            msg.sender,
-            _accountStakes[msg.sender].length - 1,
-            amount
-        );
+        emit StakeAdded(staked, msg.sender, stake.id, amount);
         return true;
     }
 
-    function _removeStake(uint256 slot) internal returns (bool) {
+    function _slotFromId(
+        address account,
+        uint256 id
+    ) internal view returns (uint256) {
+        for (uint256 i = 0; i < _stakerStakes[account].length; i++) {
+            if (_stakerStakes[account][i] == id) {
+                return i;
+            }
+        }
+        revert("Staking: invalid id");
+    }
+
+    function _removeStake(uint256 id) internal returns (bool) {
+        AddressStakingLibrary.Stake storage stake = _allStakes[id];
+
+        require(stake.id == id, "Staking: invalid id");
+        require(stake.staker == msg.sender, "Staking: invalid staker");
+
         require(
-            AddressStakingLibrary._isStakeRemovable(
-                _accountStakes[msg.sender][slot]
-            ),
+            AddressStakingLibrary._isStakeRemovable(stake),
             "Staking: not removable"
         );
 
-        uint256 amount = _accountStakes[msg.sender][slot].amount;
-        address staked = _accountStakes[msg.sender][slot].staked;
+        uint256 amount = stake.amount;
+        address staked = stake.staked;
 
-        _accountStakes[msg.sender][slot].removeBlock = block.number;
+        stake.removeBlock = block.number;
         _totalActiveStake -= amount;
         _totalPendingStake += amount;
         _stakeAmountByAddressStaked[staked] -= amount;
         _pendingAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] -= amount;
 
-        emit StakeRemoved(staked, msg.sender, slot, amount);
+        emit StakeRemoved(staked, msg.sender, id, amount);
         return true;
     }
 
     function _withdrawStake(
-        uint256 slot,
+        uint256 id,
         uint256 minWithdrawalBlocks
     ) internal returns (bool) {
+        AddressStakingLibrary.Stake storage stake = _allStakes[id];
+
+        require(stake.id == id, "Staking: invalid id");
+        require(stake.staker == msg.sender, "Staking: invalid staker");
+
         require(
             AddressStakingLibrary._isStakeWithdrawable(
-                _accountStakes[msg.sender][slot],
+                stake,
                 minWithdrawalBlocks
             ),
             "Staking: not withdrawable"
         );
 
-        uint256 amount = _accountStakes[msg.sender][slot].amount;
-        address staked = _accountStakes[msg.sender][slot].staked;
+        uint256 amount = stake.amount;
+        address staked = stake.staked;
 
-        _accountStakes[msg.sender][slot].withdrawBlock = block.number;
+        stake.withdrawBlock = block.number;
         _pendingAmountByAddressStaked[staked] -= amount;
         _totalPendingStake -= amount;
         _totalWithdrawnStake += amount;
 
         _transferStakeToSender(amount);
 
-        emit StakeWithdrawn(staked, msg.sender, slot, amount);
+        emit StakeWithdrawn(staked, msg.sender, id, amount);
 
         return true;
     }
@@ -123,10 +148,9 @@ abstract contract AddressStakingInternal is
         uint256 slashRatio = (atRiskStake * 100000) / amount;
         uint256 totalSlashedAmountActive = 0;
         uint256 totalSlashedAmountPending = 0;
-        for (uint256 i = 0; i < _accountStakes[stakedAddress].length; i++) {
-            AddressStakingLibrary.Stake storage stake = _accountStakes[
-                stakedAddress
-            ][i];
+        for (uint256 i = 0; i < _stakerStakes[stakedAddress].length; i++) {
+            uint256 id = _stakerStakes[stakedAddress][i];
+            AddressStakingLibrary.Stake storage stake = _allStakes[id];
             //skip already withdrawn stakes
             if (stake.withdrawBlock != 0) {
                 continue;
@@ -160,21 +184,32 @@ abstract contract AddressStakingInternal is
         address staker,
         uint256 slot
     ) internal view returns (AddressStakingLibrary.Stake memory) {
-        return _accountStakes[staker][slot];
+        return _allStakes[_stakerStakes[staker][slot]];
     }
 
-    function _stakedAddresses(
+    function _getStakerStakes(
+        address staker
+    ) internal view returns (AddressStakingLibrary.Stake[] memory) {
+        AddressStakingLibrary.Stake[]
+            memory stakes = new AddressStakingLibrary.Stake[](
+                _stakerStakes[staker].length
+            );
+        for (uint256 i = 0; i < _stakerStakes[staker].length; i++) {
+            stakes[i] = _allStakes[_stakerStakes[staker][i]];
+        }
+        return stakes;
+    }
+
+    function _stakedAddressesWithMinStake(
         uint256 minStake
     ) internal view returns (address[] memory) {
         address[] memory result = new address[](
             _stakedAddressesCount(minStake)
         );
         uint256 index = 0;
-        for (uint256 i = 0; i < _addressesWithStake.length; i++) {
-            if (
-                _stakeAmountByAddressStaked[_addressesWithStake[i]] >= minStake
-            ) {
-                result[index] = _addressesWithStake[i];
+        for (uint256 i = 0; i < _stakedAddresses.length; i++) {
+            if (_stakeAmountByAddressStaked[_stakedAddresses[i]] >= minStake) {
+                result[index] = _stakedAddresses[i];
                 index++;
             }
         }
@@ -185,10 +220,8 @@ abstract contract AddressStakingInternal is
         uint256 minStake
     ) internal view returns (uint256) {
         uint256 count = 0;
-        for (uint256 i = 0; i < _addressesWithStake.length; i++) {
-            if (
-                _stakeAmountByAddressStaked[_addressesWithStake[i]] >= minStake
-            ) {
+        for (uint256 i = 0; i < _stakedAddresses.length; i++) {
+            if (_stakeAmountByAddressStaked[_stakedAddresses[i]] >= minStake) {
                 count++;
             }
         }

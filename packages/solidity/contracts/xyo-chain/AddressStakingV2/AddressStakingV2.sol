@@ -49,7 +49,7 @@ contract AddressStakingV2 is
     function stakedAddresses(
         uint256 minStake
     ) external view returns (address[] memory) {
-        return _stakedAddresses(minStake);
+        return _stakedAddressesWithMinStake(minStake);
     }
 
     function stakedAddressesCount(
