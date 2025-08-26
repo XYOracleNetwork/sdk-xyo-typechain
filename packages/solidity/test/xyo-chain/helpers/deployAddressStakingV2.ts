@@ -1,6 +1,7 @@
 import hre from 'hardhat'
 
-import { deployTestERC20 } from './index.js'
+import { deployTestERC20 } from './deployTestERC20.js'
+import { NETWORK_STAKING_ADDRESS } from './networkStaking.js'
 const { ethers } = hre
 
 export const deployAddressStakingV2 = async (minWithdrawalBlocks = 3) => {
@@ -10,7 +11,7 @@ export const deployAddressStakingV2 = async (minWithdrawalBlocks = 3) => {
     minWithdrawalBlocks,
     await token.getAddress(),
     10,
-    ethers.getAddress('0x1969196919691969196919691969196919691969'),
+    NETWORK_STAKING_ADDRESS,
   )
   await staking.waitForDeployment()
   return {
