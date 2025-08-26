@@ -12,7 +12,6 @@ export const deployStakedXyoChainV2 = async ({
   minWithdrawalBlocks = 5n,
   rewardOverrides = {},
 } = {}) => {
-  const [deployer] = await ethers.getSigners()
   const [owner] = await ethers.getSigners()
 
   // Deploy ERC20 Token
@@ -31,7 +30,7 @@ export const deployStakedXyoChainV2 = async ({
     minWithdrawalBlocks,
     await token.getAddress(),
     10,
-    deployer,
+    ethers.getAddress('0x1969196919691969196919691969196919691969'),
   )
 
   return {
