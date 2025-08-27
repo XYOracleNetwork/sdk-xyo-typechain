@@ -15,6 +15,7 @@ node_modules
 
 # TypeChain files
 /src
+/types
 
 # solidity-coverage files
 /coverage

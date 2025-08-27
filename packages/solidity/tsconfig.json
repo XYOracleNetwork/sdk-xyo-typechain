@@ -1,25 +1,12 @@
 {
   "compilerOptions": {
-    "lib": ["es2020"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es2020",
+    "lib": ["es2023"],
+    "module": "node16",
+    "target": "es2022",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    // "noImplicitAny": false,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
-    "allowImportingTsExtensions": false,
-    "emitDeclarationOnly": false
-  },
-  "ts-node": {
-    "esm": true,
-    "experimentalResolver": true,
-    "files": true // only if you have "files", "include" or "exclude" in your config
-  },
-  "include": ["./scripts", "test/**/*.ts", "./typechain-types/**/*.ts", "hardhat.config.cts", "./ignition/**/*.ts"],
-  "extends": "@xylabs/tsconfig"
+    "moduleResolution": "node16",
+    "outDir": "dist"
+  }
 }
