@@ -10,6 +10,8 @@ interface IAddressStakingProperties {
 
     function pending() external view returns (uint256);
 
+    function slashed() external view returns (uint256);
+
     function withdrawn() external view returns (uint256);
 
     // ============ Volatile [By Staker] ============
