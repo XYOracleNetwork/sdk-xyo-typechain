@@ -30,6 +30,7 @@
     "typechain-types/"
   ],
   "scripts": {
+    "dev": "hardhat node",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile && hardhat typechain",
