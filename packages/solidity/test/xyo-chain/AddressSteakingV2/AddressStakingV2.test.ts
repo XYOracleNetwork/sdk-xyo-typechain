@@ -462,7 +462,7 @@ describe('AddressStakingV2', () => {
 
     describe('minWithdrawalBlocks', () => {
       it('should return correct minWithdrawalBlocks', async () => {
-        const { networkHelpers, ethers } = await network.connect()
+        const { networkHelpers } = await network.connect()
         const { loadFixture } = networkHelpers
         const { staking, minWithdrawalBlocks } = await loadFixture(deployAddressStakingV2)
         const result = await staking.minWithdrawalBlocks()
@@ -600,7 +600,7 @@ describe('AddressStakingV2', () => {
   describe('TransferStake', () => {
     describe('stakingTokenAddress', () => {
       it('should return staking token address', async () => {
-        const { networkHelpers, ethers } = await network.connect()
+        const { networkHelpers } = await network.connect()
         const { loadFixture } = networkHelpers
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         const tokenAddress = await token.getAddress()
