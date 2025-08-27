@@ -1,5 +1,5 @@
 import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers'
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types'
 import { expect } from 'chai'
 import type { BaseContract } from 'ethers'
 import { keccak256, toUtf8Bytes } from 'ethers'

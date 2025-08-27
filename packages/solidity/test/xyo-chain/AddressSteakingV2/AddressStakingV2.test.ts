@@ -172,7 +172,7 @@ describe('AddressStakingV2', () => {
 
   describe('stakedAddresses', () => {
     it('should be 0 (stubbed)', async () => {
-      const { networkHelpers, ethers } = await network.connect()
+      const { networkHelpers } = await network.connect()
       const { loadFixture } = networkHelpers
       const { staking } = await loadFixture(deployAddressStakingV2)
       const result = await staking.stakedAddressesWithMinStakeCount()
