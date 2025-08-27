@@ -1,0 +1,7 @@
+{
+  "compilerOptions": {
+    "erasableSyntaxOnly": false
+  },
+  "extends": "@xylabs/tsconfig",
+  "include": ["./test/**/*.ts"],
+}

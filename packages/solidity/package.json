@@ -30,6 +30,7 @@
     "typechain-types/"
   ],
   "scripts": {
+    "compile-tests": "tsc -p ./tsconfig.test.json",
     "dev": "hardhat node",
     "dev-deploy": "hardhat ignition deploy ignition/modules/BridgeableToken.ts --network localhost",
     "package-build": "yarn package-clean && yarn package-compile",
