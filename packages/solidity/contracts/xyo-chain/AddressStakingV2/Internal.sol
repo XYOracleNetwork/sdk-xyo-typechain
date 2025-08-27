@@ -210,7 +210,12 @@ abstract contract AddressStakingInternal is
 
         uint256 atRiskStake = _stakeAmountByAddressStaked[stakedAddress] +
             _pendingAmountByAddressStaked[stakedAddress];
-        require(atRiskStake >= amount, "Staking: insufficient atRiskStake");
+
+        //if the address is under-staked, then take all the stake
+        if (atRiskStake < amount) {
+            amount = atRiskStake;
+        }
+
         uint256 slashRatio = (amount * 100000) / atRiskStake;
         uint256 totalSlashedAmountActive = 0;
         uint256 totalSlashedAmountPending = 0;
