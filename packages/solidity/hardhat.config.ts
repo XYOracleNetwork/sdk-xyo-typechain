@@ -1,37 +1,24 @@
 /* eslint-disable import-x/no-internal-modules */
-import '@typechain/hardhat'
-
 import hardhatNetworkHelpers from '@nomicfoundation/hardhat-network-helpers'
 import hardhatToolboxMochaEthersPlugin from '@nomicfoundation/hardhat-toolbox-mocha-ethers'
+import hardhatTypechain from '@nomicfoundation/hardhat-typechain'
 import type { HardhatUserConfig } from 'hardhat/config'
 import { configVariable } from 'hardhat/config'
 
 const config: HardhatUserConfig = {
-  plugins: [hardhatToolboxMochaEthersPlugin, hardhatNetworkHelpers],
+  plugins: [hardhatToolboxMochaEthersPlugin, hardhatNetworkHelpers, hardhatTypechain],
   solidity: {
     profiles: {
       default: { version: '0.8.28', settings: { viaIR: true } },
       production: {
         version: '0.8.28',
-        settings: {
-          viaIR: true,
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
+        settings: { viaIR: true, optimizer: { enabled: true, runs: 200 } },
       },
     },
   },
   networks: {
-    hardhatMainnet: {
-      type: 'edr-simulated',
-      chainType: 'l1',
-    },
-    hardhatOp: {
-      type: 'edr-simulated',
-      chainType: 'op',
-    },
+    hardhatMainnet: { type: 'edr-simulated', chainType: 'l1' },
+    hardhatOp: { type: 'edr-simulated', chainType: 'op' },
     sepolia: {
       type: 'http',
       chainType: 'l1',
@@ -39,11 +26,7 @@ const config: HardhatUserConfig = {
       accounts: [configVariable('SEPOLIA_PRIVATE_KEY')],
     },
   },
-  typechain: {
-    target: 'ethers-v6', // generate Ethers v6 bindings
-    outDir: 'typechain-types', // where types go
-    // alwaysGenerateOverloads: true, // optional
-  },
+  typechain: { outDir: 'typechain-types' },
 }
 
 export default config

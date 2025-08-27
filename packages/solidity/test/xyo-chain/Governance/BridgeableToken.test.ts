@@ -1,5 +1,5 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { loadFixture } from '@nomicfoundation/hardhat-network-helpers'
 import { expect } from 'chai'
 import type { EventLog } from 'ethers'
 import hre from 'hardhat'
