@@ -53,6 +53,10 @@ abstract contract AddressStakingProperties is
         return _totalPendingStake;
     }
 
+    function slashed() external view returns (uint256) {
+        return _totalSlashedStake;
+    }
+
     function withdrawn() external view returns (uint256) {
         return _totalWithdrawnStake;
     }
