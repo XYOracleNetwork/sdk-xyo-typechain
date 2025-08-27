@@ -255,6 +255,8 @@ describe('AddressStakingV2', () => {
     })
 
     it('should revert when accessing a nonexistent slot', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [_, staker] = await ethers.getSigners()
       const { staking } = await loadFixture(deployAddressStakingV2)
 
@@ -269,6 +271,8 @@ describe('AddressStakingV2', () => {
 
     describe('active', () => {
       it('should reflect correct amount after staking', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker, staked1, staked2] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -281,6 +285,8 @@ describe('AddressStakingV2', () => {
         expect(globalActive).to.equal(amount)
       })
       it('should reflect correct amount after removal', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker, staked1, staked2] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -295,6 +301,8 @@ describe('AddressStakingV2', () => {
         expect(globalActive).to.equal(amount / 2n)
       })
       it('should reflect correct amount after withdraw', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker, staked1, staked2] = await ethers.getSigners()
         const {
           staking, token, minWithdrawalBlocks,
@@ -317,6 +325,8 @@ describe('AddressStakingV2', () => {
     describe('activeByStaker', () => {
       describe('for staker address', () => {
         it('should reflect correct amount after staking', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2] = await ethers.getSigners()
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -329,6 +339,8 @@ describe('AddressStakingV2', () => {
           expect(activeForStaker).to.equal(amount)
         })
         it('should reflect correct amount after removal', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2] = await ethers.getSigners()
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -342,6 +354,8 @@ describe('AddressStakingV2', () => {
           expect(activeForStaker).to.equal(amount / 2n)
         })
         it('should reflect correct amount after withdraw', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2] = await ethers.getSigners()
           const {
             staking, token, minWithdrawalBlocks,
@@ -361,6 +375,8 @@ describe('AddressStakingV2', () => {
       })
       describe('for non-staker address', () => {
         it('should be 0', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2, other] = await ethers.getSigners()
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -378,6 +394,8 @@ describe('AddressStakingV2', () => {
     describe('activeByAddressStaked', () => {
       describe('for staked address', () => {
         it('should reflect correct amount after staking', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2] = await ethers.getSigners()
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -390,6 +408,8 @@ describe('AddressStakingV2', () => {
           expect(activeForTarget).to.equal(amount / 2n)
         })
         it('should be 0 after removal', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2] = await ethers.getSigners()
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -403,6 +423,8 @@ describe('AddressStakingV2', () => {
           expect(activeForTarget).to.equal(0n)
         })
         it('should be 0 after withdraw', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2] = await ethers.getSigners()
           const {
             staking, token, minWithdrawalBlocks,
@@ -422,6 +444,8 @@ describe('AddressStakingV2', () => {
       })
       describe('for non-staked address', () => {
         it('should be 0', async () => {
+          const { networkHelpers, ethers } = await network.connect()
+          const { loadFixture } = networkHelpers
           const [_, staker, staked1, staked2, other] = await ethers.getSigners()
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -438,6 +462,8 @@ describe('AddressStakingV2', () => {
 
     describe('minWithdrawalBlocks', () => {
       it('should return correct minWithdrawalBlocks', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const { staking, minWithdrawalBlocks } = await loadFixture(deployAddressStakingV2)
         const result = await staking.minWithdrawalBlocks()
         expect(result).to.equal(minWithdrawalBlocks)
@@ -446,6 +472,8 @@ describe('AddressStakingV2', () => {
 
     describe('pending', () => {
       it('should reflect correct amount after removal', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -458,6 +486,8 @@ describe('AddressStakingV2', () => {
         expect(globalPending).to.equal(amount)
       })
       it('should be 0 after withdraw', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const {
           staking, token, minWithdrawalBlocks,
@@ -477,6 +507,8 @@ describe('AddressStakingV2', () => {
 
     describe('pendingByStaker', () => {
       it('should reflect correct amount after removal', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -489,6 +521,8 @@ describe('AddressStakingV2', () => {
         expect(pendingForStaker).to.equal(amount)
       })
       it('should be 0 after withdraw', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const {
           staking, token, minWithdrawalBlocks,
@@ -508,6 +542,8 @@ describe('AddressStakingV2', () => {
 
     describe('withdrawn', () => {
       it('should reflect correct amount after withdrawal', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const {
           staking, token, minWithdrawalBlocks,
@@ -527,6 +563,8 @@ describe('AddressStakingV2', () => {
 
     describe('withdrawnByStaker', () => {
       it('should be 0 before withdrawal', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -539,6 +577,8 @@ describe('AddressStakingV2', () => {
         expect(withdrawnForStaker).to.equal(0n)
       })
       it('should reflect correct amount after withdrawal', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, staker] = await ethers.getSigners()
         const {
           staking, token, minWithdrawalBlocks,
@@ -560,6 +600,8 @@ describe('AddressStakingV2', () => {
   describe('TransferStake', () => {
     describe('stakingTokenAddress', () => {
       it('should return staking token address', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         const tokenAddress = await token.getAddress()
         const stakingTokenAddress = await staking.stakingTokenAddress()

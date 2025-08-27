@@ -5,7 +5,7 @@ import {
   deploySingleAddressSubGovernor, SingleAddressSubGovernorDefaultVotingDelay, SingleAddressSubGovernorDefaultVotingPeriod,
 } from '../helpers/index.js'
 
-describe.only('SingleAddressSubGovernor', () => {
+describe('SingleAddressSubGovernor', () => {
   it('should return correct vote weight for owner', async () => {
     const { networkHelpers, ethers } = await network.connect()
     const { loadFixture } = networkHelpers
