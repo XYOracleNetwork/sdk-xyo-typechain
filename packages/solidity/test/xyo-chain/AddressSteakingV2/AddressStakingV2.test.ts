@@ -233,6 +233,8 @@ describe('AddressStakingV2', () => {
             // Assert
             expect(await staking.active()).to.equal(amount / 2n / 2n)
             expect(await staking.pending()).to.equal(amount / 2n / 2n)
+            expect(await staking.activeByStaker(staker)).to.equal(amount / 2n / 2n)
+            expect(await staking.activeByAddressStaked(staked)).to.equal(amount / 2n / 2n)
           })
         })
       })
