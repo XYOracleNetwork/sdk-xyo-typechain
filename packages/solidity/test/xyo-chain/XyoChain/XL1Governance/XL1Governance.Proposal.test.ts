@@ -1,16 +1,15 @@
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
-import hre from 'hardhat'
+import { network } from 'hardhat'
 
 import {
   advanceBlocks, deployTestERC20, deployXL1GovernanceWithSingleAddressSubGovernor, ProposalState, ProposalVote, proposeToCallSmartContract,
   proposeToTransferTokens,
 } from '../../helpers/index.js'
 
-const { ethers } = hre
-
 describe('XL1Governance - ERC20 Transfer Proposal', () => {
   it('should execute an ERC20 transfer proposal and send tokens to the recipient', async () => {
+    const { ethers, networkHelpers } = await network.connect()
+    const { loadFixture } = networkHelpers
     const [_, proposer, recipient] = await ethers.getSigners()
     const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
     const { token, owner } = await loadFixture(deployTestERC20)

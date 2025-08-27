@@ -1,4 +1,4 @@
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types'
 import { expect } from 'chai'
 import { parseUnits } from 'ethers'
 import { network } from 'hardhat'

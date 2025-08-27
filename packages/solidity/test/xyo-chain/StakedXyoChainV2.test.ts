@@ -1,10 +1,12 @@
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
+import { network } from 'hardhat'
 
 import { deployStakedXyoChainV2 } from './helpers/index.js'
 
 describe('StakedXyoChainV2', () => {
   it('should deploy successfully and return correct initial values', async () => {
+    const { networkHelpers } = await network.connect()
+    const { loadFixture } = networkHelpers
     const {
       chain,
       forkedAtBlockNumber,
@@ -24,6 +26,8 @@ describe('StakedXyoChainV2', () => {
   })
 
   it('should initialize with reward config accessible via the rewards contract', async () => {
+    const { networkHelpers } = await network.connect()
+    const { loadFixture } = networkHelpers
     const {
       rewards,
       rewardConfig: {

@@ -1,25 +1,25 @@
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
-import { loadFixture } from '@nomicfoundation/hardhat-network-helpers'
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/types'
 import { expect } from 'chai'
-import type { EventLog } from 'ethers'
-import hre from 'hardhat'
+import type {
+  ContractRunner, EventLog, Signer,
+} from 'ethers'
+import { parseUnits } from 'ethers'
+import { network } from 'hardhat'
 
 import type { BridgeableToken } from '../../../typechain-types/index.js'
 import { deployBridgeableToken } from '../helpers/index.js'
 
-const { ethers } = hre
-
 describe('BridgeableToken', () => {
-  const amount = ethers.parseUnits('1000000', 18)
+  const amount = parseUnits('1000000', 18)
 
-  const expectMintToSucceed = async (token: BridgeableToken, caller: HardhatEthersSigner, recipient: HardhatEthersSigner, amount: bigint) => {
+  const expectMintToSucceed = async (token: BridgeableToken, caller: ContractRunner, recipient: HardhatEthersSigner, amount: bigint) => {
     const tx = await token.connect(caller).mint(recipient.address, amount)
     await tx.wait()
     const balance = await token.balanceOf(recipient.address)
     expect(balance).to.equal(amount)
   }
 
-  const expectMintToRevert = async (token: BridgeableToken, caller: HardhatEthersSigner, recipient: HardhatEthersSigner, amount: bigint) => {
+  const expectMintToRevert = async (token: BridgeableToken, caller: Signer, recipient: Signer, amount: bigint) => {
     await expect(token.connect(caller).mint(recipient.address, amount)).to.be.reverted
   }
 
@@ -48,7 +48,7 @@ describe('BridgeableToken', () => {
     expect(record.amount).to.equal(amount)
     expect(record.timepoint).to.equal(receipt?.blockNumber)
 
-    const event = receipt?.logs.find((log): log is EventLog => 'fragment' in log && log.fragment?.name === 'BridgeInitiated')
+    const event = receipt?.logs.find(log => 'fragment' in log && (log as unknown as EventLog).fragment?.name === 'BridgeInitiated') as EventLog | undefined
     expect(event?.args.id).to.equal(nextBridgeId)
     expect(event?.args.from).to.equal(from.address)
     expect(event?.args.destination).to.equal(to.address)
@@ -62,12 +62,16 @@ describe('BridgeableToken', () => {
 
   describe('owner', () => {
     it('should initially be set to the deployer', async () => {
+      const { ethers, networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [deployer] = await ethers.getSigners()
       const { token, owner } = await loadFixture(deployBridgeableToken)
       expect(owner).to.equal(deployer.address)
       expect(await token.owner()).to.equal(deployer.address)
     })
     it('can be changed after deployment', async () => {
+      const { ethers, networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { token } = await loadFixture(deployBridgeableToken)
       const [_, newOwner] = await ethers.getSigners()
       await token.transferOwnership(newOwner.address)
@@ -79,12 +83,16 @@ describe('BridgeableToken', () => {
   describe('mint', () => {
     describe('with original owner', () => {
       it('should allow owner to mint', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, receiver] = await ethers.getSigners()
         const { token, owner } = await loadFixture(deployBridgeableToken)
         await expectMintToSucceed(token, owner, receiver, amount)
       })
 
       it('should not allow non-owner to mint', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, receiver, minter] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
         await expectMintToRevert(token, minter, receiver, amount)
@@ -93,6 +101,8 @@ describe('BridgeableToken', () => {
 
     describe('after ownership transfer', () => {
       it('should allow the new owner to mint', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, newOwner, receiver] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
         await token.transferOwnership(newOwner.address)
@@ -100,6 +110,8 @@ describe('BridgeableToken', () => {
       })
 
       it('should not allow previous owner to mint', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_, newOwner, receiver] = await ethers.getSigners()
         const { token, owner: originalOwner } = await loadFixture(deployBridgeableToken)
         await token.transferOwnership(newOwner.address)
@@ -111,6 +123,8 @@ describe('BridgeableToken', () => {
   describe('bridge', () => {
     describe('when called by owner', () => {
       it('should bridge tokens and emit event', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
 
@@ -121,6 +135,8 @@ describe('BridgeableToken', () => {
       })
 
       it('should increment bridge ID after each bridge', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
 
@@ -136,6 +152,8 @@ describe('BridgeableToken', () => {
       })
 
       it('should revert if trying to bridge more than balance', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
 
@@ -147,13 +165,16 @@ describe('BridgeableToken', () => {
 
     describe('when called by non-owner', () => {
       it('should revert', async () => {
+        const { ethers, networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [owner, attacker, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployBridgeableToken)
 
         await mintToOwner(token, owner, amount)
 
         await expect(
-          token.connect(attacker).bridge(amount, destination.address),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          token.connect(attacker as any).bridge(amount, destination.address),
         ).to.be.reverted
       })
     })

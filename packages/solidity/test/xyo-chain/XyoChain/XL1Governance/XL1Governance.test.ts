@@ -1,6 +1,5 @@
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
-import hre from 'hardhat'
+import { network } from 'hardhat'
 
 import type { VoteType } from '../../helpers/index.js'
 import {
@@ -14,11 +13,11 @@ import {
   XL1GovernanceDefaultVotingPeriod,
 } from '../../helpers/index.js'
 
-const { ethers } = hre
-
 describe('XL1Governance', () => {
   describe('clock', () => {
     it('should return the current block number as clock()', async () => {
+      const { ethers, networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       for (let index = 0; index < 5; index++) {
         const currentBlock = await ethers.provider.getBlockNumber()
@@ -29,12 +28,16 @@ describe('XL1Governance', () => {
   })
   describe('CLOCK_MODE', () => {
     it('should return the clock mode', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       expect(await xl1Governance.CLOCK_MODE()).to.equal('mode=blocknumber&from=default')
     })
   })
   describe('quorum', () => {
     it('should have a quorum equal to the number of governors', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
       expect(await xl1Governance.quorum(0)).to.equal(await xl1Governance.governorCount())
     })
@@ -58,6 +61,8 @@ describe('XL1Governance', () => {
 
   describe('supportsInterface', () => {
     it('should return check for interface support', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       const NON_EXISTENT_INTERFACE = '0x12345678'
@@ -67,6 +72,8 @@ describe('XL1Governance', () => {
 
   describe('votingDelay', () => {
     it('should return voting delay', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       expect(await xl1Governance.votingDelay()).to.equal(XL1GovernanceDefaultVotingDelay)
@@ -74,6 +81,8 @@ describe('XL1Governance', () => {
   })
   describe('votingPeriod', () => {
     it('should return voting period', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { xl1Governance } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
 
       expect(await xl1Governance.votingPeriod()).to.equal(XL1GovernanceDefaultVotingPeriod)
@@ -82,6 +91,8 @@ describe('XL1Governance', () => {
   describe('GovernorCountingUnanimous', () => {
     describe('with single subGovernor', () => {
       it('should pass if subGovernor votes For', async () => {
+        const { networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const voteType: VoteType = 'For'
         const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
         const ctx = await createRandomProposal(xl1Governance)
@@ -108,6 +119,8 @@ describe('XL1Governance', () => {
       })
 
       it('should not pass if subGovernor votes Against', async () => {
+        const { networkHelpers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const voteType: VoteType = 'Against'
         const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
         const ctx = await createRandomProposal(xl1Governance)
