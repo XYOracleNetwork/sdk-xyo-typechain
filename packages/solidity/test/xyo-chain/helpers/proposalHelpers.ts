@@ -1,9 +1,8 @@
 import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers'
 import { expect } from 'chai'
 import type { BaseContract } from 'ethers'
 import { keccak256, toUtf8Bytes } from 'ethers'
-import hre from 'hardhat'
 
 import type {
   BridgeableToken, IGovernor, XL1Governance,
