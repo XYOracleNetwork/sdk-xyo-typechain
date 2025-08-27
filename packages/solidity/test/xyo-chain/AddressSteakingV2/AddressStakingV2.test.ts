@@ -138,7 +138,7 @@ describe('AddressStakingV2', () => {
             const tx = await staking.connect(owner).slashStake(staked.address, amount / 2n)
             await expect(tx).to.emit(staking, 'StakeSlashed')
           })
-          it('equal to amount that is staked should allow slashing', async () => {
+          it('equal to amount staked should allow slashing', async () => {
             const [owner, staker, staked] = await ethers.getSigners()
             const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -148,7 +148,7 @@ describe('AddressStakingV2', () => {
             const tx = await staking.connect(owner).slashStake(staked.address, amount)
             await expect(tx).to.emit(staking, 'StakeSlashed')
           })
-          it('more than is staked should not allow slashing', async () => {
+          it('more than amount staked should not allow slashing', async () => {
             const [owner, staker, staked] = await ethers.getSigners()
             const { staking, token } = await loadFixture(deployAddressStakingV2)
 
