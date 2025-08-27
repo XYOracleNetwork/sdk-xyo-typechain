@@ -160,5 +160,6 @@ describe('AddressStakingV2.slashStake', () => {
     await expect(
       staking.connect(other).slashStake(staked, amount / 2n),
     ).to.be.reverted
+    expect(await staking.slashed()).to.equal(0n)
   })
 })
