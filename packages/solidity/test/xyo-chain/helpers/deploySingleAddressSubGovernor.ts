@@ -1,6 +1,4 @@
-import hre from 'hardhat'
-
-const { ethers } = hre
+import { network } from 'hardhat'
 
 export const SingleAddressSubGovernorDefaultName = 'SingleAddressSubGovernor'
 export const SingleAddressSubGovernorDefaultVotingDelay = 1
@@ -11,6 +9,7 @@ export const deploySingleAddressSubGovernor = async (
   votingDelay = SingleAddressSubGovernorDefaultVotingDelay,
   votingPeriod = SingleAddressSubGovernorDefaultVotingPeriod,
 ) => {
+  const { ethers } = await network.connect()
   const [deployer] = await ethers.getSigners()
 
   const SingleAddressSubGovernor = await ethers.getContractFactory('SingleAddressSubGovernor')
