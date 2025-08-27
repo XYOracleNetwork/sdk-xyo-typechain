@@ -1,7 +1,9 @@
 import { expect } from 'chai'
 import { network } from 'hardhat'
-import { deploySingleAddressSubGovernor, SingleAddressSubGovernorDefaultVotingDelay, SingleAddressSubGovernorDefaultVotingPeriod } from '../helpers/deploySingleAddressSubGovernor.js'
 
+import {
+  deploySingleAddressSubGovernor, SingleAddressSubGovernorDefaultVotingDelay, SingleAddressSubGovernorDefaultVotingPeriod,
+} from '../helpers/index.js'
 
 describe.only('SingleAddressSubGovernor', () => {
   it('should return correct vote weight for owner', async () => {

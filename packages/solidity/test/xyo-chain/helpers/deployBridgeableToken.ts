@@ -1,8 +1,7 @@
-import hre from 'hardhat'
-
-const { ethers } = hre
+import { network } from 'hardhat'
 
 export const deployBridgeableToken = async (name = 'Test Token', symbol = 'TEST') => {
+  const { ethers } = await network.connect()
   // Deploy a BridgeableToken token to use as staking token
   const TokenFactory = await ethers.getContractFactory('BridgeableToken')
   const token = await TokenFactory.deploy(name, symbol)

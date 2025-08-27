@@ -1,8 +1,7 @@
-import hre from 'hardhat'
-
-const { ethers } = hre
+import { network } from 'hardhat'
 
 export const deployTestERC20 = async (name = 'Test Token', symbol = 'TEST') => {
+  const { ethers } = await network.connect()
   const TokenFactory = await ethers.getContractFactory('BridgeableToken')
   const token = await TokenFactory.deploy(name, symbol)
 

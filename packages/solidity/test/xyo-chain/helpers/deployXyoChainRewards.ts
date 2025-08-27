@@ -1,6 +1,4 @@
-import hre from 'hardhat'
-
-const { ethers } = hre
+import { network } from 'hardhat'
 
 const defaultConfig = {
   initialReward: 1000n,
@@ -13,6 +11,7 @@ const defaultConfig = {
 }
 
 export const deployXyoChainRewards = async (configOverrides = {}) => {
+  const { ethers } = await network.connect()
   const config = { ...defaultConfig, ...configOverrides }
   const Rewards = await ethers.getContractFactory('XyoChainRewards')
   const rewards = await Rewards.deploy(

@@ -2,13 +2,12 @@ import { anyValue } from '@nomicfoundation/hardhat-chai-matchers/withArgs.js'
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { expect } from 'chai'
 import type { BaseContract } from 'ethers'
+import { keccak256, toUtf8Bytes } from 'ethers'
 import hre from 'hardhat'
 
 import type {
   BridgeableToken, IGovernor, XL1Governance,
 } from '../../../typechain-types/index.js'
-
-const { ethers } = hre
 
 export const ProposalState = {
   Pending: 0n,
@@ -42,7 +41,7 @@ export const proposeToCallSmartContract = async (
   const calldatas = [functionData]
   // NOTE: JSON.stringify(args) not used as it throws here for some reason
   const description = `Proposal to call ${method} on ${contractAddress} with args ${args}`
-  const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
+  const descriptionHash = keccak256(toUtf8Bytes(description))
 
   // Get the proposal ID
   const proposalId = await governor.getProposalId(

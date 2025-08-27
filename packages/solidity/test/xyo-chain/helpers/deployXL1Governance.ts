@@ -1,9 +1,7 @@
 import type { AddressLike } from 'ethers'
-import hre from 'hardhat'
+import { network } from 'hardhat'
 
 import { deploySingleAddressSubGovernor } from './deploySingleAddressSubGovernor.js'
-
-const { ethers } = hre
 
 export const XL1GovernanceDefaultName = 'XL1Governance'
 export const XL1GovernanceDefaultVotingDelay = 1
@@ -15,6 +13,7 @@ export const deployXL1Governance = async (
   votingDelay = XL1GovernanceDefaultVotingDelay,
   votingPeriod = XL1GovernanceDefaultVotingPeriod,
 ) => {
+  const { ethers } = await network.connect()
   const [deployer] = await ethers.getSigners()
 
   const XL1Governance = await ethers.getContractFactory('XL1Governance')

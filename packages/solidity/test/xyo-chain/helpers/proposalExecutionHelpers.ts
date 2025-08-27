@@ -1,13 +1,11 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { expect } from 'chai'
 import type { BaseContract, BigNumberish } from 'ethers'
-import hre from 'hardhat'
+import { keccak256, toUtf8Bytes } from 'ethers'
 
-import type { IGovernor } from '../../../typechain-types'
+import type { IGovernor } from '../../../typechain-types/index.js'
 import { advanceBlocks } from './evmHelpers.js'
 import { ProposalState } from './proposalHelpers.js'
-
-const { ethers } = hre
 
 export interface PassAndExecuteProposalArgs {
   calldatas: string[]
@@ -87,7 +85,7 @@ export const createProposalToCallContract = async (
   const values = [0n]
   const calldatas = [functionData]
   const description = `Proposal to call ${method} on ${contractAddress} with args ${args}`
-  const descriptionHash = ethers.keccak256(ethers.toUtf8Bytes(description))
+  const descriptionHash = keccak256(toUtf8Bytes(description))
 
   const proposalId = await governor.getProposalId(targets, values, calldatas, descriptionHash)
 

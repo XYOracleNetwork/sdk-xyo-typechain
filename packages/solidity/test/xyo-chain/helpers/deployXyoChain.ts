@@ -1,8 +1,6 @@
-import hre from 'hardhat'
+import { network } from 'hardhat'
 
 import { deployXyoChainRewards } from './deployXyoChainRewards.js'
-
-const { ethers } = hre
 
 const defaultForkParams = {
   forkedChainId: '0x0000000000000000000000000000000000000001',
@@ -11,6 +9,7 @@ const defaultForkParams = {
 }
 
 export const deployXyoChain = async (forkParamsOverrides = {}, rewardsConfigOverrides = {}) => {
+  const { ethers } = await network.connect()
   const forkParams = { ...defaultForkParams, ...forkParamsOverrides }
   const { rewards, config } = await deployXyoChainRewards(rewardsConfigOverrides)
 

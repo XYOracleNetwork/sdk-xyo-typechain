@@ -1,7 +1,7 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { expect } from 'chai'
 
-import type { IGovernor } from '../../../typechain-types'
+import type { IGovernor } from '../../../typechain-types/index.js'
 import { advanceBlocks } from './evmHelpers.js'
 import {
   ProposalState, ProposalVote, proposeToCallSmartContract,
