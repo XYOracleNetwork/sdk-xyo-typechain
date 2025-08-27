@@ -136,6 +136,17 @@ describe('AddressStakingV2', () => {
         const tx = await staking.connect(owner).slashStake(staked.address, amount / 2n)
         await expect(tx).to.emit(staking, 'StakeSlashed')
       })
+      it('should not allow slashing of more than is staked', async () => {
+        const [owner, staker, staked] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked.address, amount)
+
+        await expect(
+          staking.connect(owner).slashStake(staked.address, amount * 2n),
+        ).to.be.reverted
+      })
     })
     describe('when called by non-owner', () => {
       it('should revert', async () => {
