@@ -199,19 +199,19 @@ abstract contract AddressStakingInternal is
         address stakedAddress,
         uint256 amount
     ) internal returns (uint256) {
-        uint256[] memory stakers = _stakerStakes[stakedAddress];
-        require(stakers.length > 0, "Staking: no stakes to slash");
+        uint256[] memory stakeIds = _addressStakes[stakedAddress];
+        require(stakeIds.length > 0, "Staking: no stakes to slash");
 
         AddressStakingLibrary.Stake[]
-            memory stakes = new AddressStakingLibrary.Stake[](stakers.length);
-        for (uint256 i = 0; i < stakers.length; i++) {
-            stakes[i] = _allStakes[stakers[i]];
+            memory stakes = new AddressStakingLibrary.Stake[](stakeIds.length);
+        for (uint256 i = 0; i < stakeIds.length; i++) {
+            stakes[i] = _allStakes[stakeIds[i]];
         }
 
         uint256 atRiskStake = _stakeAmountByAddressStaked[stakedAddress] +
             _pendingAmountByAddressStaked[stakedAddress];
         require(atRiskStake >= amount, "Staking: insufficient atRiskStake");
-        uint256 slashRatio = (atRiskStake * 100000) / amount;
+        uint256 slashRatio = (amount * 100000) / atRiskStake;
         uint256 totalSlashedAmountActive = 0;
         uint256 totalSlashedAmountPending = 0;
         for (uint256 i = 0; i < stakes.length; i++) {
