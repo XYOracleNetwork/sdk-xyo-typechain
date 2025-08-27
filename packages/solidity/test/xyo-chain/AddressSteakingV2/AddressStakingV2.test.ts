@@ -1,15 +1,13 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
-import hre from 'hardhat'
+import { parseUnits } from 'ethers'
+import { network } from 'hardhat'
 
 import type { AddressStakingV2, BridgeableToken } from '../../../typechain-types/index.js'
 import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
 
-const { ethers } = hre
-
 describe('AddressStakingV2', () => {
-  const amount = ethers.parseUnits('1000', 18)
+  const amount = parseUnits('1000', 18)
 
   const mintAndApprove = async (token: BridgeableToken, staker: HardhatEthersSigner, stakingContract: AddressStakingV2, amount: bigint) => {
     await token.mint(staker.address, amount)
@@ -18,6 +16,8 @@ describe('AddressStakingV2', () => {
 
   describe('addStake', () => {
     it('should allow a staker to add a stake', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [_, staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -27,6 +27,8 @@ describe('AddressStakingV2', () => {
     })
 
     it('should revert if amount is zero', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -41,6 +43,8 @@ describe('AddressStakingV2', () => {
 
   describe('removeStake', () => {
     it('should allow a staker to remove a stake', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [_, staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -52,6 +56,8 @@ describe('AddressStakingV2', () => {
     })
 
     it('should revert if the stake is already removed', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -65,6 +71,8 @@ describe('AddressStakingV2', () => {
     })
 
     it('should revert if non-existent stake is removed', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -79,6 +87,8 @@ describe('AddressStakingV2', () => {
 
   describe('withdrawStake', () => {
     it('should allow withdrawal after required blocks', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [staker] = await ethers.getSigners()
       const {
         staking, token, minWithdrawalBlocks,
@@ -95,6 +105,8 @@ describe('AddressStakingV2', () => {
       await expect(tx).to.emit(staking, 'StakeWithdrawn')
     })
     it('should revert if not enough blocks have passed', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -107,6 +119,8 @@ describe('AddressStakingV2', () => {
       ).to.be.revertedWith('Staking: not withdrawable')
     })
     it('should revert if non-existent stake is withdrawn', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [staker] = await ethers.getSigners()
       const {
         staking, token, minWithdrawalBlocks,
@@ -127,6 +141,8 @@ describe('AddressStakingV2', () => {
   describe('slashStake', () => {
     describe('when called by owner', () => {
       it('should allow slashing of stake', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [owner, staker, staked] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -139,6 +155,8 @@ describe('AddressStakingV2', () => {
     })
     describe('when called by non-owner', () => {
       it('should revert', async () => {
+        const { networkHelpers, ethers } = await network.connect()
+        const { loadFixture } = networkHelpers
         const [_owner, staker, staked, other] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
@@ -154,6 +172,8 @@ describe('AddressStakingV2', () => {
 
   describe('stakedAddresses', () => {
     it('should be 0 (stubbed)', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { staking } = await loadFixture(deployAddressStakingV2)
       const result = await staking.stakedAddressesWithMinStakeCount()
       expect(result).to.equal(0)
@@ -162,11 +182,13 @@ describe('AddressStakingV2', () => {
 
   describe('getStake', () => {
     it('should correctly record multiple stakes in unique slots', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [_, staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-      const stake1 = ethers.parseUnits('500', 18)
-      const stake2 = ethers.parseUnits('250', 18)
+      const stake1 = parseUnits('500', 18)
+      const stake2 = parseUnits('250', 18)
 
       await mintAndApprove(token, staker, staking, stake1 + stake2)
 
@@ -187,11 +209,13 @@ describe('AddressStakingV2', () => {
     })
 
     it('should allow each slot to be removed independently', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [_, staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-      const stake1 = ethers.parseUnits('100', 18)
-      const stake2 = ethers.parseUnits('200', 18)
+      const stake1 = parseUnits('100', 18)
+      const stake2 = parseUnits('200', 18)
 
       await mintAndApprove(token, staker, staking, stake1 + stake2)
 
@@ -208,10 +232,12 @@ describe('AddressStakingV2', () => {
     })
 
     it('should track multiple stakers with separate slot indexes', async () => {
+      const { networkHelpers, ethers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const [_, stakerA, stakerB] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-      const smallAmount = ethers.parseUnits('123', 18)
+      const smallAmount = parseUnits('123', 18)
 
       await mintAndApprove(token, stakerA, staking, smallAmount)
       await mintAndApprove(token, stakerB, staking, smallAmount)
@@ -239,7 +265,7 @@ describe('AddressStakingV2', () => {
   })
 
   describe('AddressStakingProperties', () => {
-    const amount = ethers.parseUnits('1000', 18)
+    const amount = parseUnits('1000', 18)
 
     describe('active', () => {
       it('should reflect correct amount after staking', async () => {

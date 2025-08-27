@@ -1,5 +1,3 @@
-import hre from 'hardhat'
+import { getAddress } from 'ethers'
 
-const { ethers } = hre
-
-export const NETWORK_STAKING_ADDRESS = ethers.getAddress('0x1969196919691969196919691969196919691969')
+export const NETWORK_STAKING_ADDRESS = getAddress('0x1969196919691969196919691969196919691969')
