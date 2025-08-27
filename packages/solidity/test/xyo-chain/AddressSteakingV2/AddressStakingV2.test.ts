@@ -125,68 +125,111 @@ describe('AddressStakingV2', () => {
   })
 
   describe('slashStake', () => {
-    describe('when called by owner', () => {
-      describe('for staker', () => {
-        describe('with amount', () => {
-          it('less than amount staked should allow slashing', async () => {
-            const [owner, staker, staked] = await ethers.getSigners()
-            const { staking, token } = await loadFixture(deployAddressStakingV2)
+    describe('with amount', () => {
+      it('less than amount staked should allow slashing', async () => {
+        const [owner, staker, staked] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-            await mintAndApprove(token, staker, staking, amount)
-            await staking.connect(staker).addStake(staked.address, amount)
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked.address, amount)
 
-            const tx = await staking.connect(owner).slashStake(staked.address, amount / 2n)
-            await expect(tx).to.emit(staking, 'StakeSlashed')
-          })
-          it('equal to amount staked should allow slashing', async () => {
-            const [owner, staker, staked] = await ethers.getSigners()
-            const { staking, token } = await loadFixture(deployAddressStakingV2)
-
-            await mintAndApprove(token, staker, staking, amount)
-            await staking.connect(staker).addStake(staked.address, amount)
-
-            const tx = await staking.connect(owner).slashStake(staked.address, amount)
-            await expect(tx).to.emit(staking, 'StakeSlashed')
-          })
-          it('more than amount staked should not allow slashing', async () => {
-            const [owner, staker, staked] = await ethers.getSigners()
-            const { staking, token } = await loadFixture(deployAddressStakingV2)
-
-            await mintAndApprove(token, staker, staking, amount)
-            await staking.connect(staker).addStake(staked.address, amount)
-
-            await expect(
-              staking.connect(owner).slashStake(staked.address, amount * 2n),
-            ).to.be.reverted
-          })
-        })
+        const tx = await staking.connect(owner).slashStake(staked.address, amount / 2n)
+        await expect(tx).to.emit(staking, 'StakeSlashed')
       })
-      describe('for non-staker', () => {
-        it('should revert', async () => {
-          const [owner, staker, staked, other] = await ethers.getSigners()
-          const { staking, token } = await loadFixture(deployAddressStakingV2)
+      it('equal to amount staked should allow slashing', async () => {
+        const [owner, staker, staked] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-          await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked.address, amount)
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked.address, amount)
 
-          await expect(
-            staking.connect(owner).slashStake(other.address, amount / 2n),
-          ).to.be.reverted
-        })
+        const tx = await staking.connect(owner).slashStake(staked.address, amount)
+        await expect(tx).to.emit(staking, 'StakeSlashed')
       })
-    })
-    describe('when called by non-owner', () => {
-      it('should revert', async () => {
-        const [_owner, staker, staked, other] = await ethers.getSigners()
+      it('more than amount staked should not allow slashing', async () => {
+        const [owner, staker, staked] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
         await staking.connect(staker).addStake(staked.address, amount)
 
         await expect(
-          staking.connect(other).slashStake(staked.address, amount / 2n),
+          staking.connect(owner).slashStake(staked.address, amount * 2n),
         ).to.be.reverted
       })
+      it('should revert for non-staker', async () => {
+        const [owner, staker, staked, other] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked.address, amount)
+
+        await expect(
+          staking.connect(owner).slashStake(other.address, amount / 2n),
+        ).to.be.reverted
+      })
+    })
+    describe('should update totals', () => {
+      describe('with only active stake', () => {
+        it('should be reduced by amount', async () => {
+          const [owner, staker, staked] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked.address, amount)
+
+          await staking.connect(owner).slashStake(staked.address, amount / 2n)
+          expect(await staking.active()).to.equal(amount / 2n)
+        })
+      })
+      describe('with only pending stake', () => {
+        it('should be reduced by amount', async () => {
+          const [owner, staker, staked] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked.address, amount)
+          await staking.connect(staker).removeStake(0)
+
+          expect(await staking.active()).to.equal(0)
+          expect(await staking.pending()).to.equal(amount)
+
+          await staking.connect(owner).slashStake(staked.address, amount / 2n)
+          expect(await staking.active()).to.equal(0n)
+          expect(await staking.pending()).to.equal(amount / 2n)
+        })
+      })
+      describe('with active and pending stake', () => {
+        describe('when equal', () => {
+          it('should be reduced equivalently', async () => {
+            const [owner, staker, staked] = await ethers.getSigners()
+            const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+            await mintAndApprove(token, staker, staking, amount)
+            await staking.connect(staker).addStake(staked.address, amount / 2n)
+            await staking.connect(staker).addStake(staked.address, amount / 2n)
+            await staking.connect(staker).removeStake(0)
+
+            expect(await staking.active()).to.equal(amount / 2n)
+            expect(await staking.pending()).to.equal(amount / 2n)
+
+            await staking.connect(owner).slashStake(staked.address, amount / 2n)
+            expect(await staking.active()).to.equal(amount / 2n / 2n)
+            expect(await staking.pending()).to.equal(amount / 2n / 2n)
+          })
+        })
+      })
+    })
+    it('when called by non-owner should revert', async () => {
+      const [_owner, staker, staked, other] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staked.address, amount)
+
+      await expect(
+        staking.connect(other).slashStake(staked.address, amount / 2n),
+      ).to.be.reverted
     })
   })
 
