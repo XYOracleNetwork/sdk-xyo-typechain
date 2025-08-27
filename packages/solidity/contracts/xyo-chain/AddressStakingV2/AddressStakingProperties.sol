@@ -14,6 +14,10 @@ abstract contract AddressStakingProperties is
     constructor(
         uint256 _minWithdrawalBlocks // The minimum number of blocks that must pass before a pending stake can be withdrawn
     ) {
+        require(
+            _minWithdrawalBlocks > 0,
+            "Staking: invalid minWithdrawalBlocks"
+        );
         __minWithdrawalBlocks = _minWithdrawalBlocks;
     }
 
@@ -28,16 +32,17 @@ abstract contract AddressStakingProperties is
     }
 
     function activeByStaker(address staker) external view returns (uint256) {
-        return AddressStakingLibrary._calcActiveStake(_accountStakes[staker]);
+        return AddressStakingLibrary._calcActiveStake(_getStakerStakes(staker));
     }
 
     function pendingByStaker(address staker) external view returns (uint256) {
-        return AddressStakingLibrary._calcPendingStake(_accountStakes[staker]);
+        return
+            AddressStakingLibrary._calcPendingStake(_getStakerStakes(staker));
     }
 
     function withdrawnByStaker(address staker) external view returns (uint256) {
         return
-            AddressStakingLibrary._calcWithdrawnStake(_accountStakes[staker]);
+            AddressStakingLibrary._calcWithdrawnStake(_getStakerStakes(staker));
     }
 
     function active() external view returns (uint256) {

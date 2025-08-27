@@ -2,10 +2,15 @@
 pragma solidity ^0.8.20;
 
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {AbstractTransferStake} from "./Abstract.sol";
+import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+
+interface IBurnable {
+    function burn(uint256 amount) external;
+}
 
 contract TransferStake is AbstractTransferStake {
+    using SafeERC20 for IERC20;
     address private __stakingTokenAddress;
 
     constructor(
@@ -21,7 +26,7 @@ contract TransferStake is AbstractTransferStake {
     function _transferStakeFromSender(
         uint256 amount
     ) internal override returns (bool) {
-        IERC20(__stakingTokenAddress).transferFrom(
+        IERC20(__stakingTokenAddress).safeTransferFrom(
             msg.sender,
             address(this),
             amount
@@ -35,6 +40,15 @@ contract TransferStake is AbstractTransferStake {
     ) internal override returns (bool) {
         IERC20(__stakingTokenAddress).transfer(msg.sender, amount);
         emit StakeOut(msg.sender, amount);
+        return true;
+    }
+
+    function _burnStake(
+        address _address,
+        uint256 amount
+    ) internal override returns (bool) {
+        IBurnable(__stakingTokenAddress).burn(amount);
+        emit StakeBurned(_address, amount);
         return true;
     }
 }

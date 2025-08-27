@@ -1,19 +1,36 @@
-// .vscode/launch.json
 {
   "version": "0.2.0",
   "configurations": [
+    // {
+    //   "request": "launch",
+    //   "name": "Debug Hardhat Tests",
+    //   "type": "node",
+    //   "cwd": "${workspaceFolder}",
+    //   "runtimeExecutable": "yarn",
+    //   "runtimeArgs": [
+    //     "workspace",
+    //     "@xyo-network/solidity",
+    //     "package-test"
+    //   ],
+    //   "skipFiles": ["<node_internals>/**"]
+    // },
     {
-      "request": "launch",
-      "name": "Debug Hardhat Tests",
       "type": "node",
-      "cwd": "${workspaceFolder}",
-      "runtimeExecutable": "yarn",
+      "request": "launch",
+      "name": "Debug Hardhat Tests (ESM + TS)",
+      "cwd": "${workspaceFolder}/packages/solidity",
+      "runtimeExecutable": "node",
       "runtimeArgs": [
-        "workspace",
-        "@xyo-network/solidity",
-        "package-test"
+        "--loader",
+        "ts-node/esm/transpile-only",
+        "--no-warnings=ExperimentalWarning",
+        "./node_modules/.bin/hardhat",
+        "test"
       ],
-      "skipFiles": ["<node_internals>/**"],
+      "env": {
+        "TS_NODE_PROJECT": "./tsconfig.json"
+      },
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }

@@ -14,14 +14,6 @@ abstract contract GovernorGroup is Governor {
 
     EnumerableSet.AddressSet internal __governors;
 
-    modifier onlyThis() {
-        require(
-            msg.sender == address(this),
-            "GovernorGroup: caller is not the contract itself"
-        );
-        _;
-    }
-
     // ========== CONSTRUCTOR ==========
 
     constructor(
@@ -33,13 +25,13 @@ abstract contract GovernorGroup is Governor {
         }
     }
 
-    function addGovernor(address governor) public onlyThis {
+    function addGovernor(address governor) public onlyGovernance {
         if (!isGovernor(governor)) {
             __governors.add(governor);
         }
     }
 
-    function removeGovernor(address governor) public onlyThis {
+    function removeGovernor(address governor) public onlyGovernance {
         if (isGovernor(governor)) {
             __governors.remove(governor);
         }

@@ -1,4 +1,9 @@
-export const deployTestERC20 = async (name = 'Test Token', symbol = 'TEST') => {
+import hre from 'hardhat'
+
+const { ethers } = hre
+
+export const deployBridgeableToken = async (name = 'Test Token', symbol = 'TEST') => {
+  // Deploy a BridgeableToken token to use as staking token
   const TokenFactory = await ethers.getContractFactory('BridgeableToken')
   const token = await TokenFactory.deploy(name, symbol)
 

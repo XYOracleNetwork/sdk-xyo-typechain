@@ -1,7 +1,7 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { expect } from 'chai'
+
 import { deployXyoChain } from '../helpers/index.js'
-import chai from 'chai'
-const { expect } = chai
 
 describe('XyoChain', () => {
   describe('chainId', () => {

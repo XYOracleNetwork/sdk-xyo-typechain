@@ -1,5 +1,10 @@
+import hre from 'hardhat'
+
 import { deployTestERC20 } from './deployTestERC20.js'
 import { deployXyoChainRewards } from './deployXyoChainRewards.js'
+import { NETWORK_STAKING_ADDRESS } from './networkStaking.js'
+
+const { ethers } = hre
 
 export const deployStakedXyoChainV2 = async ({
   forkedChainId = ethers.ZeroAddress,
@@ -25,6 +30,9 @@ export const deployStakedXyoChainV2 = async ({
     await rewards.getAddress(),
     minWithdrawalBlocks,
     await token.getAddress(),
+    10,
+    NETWORK_STAKING_ADDRESS,
+    1_000_000n * 10n ** 18n, /// 1,000,000 XYO
   )
 
   return {

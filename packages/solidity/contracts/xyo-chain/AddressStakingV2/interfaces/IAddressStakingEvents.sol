@@ -6,7 +6,7 @@ interface IAddressStakingEvents {
     event StakeAdded(
         address indexed staked,
         address indexed by,
-        uint256 indexed slot,
+        uint256 indexed id,
         uint256 amount
     );
 
@@ -14,7 +14,7 @@ interface IAddressStakingEvents {
     event StakeRemoved(
         address indexed staked,
         address indexed by,
-        uint256 indexed slot,
+        uint256 indexed id,
         uint256 amount
     );
 
@@ -22,7 +22,7 @@ interface IAddressStakingEvents {
     event StakeWithdrawn(
         address indexed staked,
         address indexed by,
-        uint256 indexed slot,
+        uint256 indexed id,
         uint256 amount
     );
 

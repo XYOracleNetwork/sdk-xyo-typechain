@@ -9,4 +9,7 @@ interface ITransferStake {
 
     // Stake has been added to the contract
     event StakeOut(address indexed staker, uint256 amount);
+
+    // Stake has been added to the contract
+    event StakeBurned(address indexed stakedAddress, uint256 amount);
 }

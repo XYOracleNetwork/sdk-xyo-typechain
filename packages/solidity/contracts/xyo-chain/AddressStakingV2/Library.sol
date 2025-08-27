@@ -3,11 +3,19 @@ pragma solidity ^0.8.20;
 
 library AddressStakingLibrary {
     struct Stake {
-        // the thing that is being staked
+        // the unique id for the stake item
+        uint256 id;
+        // the address that owns the stake
+        address staker;
+        // the address that is being staked
         address staked;
+        // the amount that is staked
         uint256 amount;
+        // the block number when the stake was added
         uint256 addBlock;
+        // the block number when the stake was removed (set to 0 if not removed)
         uint256 removeBlock;
+        // the block number when the stake was withdrawn (set to 0 if not withdrawn)
         uint256 withdrawBlock;
     }
 
@@ -100,6 +108,6 @@ library AddressStakingLibrary {
             stake.addBlock > 0 &&
             stake.removeBlock > 0 &&
             stake.withdrawBlock == 0 &&
-            block.number > (stake.removeBlock + minWithdrawalBlocks);
+            block.number >= (stake.removeBlock + minWithdrawalBlocks);
     }
 }

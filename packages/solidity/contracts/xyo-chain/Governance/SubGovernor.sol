@@ -34,21 +34,8 @@ abstract contract SubGovernor is Governor, GovernorCountingSimple {
         return __votingPeriod;
     }
 
-    /**
-     * @dev Is the proposal failure or not.
-     */
     function _voteFailed(uint256 proposalId) internal view returns (bool) {
-        if (!_quorumReached(proposalId)) {
-            return false;
-        }
-
-        (
-            uint256 againstVotes,
-            uint256 forVotes,
-            uint256 abstainVotes
-        ) = proposalVotes(proposalId);
-
-        return againstVotes > forVotes;
+        return !_quorumReached(proposalId) || !_voteSucceeded(proposalId);
     }
 
     // --- REQUIRED: ERC-6372 clock (Governor uses this abstraction) ---

@@ -1,13 +1,18 @@
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { expect } from 'chai'
+import hre from 'hardhat'
+
+import type { AddressStakingV2, BridgeableToken } from '../../../typechain-types/index.js'
 import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
-import chai from 'chai'
-const { expect } = chai
+
+const { ethers } = hre
 
 describe('AddressStakingV2', () => {
   const amount = ethers.parseUnits('1000', 18)
 
-  const mintAndApprove = async (token, staker, stakingContract, amount) => {
-    await token.mint(staker.address, amount)
+  const mintAndApprove = async (token: BridgeableToken, staker: HardhatEthersSigner, stakingContract: AddressStakingV2, amount: bigint) => {
+    await token.mint(staker, amount)
     await token.connect(staker).approve(await stakingContract.getAddress(), amount)
   }
 
@@ -17,7 +22,7 @@ describe('AddressStakingV2', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      const tx = await staking.connect(staker).addStake(staker.address, amount)
+      const tx = await staking.connect(staker).addStake(staker, amount)
       await expect(tx).to.emit(staking, 'StakeAdded')
     })
 
@@ -25,11 +30,11 @@ describe('AddressStakingV2', () => {
       const [staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-      await token.mint(staker.address, amount)
+      await token.mint(staker, amount)
       await token.connect(staker).approve(await staking.getAddress(), amount)
 
       await expect(
-        staking.connect(staker).addStake(staker.address, 0),
+        staking.connect(staker).addStake(staker, 0),
       ).to.be.revertedWith('Staking: amount must be greater than 0')
     })
   })
@@ -40,7 +45,7 @@ describe('AddressStakingV2', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).addStake(staker, amount)
 
       const tx = await staking.connect(staker).removeStake(0)
       await expect(tx).to.emit(staking, 'StakeRemoved')
@@ -51,7 +56,7 @@ describe('AddressStakingV2', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).addStake(staker, amount)
       await staking.connect(staker).removeStake(0)
 
       await expect(
@@ -64,7 +69,7 @@ describe('AddressStakingV2', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).addStake(staker, amount)
 
       await expect(
         staking.connect(staker).removeStake(1),
@@ -80,7 +85,7 @@ describe('AddressStakingV2', () => {
       } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).addStake(staker, amount)
       await staking.connect(staker).removeStake(0)
 
       // Mine required number of blocks
@@ -94,7 +99,7 @@ describe('AddressStakingV2', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).addStake(staker, amount)
       await staking.connect(staker).removeStake(0)
 
       await expect(
@@ -108,7 +113,7 @@ describe('AddressStakingV2', () => {
       } = await loadFixture(deployAddressStakingV2)
 
       await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker.address, amount)
+      await staking.connect(staker).addStake(staker, amount)
       await staking.connect(staker).removeStake(0)
 
       await advanceBlocks(minWithdrawalBlocks)
@@ -120,37 +125,137 @@ describe('AddressStakingV2', () => {
   })
 
   describe('slashStake', () => {
-    describe('when called by owner', () => {
-      it('should allow slashing of stake', async () => {
+    describe('with amount', () => {
+      it('less than amount staked should allow slashing', async () => {
         const [owner, staker, staked] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staked.address, amount)
+        await staking.connect(staker).addStake(staked, amount)
 
-        const tx = await staking.connect(owner).slashStake(staked.address, amount / 2n)
+        const tx = await staking.connect(owner).slashStake(staked, amount / 2n)
         await expect(tx).to.emit(staking, 'StakeSlashed')
       })
-    })
-    describe('when called by non-owner', () => {
-      it('should revert', async () => {
-        const [_owner, staker, staked, other] = await ethers.getSigners()
+      it('equal to amount staked should allow slashing', async () => {
+        const [owner, staker, staked] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staked.address, amount)
+        await staking.connect(staker).addStake(staked, amount)
+
+        const tx = await staking.connect(owner).slashStake(staked, amount)
+        await expect(tx).to.emit(staking, 'StakeSlashed')
+      })
+      it('more than amount staked should not allow slashing', async () => {
+        const [owner, staker, staked] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked, amount)
 
         await expect(
-          staking.connect(other).slashStake(staked.address, amount / 2n),
+          staking.connect(owner).slashStake(staked, amount * 2n),
         ).to.be.reverted
       })
+      it('should revert for non-staker', async () => {
+        const [owner, staker, staked, other] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked, amount)
+
+        await expect(
+          staking.connect(owner).slashStake(other, amount / 2n),
+        ).to.be.reverted
+      })
+    })
+    describe('should update totals', () => {
+      describe('with only active stake', () => {
+        it('should be reduced by amount', async () => {
+          // Arrange
+          const [owner, staker, staked] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked, amount)
+          expect(await staking.activeByStaker(staker)).to.equal(amount)
+          expect(await staking.activeByAddressStaked(staked)).to.equal(amount)
+
+          // Act
+          await staking.connect(owner).slashStake(staked, amount / 2n)
+
+          // Assert
+          expect(await staking.active()).to.equal(amount / 2n)
+          expect(await staking.activeByStaker(staker)).to.equal(amount / 2n)
+          expect(await staking.activeByAddressStaked(staked)).to.equal(amount / 2n)
+        })
+      })
+      describe('with only pending stake', () => {
+        it('should be reduced by amount', async () => {
+          // Arrange
+          const [owner, staker, staked] = await ethers.getSigners()
+          const { staking, token } = await loadFixture(deployAddressStakingV2)
+          await mintAndApprove(token, staker, staking, amount)
+          await staking.connect(staker).addStake(staked, amount)
+          await staking.connect(staker).removeStake(0)
+          expect(await staking.active()).to.equal(0)
+          expect(await staking.pending()).to.equal(amount)
+          expect(await staking.activeByStaker(staker)).to.equal(0n)
+          expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
+
+          // Act
+          await staking.connect(owner).slashStake(staked, amount / 2n)
+
+          // Assert
+          expect(await staking.active()).to.equal(0n)
+          expect(await staking.pending()).to.equal(amount / 2n)
+          expect(await staking.activeByStaker(staker)).to.equal(0n)
+          expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
+        })
+      })
+      describe('with active and pending stake', () => {
+        describe('when equal', () => {
+          it('should be reduced equivalently', async () => {
+            // Arrange
+            const [owner, staker, staked] = await ethers.getSigners()
+            const { staking, token } = await loadFixture(deployAddressStakingV2)
+            await mintAndApprove(token, staker, staking, amount)
+            await staking.connect(staker).addStake(staked, amount / 2n)
+            await staking.connect(staker).addStake(staked, amount / 2n)
+            await staking.connect(staker).removeStake(0)
+            expect(await staking.active()).to.equal(amount / 2n)
+            expect(await staking.pending()).to.equal(amount / 2n)
+            expect(await staking.activeByStaker(staker)).to.equal(amount / 2n)
+            expect(await staking.activeByAddressStaked(staked)).to.equal(amount / 2n)
+
+            // Act
+            await staking.connect(owner).slashStake(staked, amount / 2n)
+
+            // Assert
+            expect(await staking.active()).to.equal(amount / 2n / 2n)
+            expect(await staking.pending()).to.equal(amount / 2n / 2n)
+            expect(await staking.activeByStaker(staker)).to.equal(amount / 2n / 2n)
+            expect(await staking.activeByAddressStaked(staked)).to.equal(amount / 2n / 2n)
+          })
+        })
+      })
+    })
+    it('when called by non-owner should revert', async () => {
+      const [_owner, staker, staked, other] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staked, amount)
+
+      await expect(
+        staking.connect(other).slashStake(staked, amount / 2n),
+      ).to.be.reverted
     })
   })
 
   describe('stakedAddresses', () => {
     it('should be 0 (stubbed)', async () => {
       const { staking } = await loadFixture(deployAddressStakingV2)
-      const result = await staking.stakedAddressesCount(1000)
+      const result = await staking.stakedAddressesWithMinStakeCount()
       expect(result).to.equal(0)
     })
   })
@@ -165,11 +270,11 @@ describe('AddressStakingV2', () => {
 
       await mintAndApprove(token, staker, staking, stake1 + stake2)
 
-      await staking.connect(staker).addStake(staker.address, stake1)
-      await staking.connect(staker).addStake(staker.address, stake2)
+      await staking.connect(staker).addStake(staker, stake1)
+      await staking.connect(staker).addStake(staker, stake2)
 
-      const s0 = await staking.getStake(staker.address, 0)
-      const s1 = await staking.getStake(staker.address, 1)
+      const s0 = await staking.getStake(staker, 0)
+      const s1 = await staking.getStake(staker, 1)
 
       expect(s0.amount).to.equal(stake1)
       expect(s1.amount).to.equal(stake2)
@@ -190,15 +295,15 @@ describe('AddressStakingV2', () => {
 
       await mintAndApprove(token, staker, staking, stake1 + stake2)
 
-      await staking.connect(staker).addStake(staker.address, stake1)
-      await staking.connect(staker).addStake(staker.address, stake2)
+      await staking.connect(staker).addStake(staker, stake1)
+      await staking.connect(staker).addStake(staker, stake2)
 
       await staking.connect(staker).removeStake(1)
 
-      const s1 = await staking.getStake(staker.address, 1)
+      const s1 = await staking.getStake(staker, 1)
       expect(s1.removeBlock).to.not.equal(0)
 
-      const s0 = await staking.getStake(staker.address, 0)
+      const s0 = await staking.getStake(staker, 0)
       expect(s0.removeBlock).to.equal(0)
     })
 
@@ -211,16 +316,16 @@ describe('AddressStakingV2', () => {
       await mintAndApprove(token, stakerA, staking, smallAmount)
       await mintAndApprove(token, stakerB, staking, smallAmount)
 
-      await staking.connect(stakerA).addStake(stakerA.address, smallAmount)
-      await staking.connect(stakerB).addStake(stakerB.address, smallAmount)
+      await staking.connect(stakerA).addStake(stakerA, smallAmount)
+      await staking.connect(stakerB).addStake(stakerB, smallAmount)
 
-      const sA = await staking.getStake(stakerA.address, 0)
-      const sB = await staking.getStake(stakerB.address, 0)
+      const sA = await staking.getStake(stakerA, 0)
+      const sB = await staking.getStake(stakerB, 0)
 
       expect(sA.amount).to.equal(smallAmount)
       expect(sB.amount).to.equal(smallAmount)
-      expect(sA.staked).to.equal(stakerA.address)
-      expect(sB.staked).to.equal(stakerB.address)
+      expect(sA.staked).to.equal(stakerA)
+      expect(sB.staked).to.equal(stakerB)
     })
 
     it('should revert when accessing a nonexistent slot', async () => {
@@ -228,7 +333,7 @@ describe('AddressStakingV2', () => {
       const { staking } = await loadFixture(deployAddressStakingV2)
 
       await expect(
-        staking.getStake(staker.address, 0),
+        staking.getStake(staker, 0),
       ).to.be.reverted
     })
   })
@@ -242,8 +347,8 @@ describe('AddressStakingV2', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staked1.address, amount / 2n)
-        await staking.connect(staker).addStake(staked2.address, amount / 2n)
+        await staking.connect(staker).addStake(staked1, amount / 2n)
+        await staking.connect(staker).addStake(staked2, amount / 2n)
 
         const globalActive = await staking.active()
 
@@ -254,8 +359,8 @@ describe('AddressStakingV2', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staked1.address, amount / 2n)
-        await staking.connect(staker).addStake(staked2.address, amount / 2n)
+        await staking.connect(staker).addStake(staked1, amount / 2n)
+        await staking.connect(staker).addStake(staked2, amount / 2n)
 
         await staking.connect(staker).removeStake(0)
 
@@ -270,8 +375,8 @@ describe('AddressStakingV2', () => {
         } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staked1.address, amount / 2n)
-        await staking.connect(staker).addStake(staked2.address, amount / 2n)
+        await staking.connect(staker).addStake(staked1, amount / 2n)
+        await staking.connect(staker).addStake(staked2, amount / 2n)
 
         await staking.connect(staker).removeStake(0)
         await advanceBlocks(minWithdrawalBlocks)
@@ -290,10 +395,10 @@ describe('AddressStakingV2', () => {
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
 
-          const activeForStaker = await staking.activeByStaker(staker.address)
+          const activeForStaker = await staking.activeByStaker(staker)
 
           expect(activeForStaker).to.equal(amount)
         })
@@ -302,11 +407,11 @@ describe('AddressStakingV2', () => {
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
           await staking.connect(staker).removeStake(0)
 
-          const activeForStaker = await staking.activeByStaker(staker.address)
+          const activeForStaker = await staking.activeByStaker(staker)
 
           expect(activeForStaker).to.equal(amount / 2n)
         })
@@ -317,13 +422,13 @@ describe('AddressStakingV2', () => {
           } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
           await staking.connect(staker).removeStake(0)
           await advanceBlocks(minWithdrawalBlocks)
           await staking.connect(staker).withdrawStake(0)
 
-          const activeForStaker = await staking.activeByStaker(staker.address)
+          const activeForStaker = await staking.activeByStaker(staker)
 
           expect(activeForStaker).to.equal(amount / 2n)
         })
@@ -334,10 +439,10 @@ describe('AddressStakingV2', () => {
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
 
-          const activeForStaker = await staking.activeByStaker(other.address)
+          const activeForStaker = await staking.activeByStaker(other)
 
           expect(activeForStaker).to.equal(0)
         })
@@ -351,10 +456,10 @@ describe('AddressStakingV2', () => {
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
 
-          const activeForTarget = await staking.activeByAddressStaked(staked1.address)
+          const activeForTarget = await staking.activeByAddressStaked(staked1)
 
           expect(activeForTarget).to.equal(amount / 2n)
         })
@@ -363,11 +468,11 @@ describe('AddressStakingV2', () => {
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
           await staking.connect(staker).removeStake(0)
 
-          const activeForTarget = await staking.activeByAddressStaked(staked1.address)
+          const activeForTarget = await staking.activeByAddressStaked(staked1)
 
           expect(activeForTarget).to.equal(0n)
         })
@@ -378,13 +483,13 @@ describe('AddressStakingV2', () => {
           } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
           await staking.connect(staker).removeStake(0)
           await advanceBlocks(minWithdrawalBlocks)
           await staking.connect(staker).withdrawStake(0)
 
-          const activeForTarget = await staking.activeByAddressStaked(staked1.address)
+          const activeForTarget = await staking.activeByAddressStaked(staked1)
 
           expect(activeForTarget).to.equal(0n)
         })
@@ -395,10 +500,10 @@ describe('AddressStakingV2', () => {
           const { staking, token } = await loadFixture(deployAddressStakingV2)
 
           await mintAndApprove(token, staker, staking, amount)
-          await staking.connect(staker).addStake(staked1.address, amount / 2n)
-          await staking.connect(staker).addStake(staked2.address, amount / 2n)
+          await staking.connect(staker).addStake(staked1, amount / 2n)
+          await staking.connect(staker).addStake(staked2, amount / 2n)
 
-          const activeForTarget = await staking.activeByAddressStaked(other.address)
+          const activeForTarget = await staking.activeByAddressStaked(other)
 
           expect(activeForTarget).to.equal(0)
         })
@@ -419,7 +524,7 @@ describe('AddressStakingV2', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
 
         const globalPending = await staking.pending()
@@ -433,7 +538,7 @@ describe('AddressStakingV2', () => {
         } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
         await advanceBlocks(minWithdrawalBlocks)
         await staking.connect(staker).withdrawStake(0)
@@ -450,10 +555,10 @@ describe('AddressStakingV2', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
 
-        const pendingForStaker = await staking.pendingByStaker(staker.address)
+        const pendingForStaker = await staking.pendingByStaker(staker)
 
         expect(pendingForStaker).to.equal(amount)
       })
@@ -464,12 +569,12 @@ describe('AddressStakingV2', () => {
         } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
         await advanceBlocks(minWithdrawalBlocks)
         await staking.connect(staker).withdrawStake(0)
 
-        const pendingForStaker = await staking.pendingByStaker(staker.address)
+        const pendingForStaker = await staking.pendingByStaker(staker)
 
         expect(pendingForStaker).to.equal(0n)
       })
@@ -483,7 +588,7 @@ describe('AddressStakingV2', () => {
         } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
         await advanceBlocks(minWithdrawalBlocks)
         await staking.connect(staker).withdrawStake(0)
@@ -500,10 +605,10 @@ describe('AddressStakingV2', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
 
-        const withdrawnForStaker = await staking.withdrawnByStaker(staker.address)
+        const withdrawnForStaker = await staking.withdrawnByStaker(staker)
 
         expect(withdrawnForStaker).to.equal(0n)
       })
@@ -514,12 +619,12 @@ describe('AddressStakingV2', () => {
         } = await loadFixture(deployAddressStakingV2)
 
         await mintAndApprove(token, staker, staking, amount)
-        await staking.connect(staker).addStake(staker.address, amount)
+        await staking.connect(staker).addStake(staker, amount)
         await staking.connect(staker).removeStake(0)
         await advanceBlocks(minWithdrawalBlocks)
         await staking.connect(staker).withdrawStake(0)
 
-        const withdrawnForStaker = await staking.withdrawnByStaker(staker.address)
+        const withdrawnForStaker = await staking.withdrawnByStaker(staker)
 
         expect(withdrawnForStaker).to.equal(amount)
       })
