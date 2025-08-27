@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
@@ -138,6 +139,7 @@ describe('AddressStakingV2', () => {
 
         // Assert
         await expect(tx).to.emit(staking, 'StakeSlashed')
+        expect(await staking.slashed()).to.equal(amount / 2n)
         expect(await staking.activeByStaker(staker)).to.equal(amount / 2n)
         expect(await staking.activeByAddressStaked(staked)).to.equal(amount / 2n)
       })
@@ -153,6 +155,7 @@ describe('AddressStakingV2', () => {
 
         // Assert
         await expect(tx).to.emit(staking, 'StakeSlashed')
+        expect(await staking.slashed()).to.equal(amount)
         expect(await staking.activeByStaker(staker)).to.equal(0n)
         expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
       })
@@ -170,6 +173,7 @@ describe('AddressStakingV2', () => {
 
         // Assert
         await expect(tx).to.emit(staking, 'StakeSlashed')
+        expect(await staking.slashed()).to.equal(amount)
         expect(await staking.activeByStaker(staker)).to.equal(0n)
         expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
       })
@@ -183,6 +187,7 @@ describe('AddressStakingV2', () => {
         await expect(
           staking.connect(owner).slashStake(other, amount / 2n),
         ).to.be.reverted
+        expect(await staking.slashed()).to.equal(0n)
       })
     })
     describe('should update totals', () => {
