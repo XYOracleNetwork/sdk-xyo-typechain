@@ -1,17 +1,21 @@
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
+import { network } from 'hardhat'
 
 import { deployXyoChainRewards } from '../helpers/index.js'
 
 describe('XyoChainRewards', () => {
   describe('calcBlockReward', () => {
     it('returns genesis reward for block 0', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { rewards, config } = await loadFixture(deployXyoChainRewards)
       const reward = await rewards.calcBlockReward(0)
       expect(reward).to.equal(config.genesisReward)
     })
 
     it('returns correct reward after 1 step', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { rewards, config } = await loadFixture(deployXyoChainRewards)
       const reward = await rewards.calcBlockReward(config.stepSize)
       const expected = config.initialReward * config.stepFactorNumerator / config.stepFactorDenominator
@@ -20,6 +24,8 @@ describe('XyoChainRewards', () => {
     })
 
     it('floors the reward to configured decimal places', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const config = {
         initialReward: 1234n,
         stepSize: 1n,
@@ -37,6 +43,8 @@ describe('XyoChainRewards', () => {
     })
 
     it('does not go below minRewardPerBlock', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const config = {
         initialReward: 5n,
         stepSize: 1n,
@@ -55,6 +63,8 @@ describe('XyoChainRewards', () => {
 
   describe('calcBlockRewardPure', () => {
     it('matches calcBlockReward', async () => {
+      const { networkHelpers } = await network.connect()
+      const { loadFixture } = networkHelpers
       const { rewards, config } = await loadFixture(deployXyoChainRewards)
       const rewardA = await rewards.calcBlockReward(150)
       const rewardB = await rewards.calcBlockRewardPure(150n, config)
