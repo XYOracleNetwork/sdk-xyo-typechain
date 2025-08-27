@@ -1,14 +1,11 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
-import hre from 'hardhat'
+import { network } from 'hardhat'
 
-import type { BridgeableToken, XL1Governance } from '../../../typechain-types'
+import type { BridgeableToken, XL1Governance } from '../../../typechain-types/index.js'
 import { deployTestERC20 } from './deployTestERC20.js'
 import type { ProposalExecutionContext } from './proposalExecutionHelpers.js'
 import { proposeToTransferTokens } from './proposalHelpers.js'
-
-const { ethers } = hre
 
 export interface CreateRandomProposalContext extends ProposalExecutionContext {
   amount: bigint
@@ -18,6 +15,8 @@ export interface CreateRandomProposalContext extends ProposalExecutionContext {
 }
 
 export const createRandomProposal = async (xl1Governance: XL1Governance): Promise<CreateRandomProposalContext> => {
+  const { networkHelpers, ethers } = await network.connect()
+  const { loadFixture } = networkHelpers
   const [_, proposer, recipient] = await ethers.getSigners()
   const { token, owner } = await loadFixture(deployTestERC20)
   const amount = 1000n

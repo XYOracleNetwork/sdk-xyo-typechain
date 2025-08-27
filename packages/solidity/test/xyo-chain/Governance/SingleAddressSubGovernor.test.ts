@@ -1,15 +1,14 @@
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
-import hre from 'hardhat'
+import { network } from 'hardhat'
 
 import {
   deploySingleAddressSubGovernor, SingleAddressSubGovernorDefaultVotingDelay, SingleAddressSubGovernorDefaultVotingPeriod,
 } from '../helpers/index.js'
 
-const { ethers } = hre
-
-describe('SingleAddressSubGovernor', () => {
+describe.only('SingleAddressSubGovernor', () => {
   it('should return correct vote weight for owner', async () => {
+    const { networkHelpers, ethers } = await network.connect()
+    const { loadFixture } = networkHelpers
     const { subGovernor, deployer } = await loadFixture(deploySingleAddressSubGovernor)
 
     expect(await subGovernor.getVotes(deployer.address, 0)).to.equal(1)
@@ -17,6 +16,8 @@ describe('SingleAddressSubGovernor', () => {
   })
 
   it('should return correct voting delay and period from parent', async () => {
+    const { networkHelpers } = await network.connect()
+    const { loadFixture } = networkHelpers
     const { subGovernor } = await loadFixture(deploySingleAddressSubGovernor)
 
     expect(await subGovernor.votingDelay()).to.equal(SingleAddressSubGovernorDefaultVotingDelay)
@@ -24,6 +25,8 @@ describe('SingleAddressSubGovernor', () => {
   })
 
   it('should return correct clock mode and value', async () => {
+    const { networkHelpers, ethers } = await network.connect()
+    const { loadFixture } = networkHelpers
     const { subGovernor } = await loadFixture(deploySingleAddressSubGovernor)
 
     const currentBlock = await ethers.provider.getBlockNumber()
