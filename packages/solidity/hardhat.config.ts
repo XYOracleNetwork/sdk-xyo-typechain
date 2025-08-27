@@ -1,4 +1,6 @@
 /* eslint-disable import-x/no-internal-modules */
+import '@typechain/hardhat'
+
 import hardhatNetworkHelpers from '@nomicfoundation/hardhat-network-helpers'
 import hardhatToolboxMochaEthersPlugin from '@nomicfoundation/hardhat-toolbox-mocha-ethers'
 import type { HardhatUserConfig } from 'hardhat/config'
@@ -36,6 +38,11 @@ const config: HardhatUserConfig = {
       url: configVariable('SEPOLIA_RPC_URL'),
       accounts: [configVariable('SEPOLIA_PRIVATE_KEY')],
     },
+  },
+  typechain: {
+    target: 'ethers-v6', // generate Ethers v6 bindings
+    outDir: 'typechain-types', // where types go
+    // alwaysGenerateOverloads: true, // optional
   },
 }
 
