@@ -3662,6 +3662,7 @@ __metadata:
     "@openzeppelin/contracts-upgradeable": "npm:~5.4.0"
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
     "@xylabs/tsconfig": "npm:~7.1.0"
+    chai: "npm:~6.0.1"
     ethers: "npm:~6.4.0"
     hardhat: "npm:~3.0.3"
     rimraf: "npm:~6.0.1"
@@ -4870,6 +4871,13 @@ __metadata:
   peerDependencies:
     chai: ">= 2.1.2 < 7"
   checksum: 10/9723b6cda34ef511b48d525ff86a730323f1287728e78918833350718e8b5da58783ebf314ad01e07cca4edcf6df42b2c4bf6b9cfebc886c54ce93b587a1183f
+  languageName: node
+  linkType: hard
+
+"chai@npm:~6.0.1":
+  version: 6.0.1
+  resolution: "chai@npm:6.0.1"
+  checksum: 10/cd95aee5f98cdeaea3e24c21dcf1786d9eaf515d571861106a2378589cf5ef1ed3ddd223ca1121552656ffd744e4acd051f8881c1a9729c71551776db55fb2cb
   languageName: node
   linkType: hard
 

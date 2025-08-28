@@ -34,11 +34,11 @@
     "deploy-token": "hardhat ignition deploy packages/solidity/ignition/modules/BridgeableToken.js --network localhost",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
-    "package-compile": "hardhat compile && hardhat typechain",
-    "package-coverage": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true hardhat coverage --solcoverjs ./.solcover.json",
+    "package-compile": "hardhat compile",
+    "package-coverage": "SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true hardhat coverage --solcoverjs ./.solcover.json",
     "package-lint": "echo Skipping lint...",
     "package-recompile": "yarn package-clean && yarn package-compile",
-    "package-test": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' hardhat test"
+    "package-test": "hardhat test"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-ethers": "~4.0.0",
@@ -55,6 +55,7 @@
     "@openzeppelin/contracts-upgradeable": "~5.4.0",
     "@xylabs/ts-scripts-yarn3": "~7.0.3",
     "@xylabs/tsconfig": "~7.1.0",
+    "chai": "~6.0.1",
     "ethers": "~6.4.0",
     "hardhat": "~3.0.3",
     "rimraf": "~6.0.1",
