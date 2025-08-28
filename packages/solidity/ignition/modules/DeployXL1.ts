@@ -1,21 +1,10 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 
-export const SingleAddressSubGovernorModule = (
-  name: string,
-  votingDelay: number,
-  votingPeriod: number
-) =>
-  buildModule("SingleAddressSubGovernor", (m) => {
-    const subGovernor = m.contract("SingleAddressSubGovernor", [
-      name,
-      votingDelay,
-      votingPeriod,
-    ]);
-
-    return { subGovernor };
-  });
+import { BridgeableTokenModule } from './BridgeableToken'
+import { SingleAddressSubGovernorModule } from './SingleAddressSubGovernor'
 
 export default buildModule('DeployXL1', (m) => {
-  const { subGovernor } = m.useModule(SingleAddressSubGovernorModule("Name", 1, 1))
-  return { subGovernor }
+  const { token } = m.useModule(BridgeableTokenModule)
+  const { subGovernor } = m.useModule(SingleAddressSubGovernorModule('Name', 1, 1))
+  return { subGovernor, token }
 })

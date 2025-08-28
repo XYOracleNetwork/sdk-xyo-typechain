@@ -1,16 +1,16 @@
-import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
+import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 
 export const SingleAddressSubGovernorModule = (
   name: string,
   votingDelay: number,
-  votingPeriod: number
+  votingPeriod: number,
 ) =>
-  buildModule("SingleAddressSubGovernor", (m) => {
-    const subGovernor = m.contract("SingleAddressSubGovernor", [
+  buildModule('SingleAddressSubGovernor', (m) => {
+    const subGovernor = m.contract('SingleAddressSubGovernor', [
       name,
       votingDelay,
       votingPeriod,
-    ]);
+    ])
 
-    return { subGovernor };
-  });
+    return { subGovernor }
+  })
