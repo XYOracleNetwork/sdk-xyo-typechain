@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/uniswap-solidity",
-  "version": "4.0.4",
+  "version": "4.0.5",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
