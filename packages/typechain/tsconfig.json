@@ -1,3 +1,17 @@
 {
+  "compilerOptions": {
+    "lib": ["es2020"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": false
+  },
   "extends": "@xylabs/tsconfig"
 }

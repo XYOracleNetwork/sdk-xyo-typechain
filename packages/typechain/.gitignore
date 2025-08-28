@@ -4,5 +4,6 @@ dist
 .DS_Store
 *.log
 *.tsconfig.*
+src
 .deps
 build-info
