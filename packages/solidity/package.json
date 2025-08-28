@@ -30,8 +30,8 @@
     "typechain-types/"
   ],
   "scripts": {
+    "deploy-token": "hardhat ignition deploy ignition/modules/BridgeableToken.ts  --deployment-id local --network localhost --config hardhat.config.js",
     "dev": "hardhat node",
-    "deploy-token": "hardhat ignition deploy packages/solidity/ignition/modules/BridgeableToken.ts --network localhost --config ./hardhat.config.ts --show-stack-traces",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile",
@@ -59,7 +59,8 @@
     "ethers": "~6.4.0",
     "hardhat": "~3.0.3",
     "rimraf": "~6.0.1",
-    "typescript": "~5.8.3"
+    "typescript": "~5.8.3",
+    "viem": "~2.36.0"
   },
   "peerDependencies": {
     "ethers": "~6"
