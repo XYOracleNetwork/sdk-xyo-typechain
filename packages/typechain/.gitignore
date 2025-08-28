@@ -7,3 +7,4 @@ dist
 src
 .deps
 build-info
+artifacts
