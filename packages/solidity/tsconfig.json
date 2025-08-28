@@ -15,6 +15,6 @@
     "allowImportingTsExtensions": false,
     "emitDeclarationOnly": false
   },
-  "include": ["./scripts", "test/**/*.ts", "./typechain-types/**/*.ts", "hardhat.config.cts", "./ignition/**/*.ts"],
+  "include": ["./scripts", "test/**/*.ts", "./typechain-types/**/*.ts", "hardhat.config.old.cts", "./ignition/**/*.ts"],
   "extends": "@xylabs/tsconfig"
 }
