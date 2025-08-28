@@ -21,6 +21,9 @@
     ".": {
       "import": "./typechain-types/index.ts"
     },
+    "./artifacts/*": "./artifacts/*",
+    "./contracts/*": "./contracts/*",
+    "./typechain-types/*": "./typechain-types/*",
     "./package.json": "./package.json",
     "./README.md": "./README.md"
   },
