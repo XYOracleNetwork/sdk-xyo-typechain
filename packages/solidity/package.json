@@ -16,7 +16,7 @@
     "url": "https://xyo.network"
   },
   "sideEffects": false,
-  "type": "module",
+  "type": "commonjs",
   "exports": {
     ".": {
       "import": "./typechain-types/index.ts"
@@ -30,6 +30,8 @@
     "typechain-types/"
   ],
   "scripts": {
+    "deploy-contracts": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/BridgeableToken.js",
+    "dev": "hardhat node",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile && hardhat typechain",
