@@ -31,7 +31,7 @@
   ],
   "scripts": {
     "dev": "hardhat node",
-    "deploy-token": "hardhat ignition deploy packages/solidity/ignition/modules/BridgeableToken.js --network localhost",
+    "deploy-token": "hardhat ignition deploy packages/solidity/ignition/modules/BridgeableToken.ts --network localhost --config ./hardhat.config.ts --show-stack-traces",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile",
