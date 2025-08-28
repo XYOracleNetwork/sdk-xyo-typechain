@@ -46,6 +46,7 @@
     "@xylabs/ts-scripts-yarn3": "~7.0.3",
     "@xylabs/tsconfig": "~7.1.0",
     "ethers": "~6.4.0",
+    "hardhat": "~3.0.3",
     "rimraf": "~6.0.1",
     "typescript": "~5.8.3"
   },
