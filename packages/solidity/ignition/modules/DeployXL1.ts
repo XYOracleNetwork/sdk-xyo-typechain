@@ -11,7 +11,7 @@ export default buildModule('DeployXL1', (m) => {
   const { subGovernor } = m.useModule(SingleAddressSubGovernorModule)
   const { xl1Governance } = m.useModule(createXL1GovernanceModule(subGovernor))
   const { rewards } = createXyoChainRewardsModule(m)
-  const { chain } = createStakedXyoChainV2Module(token, rewards)(m)
+  const { chain } = createStakedXyoChainV2Module(rewards, token)(m)
   return {
     chain, subGovernor, token, xl1Governance,
   }
