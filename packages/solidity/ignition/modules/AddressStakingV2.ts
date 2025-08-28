@@ -1,15 +1,14 @@
 import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import type { IgnitionModuleBuilder } from '@nomicfoundation/ignition-core'
 
-const MIN_WITHDRAWAL_BLOCKS = 3
-const MAX_SUPPLY = 1_000_000n * 10n ** 18n // 1,000,000 XYO
-const DEFAULT_STAKING_REWARD_BPS = 10
-const DEFAULT_NETWORK_STAKING_ADDRESS = '0x1969196919691969196919691969196919691969'
+import {
+  DEFAULT_MAX_SUPPLY, DEFAULT_MIN_WITHDRAWAL_BLOCKS, DEFAULT_NETWORK_STAKING_ADDRESS, DEFAULT_STAKING_REWARD_BPS,
+} from './ContractDefaults'
 
 export const createAddressStakingV2Module = (m: IgnitionModuleBuilder) => {
-  const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks', MIN_WITHDRAWAL_BLOCKS)
+  const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks', DEFAULT_MIN_WITHDRAWAL_BLOCKS)
   const rewardBps = m.getParameter('stakingRewardBps', DEFAULT_STAKING_REWARD_BPS)
-  const maxSupply = m.getParameter('maxSupply', MAX_SUPPLY)
+  const maxSupply = m.getParameter('maxSupply', DEFAULT_MAX_SUPPLY)
   const networkStakingAddress = m.getParameter('networkStakingAddress', DEFAULT_NETWORK_STAKING_ADDRESS)
 
   const token = m.contract('TestERC20', [])
