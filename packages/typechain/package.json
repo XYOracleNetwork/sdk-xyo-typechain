@@ -19,23 +19,19 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./types.d.ts",
+      "types": "./dist/neutral/index.d.ts",
       "import": "./dist/neutral/index.mjs"
-    },
-    "./common": {
-      "types": "./dist/neutral/common.d.ts",
-      "import": "./dist/neutral/common.mjs"
     },
     "./package.json": "./package.json"
   },
   "module": "./dist/neutral/index.mjs",
-  "types": "./types.d.ts",
+  "types": "/dist/neutral/index.d.ts",
   "files": [
     "dist",
     "types.d.ts"
   ],
   "scripts": {
-    "generate:sdk": "node ./scripts/generate-sdk.mjs",
+    "generate:sdk": "echo node ./scripts/generate-sdk.mjs",
     "lint-pkg": "npmPkgJsonLint .",
     "package-build": "yarn generate:sdk && yarn package-build-only",
     "package-clean": "rimraf dist && rimraf src",
@@ -43,7 +39,7 @@
     "package-recompile": "yarn package-clean && yarn package-compile"
   },
   "dependencies": {
-    "ethers": "~6.15.0"
+    "@xyo-network/solidity": "workspace:~"
   },
   "devDependencies": {
     "@typechain/ethers-v6": "~0.5.1",

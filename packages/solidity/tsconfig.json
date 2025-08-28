@@ -1,25 +1,31 @@
 {
   "compilerOptions": {
-    "lib": ["es2020"],
-    "module": "esnext",
-    "moduleResolution": "node",
-    "target": "es2020",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "target": "es2020",                       // good for Node 14+ (Hardhat 2 requires >=12)
+    "module": "commonjs",                     // Hardhat plugins expect CommonJS
+    "strict": true,                           // enable strict type checking
+    "esModuleInterop": true,                  // allow `import foo from 'foo'`
     "forceConsistentCasingInFileNames": true,
-    // "noImplicitAny": false,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": false,
-    "allowImportingTsExtensions": false,
-    "emitDeclarationOnly": false
+    "skipLibCheck": true,                     // faster builds, avoids TS lib conflicts
+    "outDir": "dist",                         // optional, if you want compiled output
+    "types": [
+      "node",
+      "mocha",                                // for `describe/it` in tests
+      "chai",                                 // for `expect/assert`
+      "hardhat",                              // Hardhat runtime environment
+      "@nomicfoundation/hardhat-ethers",
+      "@nomicfoundation/hardhat-chai-matchers"
+    ]
   },
   "ts-node": {
     "esm": true,
     "experimentalResolver": true,
     "files": true // only if you have "files", "include" or "exclude" in your config
   },
-  "include": ["./scripts", "test/**/*.ts", "./typechain-types/**/*.ts", "hardhat.config.cts", "./ignition/**/*.ts"],
-  "extends": "@xylabs/tsconfig"
+  "include": [
+    "./hardhat.config.ts",
+    "./scripts",
+    "./test",
+    "./typechain-types",
+    "./ignition"                      
+  ]
 }
