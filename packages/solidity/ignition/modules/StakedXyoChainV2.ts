@@ -14,7 +14,7 @@ import {
 export const createStakedXyoChainV2Module
   = (
     token: ContractFuture<'BridgeableToken'>,
-    rewards: ContractFuture<'StakingRewards'>,
+    rewards: ContractFuture<'XyoChainRewards'>,
   ) =>
     (m: IgnitionModuleBuilder) => {
       const forkedChainId = m.getParameter('forkedChainId', '0x0000000000000000000000000000000000000000')
