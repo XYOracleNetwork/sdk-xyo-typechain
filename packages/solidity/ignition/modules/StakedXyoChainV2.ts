@@ -2,10 +2,11 @@ import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import type { ContractFuture, IgnitionModuleBuilder } from '@nomicfoundation/ignition-core'
 
 import {
+  DEFAULT_MAX_STAKERS_PER_ADDRESS,
   DEFAULT_MAX_SUPPLY,
+  DEFAULT_MIN_VOTING_STAKE,
   DEFAULT_MIN_WITHDRAWAL_BLOCKS,
   DEFAULT_NETWORK_STAKING_ADDRESS,
-  DEFAULT_STAKING_REWARD_BPS,
 } from './ContractDefaults'
 
 /**
@@ -13,28 +14,28 @@ import {
  */
 export const createStakedXyoChainV2Module
   = (
+    rewardsContract: ContractFuture<'XyoChainRewards'>,
     token: ContractFuture<'BridgeableToken'>,
-    rewards: ContractFuture<'XyoChainRewards'>,
   ) =>
     (m: IgnitionModuleBuilder) => {
-      const forkedChainId = m.getParameter('forkedChainId', '0x0000000000000000000000000000000000000000')
-      const forkedAtBlockNumber = m.getParameter('forkedAtBlockNumber', 0n)
-      const forkedAtHash = m.getParameter('forkedAtHash', 0n)
+      const forkFromChainId = m.getParameter('forkFromChainId', '0x0000000000000000000000000000000000000000')
+      const forkFromLastBlockNumber = m.getParameter('forkFromLastBlockNumber', 0n)
+      const forkFromLastHash = m.getParameter('forkFromLastHash', 0n)
       const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks', DEFAULT_MIN_WITHDRAWAL_BLOCKS)
-      const rewardBps = m.getParameter('rewardBps', DEFAULT_STAKING_REWARD_BPS)
-      const maxSupply = m.getParameter('maxSupply', DEFAULT_MAX_SUPPLY)
-      const networkStakingAddress = m.getParameter('networkStakingAddress', DEFAULT_NETWORK_STAKING_ADDRESS)
+      const maxStakersPerAddress = m.getParameter('maxStakersPerAddress', DEFAULT_MAX_STAKERS_PER_ADDRESS)
+      const unlimitedStakerAddress = m.getParameter('networkStakingAddress', DEFAULT_NETWORK_STAKING_ADDRESS)
+      const minStake = m.getParameter('minStake', DEFAULT_MIN_VOTING_STAKE)
 
       const chain = m.contract('StakedXyoChainV2', [
-        forkedChainId,
-        forkedAtBlockNumber,
-        forkedAtHash,
-        rewards,
+        forkFromChainId,
+        forkFromLastBlockNumber,
+        forkFromLastHash,
+        rewardsContract,
         minWithdrawalBlocks,
         token,
-        rewardBps,
-        networkStakingAddress,
-        maxSupply,
+        maxStakersPerAddress,
+        unlimitedStakerAddress,
+        minStake,
       ])
 
       return { chain }
