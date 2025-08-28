@@ -11,7 +11,9 @@
       "node",
       "mocha",                                // for `describe/it` in tests
       "chai",                                 // for `expect/assert`
-      "hardhat"                               // Hardhat runtime environment
+      "hardhat",                              // Hardhat runtime environment
+      "@nomicfoundation/hardhat-ethers",
+      "@nomicfoundation/hardhat-chai-matchers"
     ]
   },
   "ts-node": {
