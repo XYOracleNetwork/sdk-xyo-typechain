@@ -5,6 +5,6 @@ import { SingleAddressSubGovernorModule } from './SingleAddressSubGovernor'
 
 export default buildModule('DeployXL1', (m) => {
   const { token } = m.useModule(BridgeableTokenModule)
-  const { subGovernor } = m.useModule(SingleAddressSubGovernorModule('Name', 1, 1))
+  const { subGovernor } = m.useModule(SingleAddressSubGovernorModule)
   return { subGovernor, token }
 })
