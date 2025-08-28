@@ -13,6 +13,6 @@ export default buildModule('DeployXL1', (m) => {
   const { rewards } = createXyoChainRewardsModule(m)
   const { chain } = createStakedXyoChainV2Module(token, rewards)(m)
   return {
-    subGovernor, token, xl1Governance,
+    chain, subGovernor, token, xl1Governance,
   }
 })
