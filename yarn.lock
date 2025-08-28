@@ -4531,12 +4531,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"artifacts-5bc5ec@workspace:packages/solidity/artifacts":
-  version: 0.0.0-use.local
-  resolution: "artifacts-5bc5ec@workspace:packages/solidity/artifacts"
-  languageName: unknown
-  linkType: soft
-
 "asap@npm:^2.0.0":
   version: 2.0.6
   resolution: "asap@npm:2.0.6"
