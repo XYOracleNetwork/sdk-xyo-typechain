@@ -49,10 +49,10 @@ describe('AddressStakingV2.addStake', () => {
     })
     describe('more than the max number of stakers', () => {
       it('should allow more than the maximum number of stakers to add a stake', async () => {
-        const [_, staked, stakerA, stakerB, stakerC, stakerD] = await ethers.getSigners()
+        const [_, staked, stakerA, stakerB, stakerC, stakerD, stakerE, stakerF] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
-        const stakers = [stakerA, stakerB, stakerC, stakerD]
-        const resultantStakers = new Set([stakerB, stakerC, stakerD])
+        const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
+        const resultantStakers = new Set([stakerD, stakerE, stakerF])
         let resultantStake: bigint = 0n
 
         for (const [i, staker] of stakers.entries()) {
