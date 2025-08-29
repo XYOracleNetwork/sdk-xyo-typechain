@@ -1,9 +1,7 @@
-import { buildModule } from '@nomicfoundation/hardhat-ignition/modules'
 import type { ContractFuture, IgnitionModuleBuilder } from '@nomicfoundation/ignition-core'
 
 import {
   DEFAULT_MAX_STAKERS_PER_ADDRESS,
-  DEFAULT_MAX_SUPPLY,
   DEFAULT_MIN_VOTING_STAKE,
   DEFAULT_MIN_WITHDRAWAL_BLOCKS,
   DEFAULT_NETWORK_STAKING_ADDRESS,
