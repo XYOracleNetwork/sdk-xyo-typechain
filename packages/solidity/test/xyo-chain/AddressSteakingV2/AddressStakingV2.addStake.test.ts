@@ -67,7 +67,7 @@ describe('AddressStakingV2.addStake', () => {
           await mintAndApprove(token, staker, staking, stakeAmount)
           const tx = await staking.connect(staker).addStake(staked, stakeAmount)
           await expect(tx).to.emit(staking, 'StakeAdded')
-          expect(await staking.activeByStaker(staker)).to.equal(amount)
+          expect(await staking.activeByStaker(staker)).to.equal(stakeAmount)
         }
         expect(await staking.activeByAddressStaked(staked)).to.equal(resultantStake)
       })
