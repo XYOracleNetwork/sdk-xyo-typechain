@@ -20,6 +20,10 @@ interface IAddressStakingFunctions {
         uint256 slot
     ) external view returns (AddressStakingLibrary.Stake memory);
 
+    function getStakeById(
+        uint256 id
+    ) external view returns (AddressStakingLibrary.Stake memory);
+
     function stakedAddressesWithMinStake()
         external
         view

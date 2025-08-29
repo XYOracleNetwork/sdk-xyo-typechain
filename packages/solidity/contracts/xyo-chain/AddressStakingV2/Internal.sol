@@ -99,6 +99,13 @@ abstract contract AddressStakingInternal is
         } else {
             //replace the stake id after removing/withdrawing lowest stake
             uint256 lowestSlot = _getLowestStakeSlot(staked);
+
+            //check if new stake is higher than the lowest stake
+            require(
+                _allStakes[_addressStakes[staked][lowestSlot]].amount < amount,
+                "Stake amount too low"
+            );
+
             _removeStake(_addressStakes[staked][lowestSlot]);
             _withdrawStake(_addressStakes[staked][lowestSlot], 0);
             _addressStakes[staked][lowestSlot] = stake.id;
@@ -135,12 +142,6 @@ abstract contract AddressStakingInternal is
         AddressStakingLibrary.Stake storage stake = _allStakes[id];
 
         require(stake.id == id, "Staking: invalid id");
-        require(stake.staker == msg.sender, "Staking: invalid staker");
-
-        require(
-            AddressStakingLibrary._isStakeRemovable(stake),
-            "Staking: not removable"
-        );
 
         uint256 amount = stake.amount;
         address staked = stake.staked;
@@ -170,7 +171,6 @@ abstract contract AddressStakingInternal is
         AddressStakingLibrary.Stake storage stake = _allStakes[id];
 
         require(stake.id == id, "Staking: invalid id");
-        require(stake.staker == msg.sender, "Staking: invalid staker");
 
         require(
             AddressStakingLibrary._isStakeWithdrawable(
@@ -257,6 +257,12 @@ abstract contract AddressStakingInternal is
         uint256 slot
     ) internal view returns (AddressStakingLibrary.Stake memory) {
         return _allStakes[_stakerStakes[staker][slot]];
+    }
+
+    function _getStakeById(
+        uint256 id
+    ) internal view returns (AddressStakingLibrary.Stake memory) {
+        return _allStakes[id];
     }
 
     function _getStakerStakes(

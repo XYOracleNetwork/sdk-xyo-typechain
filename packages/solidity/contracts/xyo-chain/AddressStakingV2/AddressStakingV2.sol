@@ -38,12 +38,25 @@ contract AddressStakingV2 is
         return _addStake(staked, amount);
     }
 
-    function removeStake(uint256 slot) public returns (bool) {
-        return _removeStake(slot);
+    function removeStake(uint256 id) public returns (bool) {
+        AddressStakingLibrary.Stake memory stake = _getStakeById(id);
+        require(
+            stake.staker == msg.sender,
+            "Staking: stake not owned by caller"
+        );
+        require(
+            AddressStakingLibrary._isStakeRemovable(stake),
+            "Staking: not removable"
+        );
+        return _removeStake(id);
     }
 
-    function withdrawStake(uint256 slot) public returns (bool) {
-        return _withdrawStake(slot, this.minWithdrawalBlocks());
+    function withdrawStake(uint256 id) public returns (bool) {
+        require(
+            _getStakeById(id).staker == msg.sender,
+            "Staking: stake not owned by caller"
+        );
+        return _withdrawStake(id, this.minWithdrawalBlocks());
     }
 
     function slashStake(
@@ -74,5 +87,11 @@ contract AddressStakingV2 is
         uint256 slot
     ) public view returns (AddressStakingLibrary.Stake memory) {
         return _getStake(staker, slot);
+    }
+
+    function getStakeById(
+        uint256 id
+    ) public view returns (AddressStakingLibrary.Stake memory) {
+        return _getStakeById(id);
     }
 }
