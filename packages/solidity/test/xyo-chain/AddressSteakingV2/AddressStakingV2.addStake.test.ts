@@ -17,36 +17,51 @@ describe.only('AddressStakingV2.addStake', () => {
   }
 
   it('should allow a staker to add a stake', async () => {
-    const [_, staker] = await ethers.getSigners()
+    const [_, staked, staker] = await ethers.getSigners()
     const { staking, token } = await loadFixture(deployAddressStakingV2)
 
     await mintAndApprove(token, staker, staking, amount)
-    const tx = await staking.connect(staker).addStake(staker, amount)
+    const tx = await staking.connect(staker).addStake(staked, amount)
     await expect(tx).to.emit(staking, 'StakeAdded')
   })
 
   it('should revert if amount is zero', async () => {
-    const [staker] = await ethers.getSigners()
+    const [_, staked, staker] = await ethers.getSigners()
     const { staking, token } = await loadFixture(deployAddressStakingV2)
 
     await token.mint(staker, amount)
     await token.connect(staker).approve(await staking.getAddress(), amount)
 
     await expect(
-      staking.connect(staker).addStake(staker, 0),
+      staking.connect(staker).addStake(staked, 0),
     ).to.be.revertedWith('Staking: amount must be greater than 0')
   })
   describe('with multiple stakers', () => {
-    it('should allow multiple stakers to add a stake', async () => {
-      const [_, stakerA, stakerB] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2)
-      const stakers = [stakerA, stakerB]
+    describe('less than the max number of stakers', () => {
+      it('should allow multiple stakers to add a stake', async () => {
+        const [_, staked, stakerA, stakerB, stakerC] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        const stakers = [stakerA, stakerB, stakerC]
 
-      for (const staker of stakers) {
-        await mintAndApprove(token, staker, staking, amount)
-        const tx = await staking.connect(staker).addStake(staker, amount)
-        await expect(tx).to.emit(staking, 'StakeAdded')
-      }
+        for (const staker of stakers) {
+          await mintAndApprove(token, staker, staking, amount)
+          const tx = await staking.connect(staker).addStake(staked, amount)
+          await expect(tx).to.emit(staking, 'StakeAdded')
+        }
+      })
+    })
+    describe('more than the max number of stakers', () => {
+      it('should allow more than the maximum number of stakers to add a stake', async () => {
+        const [_, staked, stakerA, stakerB, stakerC, stakerD] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        const stakers = [stakerA, stakerB, stakerC, stakerD]
+
+        for (const staker of stakers) {
+          await mintAndApprove(token, staker, staking, amount)
+          const tx = await staking.connect(staker).addStake(staked, amount)
+          await expect(tx).to.emit(staking, 'StakeAdded')
+        }
+      })
     })
   })
 })
