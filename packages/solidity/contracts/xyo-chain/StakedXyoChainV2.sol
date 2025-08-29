@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: GPL-3.0
-pragma solidity ^0.8.24;
+pragma solidity 0.8.26;
 
 import {XyoChain} from "./XyoChain/XyoChain.sol";
 import {AddressStakingV2} from "./AddressStakingV2/AddressStakingV2.sol";
