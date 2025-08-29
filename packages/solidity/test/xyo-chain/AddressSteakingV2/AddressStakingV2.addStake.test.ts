@@ -9,25 +9,26 @@ const { ethers } = hre
 describe('AddressStakingV2.addStake', () => {
   const amount = ethers.parseUnits('1000', 18)
 
-  it('should allow a staker to add a stake', async () => {
-    const [_, staked, staker] = await ethers.getSigners()
-    const { staking, token } = await loadFixture(deployAddressStakingV2)
+  describe('with single staker', () => {
+    it('should allow a staker to add a stake', async () => {
+      const [_, staked, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-    await mintAndApprove(token, staker, staking, amount)
-    const tx = await staking.connect(staker).addStake(staked, amount)
-    await expect(tx).to.emit(staking, 'StakeAdded')
-  })
+      await mintAndApprove(token, staker, staking, amount)
+      const tx = await staking.connect(staker).addStake(staked, amount)
+      await expect(tx).to.emit(staking, 'StakeAdded')
+    })
+    it('should revert if amount is zero', async () => {
+      const [_, staked, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
 
-  it('should revert if amount is zero', async () => {
-    const [_, staked, staker] = await ethers.getSigners()
-    const { staking, token } = await loadFixture(deployAddressStakingV2)
+      await token.mint(staker, amount)
+      await token.connect(staker).approve(await staking.getAddress(), amount)
 
-    await token.mint(staker, amount)
-    await token.connect(staker).approve(await staking.getAddress(), amount)
-
-    await expect(
-      staking.connect(staker).addStake(staked, 0),
-    ).to.be.revertedWith('Staking: amount must be greater than 0')
+      await expect(
+        staking.connect(staker).addStake(staked, 0),
+      ).to.be.revertedWith('Staking: amount must be greater than 0')
+    })
   })
   describe('with multiple stakers', () => {
     describe('less than the max number of stakers', () => {
