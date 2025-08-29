@@ -10,13 +10,17 @@ import type { HardhatUserConfig } from 'hardhat/config'
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   networks:{
-    hardhat: {
-      chainId: 31337,
-    },
     local: {
       url: 'http://127.0.0.1:8545',
       // chainId: 1337,
       chainId: 31337,
+    },
+    hardhat: {
+      chainId: 31337,
+    },
+    sepolia: {
+      url: process.env.SEPOLIA_RPC_URL || '',
+      accounts: process.env.SEPOLIA_PRIVATE_KEY ? [process.env.SEPOLIA_PRIVATE_KEY] : [],
     },
   },
   solidity: {
