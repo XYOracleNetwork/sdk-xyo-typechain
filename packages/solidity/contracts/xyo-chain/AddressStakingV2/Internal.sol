@@ -171,7 +171,7 @@ abstract contract AddressStakingInternal is
         _totalPendingStake += amount;
         _stakeAmountByAddressStaked[staked] -= amount;
         _pendingAmountByAddressStaked[staked] += amount;
-        _stakeAmountByStaker[msg.sender] -= amount;
+        _stakeAmountByStaker[stake.staker] -= amount;
 
         if (
             _addressesWithMinStake.contains(staked) &&
@@ -180,7 +180,7 @@ abstract contract AddressStakingInternal is
             _addressesWithMinStake.remove(staked);
         }
 
-        emit StakeRemoved(staked, msg.sender, id, amount);
+        emit StakeRemoved(staked, stake.staker, id, amount);
         return true;
     }
 
@@ -210,7 +210,7 @@ abstract contract AddressStakingInternal is
 
         _transferStakeToSender(amount);
 
-        emit StakeWithdrawn(staked, msg.sender, id, amount);
+        emit StakeWithdrawn(staked, stake.staker, id, amount);
 
         return true;
     }
