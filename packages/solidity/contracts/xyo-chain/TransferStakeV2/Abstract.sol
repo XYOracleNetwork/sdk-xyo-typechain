@@ -12,7 +12,8 @@ abstract contract AbstractTransferStake is ITransferStake {
         uint256 amount
     ) internal virtual returns (bool);
 
-    function _transferStakeToSender(
+    function _transferStakeToStaker(
+        address staker,
         uint256 amount
     ) internal virtual returns (bool);
 

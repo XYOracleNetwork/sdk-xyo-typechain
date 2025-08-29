@@ -9,7 +9,7 @@ interface IBurnable {
     function burn(uint256 amount) external;
 }
 
-contract TransferStake is AbstractTransferStake {
+contract TransferStakeV2 is AbstractTransferStake {
     using SafeERC20 for IERC20;
     address private __stakingTokenAddress;
 
@@ -35,11 +35,12 @@ contract TransferStake is AbstractTransferStake {
         return true;
     }
 
-    function _transferStakeToSender(
+    function _transferStakeToStaker(
+        address staker,
         uint256 amount
     ) internal override returns (bool) {
-        IERC20(__stakingTokenAddress).transfer(msg.sender, amount);
-        emit StakeOut(msg.sender, amount);
+        IERC20(__stakingTokenAddress).transfer(staker, amount);
+        emit StakeOut(staker, amount);
         return true;
     }
 
