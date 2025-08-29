@@ -23,8 +23,9 @@ const config: HardhatUserConfig = {
       chainId: 31337,
     },
     sepolia: {
-      url: process.env.SEPOLIA_RPC_URL || '',
       accounts: process.env.SEPOLIA_PRIVATE_KEY ? [process.env.SEPOLIA_PRIVATE_KEY] : [],
+      chainId: 11155111,
+      url: process.env.SEPOLIA_RPC_URL || '',
     },
   },
   solidity: {
