@@ -125,20 +125,23 @@ abstract contract AddressStakingInternal is
                 minWithdrawalBlocks
             );
 
-            uint256 lowestSlot = _getLowestStakeSlot(staked);
+            //check again in case we are now under the max
+            if (_addressStakes[staked].length() >= _maxStakersPerAddress) {
+                uint256 lowestSlot = _getLowestStakeSlot(staked);
 
-            //check if new stake is higher than the lowest stake
-            require(
-                _allStakes[_addressStakes[staked].at(lowestSlot)].amount <
-                    amount,
-                "Stake amount too low"
-            );
+                //check if new stake is higher than the lowest stake
+                require(
+                    _allStakes[_addressStakes[staked].at(lowestSlot)].amount <
+                        amount,
+                    "Stake amount too low"
+                );
 
-            _removeStake(_addressStakes[staked].at(lowestSlot));
-            _withdrawStake(_addressStakes[staked].at(lowestSlot), 0);
-            _addressStakes[staked].remove(
-                _addressStakes[staked].at(lowestSlot)
-            );
+                _removeStake(_addressStakes[staked].at(lowestSlot));
+                _withdrawStake(_addressStakes[staked].at(lowestSlot), 0);
+                _addressStakes[staked].remove(
+                    _addressStakes[staked].at(lowestSlot)
+                );
+            }
         }
 
         _addressStakes[staked].add(stake.id);
