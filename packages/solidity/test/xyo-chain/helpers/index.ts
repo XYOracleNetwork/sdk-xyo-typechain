@@ -1,3 +1,4 @@
+export * from './bridgeableTokenHelpers.js'
 export * from './deployAddressStakingV2.js'
 export * from './deployBridgeableToken.js'
 export * from './deploySingleAddressSubGovernor.js'
