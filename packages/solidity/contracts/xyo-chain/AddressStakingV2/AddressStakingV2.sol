@@ -2,7 +2,7 @@
 pragma solidity 0.8.26;
 
 import {IAddressStaking} from "./interfaces/IAddressStaking.sol";
-import {TransferStake} from "../TransferStake/TransferStake.sol";
+import {TransferStakeV2} from "../TransferStakeV2/TransferStake.sol";
 import {AddressStakingProperties} from "./AddressStakingProperties.sol";
 import {AddressStakingLibrary} from "./Library.sol";
 import {AddressStakingInternal} from "./Internal.sol";
@@ -10,7 +10,7 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract AddressStakingV2 is
     IAddressStaking,
-    TransferStake,
+    TransferStakeV2,
     AddressStakingProperties,
     Ownable
 {
@@ -23,7 +23,7 @@ contract AddressStakingV2 is
         address unlimitedStakerAddress_,
         uint256 minStake_
     )
-        TransferStake(_stakingToken)
+        TransferStakeV2(_stakingToken)
         AddressStakingProperties(_minWithdrawalBlocks)
         Ownable(msg.sender)
     {

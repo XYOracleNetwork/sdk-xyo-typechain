@@ -3,7 +3,7 @@ pragma solidity 0.8.26;
 
 import {AddressStakingLibrary} from "./Library.sol";
 import {IAddressStakingEvents} from "./interfaces/IAddressStakingEvents.sol";
-import {AbstractTransferStake} from "../TransferStake/Abstract.sol";
+import {AbstractTransferStake} from "../TransferStakeV2/Abstract.sol";
 import {IAddressStakingProperties} from "./interfaces/IAddressStakingProperties.sol";
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
@@ -208,7 +208,7 @@ abstract contract AddressStakingInternal is
         _totalPendingStake -= amount;
         _totalWithdrawnStake += amount;
 
-        _transferStakeToSender(amount);
+        _transferStakeToStaker(stake.staker, amount);
 
         emit StakeWithdrawn(staked, stake.staker, id, amount);
 
