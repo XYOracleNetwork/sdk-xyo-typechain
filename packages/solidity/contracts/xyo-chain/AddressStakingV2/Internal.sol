@@ -135,7 +135,6 @@ abstract contract AddressStakingInternal is
             );
 
             _removeStake(_addressStakes[staked].at(lowestSlot));
-            _withdrawStake(_addressStakes[staked].at(lowestSlot), 0);
             _addressStakes[staked].remove(
                 _addressStakes[staked].at(lowestSlot)
             );
