@@ -4,11 +4,11 @@ import { expect } from 'chai'
 import hre from 'hardhat'
 
 import type { AddressStakingV2, BridgeableToken } from '../../../typechain-types/index.js'
-import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
+import { deployAddressStakingV2 } from '../helpers/index.js'
 
 const { ethers } = hre
 
-describe.only('AddressStakingV2.addStake', () => {
+describe('AddressStakingV2.addStake', () => {
   const amount = ethers.parseUnits('1000', 18)
 
   const mintAndApprove = async (token: BridgeableToken, staker: HardhatEthersSigner, stakingContract: AddressStakingV2, amount: bigint) => {
@@ -56,9 +56,10 @@ describe.only('AddressStakingV2.addStake', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         const stakers = [stakerA, stakerB, stakerC, stakerD]
 
-        for (const staker of stakers) {
-          await mintAndApprove(token, staker, staking, amount)
-          const tx = await staking.connect(staker).addStake(staked, amount)
+        for (const [i, staker] of stakers.entries()) {
+          const stakeAmount = amount * (BigInt(i) + 1n)
+          await mintAndApprove(token, staker, staking, stakeAmount)
+          const tx = await staking.connect(staker).addStake(staked, stakeAmount)
           await expect(tx).to.emit(staking, 'StakeAdded')
         }
       })
