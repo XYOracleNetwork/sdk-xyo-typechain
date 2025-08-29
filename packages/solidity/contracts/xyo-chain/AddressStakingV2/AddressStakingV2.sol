@@ -35,7 +35,7 @@ contract AddressStakingV2 is
     // ========== PUBLIC ==========
 
     function addStake(address staked, uint256 amount) public returns (bool) {
-        return _addStake(staked, amount);
+        return _addStake(staked, amount, this.minWithdrawalBlocks());
     }
 
     function removeStake(uint256 id) public returns (bool) {
@@ -63,7 +63,7 @@ contract AddressStakingV2 is
         address stakedAddress,
         uint256 amount
     ) public onlyOwner returns (uint256) {
-        return _slashStake(stakedAddress, amount);
+        return _slashStake(stakedAddress, amount, this.minWithdrawalBlocks());
     }
 
     function stakedAddressesWithMinStake()
@@ -93,5 +93,18 @@ contract AddressStakingV2 is
         uint256 id
     ) public view returns (AddressStakingLibrary.Stake memory) {
         return _getStakeById(id);
+    }
+
+    function getStakeCountForAddress(
+        address account
+    ) external view returns (uint256) {
+        return _getStakeCountForAddress(account);
+    }
+
+    function getAccountStakeBySlot(
+        address account,
+        uint256 slot
+    ) external view returns (uint256) {
+        return _getAccountStakeBySlot(account, slot);
     }
 }

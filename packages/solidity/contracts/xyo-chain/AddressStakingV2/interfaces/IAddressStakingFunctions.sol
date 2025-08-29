@@ -20,6 +20,15 @@ interface IAddressStakingFunctions {
         uint256 slot
     ) external view returns (AddressStakingLibrary.Stake memory);
 
+    function getStakeCountForAddress(
+        address account
+    ) external view returns (uint256);
+
+    function getAccountStakeBySlot(
+        address account,
+        uint256 slot
+    ) external view returns (uint256);
+
     function getStakeById(
         uint256 id
     ) external view returns (AddressStakingLibrary.Stake memory);

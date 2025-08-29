@@ -12,6 +12,7 @@ abstract contract AddressStakingInternal is
     AbstractTransferStake
 {
     using EnumerableSet for EnumerableSet.AddressSet;
+    using EnumerableSet for EnumerableSet.UintSet;
     uint256 internal _maxStakersPerAddress;
     address internal _unlimitedStakerAddress;
 
@@ -44,10 +45,10 @@ abstract contract AddressStakingInternal is
     AddressStakingLibrary.Stake[] internal _allStakes;
 
     //all the stake ids held by a given staker
-    mapping(address => uint256[]) internal _stakerStakes;
+    mapping(address => EnumerableSet.UintSet) internal _stakerStakes;
 
     //all the stake ids for a given staked address
-    mapping(address => uint256[]) internal _addressStakes;
+    mapping(address => EnumerableSet.UintSet) internal _addressStakes;
 
     //all addresses that have been staked
     address[] internal _stakedAddresses;
@@ -57,10 +58,9 @@ abstract contract AddressStakingInternal is
     ) internal view returns (uint256) {
         uint256 lowestAmount = type(uint256).max;
         uint256 lowestIndex = type(uint256).max;
-        for (uint256 i = 0; i < _addressStakes[staked].length; i++) {
-            AddressStakingLibrary.Stake memory stake = _allStakes[
-                _addressStakes[staked][i]
-            ];
+        for (uint256 i = 0; i < _addressStakes[staked].length(); i++) {
+            uint256 id = _addressStakes[staked].at(i);
+            AddressStakingLibrary.Stake memory stake = _allStakes[id];
             if (stake.amount < lowestAmount) {
                 lowestAmount = stake.amount;
                 lowestIndex = i;
@@ -73,7 +73,30 @@ abstract contract AddressStakingInternal is
         return lowestIndex;
     }
 
-    function _addStake(address staked, uint256 amount) internal returns (bool) {
+    function _removeWithdrawableStakes(
+        EnumerableSet.UintSet storage idSet,
+        uint256 minWithdrawalBlocks
+    ) internal {
+        uint256[] memory ids = idSet.values();
+        for (uint256 i = 0; i < ids.length; i++) {
+            AddressStakingLibrary.Stake memory stake = _getStakeById(ids[i]);
+            //remove if withdrawable or already withdrawn
+            if (
+                AddressStakingLibrary._isStakeWithdrawable(
+                    stake,
+                    minWithdrawalBlocks
+                ) || stake.withdrawBlock != 0
+            ) {
+                idSet.remove(stake.id);
+            }
+        }
+    }
+
+    function _addStake(
+        address staked,
+        uint256 amount,
+        uint256 minWithdrawalBlocks
+    ) internal returns (bool) {
         require(amount > 0, "Staking: amount must be greater than 0");
         bool newStakeAddress = _stakeAmountByAddressStaked[staked] == 0;
         _transferStakeFromSender(amount);
@@ -89,27 +112,36 @@ abstract contract AddressStakingInternal is
         });
 
         _allStakes.push(stake);
-        _stakerStakes[msg.sender].push(stake.id);
+        _stakerStakes[msg.sender].add(stake.id);
+
+        //make space for new stake if needed
         if (
-            _addressStakes[staked].length < _maxStakersPerAddress ||
-            _unlimitedStakerAddress == staked
+            _addressStakes[staked].length() >= _maxStakersPerAddress &&
+            _unlimitedStakerAddress != staked
         ) {
-            //add the stake id
-            _addressStakes[staked].push(stake.id);
-        } else {
-            //replace the stake id after removing/withdrawing lowest stake
+            //remove non-at-risk stakes - we do this to prevent a withdrawable stake from being kept over an at-risk stake
+            _removeWithdrawableStakes(
+                _addressStakes[staked],
+                minWithdrawalBlocks
+            );
+
             uint256 lowestSlot = _getLowestStakeSlot(staked);
 
             //check if new stake is higher than the lowest stake
             require(
-                _allStakes[_addressStakes[staked][lowestSlot]].amount < amount,
+                _allStakes[_addressStakes[staked].at(lowestSlot)].amount <
+                    amount,
                 "Stake amount too low"
             );
 
-            _removeStake(_addressStakes[staked][lowestSlot]);
-            _withdrawStake(_addressStakes[staked][lowestSlot], 0);
-            _addressStakes[staked][lowestSlot] = stake.id;
+            _removeStake(_addressStakes[staked].at(lowestSlot));
+            _withdrawStake(_addressStakes[staked].at(lowestSlot), 0);
+            _addressStakes[staked].remove(
+                _addressStakes[staked].at(lowestSlot)
+            );
         }
+
+        _addressStakes[staked].add(stake.id);
         _totalActiveStake += amount;
         _stakeAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] += amount;
@@ -124,18 +156,6 @@ abstract contract AddressStakingInternal is
         }
         emit StakeAdded(staked, msg.sender, stake.id, amount);
         return true;
-    }
-
-    function _slotFromId(
-        address account,
-        uint256 id
-    ) internal view returns (uint256) {
-        for (uint256 i = 0; i < _stakerStakes[account].length; i++) {
-            if (_stakerStakes[account][i] == id) {
-                return i;
-            }
-        }
-        revert("Staking: invalid id");
     }
 
     function _removeStake(uint256 id) internal returns (bool) {
@@ -195,18 +215,31 @@ abstract contract AddressStakingInternal is
         return true;
     }
 
+    function _stakesFromIds(
+        uint256[] memory ids
+    ) internal view returns (AddressStakingLibrary.Stake[] memory) {
+        AddressStakingLibrary.Stake[]
+            memory stakes = new AddressStakingLibrary.Stake[](ids.length);
+        for (uint256 i = 0; i < ids.length; i++) {
+            stakes[i] = _allStakes[ids[i]];
+        }
+        return stakes;
+    }
+
     function _slashStake(
         address stakedAddress,
-        uint256 amount
+        uint256 amount,
+        uint256 minWithdrawalBlocks
     ) internal returns (uint256) {
-        uint256[] memory stakeIds = _addressStakes[stakedAddress];
-        require(stakeIds.length > 0, "Staking: no stakes to slash");
+        //remove non-at-risk stakes - we do this to prevent a withdrawable stake from being kept over an at-risk stake
+        _removeWithdrawableStakes(
+            _addressStakes[stakedAddress],
+            minWithdrawalBlocks
+        );
 
-        AddressStakingLibrary.Stake[]
-            memory stakes = new AddressStakingLibrary.Stake[](stakeIds.length);
-        for (uint256 i = 0; i < stakeIds.length; i++) {
-            stakes[i] = _allStakes[stakeIds[i]];
-        }
+        uint256[] memory stakeIds = _addressStakes[stakedAddress].values();
+
+        require(stakeIds.length > 0, "Staking: no stakes to slash");
 
         uint256 atRiskStake = _stakeAmountByAddressStaked[stakedAddress] +
             _pendingAmountByAddressStaked[stakedAddress];
@@ -219,14 +252,8 @@ abstract contract AddressStakingInternal is
         uint256 slashRatio = (amount * 100000) / atRiskStake;
         uint256 totalSlashedAmountActive = 0;
         uint256 totalSlashedAmountPending = 0;
-        for (uint256 i = 0; i < stakes.length; i++) {
-            AddressStakingLibrary.Stake storage stake = _allStakes[
-                stakes[i].id
-            ];
-            //skip already withdrawn stakes
-            if (stake.withdrawBlock != 0) {
-                continue;
-            }
+        for (uint256 i = 0; i < stakeIds.length; i++) {
+            AddressStakingLibrary.Stake storage stake = _allStakes[stakeIds[i]];
             uint256 slashedAmount = (stake.amount * slashRatio) / 100000;
             stake.amount -= slashedAmount;
             if (stake.removeBlock != 0) {
@@ -256,7 +283,7 @@ abstract contract AddressStakingInternal is
         address staker,
         uint256 slot
     ) internal view returns (AddressStakingLibrary.Stake memory) {
-        return _allStakes[_stakerStakes[staker][slot]];
+        return _allStakes[_stakerStakes[staker].at(slot)];
     }
 
     function _getStakeById(
@@ -268,14 +295,7 @@ abstract contract AddressStakingInternal is
     function _getStakerStakes(
         address staker
     ) internal view returns (AddressStakingLibrary.Stake[] memory) {
-        AddressStakingLibrary.Stake[]
-            memory stakes = new AddressStakingLibrary.Stake[](
-                _stakerStakes[staker].length
-            );
-        for (uint256 i = 0; i < _stakerStakes[staker].length; i++) {
-            stakes[i] = _allStakes[_stakerStakes[staker][i]];
-        }
-        return stakes;
+        return _stakesFromIds(_stakerStakes[staker].values());
     }
 
     function _stakedAddressesWithMinStake()
@@ -292,5 +312,18 @@ abstract contract AddressStakingInternal is
         returns (uint256)
     {
         return _addressesWithMinStake.length();
+    }
+
+    function _getStakeCountForAddress(
+        address account
+    ) internal view returns (uint256) {
+        return _addressStakes[account].length();
+    }
+
+    function _getAccountStakeBySlot(
+        address account,
+        uint256 slot
+    ) internal view returns (uint256) {
+        return _allStakes[_addressStakes[account].at(slot)].amount;
     }
 }
