@@ -36,15 +36,16 @@ describe('AddressStakingV2.addStake', () => {
         const [_, staked, stakerA, stakerB, stakerC] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         const stakers = new Set([stakerA, stakerB, stakerC])
-        let totalStaked: bigint = 0n
+        let active: bigint = 0n
         for (const staker of stakers) {
-          totalStaked += amount
+          active += amount
           await mintAndApprove(token, staker, staking, amount)
           const tx = await staking.connect(staker).addStake(staked, amount)
           await expect(tx).to.emit(staking, 'StakeAdded')
           expect(await staking.activeByStaker(staker)).to.equal(amount)
         }
-        expect(await staking.activeByAddressStaked(staked)).to.equal(totalStaked)
+        expect(await staking.active()).to.equal(active)
+        expect(await staking.activeByAddressStaked(staked)).to.equal(active)
         expect(await staking.getStakeCountForAddress(staked)).to.equal(stakers.size)
       })
     })
@@ -54,17 +55,18 @@ describe('AddressStakingV2.addStake', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
         const resultantStakers = new Set([stakerD, stakerE, stakerF])
-        let resultantStake: bigint = 0n
+        let active: bigint = 0n
 
         for (const [i, staker] of stakers.entries()) {
           const stakeAmount = amount * (BigInt(i) + 1n)
-          if (resultantStakers.has(staker)) resultantStake += stakeAmount
+          if (resultantStakers.has(staker)) active += stakeAmount
           await mintAndApprove(token, staker, staking, stakeAmount)
           const tx = await staking.connect(staker).addStake(staked, stakeAmount)
           await expect(tx).to.emit(staking, 'StakeAdded')
           expect(await staking.activeByStaker(staker)).to.equal(stakeAmount)
         }
-        expect(await staking.activeByAddressStaked(staked)).to.equal(resultantStake)
+        expect(await staking.active()).to.equal(active)
+        expect(await staking.activeByAddressStaked(staked)).to.equal(active)
         expect(await staking.getStakeCountForAddress(staked)).to.equal(resultantStakers.size)
       })
     })
