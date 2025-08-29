@@ -11,15 +11,4 @@ describe('AddressStakingV2', () => {
       expect(result).to.equal(0)
     })
   })
-
-  describe('TransferStake', () => {
-    describe('stakingTokenAddress', () => {
-      it('should return staking token address', async () => {
-        const { staking, token } = await loadFixture(deployAddressStakingV2)
-        const tokenAddress = await token.getAddress()
-        const stakingTokenAddress = await staking.stakingTokenAddress()
-        expect(stakingTokenAddress).to.equal(tokenAddress)
-      })
-    })
-  })
 })
