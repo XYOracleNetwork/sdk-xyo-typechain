@@ -55,6 +55,9 @@ describe('AddressStakingV2.addStake', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
         const resultantStakers = new Set([stakerD, stakerE, stakerF])
+        const evictedStakers = new Set(
+          stakers.filter(staker => !resultantStakers.has(staker)),
+        )
         let active: bigint = 0n
 
         for (const [i, staker] of stakers.entries()) {
@@ -68,6 +71,9 @@ describe('AddressStakingV2.addStake', () => {
         expect(await staking.active()).to.equal(active)
         expect(await staking.activeByAddressStaked(staked)).to.equal(active)
         expect(await staking.getStakeCountForAddress(staked)).to.equal(resultantStakers.size)
+        for (const evictedStaker of evictedStakers) {
+          expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
+        }
       })
     })
   })
@@ -85,18 +91,18 @@ describe('AddressStakingV2.addStake', () => {
         const activeByAddressStaked: Record<string, bigint> = Object.fromEntries(
           [...staked].map(s => [s.address, 0n]),
         )
-        for (const s of staked) {
+        for (const addressStaked of staked) {
           for (const staker of stakers) {
             active += amount
             activeByStaker[staker.address] += amount
-            activeByAddressStaked[s.address] += amount
+            activeByAddressStaked[addressStaked.address] += amount
             await mintAndApprove(token, staker, staking, amount)
-            const tx = await staking.connect(staker).addStake(s, amount)
+            const tx = await staking.connect(staker).addStake(addressStaked, amount)
             await expect(tx).to.emit(staking, 'StakeAdded')
             expect(await staking.activeByStaker(staker)).to.equal(activeByStaker[staker.address])
           }
-          expect(await staking.activeByAddressStaked(s)).to.equal(activeByAddressStaked[s.address])
-          expect(await staking.getStakeCountForAddress(s)).to.equal(stakers.size)
+          expect(await staking.activeByAddressStaked(addressStaked)).to.equal(activeByAddressStaked[addressStaked.address])
+          expect(await staking.getStakeCountForAddress(addressStaked)).to.equal(stakers.size)
         }
         expect(await staking.active()).to.equal(active)
       })
@@ -108,19 +114,35 @@ describe('AddressStakingV2.addStake', () => {
         const staked = new Set([stakedA, stakedB])
         const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
         const resultantStakers = new Set([stakerD, stakerE, stakerF])
+        const evictedStakers = new Set(
+          stakers.filter(staker => !resultantStakers.has(staker)),
+        )
         let active: bigint = 0n
-
-        for (const [i, staker] of stakers.entries()) {
-          const stakeAmount = amount * (BigInt(i) + 1n)
-          if (resultantStakers.has(staker)) active += stakeAmount
-          await mintAndApprove(token, staker, staking, stakeAmount)
-          const tx = await staking.connect(staker).addStake(stakedA, stakeAmount)
-          await expect(tx).to.emit(staking, 'StakeAdded')
-          expect(await staking.activeByStaker(staker)).to.equal(stakeAmount)
+        const activeByStaker: Record<string, bigint> = Object.fromEntries(
+          stakers.map(s => [s.address, 0n]),
+        )
+        const activeByAddressStaked: Record<string, bigint> = Object.fromEntries(
+          [...staked].map(s => [s.address, 0n]),
+        )
+        for (const addressStaked of staked) {
+          for (const [i, staker] of stakers.entries()) {
+            const stakeAmount = amount * (BigInt(i) + 1n)
+            await mintAndApprove(token, staker, staking, stakeAmount)
+            const tx = await staking.connect(staker).addStake(addressStaked, stakeAmount)
+            await expect(tx).to.emit(staking, 'StakeAdded')
+            if (resultantStakers.has(staker)) {
+              active += stakeAmount
+              activeByStaker[staker.address] += stakeAmount
+              activeByAddressStaked[addressStaked.address] += stakeAmount
+            }
+          }
+          expect(await staking.activeByAddressStaked(addressStaked)).to.equal(activeByAddressStaked[addressStaked.address])
+          expect(await staking.getStakeCountForAddress(addressStaked)).to.equal(resultantStakers.size)
+        }
+        for (const evictedStaker of evictedStakers) {
+          expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
         }
         expect(await staking.active()).to.equal(active)
-        expect(await staking.activeByAddressStaked(stakedA)).to.equal(active)
-        expect(await staking.getStakeCountForAddress(stakedA)).to.equal(resultantStakers.size)
       })
     })
   })
