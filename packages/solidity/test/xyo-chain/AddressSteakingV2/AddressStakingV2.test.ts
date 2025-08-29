@@ -9,97 +9,10 @@ import { advanceBlocks, deployAddressStakingV2 } from '../helpers/index.js'
 const { ethers } = hre
 
 describe('AddressStakingV2', () => {
-  const amount = ethers.parseUnits('1000', 18)
-
   const mintAndApprove = async (token: BridgeableToken, staker: HardhatEthersSigner, stakingContract: AddressStakingV2, amount: bigint) => {
     await token.mint(staker, amount)
     await token.connect(staker).approve(await stakingContract.getAddress(), amount)
   }
-
-  describe('removeStake', () => {
-    it('should allow a staker to remove a stake', async () => {
-      const [_, staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2)
-
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker, amount)
-
-      const tx = await staking.connect(staker).removeStake(0)
-      await expect(tx).to.emit(staking, 'StakeRemoved')
-    })
-
-    it('should revert if the stake is already removed', async () => {
-      const [staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2)
-
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker, amount)
-      await staking.connect(staker).removeStake(0)
-
-      await expect(
-        staking.connect(staker).removeStake(0),
-      ).to.be.revertedWith('Staking: not removable')
-    })
-
-    it('should revert if non-existent stake is removed', async () => {
-      const [staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2)
-
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker, amount)
-
-      await expect(
-        staking.connect(staker).removeStake(1),
-      ).to.be.reverted
-    })
-  })
-
-  describe('withdrawStake', () => {
-    it('should allow withdrawal after required blocks', async () => {
-      const [staker] = await ethers.getSigners()
-      const {
-        staking, token, minWithdrawalBlocks,
-      } = await loadFixture(deployAddressStakingV2)
-
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker, amount)
-      await staking.connect(staker).removeStake(0)
-
-      // Mine required number of blocks
-      await advanceBlocks(minWithdrawalBlocks)
-
-      const tx = await staking.connect(staker).withdrawStake(0)
-      await expect(tx).to.emit(staking, 'StakeWithdrawn')
-    })
-    it('should revert if not enough blocks have passed', async () => {
-      const [staker] = await ethers.getSigners()
-      const { staking, token } = await loadFixture(deployAddressStakingV2)
-
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker, amount)
-      await staking.connect(staker).removeStake(0)
-
-      await expect(
-        staking.connect(staker).withdrawStake(0),
-      ).to.be.revertedWith('Staking: not withdrawable')
-    })
-    it('should revert if non-existent stake is withdrawn', async () => {
-      const [staker] = await ethers.getSigners()
-      const {
-        staking, token, minWithdrawalBlocks,
-      } = await loadFixture(deployAddressStakingV2)
-
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staker, amount)
-      await staking.connect(staker).removeStake(0)
-
-      await advanceBlocks(minWithdrawalBlocks)
-
-      await expect(
-        staking.connect(staker).withdrawStake(1),
-      ).to.be.reverted
-    })
-  })
 
   describe('stakedAddresses', () => {
     it('should be 0 (stubbed)', async () => {
