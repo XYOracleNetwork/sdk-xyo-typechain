@@ -78,8 +78,6 @@ describe('AddressStakingV2.addStake', () => {
         await advanceBlocks(minWithdrawalBlocks * 10)
         for (const evictedStaker of evictedStakers) {
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
-          await advanceBlocks(minWithdrawalBlocks)
-          await staking.connect(evictedStaker).withdrawStake(0)
           const updatedBalance = await token.balanceOf(evictedStaker)
           expect(updatedBalance).to.be.greaterThan(0n)
         }
@@ -153,8 +151,6 @@ describe('AddressStakingV2.addStake', () => {
         await advanceBlocks(minWithdrawalBlocks * 10)
         for (const evictedStaker of evictedStakers) {
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
-          await advanceBlocks(minWithdrawalBlocks)
-          await staking.connect(evictedStaker).withdrawStake(0)
           const updatedBalance = await token.balanceOf(evictedStaker)
           expect(updatedBalance).to.be.greaterThan(0n)
         }
