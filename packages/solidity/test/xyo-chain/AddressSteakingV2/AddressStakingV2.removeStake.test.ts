@@ -14,7 +14,9 @@ describe('AddressStakingV2.removeStake', () => {
     const { staking, token } = await loadFixture(deployAddressStakingV2)
 
     await mintAndApprove(token, staker, staking, amount)
+    expect(await token.balanceOf(staker)).to.equal(amount)
     await staking.connect(staker).addStake(staker, amount)
+    expect(await token.balanceOf(staker)).to.equal(0)
 
     const tx = await staking.connect(staker).removeStake(0)
     await expect(tx).to.emit(staking, 'StakeRemoved')
@@ -25,7 +27,9 @@ describe('AddressStakingV2.removeStake', () => {
     const { staking, token } = await loadFixture(deployAddressStakingV2)
 
     await mintAndApprove(token, staker, staking, amount)
+    expect(await token.balanceOf(staker)).to.equal(amount)
     await staking.connect(staker).addStake(staker, amount)
+    expect(await token.balanceOf(staker)).to.equal(0)
     await staking.connect(staker).removeStake(0)
 
     await expect(
@@ -38,7 +42,9 @@ describe('AddressStakingV2.removeStake', () => {
     const { staking, token } = await loadFixture(deployAddressStakingV2)
 
     await mintAndApprove(token, staker, staking, amount)
+    expect(await token.balanceOf(staker)).to.equal(amount)
     await staking.connect(staker).addStake(staker, amount)
+    expect(await token.balanceOf(staker)).to.equal(0)
 
     await expect(
       staking.connect(staker).removeStake(1),
