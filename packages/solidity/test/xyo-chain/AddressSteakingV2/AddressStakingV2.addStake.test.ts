@@ -71,4 +71,57 @@ describe('AddressStakingV2.addStake', () => {
       })
     })
   })
+  describe('with multiple addresses staked', () => {
+    describe('less than the max number of stakers', () => {
+      it('should allow multiple stakers to add a stake', async () => {
+        const [_, stakedA, stakedB, stakerA, stakerB, stakerC] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        const staked = new Set([stakedA, stakedB])
+        const stakers = new Set([stakerA, stakerB, stakerC])
+        let active: bigint = 0n
+        const activeByStaker: Record<string, bigint> = Object.fromEntries(
+          [...stakers].map(s => [s.address, 0n]),
+        )
+        const activeByAddressStaked: Record<string, bigint> = Object.fromEntries(
+          [...staked].map(s => [s.address, 0n]),
+        )
+        for (const s of staked) {
+          for (const staker of stakers) {
+            active += amount
+            activeByStaker[staker.address] += amount
+            activeByAddressStaked[s.address] += amount
+            await mintAndApprove(token, staker, staking, amount)
+            const tx = await staking.connect(staker).addStake(s, amount)
+            await expect(tx).to.emit(staking, 'StakeAdded')
+            expect(await staking.activeByStaker(staker)).to.equal(activeByStaker[staker.address])
+          }
+          expect(await staking.activeByAddressStaked(s)).to.equal(activeByAddressStaked[s.address])
+          expect(await staking.getStakeCountForAddress(s)).to.equal(stakers.size)
+        }
+        expect(await staking.active()).to.equal(active)
+      })
+    })
+    describe('more than the max number of stakers', () => {
+      it('should allow more than the maximum number of stakers to add a stake', async () => {
+        const [_, stakedA, stakedB, stakerA, stakerB, stakerC, stakerD, stakerE, stakerF] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        const staked = new Set([stakedA, stakedB])
+        const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
+        const resultantStakers = new Set([stakerD, stakerE, stakerF])
+        let active: bigint = 0n
+
+        for (const [i, staker] of stakers.entries()) {
+          const stakeAmount = amount * (BigInt(i) + 1n)
+          if (resultantStakers.has(staker)) active += stakeAmount
+          await mintAndApprove(token, staker, staking, stakeAmount)
+          const tx = await staking.connect(staker).addStake(stakedA, stakeAmount)
+          await expect(tx).to.emit(staking, 'StakeAdded')
+          expect(await staking.activeByStaker(staker)).to.equal(stakeAmount)
+        }
+        expect(await staking.active()).to.equal(active)
+        expect(await staking.activeByAddressStaked(stakedA)).to.equal(active)
+        expect(await staking.getStakeCountForAddress(stakedA)).to.equal(resultantStakers.size)
+      })
+    })
+  })
 })
