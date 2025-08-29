@@ -75,12 +75,13 @@ describe('AddressStakingV2.addStake', () => {
         expect(await staking.active()).to.equal(active)
         expect(await staking.activeByAddressStaked(staked)).to.equal(active)
         expect(await staking.getStakeCountForAddress(staked)).to.equal(resultantStakers.size)
+        await advanceBlocks(minWithdrawalBlocks * 10)
         for (const evictedStaker of evictedStakers) {
-          expect(await token.balanceOf(evictedStaker)).to.equal(0n)
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
-          await staking.connect(evictedStaker).removeStake(0)
           await advanceBlocks(minWithdrawalBlocks)
           await staking.connect(evictedStaker).withdrawStake(0)
+          const updatedBalance = await token.balanceOf(evictedStaker)
+          expect(updatedBalance).to.be.greaterThan(0n)
         }
       })
     })
@@ -149,13 +150,13 @@ describe('AddressStakingV2.addStake', () => {
           expect(await staking.activeByAddressStaked(addressStaked)).to.equal(activeByAddressStaked[addressStaked.address])
           expect(await staking.getStakeCountForAddress(addressStaked)).to.equal(resultantStakers.size)
         }
-        await advanceBlocks(await staking.minWithdrawalBlocks() * 10n)
+        await advanceBlocks(minWithdrawalBlocks * 10)
         for (const evictedStaker of evictedStakers) {
-          expect(await token.balanceOf(evictedStaker)).to.equal(0n)
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
-          await staking.connect(evictedStaker).removeStake(0)
           await advanceBlocks(minWithdrawalBlocks)
           await staking.connect(evictedStaker).withdrawStake(0)
+          const updatedBalance = await token.balanceOf(evictedStaker)
+          expect(updatedBalance).to.be.greaterThan(0n)
         }
         expect(await staking.active()).to.equal(active)
       })
