@@ -11,6 +11,15 @@ dotenv.config({ quiet:true })
 // eslint-disable-next-line import-x/no-internal-modules
 import type { HardhatUserConfig } from 'hardhat/config'
 
+const sepolia =
+  process.env.SEPOLIA_PRIVATE_KEY && process.env.SEPOLIA_RPC_URL
+    ? {
+        accounts: [process.env.SEPOLIA_PRIVATE_KEY],
+        chainId: 1115511,
+        url: process.env.SEPOLIA_RPC_URL,
+      }
+    : undefined;
+
 const config: HardhatUserConfig = {
   defaultNetwork: 'hardhat',
   networks:{
@@ -21,11 +30,6 @@ const config: HardhatUserConfig = {
     },
     hardhat: {
       chainId: 31337,
-    },
-    sepolia: {
-      accounts: process.env.SEPOLIA_PRIVATE_KEY ? [process.env.SEPOLIA_PRIVATE_KEY] : [],
-      chainId: 11155111,
-      url: process.env.SEPOLIA_RPC_URL || '',
     },
   },
   solidity: {
@@ -46,5 +50,7 @@ const config: HardhatUserConfig = {
     // alwaysGenerateOverloads: true, // optional
   },
 }
+
+if (sepolia && config.networks) config.networks.sepolia = sepolia
 
 export default config
