@@ -34,7 +34,7 @@ describe('AddressStakingV2.addStake', () => {
       it('should allow multiple stakers to add a stake', async () => {
         const [_, staked, stakerA, stakerB, stakerC] = await ethers.getSigners()
         const { staking, token } = await loadFixture(deployAddressStakingV2)
-        const stakers = [stakerA, stakerB, stakerC]
+        const stakers = new Set([stakerA, stakerB, stakerC])
         let totalStaked: bigint = 0n
         for (const staker of stakers) {
           totalStaked += amount
@@ -44,6 +44,7 @@ describe('AddressStakingV2.addStake', () => {
           expect(await staking.activeByStaker(staker)).to.equal(amount)
         }
         expect(await staking.activeByAddressStaked(staked)).to.equal(totalStaked)
+        expect(await staking.getStakeCountForAddress(staked)).to.equal(stakers.size)
       })
     })
     describe('more than the max number of stakers', () => {
@@ -63,6 +64,7 @@ describe('AddressStakingV2.addStake', () => {
           expect(await staking.activeByStaker(staker)).to.equal(stakeAmount)
         }
         expect(await staking.activeByAddressStaked(staked)).to.equal(resultantStake)
+        expect(await staking.getStakeCountForAddress(staked)).to.equal(resultantStakers.size)
       })
     })
   })
