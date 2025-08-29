@@ -18,7 +18,9 @@ describe('AddressStakingV2.withdrawStake', () => {
     } = await loadFixture(deployAddressStakingV2)
 
     await mintAndApprove(token, staker, staking, amount)
+    expect(await token.balanceOf(staker)).to.equal(amount)
     await staking.connect(staker).addStake(staker, amount)
+    expect(await token.balanceOf(staker)).to.equal(0)
     await staking.connect(staker).removeStake(0)
 
     // Mine required number of blocks
@@ -26,6 +28,7 @@ describe('AddressStakingV2.withdrawStake', () => {
 
     const tx = await staking.connect(staker).withdrawStake(0)
     await expect(tx).to.emit(staking, 'StakeWithdrawn')
+    expect(await token.balanceOf(staker)).to.equal(amount)
   })
   it('should revert if not enough blocks have passed', async () => {
     const [staker] = await ethers.getSigners()

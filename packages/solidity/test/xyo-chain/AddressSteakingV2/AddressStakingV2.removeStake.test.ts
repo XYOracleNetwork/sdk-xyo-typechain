@@ -9,7 +9,7 @@ const { ethers } = hre
 describe('AddressStakingV2.removeStake', () => {
   const amount = ethers.parseUnits('1000', 18)
 
-  it.only('should allow a staker to remove a stake', async () => {
+  it('should allow a staker to remove a stake', async () => {
     const [_, staker] = await ethers.getSigners()
     const { staking, token } = await loadFixture(deployAddressStakingV2)
 
