@@ -117,9 +117,7 @@ describe('AddressStakingV2.addStake', () => {
         const staked = new Set([stakedA, stakedB])
         const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
         const resultantStakers = new Set([stakerD, stakerE, stakerF])
-        const evictedStakers = new Set(
-          stakers.filter(staker => !resultantStakers.has(staker)),
-        )
+        const evictedStakers = new Set(stakers.filter(s => !resultantStakers.has(s)))
         let active: bigint = 0n
         const activeByStaker: Record<string, bigint> = Object.fromEntries(
           stakers.map(s => [s.address, 0n]),
@@ -127,6 +125,12 @@ describe('AddressStakingV2.addStake', () => {
         const activeByAddressStaked: Record<string, bigint> = Object.fromEntries(
           [...staked].map(s => [s.address, 0n]),
         )
+
+        // Used to track how much was returned to evicted stakers
+        const returnedToEvicted: Record<string, bigint> = Object.fromEntries(
+          [...evictedStakers].map(s => [s.address, 0n]),
+        )
+
         for (const addressStaked of staked) {
           for (const [i, staker] of stakers.entries()) {
             const stakeAmount = amount * (BigInt(i) + 1n)
@@ -137,15 +141,19 @@ describe('AddressStakingV2.addStake', () => {
               active += stakeAmount
               activeByStaker[staker.address] += stakeAmount
               activeByAddressStaked[addressStaked.address] += stakeAmount
+            } else {
+              returnedToEvicted[staker.address] += stakeAmount
             }
           }
-          expect(await staking.activeByAddressStaked(addressStaked)).to.equal(activeByAddressStaked[addressStaked.address])
+          expect(await staking.activeByAddressStaked(addressStaked)).to.equal(
+            activeByAddressStaked[addressStaked.address],
+          )
           expect(await staking.getStakeCountForAddress(addressStaked)).to.equal(resultantStakers.size)
         }
+        // Assert balances returned to evicted stakers
         for (const evictedStaker of evictedStakers) {
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
-          const updatedBalance = await token.balanceOf(evictedStaker)
-          expect(updatedBalance).to.be.greaterThan(0n)
+          expect(await token.balanceOf(evictedStaker)).to.equal(returnedToEvicted[evictedStaker.address])
         }
         expect(await staking.active()).to.equal(active)
       })
