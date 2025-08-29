@@ -4,6 +4,10 @@ import '@nomicfoundation/hardhat-verify'
 import '@typechain/hardhat'
 import 'solidity-coverage'
 
+import dotenv from 'dotenv'
+
+dotenv.config({ quiet:true })
+
 // eslint-disable-next-line import-x/no-internal-modules
 import type { HardhatUserConfig } from 'hardhat/config'
 
