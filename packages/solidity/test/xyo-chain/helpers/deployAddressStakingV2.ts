@@ -16,6 +16,6 @@ export const deployAddressStakingV2 = async (minWithdrawalBlocks = 3, maxStakers
   )
   await staking.waitForDeployment()
   return {
-    staking, token, minWithdrawalBlocks,
+    staking, token, minWithdrawalBlocks, maxStakersPerAddress,
   }
 }

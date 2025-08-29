@@ -2,7 +2,9 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import { expect } from 'chai'
 import hre from 'hardhat'
 
-import { deployAddressStakingV2, mintAndApprove } from '../helpers/index.js'
+import {
+  advanceBlocks, deployAddressStakingV2, mintAndApprove,
+} from '../helpers/index.js'
 
 const { ethers } = hre
 
@@ -52,7 +54,9 @@ describe('AddressStakingV2.addStake', () => {
     describe('more than the max number of stakers', () => {
       it('should allow more than the maximum number of stakers to add a stake', async () => {
         const [_, staked, stakerA, stakerB, stakerC, stakerD, stakerE, stakerF] = await ethers.getSigners()
-        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        const {
+          staking, token, minWithdrawalBlocks,
+        } = await loadFixture(deployAddressStakingV2)
         const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
         const resultantStakers = new Set([stakerD, stakerE, stakerF])
         const evictedStakers = new Set(
@@ -72,7 +76,11 @@ describe('AddressStakingV2.addStake', () => {
         expect(await staking.activeByAddressStaked(staked)).to.equal(active)
         expect(await staking.getStakeCountForAddress(staked)).to.equal(resultantStakers.size)
         for (const evictedStaker of evictedStakers) {
+          expect(await token.balanceOf(evictedStaker)).to.equal(0n)
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
+          await staking.connect(evictedStaker).removeStake(0)
+          await advanceBlocks(minWithdrawalBlocks)
+          await staking.connect(evictedStaker).withdrawStake(0)
         }
       })
     })
@@ -110,7 +118,9 @@ describe('AddressStakingV2.addStake', () => {
     describe('more than the max number of stakers', () => {
       it('should allow more than the maximum number of stakers to add a stake', async () => {
         const [_, stakedA, stakedB, stakerA, stakerB, stakerC, stakerD, stakerE, stakerF] = await ethers.getSigners()
-        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        const {
+          staking, token, minWithdrawalBlocks,
+        } = await loadFixture(deployAddressStakingV2)
         const staked = new Set([stakedA, stakedB])
         const stakers = [stakerA, stakerB, stakerC, stakerD, stakerE, stakerF]
         const resultantStakers = new Set([stakerD, stakerE, stakerF])
@@ -139,8 +149,13 @@ describe('AddressStakingV2.addStake', () => {
           expect(await staking.activeByAddressStaked(addressStaked)).to.equal(activeByAddressStaked[addressStaked.address])
           expect(await staking.getStakeCountForAddress(addressStaked)).to.equal(resultantStakers.size)
         }
+        await advanceBlocks(await staking.minWithdrawalBlocks() * 10n)
         for (const evictedStaker of evictedStakers) {
+          expect(await token.balanceOf(evictedStaker)).to.equal(0n)
           expect(await staking.activeByStaker(evictedStaker)).to.equal(0n)
+          await staking.connect(evictedStaker).removeStake(0)
+          await advanceBlocks(minWithdrawalBlocks)
+          await staking.connect(evictedStaker).withdrawStake(0)
         }
         expect(await staking.active()).to.equal(active)
       })
