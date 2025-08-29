@@ -3837,6 +3837,7 @@ __metadata:
     "@xylabs/ts-scripts-yarn3": "npm:~7.0.3"
     "@xylabs/tsconfig": "npm:~7.1.0"
     chai: "npm:~5.0.0"
+    dotenv: "npm:~17.2.1"
     ethers: "npm:~6.4.0"
     hardhat: "npm:~2.26.2"
     hardhat-gas-reporter: "npm:~2.3.0"
@@ -6363,6 +6364,13 @@ __metadata:
   dependencies:
     is-obj: "npm:^2.0.0"
   checksum: 10/1200a4f6f81151161b8526c37966d60738cf12619b0ed1f55be01bdb55790bf0a5cd1398b8f2c296dcc07d0a7c2dd0e650baf0b069c367e74bb5df2f6603aba0
+  languageName: node
+  linkType: hard
+
+"dotenv@npm:~17.2.1":
+  version: 17.2.1
+  resolution: "dotenv@npm:17.2.1"
+  checksum: 10/8fde672d1cc57f176095be8c93de1c5ea100ab38f2db183b50d522323fd9a6c07235e4145da624eec27fa310bb66d061aa8cb766f99e22ebe1e4a7ae78b5e56e
   languageName: node
   linkType: hard
 

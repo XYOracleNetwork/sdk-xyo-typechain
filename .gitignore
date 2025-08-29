@@ -15,4 +15,5 @@ lib
 .tsconfig*
 .eslintcache
 .deps
+.env*
 build-info

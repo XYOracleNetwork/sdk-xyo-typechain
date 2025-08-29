@@ -7,7 +7,7 @@ dist
 .deps
 build-info
 node_modules
-.env
+.env*
 
 # Hardhat files
 /cache
