@@ -16,7 +16,7 @@ const sepolia: NetworkUserConfig | undefined =
   process.env.SEPOLIA_PRIVATE_KEY && process.env.SEPOLIA_RPC_URL
     ? {
         accounts: [process.env.SEPOLIA_PRIVATE_KEY],
-        chainId: 1115511,
+        chainId: 11155111,
         url: process.env.SEPOLIA_RPC_URL,
       }
     : undefined;
