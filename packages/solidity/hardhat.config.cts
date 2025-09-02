@@ -21,6 +21,15 @@ const sepolia: NetworkUserConfig | undefined =
       }
     : undefined;
 
+const ethereum: NetworkUserConfig | undefined =
+  process.env.ETHEREUM_PRIVATE_KEY && process.env.ETHEREUM_RPC_URL
+    ? {
+        accounts: [process.env.ETHEREUM_PRIVATE_KEY],
+        chainId: 1,
+        url: process.env.ETHEREUM_RPC_URL,
+      }
+    : undefined;
+
 const config = {
   defaultNetwork: 'hardhat',
   networks:{
@@ -53,5 +62,6 @@ const config = {
 } satisfies HardhatUserConfig
 
 if (sepolia) config.networks.sepolia = sepolia
+if (ethereum) config.networks.ethereum = ethereum
 
 export default config
