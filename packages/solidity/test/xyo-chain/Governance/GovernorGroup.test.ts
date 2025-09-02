@@ -21,13 +21,15 @@ describe.only('GovernorGroup', () => {
     expect(await xl1Governance.isGovernor(subGovernorAddress)).to.equal(true)
 
     // Create new subGovernor to add
-    const { subGovernor: newSubGovernor } = await loadFixture(deploySingleAddressSubGovernor)
-    expect(await xl1Governance.isGovernor(await subGovernor.getAddress())).to.equal(true)
+    const fixture = () => deploySingleAddressSubGovernor('newSubGovernor')
+    const { subGovernor: newSubGovernor } = await loadFixture(fixture)
+    const newSubGovernorAddress = await newSubGovernor.getAddress()
+    expect(newSubGovernorAddress).to.not.equal(subGovernorAddress)
 
     // Create proposal to add new subGovernor
     const {
       proposalId: parentProposalId, targets, values, calldatas, descriptionHash,
-    } = await proposeToCallSmartContract(xl1Governance, 'addGovernor', [await newSubGovernor.getAddress()], subGovernor, proposer)
+    } = await proposeToCallSmartContract(xl1Governance, 'addGovernor', [newSubGovernorAddress], xl1Governance, proposer)
 
     // Cast vote via subGovernor
     await voteThroughSubGovernor({
