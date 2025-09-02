@@ -68,6 +68,9 @@ describe.only('GovernorGroup', () => {
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
 
+    // Verify the subGovernor has not yet voted
+    expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(true)
+
     // Queue and execute the proposal
     await xl1Governance.execute(targets, values, calldatas, descriptionHash)
 
