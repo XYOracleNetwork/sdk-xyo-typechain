@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2020",                       // good for Node 14+ (Hardhat 2 requires >=12)
+    "target": "es2022",                       // good for Node 14+ (Hardhat 2 requires >=12)
     "module": "commonjs",                     // Hardhat plugins expect CommonJS
     "strict": true,                           // enable strict type checking
     "esModuleInterop": true,                  // allow `import foo from 'foo'`

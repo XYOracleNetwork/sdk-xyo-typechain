@@ -34,8 +34,10 @@
     "!artifacts/**/*.dbg.json"
   ],
   "scripts": {
+    "deploy-ethereum": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network ethereum",
     "deploy-hardhat": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network hardhat",
     "deploy-local": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network local",
+    "deploy-sepolia": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network sepolia",
     "dev": "hardhat node",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
@@ -43,7 +45,9 @@
     "package-coverage": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true hardhat coverage --solcoverjs ./.solcover.json",
     "package-lint": "echo Skipping lint...",
     "package-recompile": "yarn package-clean && yarn package-compile",
-    "package-test": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' hardhat test"
+    "package-test": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' hardhat test",
+    "verify-ethereum": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition verify chain-1 --network ethereum",
+    "verify-sepolia": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition verify chain-11155111 --network sepolia"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-chai-matchers": "^2.1.0",
@@ -64,7 +68,7 @@
     "@xylabs/tsconfig": "~7.1.0",
     "chai": "~5.0.0",
     "dotenv": "~17.2.1",
-    "ethers": "~6.4.0",
+    "ethers": "~6.15.0",
     "hardhat": "~2.26.2",
     "hardhat-gas-reporter": "~2.3.0",
     "rimraf": "~6.0.1",

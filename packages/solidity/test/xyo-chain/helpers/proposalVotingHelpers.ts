@@ -3,6 +3,7 @@ import { expect } from 'chai'
 
 import type { IGovernor } from '../../../typechain-types'
 import { advanceBlocks } from './evmHelpers.js'
+import type { Proposal } from './proposalHelpers.js'
 import {
   ProposalState, ProposalVote, proposeToCallSmartContract,
 } from './proposalHelpers.js'
@@ -41,6 +42,51 @@ export const voteThroughSubGovernor = async (args: VoteThroughSubGovernorArgs) =
     subVoteProposal.calldatas,
     subVoteProposal.descriptionHash,
   )
+}
+
+export interface VoteThroughSubGovernorsArgs {
+  parentGovernor: IGovernor
+  parentProposalId: bigint
+  proposer: HardhatEthersSigner
+  subGovernors: IGovernor[]
+  voteType: VoteType
+}
+
+export const voteThroughSubGovernors = async ({
+  parentGovernor,
+  parentProposalId,
+  proposer,
+  subGovernors,
+  voteType,
+}: VoteThroughSubGovernorsArgs) => {
+  const proposals: Proposal[] = []
+  for (const subGovernor of subGovernors) {
+    const subVoteProposal = await proposeToCallSmartContract(
+      parentGovernor,
+      'castVote',
+      [parentProposalId, ProposalVote[voteType]],
+      subGovernor,
+      proposer,
+    )
+    proposals.push(subVoteProposal)
+  }
+
+  await advanceBlocks(await subGovernors.at(0)?.votingDelay() ?? 0n + 1n)
+  for (const [i, subGovernor] of subGovernors.entries()) {
+    const subVoteProposal = proposals[i]
+    await subGovernor.castVote(subVoteProposal.proposalId, ProposalVote.For)
+  }
+  await advanceBlocks(await subGovernors.at(0)?.votingPeriod() ?? 0n + 1n)
+  for (const [i, subGovernor] of subGovernors.entries()) {
+    const subVoteProposal = proposals[i]
+    expect(await subGovernor.state(subVoteProposal.proposalId)).to.equal(ProposalState.Succeeded)
+    await subGovernor.execute(
+      subVoteProposal.targets,
+      subVoteProposal.values,
+      subVoteProposal.calldatas,
+      subVoteProposal.descriptionHash,
+    )
+  }
 }
 
 export const voteAndFinalizeProposal = async (

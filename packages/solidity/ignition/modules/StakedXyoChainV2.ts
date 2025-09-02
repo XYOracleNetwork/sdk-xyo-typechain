@@ -13,7 +13,7 @@ import {
 export const createStakedXyoChainV2Module
   = (
     rewardsContract: ContractFuture<'XyoChainRewards'>,
-    token: ContractFuture<'BridgeableToken'>,
+    token: string,
   ) =>
     (m: IgnitionModuleBuilder) => {
       const forkFromChainId = m.getParameter('forkFromChainId', '0x0000000000000000000000000000000000000000')

@@ -31,6 +31,27 @@
         "TS_NODE_PROJECT": "./tsconfig.json"
       },
       "skipFiles": ["<node_internals>/**"]
+    },
+        {
+      "type": "node",
+      "request": "launch",
+      "name": "Debug Check Deploment",
+      "cwd": "${workspaceFolder}/packages/solidity",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--loader",
+        "ts-node/esm/transpile-only",
+        "--no-warnings=ExperimentalWarning",
+        "./node_modules/.bin/hardhat",
+        "run",
+        "scripts/CheckDeployment.ts",
+        "--network",
+        "sepolia",
+      ],
+      "env": {
+        "TS_NODE_PROJECT": "./tsconfig.json"
+      },
+      "skipFiles": ["<node_internals>/**"]
     }
   ]
 }
