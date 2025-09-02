@@ -64,7 +64,7 @@
     "@xylabs/tsconfig": "~7.1.0",
     "chai": "~5.0.0",
     "dotenv": "~17.2.1",
-    "ethers": "~6.4.0",
+    "ethers": "~6.15.0",
     "hardhat": "~2.26.2",
     "hardhat-gas-reporter": "~2.3.0",
     "rimraf": "~6.0.1",
