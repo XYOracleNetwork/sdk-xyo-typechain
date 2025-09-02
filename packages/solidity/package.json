@@ -30,10 +30,10 @@
     "typechain-types/"
   ],
   "scripts": {
-    "deploy-ethereum": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network ethereum",
-    "deploy-hardhat": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network hardhat",
-    "deploy-local": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network local",
-    "deploy-sepolia": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network sepolia",
+    "deploy-ethereum": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network ethereum --parameters ./ignition/params.sepolia.json",
+    "deploy-hardhat": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network hardhat --parameters ./ignition/params.hardhat.json",
+    "deploy-local": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network local --parameters ./ignition/params.local.json",
+    "deploy-sepolia": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network sepolia --parameters ./ignition/params.sepolia.json",
     "dev": "hardhat node",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
