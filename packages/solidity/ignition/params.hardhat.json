@@ -7,5 +7,10 @@
     "name": "Single Address Governor",
     "votingDelay": 1,
     "votingPeriod": 5
+  },
+  "XL1Governance": {
+    "name": "XL1 Governance",
+    "votingDelay": 1,
+    "votingPeriod": 10
   }
 }
