@@ -31,6 +31,9 @@ const ethereum: NetworkUserConfig | undefined =
     : undefined;
 
 const config = {
+  etherscan: {
+    apiKey: process.env.ETHERSCAN_API_KEY,
+  },
   defaultNetwork: 'hardhat',
   networks:{
     local: {
