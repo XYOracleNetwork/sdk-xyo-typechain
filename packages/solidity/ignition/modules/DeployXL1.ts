@@ -11,7 +11,9 @@ export default buildModule('DeployXL1', (m) => {
   const { subGovernor } = m.useModule(SingleAddressSubGovernorModule)
   const { xl1Governance } = m.useModule(createXL1GovernanceModule(subGovernor))
   const { rewards } = createXyoChainRewardsModule(m)
-  const { chain } = createStakedXyoChainV2Module(rewards, token)(m)
+  const stakingTokenAddress = process.env.STAKING_TOKEN_ADDRESS ?? ''
+  const { chain } = createStakedXyoChainV2Module(rewards, stakingTokenAddress)(m)
+  m.call(token, 'transferOwnership', [xl1Governance])
   return {
     chain, subGovernor, token, xl1Governance,
   }
