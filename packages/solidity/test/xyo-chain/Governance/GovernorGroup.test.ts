@@ -10,7 +10,7 @@ import {
 
 const { ethers } = hre
 
-describe.only('GovernorGroup', () => {
+describe('GovernorGroup', () => {
   it('should allow adding governors', async () => {
     const [_, proposer] = await ethers.getSigners()
     const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
