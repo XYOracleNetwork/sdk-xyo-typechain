@@ -27,13 +27,22 @@ export const ProposalVote = {
   Abstain: 2n,
 } satisfies Readonly<Record<string, bigint>>
 
+export interface Proposal {
+  calldatas: string[]
+  description: string
+  descriptionHash: string
+  proposalId: bigint
+  targets: string[]
+  values: number[]
+}
+
 export const proposeToCallSmartContract = async (
   contract: BaseContract,
   method: string,
   args: ReadonlyArray<unknown>,
   governor: IGovernor,
   proposer: HardhatEthersSigner,
-) => {
+): Promise<Proposal> => {
   // Encode call to contract from the governance contract
   const functionData = contract.interface.encodeFunctionData(method, args)
   const contractAddress = await contract.getAddress()
