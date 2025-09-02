@@ -5,7 +5,7 @@
   },
   "SingleAddressSubGovernor": {
     "name": "Single Address Governor",
-    "votingDelay": 1,
-    "votingPeriod": 50
+    "votingDelay": 7200,
+    "votingPeriod": 50400
   }
 }

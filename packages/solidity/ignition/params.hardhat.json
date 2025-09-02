@@ -7,11 +7,5 @@
     "name": "Single Address Governor",
     "votingDelay": 1,
     "votingPeriod": 5
-  },
-  "X": {
-    "minWithdrawalBlocks": 1,
-    "stakingRewardBps": 1,
-    "maxSupply": 1,
-    "networkStakingAddress": 1
   }
 }
