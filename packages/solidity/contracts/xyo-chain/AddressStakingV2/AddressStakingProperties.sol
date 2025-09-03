@@ -49,6 +49,10 @@ abstract contract AddressStakingProperties is
         return _totalActiveStake;
     }
 
+    function minStake() external view returns (uint256) {
+        return _minStake;
+    }
+
     function pending() external view returns (uint256) {
         return _totalPendingStake;
     }

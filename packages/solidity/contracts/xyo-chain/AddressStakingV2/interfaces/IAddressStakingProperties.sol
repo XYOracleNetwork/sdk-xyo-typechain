@@ -8,6 +8,8 @@ interface IAddressStakingProperties {
     // ============ Volatile [Overall] ============
     function active() external view returns (uint256);
 
+    function minStake() external view returns (uint256);
+
     function pending() external view returns (uint256);
 
     function slashed() external view returns (uint256);
