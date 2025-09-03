@@ -3,6 +3,10 @@
     "tokenName": "Bridgeable Token Name",
     "tokenSymbol": "TEST"
   },
+  "DeployXL1": {
+    "bridgeTreasuryAddress": "0x1969196919691969196919691969196919691969",
+    "bridgeTreasuryAmount": "18000000000000000000000000000n"
+  },
   "SingleAddressSubGovernor": {
     "name": "Single Address SubGovernor",
     "votingDelay": 1,
