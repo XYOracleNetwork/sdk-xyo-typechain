@@ -1,0 +1,35 @@
+{
+  "BridgeableToken": {
+    "tokenName": "Bridgeable Token Name",
+    "tokenSymbol": "TEST"
+  },
+  "SingleAddressSubGovernor": {
+    "name": "Single Address SubGovernor",
+    "votingDelay": 1,
+    "votingPeriod": 5
+  },
+  "StakedXyoChainV2": {
+    "forkFromChainId": "0x0000000000000000000000000000000000000000",
+    "forkFromLastBlockNumber": 0,
+    "forkFromLastHash": 0,
+    "maxStakersPerAddress": 10,
+    "minStake": 1,
+    "minWithdrawalBlocks": 1,
+    "networkStakingAddress": "0x1969196919691969196919691969196919691969",
+    "stakingTokenAddress": "0x3E67484D61ea5A8963F2AC8a659848c86caBaC9a"
+  },
+  "XL1Governance": {
+    "name": "XL1 Governance",
+    "votingDelay": 1,
+    "votingPeriod": 10
+  },
+  "XyoChainRewards": {
+    "floorPlaces": 1,
+    "genesisReward": 5000,
+    "initialReward": 1000,
+    "minRewardPerBlock": 100,
+    "stepFactorDenominator": 10,
+    "stepFactorNumerator": 9,
+    "stepSize": 100
+  }
+}
