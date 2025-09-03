@@ -20,16 +20,18 @@ async function main() {
   const stakingTokenAddress = await stakedXyoChainV2.stakingTokenAddress()
   console.log('Staking Token Address:', stakingTokenAddress)
   const token = await hre.ethers.getContractAt('BridgeableToken', deployments['BridgeableToken#BridgeableToken'], signer)
-  console.log('Bridgeable Token Address:', await token.getAddress())
+  console.log('BridgeableToken Address:', await token.getAddress())
   const tokenOwner = await token.owner()
-  console.log('BridgeableToken Token Owner Address:', tokenOwner)
-  const balance = await token.balanceOf('0x1969196919691969196919691969196919691969')
+  console.log('BridgeableToken Owner Address:', tokenOwner)
+  const bridgeableTokenTreasuryAddress = '0x1969196919691969196919691969196919691969'
+  console.log('BridgeableToken Treasury Address:', bridgeableTokenTreasuryAddress)
+  const balance = await token.balanceOf(bridgeableTokenTreasuryAddress)
   const decimals = await token.decimals()
   const normalizedBalance = hre.ethers.formatUnits(balance, decimals)
-  console.log('Treasury Balance:', normalizedBalance)
+  console.log('BridgeableToken Treasury Balance:', normalizedBalance)
   const totalSupply = await token.totalSupply()
   const normalizedTotalSupply = hre.ethers.formatUnits(totalSupply, decimals)
-  console.log('Total Supply:', normalizedTotalSupply)
+  console.log('BridgeableToken Total Supply:', normalizedTotalSupply)
 }
 
 main().catch(console.error)
