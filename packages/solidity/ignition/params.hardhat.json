@@ -11,7 +11,7 @@
   "StakedXyoChainV2": {
     "forkFromChainId": "0x0000000000000000000000000000000000000000",
     "forkFromLastBlockNumber": 0,
-    "forkFromLastHash": 0,
+    "forkFromLastHash": "113941745558234458747379102073260273734136420295792696568102548073617922391740n",
     "maxStakersPerAddress": 10,
     "minStake": 1,
     "minWithdrawalBlocks": 1,
