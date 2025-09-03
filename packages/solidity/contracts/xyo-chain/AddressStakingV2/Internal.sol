@@ -257,6 +257,11 @@ abstract contract AddressStakingInternal is
             AddressStakingLibrary.Stake storage stake = _allStakes[stakeIds[i]];
             uint256 slashedAmount = (stake.amount * slashRatio) / 100000;
             stake.amount -= slashedAmount;
+
+            // reduce counters
+            _stakeAmountByAddressStaked[stake.staked] -= amount;
+            _stakeAmountByStaker[stake.staker] -= amount;
+
             if (stake.removeBlock != 0) {
                 _totalPendingStake -= slashedAmount;
                 totalSlashedAmountPending += slashedAmount;

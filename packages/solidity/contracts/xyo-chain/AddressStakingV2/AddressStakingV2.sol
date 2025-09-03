@@ -89,6 +89,10 @@ contract AddressStakingV2 is
         return _getStake(staker, slot);
     }
 
+    function getStakedAddresses() external view returns (address[] memory) {
+        return _stakedAddresses;
+    }
+
     function getStakeById(
         uint256 id
     ) public view returns (AddressStakingLibrary.Stake memory) {
