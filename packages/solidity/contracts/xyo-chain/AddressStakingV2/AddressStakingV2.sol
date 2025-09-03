@@ -35,7 +35,7 @@ contract AddressStakingV2 is
     // ========== PUBLIC ==========
 
     function addStake(address staked, uint256 amount) public returns (bool) {
-        return _addStake(staked, amount, this.minWithdrawalBlocks());
+        return _addStake(staked, amount, __minWithdrawalBlocks);
     }
 
     function removeStake(uint256 id) public returns (bool) {
@@ -56,14 +56,14 @@ contract AddressStakingV2 is
             _getStakeById(id).staker == msg.sender,
             "Staking: stake not owned by caller"
         );
-        return _withdrawStake(id, this.minWithdrawalBlocks());
+        return _withdrawStake(id, __minWithdrawalBlocks);
     }
 
     function slashStake(
         address stakedAddress,
         uint256 amount
     ) public onlyOwner returns (uint256) {
-        return _slashStake(stakedAddress, amount, this.minWithdrawalBlocks());
+        return _slashStake(stakedAddress, amount, __minWithdrawalBlocks);
     }
 
     function stakedAddressesWithMinStake()
