@@ -4,7 +4,7 @@
     "tokenSymbol": "TEST"
   },
   "SingleAddressSubGovernor": {
-    "name": "Single Address Governor",
+    "name": "Single Address SubGovernor",
     "votingDelay": 7200,
     "votingPeriod": 50400
   },
