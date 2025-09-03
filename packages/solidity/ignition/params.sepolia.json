@@ -8,6 +8,15 @@
     "votingDelay": 1,
     "votingPeriod": 50
   },
+  "StakedXyoChainV2": {
+    "forkFromChainId": "0x0000000000000000000000000000000000000000",
+    "forkFromLastBlockNumber": 0,
+    "forkFromLastHash": 0,
+    "maxStakersPerAddress": 10,
+    "minStake": 1,
+    "minWithdrawalBlocks": 1,
+    "networkStakingAddress": "0x1969196919691969196919691969196919691969"
+  },
   "XL1Governance": {
     "name": "XL1 Governance",
     "votingDelay": 1,
