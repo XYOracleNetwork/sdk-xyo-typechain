@@ -32,6 +32,8 @@ async function main() {
   console.log('Stake By ID:', stakeById)
   const activeByStaker = await stakedXyoChainV2.activeByStaker(signer.address)
   console.log('Active By Staker:', activeByStaker)
+  const activeByAddressStaked = await stakedXyoChainV2.activeByAddressStaked(signer.address)
+  console.log('Active By Address Staked:', activeByAddressStaked)
   const stake = await stakedXyoChainV2.getStake(signer.address, 0)
   console.log('Stake:', stake)
 }
