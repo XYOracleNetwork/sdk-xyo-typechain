@@ -259,8 +259,10 @@ abstract contract AddressStakingInternal is
             stake.amount -= slashedAmount;
 
             // reduce counters
-            _stakeAmountByAddressStaked[stake.staked] -= amount;
-            _stakeAmountByStaker[stake.staker] -= amount;
+            if (stake.removeBlock == 0) {
+                //_stakeAmountByStaker is only active stake, so only reduce it if not yet removed
+                _stakeAmountByStaker[stake.staker] -= slashedAmount;
+            }
 
             if (stake.removeBlock != 0) {
                 _totalPendingStake -= slashedAmount;
