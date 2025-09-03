@@ -15,7 +15,8 @@
     "maxStakersPerAddress": 10,
     "minStake": 1,
     "minWithdrawalBlocks": 1,
-    "networkStakingAddress": "0x1969196919691969196919691969196919691969"
+    "networkStakingAddress": "0x1969196919691969196919691969196919691969",
+    "stakingTokenAddress": "0x3E67484D61ea5A8963F2AC8a659848c86caBaC9a"
   },
   "XL1Governance": {
     "name": "XL1 Governance",
