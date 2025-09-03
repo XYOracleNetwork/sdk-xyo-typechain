@@ -21,5 +21,14 @@
     "name": "XL1 Governance",
     "votingDelay": 1,
     "votingPeriod": 100
+  },
+  "XyoChainRewards": {
+    "floorPlaces": 1,
+    "genesisReward": 5000,
+    "initialReward": 1000,
+    "minRewardPerBlock": 100,
+    "stepFactorDenominator": 10,
+    "stepFactorNumerator": 9,
+    "stepSize": 100
   }
 }
