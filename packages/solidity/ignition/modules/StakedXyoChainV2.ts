@@ -13,11 +13,11 @@ export const createStakedXyoChainV2Module
       const forkFromChainId = m.getParameter('forkFromChainId')
       const forkFromLastBlockNumber = m.getParameter('forkFromLastBlockNumber')
       const forkFromLastHash = m.getParameter('forkFromLastHash')
-      const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks')
       const maxStakersPerAddress = m.getParameter('maxStakersPerAddress')
-      const unlimitedStakerAddress = m.getParameter('networkStakingAddress')
       const minStake = m.getParameter('minStake')
+      const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks')
       const stakingTokenAddress = m.getParameter('stakingTokenAddress')
+      const unlimitedStakerAddress = m.getParameter('networkStakingAddress')
 
       const chain = m.contract('StakedXyoChainV2', [
         forkFromChainId,
