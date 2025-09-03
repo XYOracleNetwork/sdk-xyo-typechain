@@ -1,7 +1,7 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "juanblanco.solidity",
+    "nomicfoundation.hardhat-solidity",
     "kravets.vscode-publint"
   ]
 }
