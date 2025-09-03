@@ -14,18 +14,26 @@ async function main() {
   const [signer] = await hre.ethers.getSigners()
   const address = signer.address
   console.log('Signer Address:', address)
-  const xl1Governance = await hre.ethers.getContractAt('XL1Governance', deployments['XL1Governance#XL1Governance'], signer)
-  const xl1GovernanceAddress = await xl1Governance.getAddress()
-  console.log('XL1 Governance Address:', xl1GovernanceAddress)
-  const token = await hre.ethers.getContractAt('BridgeableToken', deployments['BridgeableToken#BridgeableToken'], signer)
-  const tokenOwner = await token.owner()
-  console.log('Token Owner Address:', tokenOwner)
+
   const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['StakedXyoChainV2#StakedXyoChainV2'], signer)
   const stakingTokenAddress = await stakedXyoChainV2.stakingTokenAddress()
   console.log('Staking Token Address:', stakingTokenAddress)
+  const stakeAmount = hre.ethers.parseUnits('4', 18)
 
-  const stakedAmount = await stakedXyoChainV2.connect(signer).getStake(signer, 0)
-  console.log(`Staked Amount: ${stakedAmount}`)
+  const erc20 = await hre.ethers.getContractAt('IERC20', stakingTokenAddress, signer)
+  await erc20.approve(await stakedXyoChainV2.getAddress(), stakeAmount)
+
+  const balance = await erc20.balanceOf(signer.address)
+  const allowance = await erc20.allowance(signer.address, await stakedXyoChainV2.getAddress())
+  console.log('Token Balance:', balance.toString())
+  console.log('Allowance:', allowance.toString())
+
+  const stakeById = await stakedXyoChainV2.getStakeById(0)
+  console.log('Stake By ID:', stakeById)
+  const activeByStaker = await stakedXyoChainV2.activeByStaker(signer.address)
+  console.log('Active By Staker:', activeByStaker)
+  const stake = await stakedXyoChainV2.getStake(signer.address, 0)
+  console.log('Stake:', stake)
 }
 
 main().catch(console.error)

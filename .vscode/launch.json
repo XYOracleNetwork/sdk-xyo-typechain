@@ -35,7 +35,7 @@
         {
       "type": "node",
       "request": "launch",
-      "name": "Debug Check Deploment",
+      "name": "Debug Script",
       "cwd": "${workspaceFolder}/packages/solidity",
       "runtimeExecutable": "node",
       "runtimeArgs": [
@@ -44,7 +44,7 @@
         "--no-warnings=ExperimentalWarning",
         "./node_modules/.bin/hardhat",
         "run",
-        "scripts/CheckDeployment.ts",
+        "scripts/CheckStake.ts",
         "--network",
         "sepolia",
       ],
