@@ -12,20 +12,26 @@ async function main() {
   const deployments = JSON.parse(readFileSync(deploymentFile, 'utf8'))
 
   const [signer] = await hre.ethers.getSigners()
-  const address = signer.address
-  console.log('Signer Address:', address)
+  console.log('Signer Address:', signer.address)
   const xl1Governance = await hre.ethers.getContractAt('XL1Governance', deployments['XL1Governance#XL1Governance'], signer)
-  const xl1GovernanceAddress = await xl1Governance.getAddress()
-  console.log('XL1 Governance Address:', xl1GovernanceAddress)
-  const token = await hre.ethers.getContractAt('BridgeableToken', deployments['BridgeableToken#BridgeableToken'], signer)
-  const tokenOwner = await token.owner()
-  console.log('Token Owner Address:', tokenOwner)
+  console.log('XL1 Governance Address:', await xl1Governance.getAddress())
   const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['StakedXyoChainV2#StakedXyoChainV2'], signer)
+  console.log('Staked XYO Chain V2 Address:', await stakedXyoChainV2.getAddress())
   const stakingTokenAddress = await stakedXyoChainV2.stakingTokenAddress()
   console.log('Staking Token Address:', stakingTokenAddress)
-
-  const stakedAmount = await stakedXyoChainV2.connect(signer).getStake(signer, 0)
-  console.log(`Staked Amount: ${stakedAmount}`)
+  const token = await hre.ethers.getContractAt('BridgeableToken', deployments['BridgeableToken#BridgeableToken'], signer)
+  console.log('BridgeableToken Address:', await token.getAddress())
+  const tokenOwner = await token.owner()
+  console.log('BridgeableToken Owner Address:', tokenOwner)
+  const bridgeableTokenTreasuryAddress = '0x1969196919691969196919691969196919691969'
+  console.log('BridgeableToken Treasury Address:', bridgeableTokenTreasuryAddress)
+  const balance = await token.balanceOf(bridgeableTokenTreasuryAddress)
+  const decimals = await token.decimals()
+  const normalizedBalance = hre.ethers.formatUnits(balance, decimals)
+  console.log('BridgeableToken Treasury Balance:', normalizedBalance)
+  const totalSupply = await token.totalSupply()
+  const normalizedTotalSupply = hre.ethers.formatUnits(totalSupply, decimals)
+  console.log('BridgeableToken Total Supply:', normalizedTotalSupply)
 }
 
 main().catch(console.error)
