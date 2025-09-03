@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/solidity",
-  "version": "4.0.2",
+  "version": "4.0.6",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -21,13 +21,17 @@
     ".": {
       "import": "./typechain-types/index.ts"
     },
+    "./artifacts/*": "./artifacts/*",
+    "./contracts/*": "./contracts/*",
+    "./typechain-types/*": "./typechain-types/*",
     "./package.json": "./package.json",
     "./README.md": "./README.md"
   },
   "files": [
-    "contracts/",
-    "artifacts/contracts/",
-    "typechain-types/"
+    "contracts/**/*",
+    "artifacts/**/*.json",
+    "typechain-types/**/*",
+    "!artifacts/**/*.dbg.json"
   ],
   "scripts": {
     "deploy-ethereum": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network ethereum --parameters ./ignition/params.ethereum.json",
