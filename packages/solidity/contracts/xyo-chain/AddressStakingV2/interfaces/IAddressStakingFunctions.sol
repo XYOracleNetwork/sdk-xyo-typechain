@@ -33,6 +33,8 @@ interface IAddressStakingFunctions {
         uint256 id
     ) external view returns (AddressStakingLibrary.Stake memory);
 
+    function getStakedAddresses() external view returns (address[] memory);
+
     function stakedAddressesWithMinStake()
         external
         view

@@ -9,7 +9,7 @@ abstract contract AddressStakingProperties is
     IAddressStakingProperties,
     AddressStakingInternal
 {
-    uint256 private __minWithdrawalBlocks;
+    uint256 internal __minWithdrawalBlocks;
 
     constructor(
         uint256 _minWithdrawalBlocks // The minimum number of blocks that must pass before a pending stake can be withdrawn
@@ -47,6 +47,10 @@ abstract contract AddressStakingProperties is
 
     function active() external view returns (uint256) {
         return _totalActiveStake;
+    }
+
+    function minStake() external view returns (uint256) {
+        return _minStake;
     }
 
     function pending() external view returns (uint256) {

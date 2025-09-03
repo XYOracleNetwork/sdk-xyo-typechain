@@ -1,28 +1,23 @@
-import type { ContractFuture, IgnitionModuleBuilder } from '@nomicfoundation/ignition-core'
-
 import {
-  DEFAULT_MAX_STAKERS_PER_ADDRESS,
-  DEFAULT_MIN_VOTING_STAKE,
-  DEFAULT_MIN_WITHDRAWAL_BLOCKS,
-  DEFAULT_NETWORK_STAKING_ADDRESS,
-} from './ContractDefaults'
+  buildModule, type ContractFuture, type IgnitionModuleBuilder,
+} from '@nomicfoundation/ignition-core'
 
 /**
- * Returns a function that builds the StakedXyoChainV2 contract with injected token and rewards.
+ * Returns a function that builds the StakedXyoChainV2 contract with injected rewards contract address.
  */
 export const createStakedXyoChainV2Module
   = (
     rewardsContract: ContractFuture<'XyoChainRewards'>,
-    token: string,
-  ) =>
-    (m: IgnitionModuleBuilder) => {
-      const forkFromChainId = m.getParameter('forkFromChainId', '0x0000000000000000000000000000000000000000')
-      const forkFromLastBlockNumber = m.getParameter('forkFromLastBlockNumber', 0n)
-      const forkFromLastHash = m.getParameter('forkFromLastHash', 0n)
-      const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks', DEFAULT_MIN_WITHDRAWAL_BLOCKS)
-      const maxStakersPerAddress = m.getParameter('maxStakersPerAddress', DEFAULT_MAX_STAKERS_PER_ADDRESS)
-      const unlimitedStakerAddress = m.getParameter('networkStakingAddress', DEFAULT_NETWORK_STAKING_ADDRESS)
-      const minStake = m.getParameter('minStake', DEFAULT_MIN_VOTING_STAKE)
+  ) => {
+    return buildModule('StakedXyoChainV2', (m: IgnitionModuleBuilder) => {
+      const forkFromChainId = m.getParameter('forkFromChainId')
+      const forkFromLastBlockNumber = m.getParameter('forkFromLastBlockNumber')
+      const forkFromLastHash = m.getParameter('forkFromLastHash')
+      const maxStakersPerAddress = m.getParameter('maxStakersPerAddress')
+      const minStake = m.getParameter('minStake')
+      const minWithdrawalBlocks = m.getParameter('minWithdrawalBlocks')
+      const stakingTokenAddress = m.getParameter('stakingTokenAddress')
+      const unlimitedStakerAddress = m.getParameter('networkStakingAddress')
 
       const chain = m.contract('StakedXyoChainV2', [
         forkFromChainId,
@@ -30,11 +25,12 @@ export const createStakedXyoChainV2Module
         forkFromLastHash,
         rewardsContract,
         minWithdrawalBlocks,
-        token,
+        stakingTokenAddress,
         maxStakersPerAddress,
         unlimitedStakerAddress,
         minStake,
       ])
 
       return { chain }
-    }
+    })
+  }
