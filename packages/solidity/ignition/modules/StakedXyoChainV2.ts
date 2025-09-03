@@ -1,4 +1,6 @@
-import type { ContractFuture, IgnitionModuleBuilder } from '@nomicfoundation/ignition-core'
+import {
+  buildModule, type ContractFuture, type IgnitionModuleBuilder,
+} from '@nomicfoundation/ignition-core'
 
 import {
   DEFAULT_MAX_STAKERS_PER_ADDRESS,
@@ -14,8 +16,8 @@ export const createStakedXyoChainV2Module
   = (
     rewardsContract: ContractFuture<'XyoChainRewards'>,
     token: string,
-  ) =>
-    (m: IgnitionModuleBuilder) => {
+  ) => {
+    return buildModule('StakedXyoChainV2', (m: IgnitionModuleBuilder) => {
       const forkFromChainId = m.getParameter('forkFromChainId', '0x0000000000000000000000000000000000000000')
       const forkFromLastBlockNumber = m.getParameter('forkFromLastBlockNumber', 0n)
       const forkFromLastHash = m.getParameter('forkFromLastHash', 0n)
@@ -37,4 +39,5 @@ export const createStakedXyoChainV2Module
       ])
 
       return { chain }
-    }
+    })
+  }
