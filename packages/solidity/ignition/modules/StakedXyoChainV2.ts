@@ -3,7 +3,7 @@ import {
 } from '@nomicfoundation/ignition-core'
 
 /**
- * Returns a function that builds the StakedXyoChainV2 contract with injected token and rewards.
+ * Returns a function that builds the StakedXyoChainV2 contract with injected rewards contract address.
  */
 export const createStakedXyoChainV2Module
   = (
