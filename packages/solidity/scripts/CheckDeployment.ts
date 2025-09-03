@@ -20,9 +20,12 @@ async function main() {
   const token = await hre.ethers.getContractAt('BridgeableToken', deployments['BridgeableToken#BridgeableToken'], signer)
   const tokenOwner = await token.owner()
   console.log('Token Owner Address:', tokenOwner)
-  const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['DeployXL1#StakedXyoChainV2'], signer)
+  const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['StakedXyoChainV2#StakedXyoChainV2'], signer)
   const stakingTokenAddress = await stakedXyoChainV2.stakingTokenAddress()
   console.log('Staking Token Address:', stakingTokenAddress)
+
+  const stakedAmount = await stakedXyoChainV2.connect(signer).getStake(signer, 0)
+  console.log(`Staked Amount: ${stakedAmount}`)
 }
 
 main().catch(console.error)
