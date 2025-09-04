@@ -19,11 +19,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
+      expect(count).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
     it('should not show address when address does not have enough staked', async () => {
@@ -37,11 +39,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.lessThan(minStake)
       expect(addresses.length).to.equal(0)
+      expect(count).to.equal(0)
     })
   })
   describe('with multiple stakers', () => {
@@ -59,11 +63,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
+      expect(count).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
     it('should not show address when address does not have enough staked', async () => {
@@ -80,11 +86,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.lessThan(minStake)
       expect(addresses.length).to.equal(0)
+      expect(count).to.equal(0)
     })
   })
   describe('with removed stake', () => {
@@ -101,11 +109,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
+      expect(count).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
     it('should not show address when address does not have enough staked', async () => {
@@ -122,11 +132,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.lessThan(minStake)
       expect(addresses.length).to.equal(0)
+      expect(count).to.equal(0)
     })
   })
   describe('with slashed stake', () => {
@@ -143,11 +155,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
+      expect(count).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
     it('should not show address when address does not have enough staked', async () => {
@@ -164,11 +178,13 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Act
       const addresses = await staking.stakedAddressesWithMinStake()
+      const count = await staking.stakedAddressesWithMinStakeCount()
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
       expect(active).to.be.equal(0n)
       expect(addresses.length).to.equal(0)
+      expect(count).to.equal(0)
     })
   })
 })
