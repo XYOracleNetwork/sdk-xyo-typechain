@@ -16,6 +16,10 @@ describe('AddressStakingV2.slashStake', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
       await mintAndApprove(token, staker, staking, amount)
       await staking.connect(staker).addStake(staked, amount)
+      expect(await staking.active()).to.equal(amount)
+      expect(await staking.activeByAddressStaked(staked)).to.equal(amount)
+      expect(await staking.activeByStaker(staker)).to.equal(amount)
+      expect(await staking.slashed()).to.equal(0n)
 
       // Act
       const tx = await staking.connect(owner).slashStake(staked, amount / 2n)
@@ -33,12 +37,17 @@ describe('AddressStakingV2.slashStake', () => {
       const { staking, token } = await loadFixture(deployAddressStakingV2)
       await mintAndApprove(token, staker, staking, amount)
       await staking.connect(staker).addStake(staked, amount)
+      expect(await staking.active()).to.equal(amount)
+      expect(await staking.activeByAddressStaked(staked)).to.equal(amount)
+      expect(await staking.activeByStaker(staker)).to.equal(amount)
+      expect(await staking.slashed()).to.equal(0n)
 
       // Act
       const tx = await staking.connect(owner).slashStake(staked, amount)
 
       // Assert
       await expect(tx).to.emit(staking, 'StakeSlashed')
+      expect(await staking.active()).to.equal(0n)
       expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
       expect(await staking.activeByStaker(staker)).to.equal(0n)
       expect(await staking.slashed()).to.equal(amount)
@@ -70,6 +79,10 @@ describe('AddressStakingV2.slashStake', () => {
 
       await mintAndApprove(token, staker, staking, amount)
       await staking.connect(staker).addStake(staked, amount)
+      expect(await staking.active()).to.equal(amount)
+      expect(await staking.activeByAddressStaked(staked)).to.equal(amount)
+      expect(await staking.activeByStaker(staker)).to.equal(amount)
+      expect(await staking.slashed()).to.equal(0n)
 
       await expect(
         staking.connect(owner).slashStake(other, amount / 2n),
@@ -90,8 +103,10 @@ describe('AddressStakingV2.slashStake', () => {
         const { staking, token } = await loadFixture(deployAddressStakingV2)
         await mintAndApprove(token, staker, staking, amount)
         await staking.connect(staker).addStake(staked, amount)
-        expect(await staking.activeByStaker(staker)).to.equal(amount)
+        expect(await staking.active()).to.equal(amount)
         expect(await staking.activeByAddressStaked(staked)).to.equal(amount)
+        expect(await staking.activeByStaker(staker)).to.equal(amount)
+        expect(await staking.slashed()).to.equal(0n)
 
         // Act
         await staking.connect(owner).slashStake(staked, amount / 2n)
@@ -115,6 +130,7 @@ describe('AddressStakingV2.slashStake', () => {
         expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
         expect(await staking.activeByStaker(staker)).to.equal(0n)
         expect(await staking.pending()).to.equal(amount)
+        expect(await staking.slashed()).to.equal(0n)
 
         // Act
         await staking.connect(owner).slashStake(staked, amount / 2n)
@@ -124,6 +140,7 @@ describe('AddressStakingV2.slashStake', () => {
         expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
         expect(await staking.activeByStaker(staker)).to.equal(0n)
         expect(await staking.pending()).to.equal(amount / 2n)
+        expect(await staking.slashed()).to.equal(amount / 2n)
       })
     })
     describe('with active and pending stake', () => {
@@ -142,13 +159,17 @@ describe('AddressStakingV2.slashStake', () => {
           expect(await staking.pending()).to.equal(amount / 2n)
 
           // Act
-          await staking.connect(owner).slashStake(staked, amount / 2n)
+          const slashAmount = amount / 2n
+          await staking.connect(owner).slashStake(staked, slashAmount)
 
           // Assert
-          expect(await staking.active()).to.equal(amount / 2n / 2n)
-          expect(await staking.activeByAddressStaked(staked)).to.equal(amount / 2n / 2n)
-          expect(await staking.activeByStaker(staker)).to.equal(amount / 2n / 2n)
-          expect(await staking.pending()).to.equal(amount / 2n / 2n)
+          const activeAmount = slashAmount / 2n
+          const pendingAmount = slashAmount / 2n
+          expect(await staking.active()).to.equal(activeAmount)
+          expect(await staking.activeByAddressStaked(staked)).to.equal(activeAmount)
+          expect(await staking.activeByStaker(staker)).to.equal(activeAmount)
+          expect(await staking.pending()).to.equal(pendingAmount)
+          expect(await staking.slashed()).to.equal(slashAmount)
         })
       })
     })
