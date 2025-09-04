@@ -59,6 +59,11 @@ contract AddressStakingV2 is
         return _withdrawStake(id, __minWithdrawalBlocks);
     }
 
+    function setMinStake(uint256 minStake) external onlyOwner {
+        require(minStake > 0, "Staking: invalid minStake");
+        _minStake = minStake;
+    }
+
     function slashStake(
         address stakedAddress,
         uint256 amount
