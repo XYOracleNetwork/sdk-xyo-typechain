@@ -6,7 +6,7 @@ import { deployAddressStakingV2, mintAndApprove } from '../helpers/index.js'
 
 const { ethers } = hre
 
-describe('AddressStakingV2.stakedAddressWithMinStake', () => {
+describe.only('AddressStakingV2.stakedAddressWithMinStake', () => {
   describe('with single staker', () => {
     it('should show address when address has enough staked', async () => {
       // Arrange
@@ -21,6 +21,8 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const addresses = await staking.stakedAddressesWithMinStake()
 
       // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
@@ -37,6 +39,8 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const addresses = await staking.stakedAddressesWithMinStake()
 
       // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.lessThan(minStake)
       expect(addresses.length).to.equal(0)
     })
   })
@@ -57,6 +61,8 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const addresses = await staking.stakedAddressesWithMinStake()
 
       // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
@@ -76,6 +82,8 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const addresses = await staking.stakedAddressesWithMinStake()
 
       // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.lessThan(minStake)
       expect(addresses.length).to.equal(0)
     })
   })
@@ -85,7 +93,7 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const [_, staked, staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
       const minStake = await staking.minStake()
-      const amount = minStake * 2n
+      const amount = minStake * 2n * 2n
       await mintAndApprove(token, staker, staking, amount)
       await staking.connect(staker).addStake(staked, amount / 2n)
       await staking.connect(staker).addStake(staked, amount / 2n)
@@ -95,6 +103,8 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const addresses = await staking.stakedAddressesWithMinStake()
 
       // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.greaterThanOrEqual(minStake)
       expect(addresses.length).to.equal(1)
       expect(addresses[0]).to.equal(staked.address)
     })
@@ -103,7 +113,7 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const [_, staked, staker] = await ethers.getSigners()
       const { staking, token } = await loadFixture(deployAddressStakingV2)
       const minStake = await staking.minStake()
-      const amount = minStake * 2n
+      const amount = minStake * 2n * 2n
       await mintAndApprove(token, staker, staking, amount)
       await staking.connect(staker).addStake(staked, amount / 2n)
       await staking.connect(staker).addStake(staked, amount / 2n)
@@ -114,6 +124,50 @@ describe('AddressStakingV2.stakedAddressWithMinStake', () => {
       const addresses = await staking.stakedAddressesWithMinStake()
 
       // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.lessThan(minStake)
+      expect(addresses.length).to.equal(0)
+    })
+  })
+  describe.only('with slashed stake', () => {
+    it('should show address when address has enough staked', async () => {
+      // Arrange
+      const [owner, staked, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const minStake = await staking.minStake()
+      const amount = minStake * 2n
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(owner).slashStake(staked, amount / 2n)
+
+      // Act
+      const addresses = await staking.stakedAddressesWithMinStake()
+
+      // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.greaterThanOrEqual(minStake)
+      expect(addresses.length).to.equal(1)
+      expect(addresses[0]).to.equal(staked.address)
+    })
+    it('should not show address when address does not have enough staked', async () => {
+      // Arrange
+      const [owner, staked, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const minStake = await staking.minStake()
+      const amount = minStake * 2n
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(owner).slashStake(staked, amount / 2n)
+      await staking.connect(owner).slashStake(staked, amount / 2n)
+
+      // Act
+      const addresses = await staking.stakedAddressesWithMinStake()
+
+      // Assert
+      const active = await staking.activeByAddressStaked(staked)
+      expect(active).to.be.lessThan(minStake)
       expect(addresses.length).to.equal(0)
     })
   })
