@@ -92,6 +92,20 @@ abstract contract AddressStakingInternal is
         }
     }
 
+    function _updateMinStakeStatus(address staked) internal {
+        if (
+            _addressesWithMinStake.contains(staked) &&
+            _stakeAmountByAddressStaked[staked] < _minStake
+        ) {
+            _addressesWithMinStake.remove(staked);
+        } else if (
+            !_addressesWithMinStake.contains(staked) &&
+            _stakeAmountByAddressStaked[staked] >= _minStake
+        ) {
+            _addressesWithMinStake.add(staked);
+        }
+    }
+
     function _addStake(
         address staked,
         uint256 amount,
@@ -149,12 +163,9 @@ abstract contract AddressStakingInternal is
         if (newStakeAddress) {
             _stakedAddresses.push(staked);
         }
-        if (
-            !_addressesWithMinStake.contains(staked) &&
-            _stakeAmountByAddressStaked[staked] >= _minStake
-        ) {
-            _addressesWithMinStake.add(staked);
-        }
+
+        _updateMinStakeStatus(staked);
+
         emit StakeAdded(staked, msg.sender, stake.id, amount);
         return true;
     }
@@ -174,12 +185,7 @@ abstract contract AddressStakingInternal is
         _pendingAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[stake.staker] -= amount;
 
-        if (
-            _addressesWithMinStake.contains(staked) &&
-            _stakeAmountByAddressStaked[staked] < _minStake
-        ) {
-            _addressesWithMinStake.remove(staked);
-        }
+        _updateMinStakeStatus(staked);
 
         emit StakeRemoved(staked, stake.staker, id, amount);
         return true;
@@ -282,6 +288,8 @@ abstract contract AddressStakingInternal is
         _pendingAmountByAddressStaked[
             stakedAddress
         ] -= totalSlashedAmountPending;
+
+        _updateMinStakeStatus(stakedAddress);
 
         emit StakeSlashed(stakedAddress, totalSlashedAmount);
         return totalSlashedAmount;
