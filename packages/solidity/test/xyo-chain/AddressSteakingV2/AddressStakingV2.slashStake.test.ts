@@ -145,7 +145,7 @@ describe('AddressStakingV2.slashStake', () => {
         expect(await staking.slashed()).to.equal(amount / 2n)
       })
     })
-    describe.only('with removable stake', () => {
+    describe('with removable stake', () => {
       it('should be reduced by amount', async () => {
         // Arrange
         const [owner, staker, staked] = await ethers.getSigners()
