@@ -44,9 +44,9 @@
         "--no-warnings=ExperimentalWarning",
         "./node_modules/.bin/hardhat",
         "run",
-        "scripts/CheckStake.ts",
+        "scripts/CheckDeployment.ts",
         "--network",
-        "sepolia",
+        "local",
       ],
       "env": {
         "TS_NODE_PROJECT": "./tsconfig.json"
