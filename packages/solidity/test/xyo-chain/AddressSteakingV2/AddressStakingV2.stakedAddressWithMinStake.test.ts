@@ -6,7 +6,7 @@ import { deployAddressStakingV2, mintAndApprove } from '../helpers/index.js'
 
 const { ethers } = hre
 
-describe.only('AddressStakingV2.stakedAddressWithMinStake', () => {
+describe('AddressStakingV2.stakedAddressWithMinStake', () => {
   describe('with single staker', () => {
     it('should show address when address has enough staked', async () => {
       // Arrange
@@ -129,7 +129,7 @@ describe.only('AddressStakingV2.stakedAddressWithMinStake', () => {
       expect(addresses.length).to.equal(0)
     })
   })
-  describe.only('with slashed stake', () => {
+  describe('with slashed stake', () => {
     it('should show address when address has enough staked', async () => {
       // Arrange
       const [owner, staked, staker] = await ethers.getSigners()
@@ -167,7 +167,7 @@ describe.only('AddressStakingV2.stakedAddressWithMinStake', () => {
 
       // Assert
       const active = await staking.activeByAddressStaked(staked)
-      expect(active).to.be.lessThan(minStake)
+      expect(active).to.be.equal(0n)
       expect(addresses.length).to.equal(0)
     })
   })
