@@ -28,12 +28,12 @@
     "votingPeriod": 100800
   },
   "XyoChainRewards": {
-    "floorPlaces": 1,
+    "floorPlaces": "18n",
     "genesisReward": "18000000000000000000000000000n",
-    "initialReward": 500,
-    "minRewardPerBlock": 10,
-    "stepFactorDenominator": 100,
-    "stepFactorNumerator": 95,
-    "stepSize": 1000000
+    "initialReward": "500n",
+    "minRewardPerBlock": "10n",
+    "stepFactorDenominator": "100n",
+    "stepFactorNumerator": "95n",
+    "stepSize": "1000000n"
   }
 }
