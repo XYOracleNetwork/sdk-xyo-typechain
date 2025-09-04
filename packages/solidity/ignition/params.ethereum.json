@@ -3,6 +3,10 @@
     "tokenName": "Bridgeable Token Name",
     "tokenSymbol": "TEST"
   },
+  "DeployXL1": {
+    "bridgeTreasuryAddress": "0x1969196919691969196919691969196919691969",
+    "bridgeTreasuryAmount": "18000000000000000000000000000n"
+  },
   "SingleAddressSubGovernor": {
     "name": "Single Address SubGovernor",
     "votingDelay": 7200,
@@ -25,11 +29,11 @@
   },
   "XyoChainRewards": {
     "floorPlaces": 1,
-    "genesisReward": 5000,
-    "initialReward": 1000,
-    "minRewardPerBlock": 100,
-    "stepFactorDenominator": 10,
-    "stepFactorNumerator": 9,
-    "stepSize": 100
+    "genesisReward": "18000000000000000000000000000n",
+    "initialReward": 500,
+    "minRewardPerBlock": 10,
+    "stepFactorDenominator": 100,
+    "stepFactorNumerator": 95,
+    "stepSize": 1000000
   }
 }
