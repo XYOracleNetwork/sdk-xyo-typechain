@@ -13,7 +13,7 @@
     "forkFromLastBlockNumber": 0,
     "forkFromLastHash": 0,
     "maxStakersPerAddress": 10,
-    "minStake": 100,
+    "minStake": 1000,
     "minWithdrawalBlocks": 403200,
     "networkStakingAddress": "0x1969196919691969196919691969196919691969",
     "stakingTokenAddress": "0x55296f69f40Ea6d20E478533C15A6B08B654E758"
