@@ -6,7 +6,7 @@ import { deployAddressStakingV2, mintAndApprove } from '../helpers/index.js'
 
 const { ethers } = hre
 
-describe.only('AddressStakingV2.activeByStaker', () => {
+describe('AddressStakingV2.activeByStaker', () => {
   describe('should show active staked', () => {
     it('with single staker', async () => {
       // Arrange
