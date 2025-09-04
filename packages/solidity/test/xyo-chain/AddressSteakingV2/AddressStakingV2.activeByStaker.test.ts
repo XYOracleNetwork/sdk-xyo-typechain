@@ -23,59 +23,59 @@ describe('AddressStakingV2.activeByStaker', () => {
       // Assert
       expect(active).to.be.equal(amount)
     })
-  })
-  it('with multiple stakers', async () => {
-    // Arrange
-    const [_, staked, stakerA, stakerB] = await ethers.getSigners()
-    const { staking, token } = await loadFixture(deployAddressStakingV2)
-    const stakers = new Set([stakerA, stakerB])
-    const minStake = await staking.minStake()
-    const amount = minStake + 1n
-    for (const staker of stakers) {
-      await mintAndApprove(token, staker, staking, amount)
-      await staking.connect(staker).addStake(staked, amount)
-    }
+    it('with multiple stakers', async () => {
+      // Arrange
+      const [_, staked, stakerA, stakerB] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const stakers = new Set([stakerA, stakerB])
+      const minStake = await staking.minStake()
+      const amount = minStake + 1n
+      for (const staker of stakers) {
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked, amount)
+      }
 
-    for (const staker of stakers) {
+      for (const staker of stakers) {
+        // Act
+        const active = await staking.activeByStaker(staker)
+
+        // Assert
+        expect(active).to.be.equal(amount)
+      }
+    })
+    it('with removed stake', async () => {
+      // Arrange
+      const [_, staked, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const minStake = await staking.minStake()
+      const amount = minStake * 2n * 2n
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(staker).removeStake(0)
+
       // Act
       const active = await staking.activeByStaker(staker)
 
       // Assert
-      expect(active).to.be.equal(amount)
-    }
-  })
-  it('with removed stake', async () => {
-    // Arrange
-    const [_, staked, staker] = await ethers.getSigners()
-    const { staking, token } = await loadFixture(deployAddressStakingV2)
-    const minStake = await staking.minStake()
-    const amount = minStake * 2n * 2n
-    await mintAndApprove(token, staker, staking, amount)
-    await staking.connect(staker).addStake(staked, amount / 2n)
-    await staking.connect(staker).addStake(staked, amount / 2n)
-    await staking.connect(staker).removeStake(0)
+      expect(active).to.be.equal(amount / 2n)
+    })
+    it('with slashed stake', async () => {
+      // Arrange
+      const [owner, staked, staker] = await ethers.getSigners()
+      const { staking, token } = await loadFixture(deployAddressStakingV2)
+      const minStake = await staking.minStake()
+      const amount = minStake * 2n
+      await mintAndApprove(token, staker, staking, amount)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(staker).addStake(staked, amount / 2n)
+      await staking.connect(owner).slashStake(staked, amount / 2n)
 
-    // Act
-    const active = await staking.activeByStaker(staker)
+      // Act
+      const active = await staking.activeByStaker(staker)
 
-    // Assert
-    expect(active).to.be.equal(amount / 2n)
-  })
-  it('with slashed stake', async () => {
-    // Arrange
-    const [owner, staked, staker] = await ethers.getSigners()
-    const { staking, token } = await loadFixture(deployAddressStakingV2)
-    const minStake = await staking.minStake()
-    const amount = minStake * 2n
-    await mintAndApprove(token, staker, staking, amount)
-    await staking.connect(staker).addStake(staked, amount / 2n)
-    await staking.connect(staker).addStake(staked, amount / 2n)
-    await staking.connect(owner).slashStake(staked, amount / 2n)
-
-    // Act
-    const active = await staking.activeByStaker(staker)
-
-    // Assert
-    expect(active).to.be.equal(amount / 2n)
+      // Assert
+      expect(active).to.be.equal(amount / 2n)
+    })
   })
 })
