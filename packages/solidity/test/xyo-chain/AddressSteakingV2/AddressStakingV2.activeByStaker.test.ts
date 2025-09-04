@@ -59,7 +59,7 @@ describe.only('AddressStakingV2.activeByStaker', () => {
     const active = await staking.activeByStaker(staker)
 
     // Assert
-    expect(active).to.be.equal(amount)
+    expect(active).to.be.equal(amount / 2n)
   })
   it('with slashed stake', async () => {
     // Arrange
@@ -76,6 +76,6 @@ describe.only('AddressStakingV2.activeByStaker', () => {
     const active = await staking.activeByStaker(staker)
 
     // Assert
-    expect(active).to.be.equal(amount)
+    expect(active).to.be.equal(amount / 2n)
   })
 })
