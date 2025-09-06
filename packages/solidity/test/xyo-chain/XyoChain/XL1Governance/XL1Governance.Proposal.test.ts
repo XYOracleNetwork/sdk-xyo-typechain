@@ -27,7 +27,7 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     } = await proposeToTransferTokens(xl1Governance, token, owner, recipient, amount, proposer)
 
     // Move past voting delay
-    await advanceBlocks(await xl1Governance.votingDelay())
+    await advanceBlocks(await xl1Governance.votingDelay() + 1n)
 
     // Propose subGovernor call xl1Governance.castVote(parentId, ProposalVote.For) by proposer
     const {
@@ -50,8 +50,8 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     // Vote on the subGovernor's proposal
     await subGovernor.castVote(subProposalId, ProposalVote.For)
 
-    // Move past voting period
-    await advanceBlocks(await subGovernor.votingPeriod() + 10n)
+    // Move past voting period of subGovernor
+    await advanceBlocks(await subGovernor.votingPeriod() + 1n)
 
     // Check the subGovernor proposal state
     expect(await subGovernor.state(subProposalId)).to.equal(ProposalState.Succeeded)
@@ -65,6 +65,9 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
 
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
+
+    // Move past voting period of xl1Governance
+    await advanceBlocks(await xl1Governance.votingPeriod() + 1n)
 
     // Assert recipient has not received tokens yet
     expect(await token.balanceOf(await recipient.getAddress())).to.equal(0n)
