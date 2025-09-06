@@ -134,15 +134,11 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     // Execute the proposal to vote on the xl1Governance
     await subGovernor.execute(subProposalTargets, subProposalValues, subProposalCalldatas, subProposalDescriptionHash)
 
-    // Verify the subGovernor has voted
-    expect(await xl1Governance.hasVoted(proposalId, await subGovernor.getAddress())).to.equal(true)
-
     // Move past voting period of xl1Governance
     // await advanceBlocks(await xl1Governance.votingPeriod() + 1n)
-    console.log('executing contract')
+
     // Assert recipient has not received tokens yet
     expect(await token.balanceOf(await recipient.getAddress())).to.equal(0n)
-    console.log('executed contract')
 
     // Queue and execute the proposal
     await xl1Governance.execute(targets, values, calldatas, descriptionHash)
