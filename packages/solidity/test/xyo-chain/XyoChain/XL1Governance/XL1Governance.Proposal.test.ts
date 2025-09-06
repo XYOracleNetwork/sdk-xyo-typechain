@@ -78,7 +78,7 @@ describe('XL1Governance - ERC20 Transfer Proposal', () => {
     // Check the recipient received the tokens
     expect(await token.balanceOf(await recipient.getAddress())).to.equal(amount)
   })
-  it.only('should allow proposal execution before voting period expires if all governors have voted', async () => {
+  it('should allow proposal execution before voting period expires if all governors have voted', async () => {
     const [_, proposer, recipient] = await ethers.getSigners()
     const { xl1Governance, subGovernor } = await loadFixture(deployXL1GovernanceWithSingleAddressSubGovernor)
     const { token, owner } = await loadFixture(deployTestERC20)
