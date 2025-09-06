@@ -3,19 +3,30 @@ import { expect } from 'chai'
 import hre from 'hardhat'
 
 import {
-  createRandomProposal, deploySingleAddressSubGovernor, ProposalState, voteOnProposal,
+  advanceBlocks, createRandomProposal, deploySingleAddressSubGovernor, validateRandomProposalSucceeded, voteOnProposal,
 } from '../helpers/index.js'
 
 const { ethers } = hre
 
-describe.only('SingleAddressSubGovernor.castVote', () => {
-  describe('should not require voting delay when all votes cast with status', () => {
-    it('for', async () => {
-      const { subGovernor, deployer } = await loadFixture(deploySingleAddressSubGovernor)
-      const { proposalId } = await createRandomProposal(subGovernor)
-      await voteOnProposal(subGovernor, proposalId, deployer, 'For')
-      const finalState = await subGovernor.state(proposalId)
-      expect(finalState).to.equal(ProposalState.Succeeded)
-    })
+describe('SingleAddressSubGovernor.castVote', () => {
+  it('should not require waiting for voting delay when all votes cast with status for', async () => {
+    // Arrange
+    const { subGovernor, deployer } = await loadFixture(deploySingleAddressSubGovernor)
+    const ctx = await createRandomProposal(subGovernor)
+    const {
+      proposalId, targets, values, calldatas, descriptionHash,
+    } = ctx
+
+    // Act
+    await voteOnProposal(subGovernor, proposalId, deployer, 'For')
+    // Verify subGovernor has voted on proposal
+    expect(await subGovernor.hasVoted(proposalId, deployer)).to.equal(true)
+    // Advance required number of blocks
+    await advanceBlocks(await subGovernor.votingPeriod() + 1n)
+    // Execute the proposal
+    await subGovernor.execute(targets, values, calldatas, descriptionHash)
+
+    // Assert
+    await validateRandomProposalSucceeded(ctx)
   })
 })
