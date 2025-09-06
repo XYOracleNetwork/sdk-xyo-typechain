@@ -5,6 +5,7 @@ import {IGovernor} from "@openzeppelin/contracts/governance/Governor.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 import {SubGovernor} from "./SubGovernor.sol";
+import "hardhat/console.sol";
 
 contract SingleAddressSubGovernor is SubGovernor, Ownable {
     uint256 private constant _OWNER_VOTE_WEIGHT = 1;
@@ -36,5 +37,20 @@ contract SingleAddressSubGovernor is SubGovernor, Ownable {
         bytes memory /* params */
     ) internal view override returns (uint256) {
         return account == owner() ? _OWNER_VOTE_WEIGHT : 0;
+    }
+
+    function state(
+        uint256 proposalId
+    ) public view override returns (ProposalState) {
+        console.log("Quorum Reached:", _quorumReached(proposalId));
+        console.log("Vote Succeeded:", _voteSucceeded(proposalId));
+        if (_quorumReached(proposalId) && _voteSucceeded(proposalId)) {
+            console.log(
+                "Simulating Vote Succeeded:",
+                _voteSucceeded(proposalId)
+            );
+            return ProposalState.Succeeded;
+        }
+        return super.state(proposalId);
     }
 }
