@@ -71,12 +71,14 @@ export const voteThroughSubGovernors = async ({
     proposals.push(subVoteProposal)
   }
 
-  await advanceBlocks(await subGovernors.at(0)?.votingDelay() ?? 0n + 1n)
+  const votingDelay = await subGovernors.at(0)?.votingDelay() ?? 1n
+  await advanceBlocks(votingDelay + 1n)
   for (const [i, subGovernor] of subGovernors.entries()) {
     const subVoteProposal = proposals[i]
     await subGovernor.castVote(subVoteProposal.proposalId, ProposalVote.For)
   }
-  await advanceBlocks(await subGovernors.at(0)?.votingPeriod() ?? 0n + 1n)
+  const votingPeriod = await subGovernors.at(0)?.votingPeriod() ?? 0n
+  await advanceBlocks(votingPeriod + 1n)
   for (const [i, subGovernor] of subGovernors.entries()) {
     const subVoteProposal = proposals[i]
     expect(await subGovernor.state(subVoteProposal.proposalId)).to.equal(ProposalState.Succeeded)
@@ -106,7 +108,7 @@ export const voteAndFinalizeProposal = async (
   voter: HardhatEthersSigner,
   vote: VoteType,
 ) => {
-  await advanceBlocks(await governor.votingDelay())
+  await advanceBlocks(await governor.votingDelay() + 1n)
 
   const voteValue = ProposalVote[vote]
   await governor.connect(voter).castVote(proposalId, voteValue)

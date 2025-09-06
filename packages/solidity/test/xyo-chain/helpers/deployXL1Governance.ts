@@ -6,8 +6,8 @@ import { deploySingleAddressSubGovernor } from './deploySingleAddressSubGovernor
 const { ethers } = hre
 
 export const XL1GovernanceDefaultName = 'XL1Governance'
-export const XL1GovernanceDefaultVotingDelay = 1
-export const XL1GovernanceDefaultVotingPeriod = 20
+export const XL1GovernanceDefaultVotingDelay = 10
+export const XL1GovernanceDefaultVotingPeriod = 2000
 
 export const deployXL1Governance = async (
   governors: AddressLike[],

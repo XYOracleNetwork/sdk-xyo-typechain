@@ -25,7 +25,7 @@ export const passAndExecuteProposal = async (args: PassAndExecuteProposalArgs) =
   } = args
 
   // Voting Delay
-  await advanceBlocks(await governor.votingDelay())
+  await advanceBlocks(await governor.votingDelay() + 1n)
 
   // Cast Vote
   await governor.connect(proposer).castVote(proposalId, 1n) // For

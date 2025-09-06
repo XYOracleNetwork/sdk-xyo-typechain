@@ -3,8 +3,8 @@ import hre from 'hardhat'
 const { ethers } = hre
 
 const SingleAddressSubGovernorDefaultName = 'SingleAddressSubGovernor'
-const SingleAddressSubGovernorDefaultVotingDelay = 1
-const SingleAddressSubGovernorDefaultVotingPeriod = 5
+const SingleAddressSubGovernorDefaultVotingDelay = 10
+const SingleAddressSubGovernorDefaultVotingPeriod = 500
 
 export const deploySingleAddressSubGovernor = async (
   name = SingleAddressSubGovernorDefaultName,
