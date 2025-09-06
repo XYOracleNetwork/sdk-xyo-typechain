@@ -97,7 +97,7 @@ export const voteOnProposal = async (
   voter: HardhatEthersSigner,
   vote: VoteType,
 ) => {
-  await advanceBlocks(await governor.votingDelay())
+  await advanceBlocks(await governor.votingDelay() + 1n)
   const voteValue = ProposalVote[vote]
   await governor.connect(voter).castVote(proposalId, voteValue)
 }
