@@ -2,7 +2,9 @@ import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js
 import { expect } from 'chai'
 import hre from 'hardhat'
 
-import { deployAddressStakingV2, mintAndApprove } from '../helpers/index.js'
+import {
+  advanceBlocks, deployAddressStakingV2, mintAndApprove,
+} from '../helpers/index.js'
 
 const { ethers } = hre
 
@@ -141,6 +143,41 @@ describe('AddressStakingV2.slashStake', () => {
         expect(await staking.activeByStaker(staker)).to.equal(0n)
         expect(await staking.pending()).to.equal(amount / 2n)
         expect(await staking.slashed()).to.equal(amount / 2n)
+      })
+    })
+    describe('with removable stake', () => {
+      it('should be reduced by amount', async () => {
+        // Arrange
+        const [owner, staker, staked] = await ethers.getSigners()
+        const { staking, token } = await loadFixture(deployAddressStakingV2)
+        await mintAndApprove(token, staker, staking, amount)
+        await staking.connect(staker).addStake(staked, amount / 2n)
+        await staking.connect(staker).addStake(staked, amount / 2n)
+
+        expect(await staking.activeByStaker(staker)).to.equal(amount)
+        expect(await staking.activeByAddressStaked(staked)).to.equal(amount)
+
+        await staking.connect(staker).removeStake(0)
+        const minWithDrawBlocks = await staking.minWithdrawalBlocks()
+        await advanceBlocks(minWithDrawBlocks + 1n)
+        await staking.connect(staker).withdrawStake(0)
+        const remainingStake = amount / 2n
+
+        expect(await staking.active()).to.equal(remainingStake)
+        expect(await staking.activeByAddressStaked(staked)).to.equal(remainingStake)
+        expect(await staking.activeByStaker(staker)).to.equal(remainingStake)
+        expect(await staking.pending()).to.equal(0n)
+        expect(await staking.slashed()).to.equal(0n)
+
+        // Act
+        await staking.connect(owner).slashStake(staked, remainingStake)
+
+        // Assert
+        expect(await staking.activeByAddressStaked(staked)).to.equal(0n)
+        expect(await staking.activeByStaker(staker)).to.equal(0n)
+        expect(await staking.pending()).to.equal(0n)
+        expect(await staking.slashed()).to.equal(remainingStake)
+        expect(await staking.active()).to.equal(0n)
       })
     })
     describe('with active and pending stake', () => {

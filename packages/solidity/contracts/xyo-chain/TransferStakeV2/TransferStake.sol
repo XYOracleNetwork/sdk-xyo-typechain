@@ -39,7 +39,7 @@ contract TransferStakeV2 is AbstractTransferStake {
         address staker,
         uint256 amount
     ) internal override returns (bool) {
-        IERC20(__stakingTokenAddress).transfer(staker, amount);
+        IERC20(__stakingTokenAddress).safeTransfer(staker, amount);
         emit StakeOut(staker, amount);
         return true;
     }

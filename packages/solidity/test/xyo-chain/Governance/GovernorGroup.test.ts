@@ -37,11 +37,11 @@ describe('GovernorGroup', () => {
       parentGovernor: xl1Governance, subGovernor, parentProposalId, proposer, voteType: 'For',
     })
 
-    // Move past voting period
-    await advanceBlocks(await subGovernor.votingPeriod() + 10n)
-
     // Verify subGovernor has voted on parent proposal
     expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
+
+    // Move past voting period
+    await advanceBlocks(await xl1Governance.votingPeriod() + 1n)
 
     // Execute the parent proposal
     await xl1Governance.execute(targets, values, calldatas, descriptionHash)
@@ -83,13 +83,13 @@ describe('GovernorGroup', () => {
       parentGovernor: xl1Governance, subGovernors: governors, parentProposalId, proposer, voteType: 'For',
     })
 
-    // Move past voting period
-    await advanceBlocks(await governorToRemove.votingPeriod() + 10n)
-
     // Verify subGovernor has voted on parent proposal
     for (const subGovernor of governors) {
       expect(await xl1Governance.hasVoted(parentProposalId, await subGovernor.getAddress())).to.equal(true)
     }
+
+    // Move past voting period
+    await advanceBlocks(await xl1Governance.votingPeriod() + 1n)
 
     // Execute the parent proposal
     await xl1Governance.execute(targets, values, calldatas, descriptionHash)

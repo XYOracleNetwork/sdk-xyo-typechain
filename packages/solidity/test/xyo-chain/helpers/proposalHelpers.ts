@@ -4,9 +4,7 @@ import { expect } from 'chai'
 import type { BaseContract } from 'ethers'
 import hre from 'hardhat'
 
-import type {
-  BridgeableToken, IGovernor, XL1Governance,
-} from '../../../typechain-types/index.js'
+import type { BridgeableToken, IGovernor } from '../../../typechain-types/index.js'
 
 const { ethers } = hre
 
@@ -83,14 +81,14 @@ export const proposeToCallSmartContract = async (
 }
 
 export const proposeToTransferTokens = async (
-  xl1Governance: XL1Governance,
+  governor: IGovernor,
   token: BridgeableToken,
   owner: HardhatEthersSigner,
   recipient: HardhatEthersSigner,
   amount: bigint,
   proposer: HardhatEthersSigner,
 ) => {
-  const xl1GovernanceAddress = await xl1Governance.getAddress()
+  const xl1GovernanceAddress = await governor.getAddress()
   const recipientAddress = await recipient.getAddress()
 
   // Transfer tokens to the governance contract so it can execute
@@ -103,5 +101,5 @@ export const proposeToTransferTokens = async (
   expect(await token.balanceOf(xl1GovernanceAddress)).to.equal(amount)
 
   // Propose xl1Governance call token.transfer(recipientAddress, amount) by proposer
-  return await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], xl1Governance, proposer)
+  return await proposeToCallSmartContract(token, 'transfer', [recipientAddress, amount], governor, proposer)
 }

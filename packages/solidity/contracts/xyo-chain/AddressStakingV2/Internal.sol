@@ -32,7 +32,7 @@ abstract contract AddressStakingInternal is
 
     /**** Address relative staking totals ****/
     //total amount that is actively staked for a given address
-    mapping(address => uint256) internal _stakeAmountByAddressStaked;
+    mapping(address => uint256) internal _activeAmountByAddressStaked;
 
     //total amount that is pending staked for a given address
     mapping(address => uint256) internal _pendingAmountByAddressStaked;
@@ -95,12 +95,12 @@ abstract contract AddressStakingInternal is
     function _updateMinStakeStatus(address staked) internal {
         if (
             _addressesWithMinStake.contains(staked) &&
-            _stakeAmountByAddressStaked[staked] < _minStake
+            _activeAmountByAddressStaked[staked] < _minStake
         ) {
             _addressesWithMinStake.remove(staked);
         } else if (
             !_addressesWithMinStake.contains(staked) &&
-            _stakeAmountByAddressStaked[staked] >= _minStake
+            _activeAmountByAddressStaked[staked] >= _minStake
         ) {
             _addressesWithMinStake.add(staked);
         }
@@ -112,7 +112,7 @@ abstract contract AddressStakingInternal is
         uint256 minWithdrawalBlocks
     ) internal returns (bool) {
         require(amount > 0, "Staking: amount must be greater than 0");
-        bool newStakeAddress = _stakeAmountByAddressStaked[staked] == 0;
+        bool newStakeAddress = _activeAmountByAddressStaked[staked] == 0;
         _transferStakeFromSender(amount);
 
         AddressStakingLibrary.Stake memory stake = AddressStakingLibrary.Stake({
@@ -158,7 +158,7 @@ abstract contract AddressStakingInternal is
 
         _addressStakes[staked].add(stake.id);
         _totalActiveStake += amount;
-        _stakeAmountByAddressStaked[staked] += amount;
+        _activeAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[msg.sender] += amount;
         if (newStakeAddress) {
             _stakedAddresses.push(staked);
@@ -181,7 +181,7 @@ abstract contract AddressStakingInternal is
         stake.removeBlock = block.number;
         _totalActiveStake -= amount;
         _totalPendingStake += amount;
-        _stakeAmountByAddressStaked[staked] -= amount;
+        _activeAmountByAddressStaked[staked] -= amount;
         _pendingAmountByAddressStaked[staked] += amount;
         _stakeAmountByStaker[stake.staker] -= amount;
 
@@ -248,7 +248,7 @@ abstract contract AddressStakingInternal is
 
         require(stakeIds.length > 0, "Staking: no stakes to slash");
 
-        uint256 atRiskStake = _stakeAmountByAddressStaked[stakedAddress] +
+        uint256 atRiskStake = _activeAmountByAddressStaked[stakedAddress] +
             _pendingAmountByAddressStaked[stakedAddress];
 
         //if the address is under-staked, then take all the stake
@@ -271,24 +271,30 @@ abstract contract AddressStakingInternal is
             }
 
             if (stake.removeBlock != 0) {
-                _totalPendingStake -= slashedAmount;
                 totalSlashedAmountPending += slashedAmount;
             } else {
-                _totalActiveStake -= slashedAmount;
                 totalSlashedAmountActive += slashedAmount;
             }
         }
+
         uint256 totalSlashedAmount = totalSlashedAmountPending +
             totalSlashedAmountActive;
+
+        //update totals
+        _totalPendingStake -= totalSlashedAmountPending;
+        _totalActiveStake -= totalSlashedAmountActive;
         _totalSlashedStake += totalSlashedAmount;
+
+        //burn the slashed stake
         _burnStake(stakedAddress, totalSlashedAmount);
 
-        _stakeAmountByAddressStaked[stakedAddress] -= totalSlashedAmountActive;
-
+        //update address totals
+        _activeAmountByAddressStaked[stakedAddress] -= totalSlashedAmountActive;
         _pendingAmountByAddressStaked[
             stakedAddress
         ] -= totalSlashedAmountPending;
 
+        //update address in min list
         _updateMinStakeStatus(stakedAddress);
 
         emit StakeSlashed(stakedAddress, totalSlashedAmount);

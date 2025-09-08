@@ -28,7 +28,7 @@ abstract contract AddressStakingProperties is
     function activeByAddressStaked(
         address staked
     ) external view returns (uint256) {
-        return _stakeAmountByAddressStaked[staked];
+        return _activeAmountByAddressStaked[staked];
     }
 
     function activeByStaker(address staker) external view returns (uint256) {
