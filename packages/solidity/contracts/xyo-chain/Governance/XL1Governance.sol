@@ -70,12 +70,12 @@ contract XL1Governance is GovernorCountingUnanimous, GovernorGroup {
         return governorCount();
     }
 
-    function state(
-        uint256 proposalId
-    ) public view override returns (ProposalState) {
-        if (_quorumReached(proposalId) && _voteSucceeded(proposalId)) {
-            return ProposalState.Succeeded;
-        }
-        return super.state(proposalId);
-    }
+    // function state(
+    //     uint256 proposalId
+    // ) public view override returns (ProposalState) {
+    //     if (_quorumReached(proposalId) && _voteSucceeded(proposalId)) {
+    //         return ProposalState.Succeeded;
+    //     }
+    //     return super.state(proposalId);
+    // }
 }

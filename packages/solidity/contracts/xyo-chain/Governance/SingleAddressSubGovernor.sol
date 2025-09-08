@@ -38,12 +38,12 @@ contract SingleAddressSubGovernor is SubGovernor, Ownable {
         return account == owner() ? _OWNER_VOTE_WEIGHT : 0;
     }
 
-    function state(
-        uint256 proposalId
-    ) public view override returns (ProposalState) {
-        if (_quorumReached(proposalId) && _voteSucceeded(proposalId)) {
-            return ProposalState.Succeeded;
-        }
-        return super.state(proposalId);
-    }
+    // function state(
+    //     uint256 proposalId
+    // ) public view override returns (ProposalState) {
+    //     if (_quorumReached(proposalId) && _voteSucceeded(proposalId)) {
+    //         return ProposalState.Succeeded;
+    //     }
+    //     return super.state(proposalId);
+    // }
 }
