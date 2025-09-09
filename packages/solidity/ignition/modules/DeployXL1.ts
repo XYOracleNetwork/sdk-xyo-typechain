@@ -14,6 +14,10 @@ export default buildModule('DeployXL1', (m) => {
   const { rewards } = m.useModule(XyoChainRewardsModule)
   const { chain } = m.useModule(createStakedXyoChainV2Module(rewards))
 
+  // Transfer subGovernor ownership to subGovernorCustodyAddress
+  const subGovernorCustodyAddress = m.getParameter('subGovernorCustodyAddress')
+  m.call(subGovernor, 'transferOwnership', [subGovernorCustodyAddress])
+
   // Setup Bridgeable Token Treasury
   const bridgeTreasuryAddress = m.getParameter('bridgeTreasuryAddress')
   const bridgeTreasuryAmount = m.getParameter('bridgeTreasuryAmount')
@@ -21,10 +25,6 @@ export default buildModule('DeployXL1', (m) => {
 
   // Transfer Bridgeable Token ownership to xl1Governance
   m.call(token, 'transferOwnership', [xl1Governance])
-
-  // Transfer subGovernor ownership to custody address
-  const subGovernorCustodyAddress = m.getParameter('subGovernorCustodyAddress')
-  m.call(subGovernor, 'transferOwnership', [subGovernorCustodyAddress])
 
   return {
     chain, subGovernor, token, xl1Governance,
