@@ -46,7 +46,7 @@
         "run",
         "scripts/CheckDeployment.ts",
         "--network",
-        "sepolia",
+        "ethereum",
       ],
       "env": {
         "TS_NODE_PROJECT": "./tsconfig.json"
