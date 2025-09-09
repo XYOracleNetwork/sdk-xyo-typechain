@@ -30,7 +30,7 @@
   "XyoChainRewards": {
     "floorPlaces": "18n",
     "genesisReward": "20000000000000000000000000000n",
-    "initialReward": "500n",
+    "initialReward": "1000000000000000000000n",
     "minRewardPerBlock": "10n",
     "stepFactorDenominator": "100n",
     "stepFactorNumerator": "95n",
