@@ -46,7 +46,7 @@
         "run",
         "scripts/CheckDeployment.ts",
         "--network",
-        "local",
+        "sepolia",
       ],
       "env": {
         "TS_NODE_PROJECT": "./tsconfig.json"
