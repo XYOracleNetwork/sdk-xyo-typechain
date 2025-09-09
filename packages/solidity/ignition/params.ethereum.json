@@ -5,7 +5,8 @@
   },
   "DeployXL1": {
     "bridgeTreasuryAddress": "0xe53218d47913b5f9E58bb74F0a0eD790bbF21972",
-    "bridgeTreasuryAmount": "18000000000000000000000000000n"
+    "bridgeTreasuryAmount": "18000000000000000000000000000n",
+    "subGovernorCustodyAddress": "0x2Dd79795c53368Ce8427bdE89cAA24A0E0d01Eb1"
   },
   "SingleAddressSubGovernor": {
     "name": "Single Address SubGovernor",
