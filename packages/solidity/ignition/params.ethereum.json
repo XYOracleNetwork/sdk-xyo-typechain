@@ -1,11 +1,12 @@
 {
   "BridgeableToken": {
-    "tokenName": "Bridgeable Token Name",
-    "tokenSymbol": "TEST"
+    "tokenName": "Wrapped XL1",
+    "tokenSymbol": "WXL1"
   },
   "DeployXL1": {
     "bridgeTreasuryAddress": "0xe53218d47913b5f9E58bb74F0a0eD790bbF21972",
-    "bridgeTreasuryAmount": "18000000000000000000000000000n"
+    "bridgeTreasuryAmount": "18000000000000000000000000000n",
+    "subGovernorCustodyAddress": "0x2Dd79795c53368Ce8427bdE89cAA24A0E0d01Eb1"
   },
   "SingleAddressSubGovernor": {
     "name": "Single Address SubGovernor",
@@ -13,9 +14,9 @@
     "votingPeriod": 50400
   },
   "StakedXyoChainV2": {
-    "forkFromChainId": "0x0000000000000000000000000000000000000000",
-    "forkFromLastBlockNumber": 0,
-    "forkFromLastHash": 0,
+    "forkFromChainId": "0x23fdbe96baa388f4bfca0de9b8d3fb8328ead28b",
+    "forkFromLastBlockNumber": 2,
+    "forkFromLastHash": "5105449208546850705933536278636416260254117928004244842768206982383575957896n",
     "maxStakersPerAddress": 10,
     "minStake": 1000,
     "minWithdrawalBlocks": 403200,
@@ -30,8 +31,8 @@
   "XyoChainRewards": {
     "floorPlaces": "18n",
     "genesisReward": "18000000000000000000000000000n",
-    "initialReward": "500n",
-    "minRewardPerBlock": "10n",
+    "initialReward": "500000000000000000000n",
+    "minRewardPerBlock": "10000000000000000000n",
     "stepFactorDenominator": "100n",
     "stepFactorNumerator": "95n",
     "stepSize": "1000000n"
