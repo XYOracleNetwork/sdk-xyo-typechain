@@ -3,6 +3,16 @@ import path from 'node:path'
 
 import hre from 'hardhat'
 
+const actualPrefix = '[ Actual ]'
+const expectedPrefix = '[Expected]'
+
+const parseBigIntLiteral = (value: string): bigint => {
+  if (!/^\d+n$/.test(value)) {
+    throw new Error(`Invalid bigint literal format: "${value}"`)
+  }
+  return BigInt(value.slice(0, -1))
+}
+
 async function main() {
   const networkName = hre.network.name
   const chainId = hre.network.config.chainId
@@ -18,7 +28,8 @@ async function main() {
   const [signer] = await hre.ethers.getSigners()
   console.log('Signer Address:', signer.address)
   const xl1Governance = await hre.ethers.getContractAt('XL1Governance', deployments['XL1Governance#XL1Governance'], signer)
-  console.log('XL1 Governance Address:', await xl1Governance.getAddress())
+  const xl1GovernanceAddress = await xl1Governance.getAddress()
+  console.log('XL1 Governance Address:', xl1GovernanceAddress)
   const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['StakedXyoChainV2#StakedXyoChainV2'], signer)
   console.log('Staked XYO Chain V2 Address:', await stakedXyoChainV2.getAddress())
   const stakingTokenAddress = await stakedXyoChainV2.stakingTokenAddress()
@@ -26,13 +37,14 @@ async function main() {
   const token = await hre.ethers.getContractAt('BridgeableToken', deployments['BridgeableToken#BridgeableToken'], signer)
   console.log('BridgeableToken Address:', await token.getAddress())
   const tokenOwner = await token.owner()
-  console.log('Expected BridgeableToken Owner Address:', bridgeTreasuryAddress)
-  console.log('Actual BridgeableToken Owner Address:', tokenOwner)
+  console.log(expectedPrefix, 'BridgeableToken Owner Address:', xl1GovernanceAddress)
+  console.log(actualPrefix, 'BridgeableToken Owner Address:', tokenOwner)
   const balance = await token.balanceOf(bridgeTreasuryAddress)
   const decimals = await token.decimals()
-  const normalizedBalance = hre.ethers.formatUnits(balance, decimals)
-  console.log('Expected BridgeableToken Treasury Balance:', bridgeTreasuryAmount)
-  console.log('Actual BridgeableToken Treasury Balance:', normalizedBalance)
+  const normalizedTreasuryBalance = hre.ethers.formatUnits(balance, decimals)
+  const normalizedExpectedTreasuryAmount = hre.ethers.formatUnits(parseBigIntLiteral(bridgeTreasuryAmount), decimals)
+  console.log(expectedPrefix, 'BridgeableToken Treasury Balance:', normalizedExpectedTreasuryAmount)
+  console.log(actualPrefix, 'BridgeableToken Treasury Balance:', normalizedTreasuryBalance)
   const totalSupply = await token.totalSupply()
   const normalizedTotalSupply = hre.ethers.formatUnits(totalSupply, decimals)
   console.log('BridgeableToken Total Supply:', normalizedTotalSupply)
