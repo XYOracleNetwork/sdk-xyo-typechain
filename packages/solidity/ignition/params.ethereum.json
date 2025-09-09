@@ -13,9 +13,9 @@
     "votingPeriod": 50400
   },
   "StakedXyoChainV2": {
-    "forkFromChainId": "0x0000000000000000000000000000000000000000",
-    "forkFromLastBlockNumber": 0,
-    "forkFromLastHash": 0,
+    "forkFromChainId": "0x23fdbe96baa388f4bfca0de9b8d3fb8328ead28b",
+    "forkFromLastBlockNumber": 2,
+    "forkFromLastHash": "5105449208546850705933536278636416260254117928004244842768206982383575957896n",
     "maxStakersPerAddress": 10,
     "minStake": 1000,
     "minWithdrawalBlocks": 403200,
