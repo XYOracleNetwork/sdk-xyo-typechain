@@ -55,9 +55,9 @@ async function main() {
   console.log(expectedPrefix, 'SingleAddressSubGovernor Owner Address:', subGovernorCustodyAddress)
   console.log(actualPrefix, 'SingleAddressSubGovernor Owner Address:', subGovernorOwner)
 
-  // Verify XL1 Governance is the owner of the BridgeableToken
-  console.log(expectedPrefix, 'BridgeableToken Owner Address:', xl1GovernanceAddress)
-  console.log(actualPrefix, 'BridgeableToken Owner Address:', tokenOwner)
+  // Verify expected treasury address
+  console.log(expectedPrefix, 'BridgeableToken Treasury Address:', bridgeTreasuryAddress)
+  console.log(actualPrefix, 'BridgeableToken Treasury Address:', bridgeTreasuryAddress)
 
   // Verify expected treasury amount
   const balance = await token.balanceOf(bridgeTreasuryAddress)
@@ -72,6 +72,10 @@ async function main() {
   const normalizedTotalSupply = hre.ethers.formatUnits(totalSupply, decimals)
   console.log(expectedPrefix, 'BridgeableToken Total Supply:', normalizedExpectedTreasuryAmount)
   console.log(actualPrefix, 'BridgeableToken Total Supply:', normalizedTotalSupply)
+
+  // Verify XL1 Governance is the owner of the BridgeableToken
+  console.log(expectedPrefix, 'BridgeableToken Owner Address:', xl1GovernanceAddress)
+  console.log(actualPrefix, 'BridgeableToken Owner Address:', tokenOwner)
 }
 
 main().catch(console.error)
