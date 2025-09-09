@@ -1,7 +1,7 @@
 {
   "BridgeableToken": {
-    "tokenName": "Bridgeable Token Name",
-    "tokenSymbol": "TEST"
+    "tokenName": "Wrapped XL1",
+    "tokenSymbol": "WXL1"
   },
   "DeployXL1": {
     "bridgeTreasuryAddress": "0xe53218d47913b5f9E58bb74F0a0eD790bbF21972",
