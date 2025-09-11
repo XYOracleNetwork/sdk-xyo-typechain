@@ -4,9 +4,9 @@
     "tokenSymbol": "XL1"
   },
   "DeployXL1": {
-    "bridgeTreasuryAddress": "0xe53218d47913b5f9E58bb74F0a0eD790bbF21972",
+    "bridgeTreasuryAddress": "0x0e65b65B10C791942665030402c35023d88B14dA",
     "bridgeTreasuryAmount": "18000000000000000000000000000n",
-    "subGovernorCustodyAddress": "0x2Dd79795c53368Ce8427bdE89cAA24A0E0d01Eb1"
+    "subGovernorCustodyAddress": "0xFffF773D81036fe998d5400D9C718f08a6Bdbe93"
   },
   "SingleAddressSubGovernor": {
     "name": "Single Address SubGovernor",
