@@ -44,7 +44,7 @@
         "--no-warnings=ExperimentalWarning",
         "./node_modules/.bin/hardhat",
         "run",
-        "scripts/AddStake.ts",
+        "scripts/LocalTestAddStake.ts",
         "--network",
         "local",
       ],
