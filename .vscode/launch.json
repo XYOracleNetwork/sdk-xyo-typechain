@@ -44,9 +44,9 @@
         "--no-warnings=ExperimentalWarning",
         "./node_modules/.bin/hardhat",
         "run",
-        "scripts/CheckDeployment.ts",
+        "scripts/LocalTestAddStake.ts",
         "--network",
-        "ethereum",
+        "local",
       ],
       "env": {
         "TS_NODE_PROJECT": "./tsconfig.json"
