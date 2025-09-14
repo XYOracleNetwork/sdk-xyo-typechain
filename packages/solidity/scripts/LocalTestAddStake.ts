@@ -45,6 +45,7 @@ async function main() {
   const [deployer, producerStaker, ...stakers] = await hre.ethers.getSigners()
   console.log('Deployer Address:', deployer.address)
 
+  // Get the StakedXyoChainV2 contract and staking token addresses
   const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['StakedXyoChainV2#StakedXyoChainV2'], deployer)
   const stakedXyoChainV2Address = await stakedXyoChainV2.getAddress()
   const stakingTokenAddress = await stakedXyoChainV2.stakingTokenAddress()
@@ -53,7 +54,7 @@ async function main() {
   // Stake producer
   await stakeAddress(producerStaker, producerAddress, 10_000n, stakingTokenAddress, stakedXyoChainV2Address)
 
-  // Stake network address
+  // Stake network address with varying amount
   for (const [i, staker] of stakers.entries()) {
     const stake = 100 * (i + 100)
     await stakeAddress(staker, networkStakingAddress, BigInt(stake), stakingTokenAddress, stakedXyoChainV2Address)
