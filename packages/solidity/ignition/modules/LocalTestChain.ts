@@ -7,7 +7,8 @@ import { createXL1GovernanceModule } from './XL1Governance'
 import { XyoChainRewardsModule } from './XyoChainRewards'
 
 /**
- * Returns a function that builds the StakedXyoChainV2 contract with injected rewards contract address.
+ * Returns a function that builds the StakedXyoChainV2 contract with injected rewards
+ * contract & staking token address.
  */
 export const createTestStakedXyoChainV2Module
   = (
