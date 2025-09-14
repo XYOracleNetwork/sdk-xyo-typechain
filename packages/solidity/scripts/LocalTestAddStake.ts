@@ -29,16 +29,21 @@ const stakeAddress = async (staker: HardhatEthersSigner, staked: string, amount:
 }
 
 async function main() {
+  // Get the network name and chain ID
   const networkName = hre.network.name
   const chainId = hre.network.config.chainId
   console.log(`Running on: ${networkName} (Chain ID: ${chainId})`)
 
+  // Get the deployment information from the local deployment file
   const deploymentFile = path.join(__dirname, `../ignition/deployments/chain-${chainId}/deployed_addresses.json`)
   const deployments = JSON.parse(readFileSync(deploymentFile, 'utf8'))
 
+  // Hardhat funds the first several addresses with 10,000 ETH each
+  // Address 0 is always the deployer
+  // Address 1 is the producer staker
+  // The rest are stakers for the network address
   const [deployer, producerStaker, ...stakers] = await hre.ethers.getSigners()
-  const address = deployer.address
-  console.log('Signer Address:', address)
+  console.log('Deployer Address:', deployer.address)
 
   const stakedXyoChainV2 = await hre.ethers.getContractAt('StakedXyoChainV2', deployments['StakedXyoChainV2#StakedXyoChainV2'], deployer)
   const stakedXyoChainV2Address = await stakedXyoChainV2.getAddress()
