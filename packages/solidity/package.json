@@ -39,6 +39,8 @@
     "deploy-local": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network local --parameters ./ignition/params.local.json",
     "deploy-sepolia": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network sepolia --parameters ./ignition/params.sepolia.json",
     "dev": "hardhat node",
+    "dev-hardhat": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/LocalTestChain.ts --network hardhat --parameters ./ignition/params.hardhat.json",
+    "dev-local": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/LocalTestChain.ts --network local --parameters ./ignition/params.local.json",
     "package-build": "yarn package-clean && yarn package-compile",
     "package-clean": "hardhat clean",
     "package-compile": "hardhat compile && hardhat typechain",
