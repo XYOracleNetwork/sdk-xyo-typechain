@@ -32,10 +32,10 @@
       },
       "skipFiles": ["<node_internals>/**"]
     },
-        {
+    {
       "type": "node",
       "request": "launch",
-      "name": "Debug Script",
+      "name": "LocalTest:AddStake",
       "cwd": "${workspaceFolder}/packages/solidity",
       "runtimeExecutable": "node",
       "runtimeArgs": [
@@ -45,6 +45,27 @@
         "./node_modules/.bin/hardhat",
         "run",
         "scripts/LocalTestAddStake.ts",
+        "--network",
+        "local",
+      ],
+      "env": {
+        "TS_NODE_PROJECT": "./tsconfig.json"
+      },
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "LocalTest:AdvanceBlocks",
+      "cwd": "${workspaceFolder}/packages/solidity",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--loader",
+        "ts-node/esm/transpile-only",
+        "--no-warnings=ExperimentalWarning",
+        "./node_modules/.bin/hardhat",
+        "run",
+        "scripts/LocalTestAdvanceBlocks.ts",
         "--network",
         "local",
       ],
