@@ -59,6 +59,7 @@ contract LiquidityPoolBridge is Ownable {
     function bridgeTo(address to, uint256 amount) external {
         require(to != address(0), "to=0");
         require(amount > 0, "amount=0");
+        require(amount <= maxBridgeAmount, "amount > max");
 
         // Transfer the tokens from the sender to this contract
         require(
