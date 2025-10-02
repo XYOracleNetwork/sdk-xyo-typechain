@@ -110,6 +110,18 @@ describe.only('LiquidityPoolBridge', () => {
 
         await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
       })
+      it('should revert if trying to bridge more than max bridge amount', async () => {
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const maxBridgeAmount = await bridge.maxBridgeAmount()
+
+        await mintToOwner(token, owner, maxBridgeAmount + 1n)
+
+        await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
+      })
     })
   })
 })
