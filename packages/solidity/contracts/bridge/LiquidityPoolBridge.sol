@@ -7,9 +7,11 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract LiquidityPoolBridge is Ownable {
     using SafeERC20 for IERC20;
     /// @notice The identifier for the remote chain
-    address public remoteChain;
+    address public immutable remoteChain;
     /// @notice The ERC20 token representing the asset being bridged
-    IERC20 public token;
+    IERC20 public immutable token;
+    /// @notice The maximum amount that can be bridged in a single transaction
+    uint256 public immutable maxBridgeAmount;
 
     /// @notice Emitted when a bridge to another chain is requested
     /// @param from The address initiating the bridge
@@ -40,12 +42,15 @@ contract LiquidityPoolBridge is Ownable {
     /// @param tokenAddress The address of the ERC20 representing the asset being bridged
     constructor(
         address remoteChainIdentifier,
-        address tokenAddress
+        address tokenAddress,
+        uint256 maxAmount
     ) Ownable(msg.sender) {
         require(remoteChainIdentifier != address(0), "remoteChain=0");
         require(tokenAddress != address(0), "token=0");
+        require(maxAmount > 0, "max=0");
         remoteChain = remoteChainIdentifier;
         token = IERC20(tokenAddress);
+        maxBridgeAmount = maxAmount;
     }
 
     /// @notice Request bridging tokens to another chain
