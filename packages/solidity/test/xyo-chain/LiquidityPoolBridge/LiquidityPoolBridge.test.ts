@@ -32,26 +32,26 @@ describe.only('LiquidityPoolBridge', () => {
     to: HardhatEthersSigner
     token: BridgeableToken
   }) => {
-    const nextBridgeId = await bridge.nextOutboundBridgeId()
+    const nextBridgeId = await bridge.nextBridgeToId()
     const initialBalance = await token.balanceOf(from.address)
 
     // Approve the bridge to spend tokens
     await token.connect(from).approve(bridge.getAddress(), amount)
 
     // Send tokens to bridge
-    const tx = await bridge.connect(from).bridgeTo(to.address, amount)
+    const tx = await bridge.connect(from).bridgeToRemote(to.address, amount)
     const receipt = await tx.wait()
     expect(receipt).not.to.equal(null)
 
-    const record = await bridge.outboundBridges(nextBridgeId)
+    const record = await bridge.toRemoteBridges(nextBridgeId)
     expect(record.from).to.equal(from.address)
     expect(record.to).to.equal(to.address)
     expect(record.amount).to.equal(amount)
 
     // Get typed logs using the filter
-    const logs = await bridge.queryFilter(bridge.filters.BridgeTo())
-    expect(logs.length).to.equal(1)
-    const log = logs[0]
+    const logs = await bridge.queryFilter(bridge.filters.BridgedToRemote())
+    expect(logs.length > 0).to.equal(true)
+    const log = logs.at(-1)
     expect(log).not.to.equal(undefined)
     const event = assertEx(log)
     expect(event?.args.id).to.equal(nextBridgeId)
@@ -79,30 +79,37 @@ describe.only('LiquidityPoolBridge', () => {
           bridge, from: owner, to: destination, amount, token,
         })
       })
+      it('should increment bridge ID after each bridge', async () => {
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
 
-      // it('should increment bridge ID after each bridge', async () => {
-      //   const [owner, destination] = await ethers.getSigners()
-      //   const { token } = await loadFixture(deployLiquidityPoolBridge)
+        const initialBridgeId = await bridge.nextBridgeToId()
+        const bridgeCount = 5
+        await mintToOwner(token, owner, amount * BigInt(bridgeCount))
+        for (let i = 0; i < bridgeCount; i++) {
+          await expectBridgeToSucceed({
+            bridge, from: owner, to: destination, amount, token,
+          })
+          const nextBridgeToId = await bridge.nextBridgeToId()
+          const expectedNextBridgeToId = initialBridgeId + BigInt(i + 1)
+          expect(nextBridgeToId).to.equal(expectedNextBridgeToId)
+        }
+      })
 
-      //   const initialBridgeId = await token.nextBridgeId()
-      //   const bridgeCount = 5
-      //   await mintToOwner(token, owner, amount * BigInt(bridgeCount))
-      //   for (let i = 0; i < bridgeCount; i++) {
-      //     await expectBridgeToSucceed({
-      //       bridge: token, from: owner, to: destination, amount,
-      //     })
-      //     expect(await token.nextBridgeId()).to.equal(initialBridgeId + BigInt(i + 1))
-      //   }
-      // })
+      it('should revert if trying to bridge more than balance', async () => {
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
 
-      // it('should revert if trying to bridge more than balance', async () => {
-      //   const [owner, destination] = await ethers.getSigners()
-      //   const { token } = await loadFixture(deployLiquidityPoolBridge)
+        await mintToOwner(token, owner, amount / 2n)
 
-      //   await mintToOwner(token, owner, amount / 2n)
-
-      //   await expect(token.bridge(amount, destination.address)).to.be.reverted
-      // })
+        await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
+      })
     })
   })
 })
