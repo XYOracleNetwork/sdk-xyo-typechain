@@ -6,6 +6,13 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 contract LiquidityPoolBridge is Ownable {
     IERC20 public token;
 
+    // Event for bridging intent
+    event BridgeRequested(
+        address indexed from,
+        address indexed to,
+        uint256 amount
+    );
+
     constructor(address tokenAddress) Ownable(msg.sender) {
         token = IERC20(tokenAddress);
     }
@@ -17,7 +24,7 @@ contract LiquidityPoolBridge is Ownable {
             token.transferFrom(msg.sender, address(this), amount),
             "Transfer failed"
         );
-
-        // TODO: Emit event
+        // Emit bridging intent
+        emit BridgeRequested(msg.sender, to, amount);
     }
 }
