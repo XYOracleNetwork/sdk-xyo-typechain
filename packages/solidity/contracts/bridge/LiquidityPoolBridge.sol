@@ -9,12 +9,24 @@ contract LiquidityPoolBridge is Ownable {
     /// @notice The ERC20 token representing the asset being bridged
     IERC20 public token;
 
-    ///
+    /// @notice Emitted when a bridge to another chain is requested
     /// @param from The address initiating the bridge
     /// @param to The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
     /// @param remoteChain The identifier for the remote chain
-    event BridgeRequested(
+    event BridgeToRequested(
+        address indexed from,
+        address indexed to,
+        uint256 amount,
+        address indexed remoteChain
+    );
+
+    /// @notice Emitted when a bridge from another chain is completed
+    /// @param from The address initiating the bridge
+    /// @param to The address receiving the bridged tokens
+    /// @param amount The amount of tokens being bridged
+    /// @param remoteChain The identifier for the remote chain
+    event BridgeFrom(
         address indexed from,
         address indexed to,
         uint256 amount,
@@ -35,13 +47,27 @@ contract LiquidityPoolBridge is Ownable {
     /// @notice Request bridging tokens to another chain
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
-    function bridge(address to, uint256 amount) external {
+    function bridgeTo(address to, uint256 amount) external {
         // Transfer the tokens from the sender to this contract
         require(
             token.transferFrom(msg.sender, address(this), amount),
             "Transfer failed"
         );
         // Emit bridging intent
-        emit BridgeRequested(msg.sender, to, amount, remoteChain);
+        emit BridgeToRequested(msg.sender, to, amount, remoteChain);
+    }
+
+    function bridgeFrom(
+        address from,
+        address to,
+        uint256 amount
+    ) external onlyOwner {
+        // Transfer the tokens from this contract to the recipient
+        require(
+            token.balanceOf(address(this)) >= amount,
+            "Insufficient balance in bridge"
+        );
+        require(token.transfer(to, amount), "Transfer failed");
+        emit BridgeFrom(from, to, amount, remoteChain);
     }
 }
