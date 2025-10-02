@@ -5,6 +5,7 @@ import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
+//TODO: Extract Interface/Event Definitions
 contract LiquidityPoolBridge is Ownable {
     using SafeERC20 for IERC20;
 
@@ -36,7 +37,7 @@ contract LiquidityPoolBridge is Ownable {
         uint256 timepoint;
     }
 
-    /// @notice History mappings
+    /// @notice History mappings TODO: [Make Array?]
     mapping(uint256 => BridgeToRemote) public toRemoteBridges;
     mapping(uint256 => BridgeFromRemote) public fromRemoteBridges;
 
@@ -120,7 +121,6 @@ contract LiquidityPoolBridge is Ownable {
         address to,
         uint256 amount
     ) external onlyOwner {
-        require(to != address(0), "to=0");
         require(amount > 0, "amount=0");
         require(token.balanceOf(address(this)) >= amount, "insufficient pool");
 

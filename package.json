@@ -40,6 +40,9 @@
     "packages/**/*"
   ],
   "scripts": {
+    "dev": "yarn workspace @xyo-network/solidity dev",
+    "dev-local": "yarn workspace @xyo-network/solidity dev-local",
+    "dev-add-stake": "yarn workspace @xyo-network/solidity ts-node scripts/LocalTestAddStake.ts",
     "build": "yarn xy clean && yarn compile",
     "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
     "deploy": "yarn deploy-patch",
