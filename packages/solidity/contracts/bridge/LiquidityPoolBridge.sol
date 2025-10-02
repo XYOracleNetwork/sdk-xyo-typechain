@@ -11,7 +11,7 @@ contract LiquidityPoolBridge is Ownable {
     /// @notice The ERC20 token representing the asset being bridged
     IERC20 public immutable token;
     /// @notice The maximum amount that can be bridged in a single transaction
-    uint256 public immutable maxBridgeAmount;
+    uint256 public maxBridgeAmount;
 
     /// @notice Emitted when a bridge to another chain is requested
     /// @param from The address initiating the bridge
@@ -36,6 +36,20 @@ contract LiquidityPoolBridge is Ownable {
         uint256 amount,
         address indexed remoteChain
     );
+
+    /// @notice Emitted when the maximum bridge amount is updated
+    /// @param oldAmount The previous maximum bridge amount
+    /// @param newAmount The new maximum bridge amount
+    event MaxBridgeAmountUpdated(uint256 oldAmount, uint256 newAmount);
+
+    /// @notice Set a new maximum bridge amount
+    /// @param newMax The new maximum bridge amount
+    function setMaxBridgeAmount(uint256 newMax) external onlyOwner {
+        require(newMax > 0, "max=0");
+        uint256 old = maxBridgeAmount;
+        maxBridgeAmount = newMax;
+        emit MaxBridgeAmountUpdated(old, newMax);
+    }
 
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChainIdentifier The identifier for the remote chain
