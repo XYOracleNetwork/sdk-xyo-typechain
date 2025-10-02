@@ -84,6 +84,10 @@ contract LiquidityPoolBridge is Ownable {
         emit BridgeTo(msg.sender, to, amount, remoteChain);
     }
 
+    /// @notice Fulfill bridging tokens from the remoteChain
+    /// @param from The address initiating the bridge
+    /// @param to The address receiving the bridged tokens
+    /// @param amount The amount of tokens being bridged
     function bridgeFrom(
         address from,
         address to,
