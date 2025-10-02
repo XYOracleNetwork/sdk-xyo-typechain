@@ -90,7 +90,7 @@ contract LiquidityPoolBridge is Ownable {
         emit MaxBridgeAmountUpdated(old, newMax);
     }
 
-    /// @notice Request bridging tokens to another chain
+    /// @notice Request bridging tokens to the remoteChain
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
     function bridgeToRemote(address to, uint256 amount) external {
