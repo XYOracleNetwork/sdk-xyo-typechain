@@ -62,19 +62,20 @@ contract LiquidityPoolBridge is Ownable {
     event MaxBridgeAmountUpdated(uint256 oldAmount, uint256 newAmount);
 
     /// @notice Constructor for the LiquidityPoolBridge contract
-    /// @param remoteChainIdentifier The identifier for the remote chain
-    /// @param tokenAddress The address of the ERC20 representing the asset being bridged
+    /// @param remoteChain_ The identifier for the remote chain
+    /// @param token_ The address of the ERC20 representing the asset being bridged
+    /// @param maxBridgeAmount_ The maximum amount that can be bridged in a single transaction
     constructor(
-        address remoteChainIdentifier,
-        address tokenAddress,
+        address remoteChain_,
+        address token_,
         uint256 maxBridgeAmount_
     ) Ownable(msg.sender) {
-        require(remoteChainIdentifier != address(0), "remoteChain=0");
-        require(tokenAddress != address(0), "token=0");
+        require(remoteChain_ != address(0), "remoteChain=0");
+        require(token_ != address(0), "token=0");
         require(maxBridgeAmount_ > 0, "max=0");
 
-        remoteChain = remoteChainIdentifier;
-        token = IERC20(tokenAddress);
+        remoteChain = remoteChain_;
+        token = IERC20(token_);
         maxBridgeAmount = maxBridgeAmount_;
     }
 
