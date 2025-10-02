@@ -16,12 +16,12 @@ contract LiquidityPoolBridge is Ownable {
     uint256 public maxBridgeAmount;
 
     /// @notice Incrementing counter for unique inbound bridge IDs
-    uint256 public nextInboundBridgeId;
+    uint256 public nextBridgeFromId;
     /// @notice Incrementing counters for unique outbound bridge IDs
-    uint256 public nextOutboundBridgeId;
+    uint256 public nextBridgeToId;
 
     /// @notice Outbound bridge record
-    struct BridgeOut {
+    struct BridgeToRemote {
         address from;
         address to;
         uint256 amount;
@@ -29,7 +29,7 @@ contract LiquidityPoolBridge is Ownable {
     }
 
     /// @notice Inbound bridge record
-    struct BridgeIn {
+    struct BridgeFromRemote {
         address from;
         address to;
         uint256 amount;
@@ -37,11 +37,11 @@ contract LiquidityPoolBridge is Ownable {
     }
 
     /// @notice History mappings
-    mapping(uint256 => BridgeOut) public outboundBridges;
-    mapping(uint256 => BridgeIn) public inboundBridges;
+    mapping(uint256 => BridgeToRemote) public toRemoteBridges;
+    mapping(uint256 => BridgeFromRemote) public fromRemoteBridges;
 
     /// @notice Emitted when a bridge to another chain is requested
-    event BridgeTo(
+    event BridgedToRemote(
         uint256 indexed id,
         address indexed from,
         address indexed to,
@@ -50,7 +50,7 @@ contract LiquidityPoolBridge is Ownable {
     );
 
     /// @notice Emitted when a bridge from another chain is completed
-    event BridgeFrom(
+    event BridgedFromRemote(
         uint256 indexed id,
         address indexed from,
         address indexed to,
@@ -93,29 +93,29 @@ contract LiquidityPoolBridge is Ownable {
     /// @notice Request bridging tokens to another chain
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
-    function bridgeTo(address to, uint256 amount) external {
+    function bridgeToRemote(address to, uint256 amount) external {
         require(to != address(0), "to=0");
         require(amount > 0, "amount=0");
         require(amount <= maxBridgeAmount, "amount > max");
 
         token.safeTransferFrom(msg.sender, address(this), amount);
 
-        uint256 id = nextOutboundBridgeId++;
-        outboundBridges[id] = BridgeOut({
+        uint256 id = nextBridgeToId++;
+        toRemoteBridges[id] = BridgeToRemote({
             from: msg.sender,
             to: to,
             amount: amount,
             timepoint: block.timestamp
         });
 
-        emit BridgeTo(id, msg.sender, to, amount, remoteChain);
+        emit BridgedToRemote(id, msg.sender, to, amount, remoteChain);
     }
 
     /// @notice Fulfill bridging tokens from the remoteChain
     /// @param from The address initiating the bridge
     /// @param to The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
-    function bridgeFrom(
+    function bridgeFromRemote(
         address from,
         address to,
         uint256 amount
@@ -126,14 +126,14 @@ contract LiquidityPoolBridge is Ownable {
 
         token.safeTransfer(to, amount);
 
-        uint256 id = nextInboundBridgeId++;
-        inboundBridges[id] = BridgeIn({
+        uint256 id = nextBridgeFromId++;
+        fromRemoteBridges[id] = BridgeFromRemote({
             from: from,
             to: to,
             amount: amount,
             timepoint: block.timestamp
         });
 
-        emit BridgeFrom(id, from, to, amount, remoteChain);
+        emit BridgedFromRemote(id, from, to, amount, remoteChain);
     }
 }
