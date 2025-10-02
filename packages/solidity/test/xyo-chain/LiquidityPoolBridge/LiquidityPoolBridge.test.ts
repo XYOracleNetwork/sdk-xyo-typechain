@@ -1,7 +1,7 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
-import type { EventLog } from 'ethers'
 import hre from 'hardhat'
 
 import type { BridgeableToken, LiquidityPoolBridge } from '../../../typechain-types/index.js'
@@ -47,9 +47,13 @@ describe.only('LiquidityPoolBridge', () => {
     expect(record.from).to.equal(from.address)
     expect(record.to).to.equal(to.address)
     expect(record.amount).to.equal(amount)
-    // expect(record.timepoint).to.equal(receipt?.blockNumber)
 
-    const event = receipt?.logs.find((log): log is EventLog => 'fragment' in log && log.fragment?.name === 'BridgeTo')
+    // Get typed logs using the filter
+    const logs = await bridge.queryFilter(bridge.filters.BridgeTo())
+    expect(logs.length).to.equal(1)
+    const log = logs[0]
+    expect(log).not.to.equal(undefined)
+    const event = assertEx(log)
     expect(event?.args.id).to.equal(nextBridgeId)
     expect(event?.args.from).to.equal(from.address)
     expect(event?.args.to).to.equal(to.address)
