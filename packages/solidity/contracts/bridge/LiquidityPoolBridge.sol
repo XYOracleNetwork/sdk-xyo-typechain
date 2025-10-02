@@ -15,8 +15,10 @@ contract LiquidityPoolBridge is Ownable {
     /// @notice The maximum amount that can be bridged in a single transaction
     uint256 public maxBridgeAmount;
 
-    /// @notice Incrementing counter for unique bridge IDs
-    uint256 public nextBridgeId;
+    /// @notice Incrementing counter for unique inbound bridge IDs
+    uint256 public nextInboundBridgeId;
+    /// @notice Incrementing counters for unique outbound bridge IDs
+    uint256 public nextOutboundBridgeId;
 
     /// @notice Outbound bridge record
     struct BridgeOut {
@@ -98,7 +100,7 @@ contract LiquidityPoolBridge is Ownable {
 
         token.safeTransferFrom(msg.sender, address(this), amount);
 
-        uint256 id = nextBridgeId++;
+        uint256 id = nextOutboundBridgeId++;
         outboundBridges[id] = BridgeOut({
             from: msg.sender,
             to: to,
@@ -124,7 +126,7 @@ contract LiquidityPoolBridge is Ownable {
 
         token.safeTransfer(to, amount);
 
-        uint256 id = nextBridgeId++;
+        uint256 id = nextInboundBridgeId++;
         inboundBridges[id] = BridgeIn({
             from: from,
             to: to,
