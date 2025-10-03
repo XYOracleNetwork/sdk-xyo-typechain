@@ -40,9 +40,6 @@
     "packages/**/*"
   ],
   "scripts": {
-    "dev": "yarn workspace @xyo-network/solidity dev",
-    "dev-local": "yarn workspace @xyo-network/solidity dev-local",
-    "dev-add-stake": "yarn workspace @xyo-network/solidity ts-node scripts/LocalTestAddStake.ts",
     "build": "yarn xy clean && yarn compile",
     "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
     "deploy": "yarn deploy-patch",
@@ -51,7 +48,10 @@
     "deploy-minor": "yarn workspaces foreach --all version minor --deferred && yarn deploy-common",
     "deploy-next": "yarn workspaces foreach --all version minor --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
     "deploy-next-major": "yarn workspaces foreach --all version major --deferred && yarn build && yarn version apply --all --prerelease && yarn workspaces foreach -ptv npm publish --tag next",
-    "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common"
+    "deploy-patch": "yarn workspaces foreach --all version patch --deferred && yarn deploy-common",
+    "dev": "yarn workspace @xyo-network/solidity dev",
+    "dev-add-stake": "yarn workspace @xyo-network/solidity ts-node scripts/LocalTestAddStake.ts",
+    "dev-local": "yarn workspace @xyo-network/solidity dev-local"
   },
   "dependencies": {
     "@xyo-network/open-zeppelin-typechain": "workspace:~",
