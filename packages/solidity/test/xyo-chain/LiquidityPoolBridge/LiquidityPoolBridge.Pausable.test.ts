@@ -8,42 +8,24 @@ import {
 
 const { ethers } = hre
 
-describe('LiquidityPoolBridge.Pausable', () => {
+describe.only('LiquidityPoolBridge.Pausable', () => {
   const amount = ethers.parseUnits('1000000', 18)
 
   describe('when paused', () => {
-    it('should send remaining funds to payout address', async () => {
+    it('should indicate paused', async () => {
       // Arrange
       const [owner, payout] = await ethers.getSigners()
       const { token } = await loadFixture(deployTestERC20)
       const tokenAddress = await token.getAddress()
       const fixture = () => deployLiquidityPoolBridge(tokenAddress, payout.address)
       const { bridge } = await loadFixture(fixture)
-      await mintToOwner(token, owner, amount)
-      await fundBridge(token, owner, bridge, amount)
-      expect(await token.balanceOf(await bridge.getAddress())).to.equal(amount)
-      expect(await token.balanceOf(payout.address)).to.equal(0n)
+      expect(await bridge.paused()).to.equal(false)
 
       // Act
-      await bridge.connect(owner).retire()
+      await bridge.connect(owner).pause()
 
       // Assert
-      expect(await token.balanceOf(payout.address)).to.equal(amount)
-    })
-    it('should indicate retired', async () => {
-      // Arrange
-      const [owner, payout] = await ethers.getSigners()
-      const { token } = await loadFixture(deployTestERC20)
-      const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress, payout.address)
-      const { bridge } = await loadFixture(fixture)
-      expect(await bridge.retired()).to.equal(false)
-
-      // Act
-      await bridge.connect(owner).retire()
-
-      // Assert
-      expect(await bridge.retired()).to.equal(true)
+      expect(await bridge.paused()).to.equal(true)
     })
     describe('should prevent calls to', () => {
       it('bridgeTo', async () => {
@@ -56,12 +38,12 @@ describe('LiquidityPoolBridge.Pausable', () => {
         await mintToOwner(token, owner, amount)
 
         // Act
-        await bridge.connect(owner).retire()
+        await bridge.connect(owner).pause()
 
         // Assert
         await expect(expectBridgeToSucceed({
           bridge, from: owner, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'ContractRetired')
+        })).to.be.revertedWithCustomError(bridge, 'Paused')
       })
       it('bridgeFrom', async () => {
         // Arrange
@@ -74,12 +56,12 @@ describe('LiquidityPoolBridge.Pausable', () => {
         await fundBridge(token, owner, bridge, amount)
 
         // Act
-        await bridge.connect(owner).retire()
+        await bridge.connect(owner).pause()
 
         // Assert
         await expect(expectBridgeFromSucceed({
           bridge, from: owner, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'ContractRetired')
+        })).to.be.revertedWithCustomError(bridge, 'Paused')
       })
       it('setMaxBridgeAmount', async () => {
         // Arrange
@@ -90,11 +72,11 @@ describe('LiquidityPoolBridge.Pausable', () => {
         const { bridge } = await loadFixture(fixture)
 
         // Act
-        await bridge.connect(owner).retire()
+        await bridge.connect(owner).pause()
 
         // Assert
         await expect(bridge.connect(owner).setMaxBridgeAmount(1n))
-          .to.be.revertedWithCustomError(bridge, 'ContractRetired')
+          .to.be.revertedWithCustomError(bridge, 'Paused')
       })
       it('pause', async () => {
         // Arrange
@@ -105,11 +87,11 @@ describe('LiquidityPoolBridge.Pausable', () => {
         const { bridge } = await loadFixture(fixture)
 
         // Act
-        await bridge.connect(owner).retire()
+        await bridge.connect(owner).pause()
 
         // Assert
         await expect(bridge.connect(owner).pause())
-          .to.be.revertedWithCustomError(bridge, 'ContractRetired')
+          .to.be.revertedWithCustomError(bridge, 'Paused')
       })
       it('unpause', async () => {
         // Arrange
@@ -120,11 +102,11 @@ describe('LiquidityPoolBridge.Pausable', () => {
         const { bridge } = await loadFixture(fixture)
 
         // Act
-        await bridge.connect(owner).retire()
+        await bridge.connect(owner).pause()
 
         // Assert
         await expect(bridge.connect(owner).unpause())
-          .to.be.revertedWithCustomError(bridge, 'ContractRetired')
+          .to.be.revertedWithCustomError(bridge, 'Paused')
       })
     })
   })
