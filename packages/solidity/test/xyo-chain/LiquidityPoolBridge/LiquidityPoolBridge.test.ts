@@ -23,6 +23,47 @@ describe.only('LiquidityPoolBridge', () => {
     await expectMintToSucceed(token, owner, owner, amount)
   }
 
+  const expectBridgeFromSucceed = async ({
+    bridge, from, to, amount, token,
+  }: {
+    amount: bigint
+    bridge: LiquidityPoolBridge
+    from: HardhatEthersSigner
+    to: HardhatEthersSigner
+    token: BridgeableToken
+  }) => {
+    const nextBridgeId = await bridge.nextBridgeToId()
+    const initialBalance = await token.balanceOf(from.address)
+
+    // Approve the bridge to spend tokens
+    await token.connect(from).approve(bridge.getAddress(), amount)
+
+    // Send tokens to bridge
+    const tx = await bridge.connect(from).bridgeFromRemote(from.address, to.address, amount)
+    const receipt = await tx.wait()
+    expect(receipt).not.to.equal(null)
+
+    const record = await bridge.toRemoteBridges(nextBridgeId)
+    expect(record.from).to.equal(from.address)
+    expect(record.to).to.equal(to.address)
+    expect(record.amount).to.equal(amount)
+
+    // Get typed logs using the filter
+    const logs = await bridge.queryFilter(bridge.filters.BridgedFromRemote())
+    expect(logs.length > 0).to.equal(true)
+    const log = logs.at(-1)
+    expect(log).not.to.equal(undefined)
+    const event = assertEx(log)
+    expect(event?.args.id).to.equal(nextBridgeId)
+    expect(event?.args.from).to.equal(from.address)
+    expect(event?.args.to).to.equal(to.address)
+    expect(event?.args.amount).to.equal(amount)
+
+    const finalBalance = await token.balanceOf(from.address)
+    expect(finalBalance).to.equal(initialBalance - amount)
+
+    return { record, event }
+  }
   const expectBridgeToSucceed = async ({
     bridge, from, to, amount, token,
   }: {
