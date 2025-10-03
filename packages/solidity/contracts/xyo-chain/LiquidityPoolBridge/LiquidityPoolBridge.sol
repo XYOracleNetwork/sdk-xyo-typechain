@@ -23,22 +23,6 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @notice Incrementing counters for unique outbound bridge IDs
     uint256 public nextBridgeToId;
 
-    /// @notice Outbound bridge record
-    struct BridgeToRemote {
-        address from;
-        address to;
-        uint256 amount;
-        uint256 timepoint;
-    }
-
-    /// @notice Inbound bridge record
-    struct BridgeFromRemote {
-        address from;
-        address to;
-        uint256 amount;
-        uint256 timepoint;
-    }
-
     /// @notice History mappings TODO: [Make Array?]
     mapping(uint256 => BridgeToRemote) public toRemoteBridges;
     mapping(uint256 => BridgeFromRemote) public fromRemoteBridges;

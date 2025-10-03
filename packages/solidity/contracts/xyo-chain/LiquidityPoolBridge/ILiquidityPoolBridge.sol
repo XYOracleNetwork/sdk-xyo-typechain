@@ -4,6 +4,22 @@ pragma solidity 0.8.26;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface ILiquidityPoolBridge {
+    /// @notice Outbound bridge record
+    struct BridgeToRemote {
+        address from;
+        address to;
+        uint256 amount;
+        uint256 timepoint;
+    }
+
+    /// @notice Inbound bridge record
+    struct BridgeFromRemote {
+        address from;
+        address to;
+        uint256 amount;
+        uint256 timepoint;
+    }
+
     /// @notice Emitted when a bridge to another chain is requested
     event BridgedToRemote(
         uint256 indexed id,
