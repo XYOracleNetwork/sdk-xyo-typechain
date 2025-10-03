@@ -38,13 +38,15 @@ abstract contract Retirable is Ownable, Pausable {
 
     /// @dev Retire the contract. Calls `_retire(payout)` hook for child contracts.
     function retire() public onlyOwner {
+        // If already retired, revert
         if (_retired) revert ContractRetired();
-
-        _pause();
+        // If not paused, pause the contract
+        if (!paused()) _pause();
+        // Mark as retired
         _retired = true;
-
+        // Call the hook for inheriting contracts to implement cleanup/asset transfer
         uint256 balance = _retire(retirementPayout);
-
+        // Emit the event
         emit Retired(retirementPayout, balance);
     }
 
