@@ -1,7 +1,7 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
-import { getAddress } from 'ethers'
+import { ZeroAddress } from 'ethers'
 import hre from 'hardhat'
 
 import {
@@ -13,6 +13,37 @@ const { ethers } = hre
 describe('LiquidityPoolBridge', () => {
   const amount = ethers.parseUnits('1000000', 18)
 
+  describe('constructor', () => {
+    it('should revert if remoteChain is 0', async () => {
+      // Arrange
+      const { token } = await loadFixture(deployTestERC20)
+      const tokenAddress = await token.getAddress()
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, undefined, ZeroAddress)
+
+      // Act/Assert
+      await expect(loadFixture(fixture))
+        .to.be.revertedWith('remoteChain=0')
+    })
+    it('should revert if token is 0', async () => {
+      // Arrange
+      const fixture = () => deployLiquidityPoolBridge(ZeroAddress)
+
+      // Act/Assert
+      await expect(loadFixture(fixture))
+        .to.be.revertedWith('token=0')
+    })
+    it('should revert if maxBridgeAmount is 0', async () => {
+      // Arrange
+      const [owner] = await ethers.getSigners()
+      const { token } = await loadFixture(deployTestERC20)
+      const tokenAddress = await token.getAddress()
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, owner.address, owner.address, 0n)
+
+      // Act/Assert
+      await expect(loadFixture(fixture))
+        .to.be.revertedWith('max=0')
+    })
+  })
   describe('bridgeTo', () => {
     describe('when called by owner', () => {
       it('should bridge tokens and emit event', async () => {
@@ -106,7 +137,7 @@ describe('LiquidityPoolBridge', () => {
 
         // Act / Assert
         await expect(expectBridgeToSucceed({
-          bridge, from: owner, to: getAddress('0x0000000000000000000000000000000000000000'), amount, token,
+          bridge, from: owner, to: ZeroAddress, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
     })
@@ -202,7 +233,7 @@ describe('LiquidityPoolBridge', () => {
 
         // Act / Assert
         await expect(expectBridgeToSucceed({
-          bridge, from: user, to: getAddress('0x0000000000000000000000000000000000000000'), amount, token,
+          bridge, from: user, to: ZeroAddress, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
     })
@@ -296,7 +327,7 @@ describe('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge zero address', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
+        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -307,7 +338,7 @@ describe('LiquidityPoolBridge', () => {
 
         // Act / Assert
         await expect(expectBridgeFromSucceed({
-          bridge, from: owner, to: getAddress('0x0000000000000000000000000000000000000000'), amount, token,
+          bridge, from: owner, to: ZeroAddress, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAmountZero')
       })
     })
@@ -354,6 +385,19 @@ describe('LiquidityPoolBridge', () => {
         const event = assertEx(log)
         expect(event?.args.oldAmount).to.equal(oldAmount)
         expect(event?.args.newAmount).to.equal(newAmount)
+      })
+      it('should revert if set to 0', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const newAmount = 0n
+
+        // Act/Assert
+        await expect(bridge.connect(owner).setMaxBridgeAmount(newAmount))
+          .to.be.revertedWith('max=0')
       })
     })
     describe('when called by non-owner', () => {
