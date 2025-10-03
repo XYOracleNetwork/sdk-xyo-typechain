@@ -4,9 +4,10 @@ pragma solidity 0.8.26;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
+import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
 //TODO: Extract Interface/Event Definitions
-contract LiquidityPoolBridge is Ownable {
+contract LiquidityPoolBridge is Ownable, Pausable {
     using SafeERC20 for IERC20;
 
     /// @notice The identifier for the remote chain
@@ -94,7 +95,7 @@ contract LiquidityPoolBridge is Ownable {
     /// @notice Request bridging tokens to the remoteChain
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
-    function bridgeToRemote(address to, uint256 amount) external {
+    function bridgeToRemote(address to, uint256 amount) external whenNotPaused {
         require(to != address(0), "to=0");
         require(amount > 0, "amount=0");
         require(amount <= maxBridgeAmount, "amount > max");
@@ -135,5 +136,13 @@ contract LiquidityPoolBridge is Ownable {
         });
 
         emit BridgedFromRemote(id, from, to, amount, remoteChain);
+    }
+
+    function pause() external onlyOwner {
+        _pause();
+    }
+
+    function unpause() external onlyOwner {
+        _unpause();
     }
 }
