@@ -8,7 +8,7 @@ import {
 
 const { ethers } = hre
 
-describe.only('LiquidityPoolBridge.Pausable', () => {
+describe('LiquidityPoolBridge.Pausable', () => {
   const amount = ethers.parseUnits('1000000', 18)
 
   describe('when paused', () => {
@@ -43,7 +43,7 @@ describe.only('LiquidityPoolBridge.Pausable', () => {
         // Assert
         await expect(expectBridgeToSucceed({
           bridge, from: owner, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'Paused')
+        })).to.be.revertedWithCustomError(bridge, 'EnforcedPause')
       })
       it('bridgeFrom', async () => {
         // Arrange
@@ -61,22 +61,7 @@ describe.only('LiquidityPoolBridge.Pausable', () => {
         // Assert
         await expect(expectBridgeFromSucceed({
           bridge, from: owner, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'Paused')
-      })
-      it('setMaxBridgeAmount', async () => {
-        // Arrange
-        const [owner] = await ethers.getSigners()
-        const { token } = await loadFixture(deployTestERC20)
-        const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
-        const { bridge } = await loadFixture(fixture)
-
-        // Act
-        await bridge.connect(owner).pause()
-
-        // Assert
-        await expect(bridge.connect(owner).setMaxBridgeAmount(1n))
-          .to.be.revertedWithCustomError(bridge, 'Paused')
+        })).to.be.revertedWithCustomError(bridge, 'EnforcedPause')
       })
       it('pause', async () => {
         // Arrange
@@ -91,7 +76,23 @@ describe.only('LiquidityPoolBridge.Pausable', () => {
 
         // Assert
         await expect(bridge.connect(owner).pause())
-          .to.be.revertedWithCustomError(bridge, 'Paused')
+          .to.be.revertedWithCustomError(bridge, 'EnforcedPause')
+      })
+    })
+    describe('should allow calls to', () => {
+      it('setMaxBridgeAmount', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+
+        // Act
+        await bridge.connect(owner).pause()
+
+        // Assert
+        await bridge.connect(owner).setMaxBridgeAmount(1n)
       })
       it('unpause', async () => {
         // Arrange
@@ -105,8 +106,7 @@ describe.only('LiquidityPoolBridge.Pausable', () => {
         await bridge.connect(owner).pause()
 
         // Assert
-        await expect(bridge.connect(owner).unpause())
-          .to.be.revertedWithCustomError(bridge, 'Paused')
+        await bridge.connect(owner).unpause()
       })
     })
   })
