@@ -54,7 +54,6 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
     function bridgeToRemote(address to, uint256 amount) external whenNotPaused {
-        require(to != address(0), "to=0");
         if (amount == 0) {
             revert AmountZero();
         }
