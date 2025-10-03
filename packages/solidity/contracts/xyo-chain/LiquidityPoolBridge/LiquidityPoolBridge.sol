@@ -54,11 +54,14 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
     function bridgeToRemote(address to, uint256 amount) external whenNotPaused {
+        if (to == address(0)) {
+            revert BridgeAddressZero();
+        }
         if (amount == 0) {
-            revert AmountZero();
+            revert BridgeAmountZero();
         }
         if (amount > maxBridgeAmount) {
-            revert AmountExceedsMax(amount, maxBridgeAmount);
+            revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
         token.safeTransferFrom(msg.sender, address(this), amount);
@@ -81,11 +84,14 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
         address to,
         uint256 amount
     ) external onlyOwner {
+        if (to == address(0)) {
+            revert BridgeAddressZero();
+        }
         if (amount == 0) {
-            revert AmountZero();
+            revert BridgeAmountZero();
         }
         if (amount > maxBridgeAmount) {
-            revert AmountExceedsMax(amount, maxBridgeAmount);
+            revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
         token.safeTransfer(to, amount);

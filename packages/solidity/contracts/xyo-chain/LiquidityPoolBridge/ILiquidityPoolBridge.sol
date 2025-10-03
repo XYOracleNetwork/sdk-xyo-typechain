@@ -4,10 +4,12 @@ pragma solidity 0.8.26;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 interface ILiquidityPoolBridge {
+    /// @notice Thrown when bridged address is the zero address
+    error BridgeAddressZero();
     /// @notice Thrown when bridged amount exceeds maximum allowed
-    error AmountExceedsMax(uint256 amount, uint256 maxAllowed);
+    error BridgeAmountExceedsMax(uint256 amount, uint256 maxAllowed);
     /// @notice Thrown when bridged amount provided is zero
-    error AmountZero();
+    error BridgeAmountZero();
 
     /// @notice Emitted when a bridge to another chain is requested
     event BridgedToRemote(

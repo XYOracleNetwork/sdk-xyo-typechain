@@ -176,7 +176,7 @@ describe.only('LiquidityPoolBridge', () => {
         // Act / Assert
         await expect(expectBridgeToSucceed({
           bridge, from: owner, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'AmountExceedsMax')
+        })).to.be.revertedWithCustomError(bridge, 'BridgeAmountExceedsMax')
       })
     })
     describe('when called by non-owner', () => {
@@ -242,7 +242,7 @@ describe.only('LiquidityPoolBridge', () => {
         // Act / Assert
         await expect(expectBridgeToSucceed({
           bridge, from: user, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'AmountExceedsMax')
+        })).to.be.revertedWithCustomError(bridge, 'BridgeAmountExceedsMax')
       })
     })
   })
@@ -315,7 +315,7 @@ describe.only('LiquidityPoolBridge', () => {
         // Act / Assert
         await expect(expectBridgeFromSucceed({
           bridge, from: owner, to: destination, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'AmountExceedsMax')
+        })).to.be.revertedWithCustomError(bridge, 'BridgeAmountExceedsMax')
       })
     })
     describe('when called by non-owner', () => {
