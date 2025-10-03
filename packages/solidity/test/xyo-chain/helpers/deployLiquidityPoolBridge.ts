@@ -8,9 +8,9 @@ const DefaultMaxBridgeAmount = ethers.parseUnits('1000000000', 18)
 
 export const deployLiquidityPoolBridge = async (
   token: string,
+  payoutAddress?: string,
   remoteChain?: string,
   maxBridgeAmount: bigint = DefaultMaxBridgeAmount,
-  payoutAddress?: string,
 ) => {
   // Contracts are deployed using the first signer/account by default
   const [owner] = await ethers.getSigners()
