@@ -7,8 +7,14 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
 import {ILiquidityPoolBridge} from "./ILiquidityPoolBridge.sol";
+import {Retirable} from "./Retirable.sol";
 
-contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
+contract LiquidityPoolBridge is
+    ILiquidityPoolBridge,
+    Ownable,
+    Pausable,
+    Retirable
+{
     using SafeERC20 for IERC20;
 
     /// @notice The identifier for the remote chain
@@ -43,7 +49,7 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
 
     /// @notice Set a new maximum bridge amount
     /// @param newMax The new maximum bridge amount
-    function setMaxBridgeAmount(uint256 newMax) external onlyOwner {
+    function setMaxBridgeAmount(uint256 newMax) external notRetired onlyOwner {
         require(newMax > 0, "max=0");
         uint256 oldMax = maxBridgeAmount;
         maxBridgeAmount = newMax;
@@ -53,7 +59,10 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @notice Request bridging tokens to the remoteChain
     /// @param to The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
-    function bridgeToRemote(address to, uint256 amount) external whenNotPaused {
+    function bridgeToRemote(
+        address to,
+        uint256 amount
+    ) external notRetired whenNotPaused {
         if (to == address(0)) {
             revert BridgeAddressZero();
         }
@@ -83,7 +92,7 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
         address from,
         address to,
         uint256 amount
-    ) external onlyOwner {
+    ) external notRetired onlyOwner {
         if (to == address(0)) {
             revert BridgeAddressZero();
         }
@@ -105,11 +114,19 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
         );
     }
 
-    function pause() external onlyOwner {
+    function pause() external notRetired onlyOwner {
         _pause();
     }
 
-    function unpause() external onlyOwner {
+    function unpause() external notRetired onlyOwner {
         _unpause();
+    }
+
+    function _retire(address payout) internal override returns (uint256) {
+        uint256 balance = token.balanceOf(address(this));
+        if (balance > 0) {
+            token.safeTransfer(payout, balance);
+        }
+        return balance;
     }
 }
