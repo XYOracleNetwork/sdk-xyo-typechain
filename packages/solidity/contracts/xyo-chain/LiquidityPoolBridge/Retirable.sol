@@ -7,7 +7,10 @@ import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 /// @notice Module that allows an owner to permanently retire a contract.
 /// Similar to OpenZeppelin's Pausable, but irreversible.
 abstract contract Retirable is Ownable, Pausable {
+    /// @dev Indicates if the contract has been retired
     bool private _retired;
+    /// @notice Address that will receive any remaining assets upon retirement
+    address public immutable retirementPayout;
 
     /// @notice Emitted when the contract is retired
     /// @param payout Address that received any final asset payouts
@@ -15,6 +18,12 @@ abstract contract Retirable is Ownable, Pausable {
     event Retired(address payout, uint256 balance);
 
     error AlreadyRetired();
+
+    /// @notice Constructor for the Retirable contract
+    /// @param payout_ Address that will receive any remaining assets upon retirement
+    constructor(address payout_) {
+        retirementPayout = payout_;
+    }
 
     /// @notice Returns true if the contract has been retired
     function retired() public view returns (bool) {
@@ -28,15 +37,15 @@ abstract contract Retirable is Ownable, Pausable {
     }
 
     /// @dev Retire the contract. Calls `_retire(payout)` hook for child contracts.
-    function retire(address payout) public onlyOwner {
+    function retire() public onlyOwner {
         if (_retired) revert AlreadyRetired();
 
         _pause();
         _retired = true;
 
-        uint256 balance = _retire(payout);
+        uint256 balance = _retire(retirementPayout);
 
-        emit Retired(payout, balance);
+        emit Retired(retirementPayout, balance);
     }
 
     /// @dev Hook for inheriting contracts to implement cleanup/asset transfer.

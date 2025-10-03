@@ -36,8 +36,9 @@ contract LiquidityPoolBridge is
     constructor(
         address remoteChain_,
         address token_,
-        uint256 maxBridgeAmount_
-    ) Ownable(msg.sender) {
+        uint256 maxBridgeAmount_,
+        address payout_
+    ) Ownable(msg.sender) Retirable(payout_) {
         require(remoteChain_ != address(0), "remoteChain=0");
         require(token_ != address(0), "token=0");
         require(maxBridgeAmount_ > 0, "max=0");
