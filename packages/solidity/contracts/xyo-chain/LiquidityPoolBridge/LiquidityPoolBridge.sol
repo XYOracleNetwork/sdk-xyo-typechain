@@ -126,10 +126,14 @@ contract LiquidityPoolBridge is
     }
 
     function _retire(address payout) internal override returns (uint256) {
+        // Transfer all tokens to the payout address
         uint256 balance = token.balanceOf(address(this));
         if (balance > 0) {
             token.safeTransfer(payout, balance);
         }
+        // If not paused, pause the contract
+        if (!paused()) _pause();
+        // Return the balance transferred
         return balance;
     }
 }
