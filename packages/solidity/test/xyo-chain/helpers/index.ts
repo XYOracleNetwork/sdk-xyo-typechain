@@ -1,6 +1,7 @@
 export * from './bridgeableTokenHelpers.js'
 export * from './deployAddressStakingV2.js'
 export * from './deployBridgeableToken.js'
+export * from './deployLiquidityPoolBridge.js'
 export * from './deploySingleAddressSubGovernor.js'
 export * from './deployStakedXyoChainV2.js'
 export * from './deployTestERC20.js'
