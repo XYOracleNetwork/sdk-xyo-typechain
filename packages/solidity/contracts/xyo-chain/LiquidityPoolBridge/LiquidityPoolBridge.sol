@@ -49,7 +49,9 @@ contract LiquidityPoolBridge is
 
     /// @notice Set a new maximum bridge amount
     /// @param newMax The new maximum bridge amount
-    function setMaxBridgeAmount(uint256 newMax) external notRetired onlyOwner {
+    function setMaxBridgeAmount(
+        uint256 newMax
+    ) external whenNotRetired onlyOwner {
         require(newMax > 0, "max=0");
         uint256 oldMax = maxBridgeAmount;
         maxBridgeAmount = newMax;
@@ -62,7 +64,7 @@ contract LiquidityPoolBridge is
     function bridgeToRemote(
         address to,
         uint256 amount
-    ) external notRetired whenNotPaused {
+    ) external whenNotRetired whenNotPaused {
         if (to == address(0)) {
             revert BridgeAddressZero();
         }
@@ -92,7 +94,7 @@ contract LiquidityPoolBridge is
         address from,
         address to,
         uint256 amount
-    ) external notRetired onlyOwner {
+    ) external whenNotRetired whenNotPaused onlyOwner {
         if (to == address(0)) {
             revert BridgeAddressZero();
         }
@@ -114,11 +116,11 @@ contract LiquidityPoolBridge is
         );
     }
 
-    function pause() external notRetired onlyOwner {
+    function pause() external whenNotRetired onlyOwner {
         _pause();
     }
 
-    function unpause() external notRetired onlyOwner {
+    function unpause() external whenNotRetired onlyOwner {
         _unpause();
     }
 

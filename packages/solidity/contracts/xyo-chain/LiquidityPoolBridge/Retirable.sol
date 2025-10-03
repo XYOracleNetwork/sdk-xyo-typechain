@@ -22,7 +22,7 @@ abstract contract Retirable is Ownable, Pausable {
     }
 
     /// @notice Modifier to make a function callable only if not retired
-    modifier notRetired() {
+    modifier whenNotRetired() {
         require(!_retired, "Retired: contract is retired");
         _;
     }
