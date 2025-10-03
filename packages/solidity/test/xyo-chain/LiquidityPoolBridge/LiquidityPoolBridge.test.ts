@@ -243,4 +243,140 @@ describe.only('LiquidityPoolBridge', () => {
       })
     })
   })
+  describe('bridgeFrom', () => {
+    describe('when called by owner', () => {
+      it('should bridge tokens and emit event', async () => {
+        // Arrange
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await mintToOwner(token, owner, amount)
+
+        // Act / Assert
+        await expectBridgeFromSucceed({
+          bridge, from: owner, to: destination, amount, token,
+        })
+      })
+      it('should increment bridge ID after each bridge', async () => {
+        // Arrange
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const initialBridgeId = await bridge.nextBridgeFromId()
+        const bridgeCount = 5
+        await mintToOwner(token, owner, amount * BigInt(bridgeCount))
+
+        // Act / Assert
+        for (let i = 0; i < bridgeCount; i++) {
+          await expectBridgeFromSucceed({
+            bridge, from: owner, to: destination, amount, token,
+          })
+          const nextBridgeFromId = await bridge.nextBridgeFromId()
+          const expectedNextBridgeFromId = initialBridgeId + BigInt(i + 1)
+          expect(nextBridgeFromId).to.equal(expectedNextBridgeFromId)
+        }
+      })
+
+      it('should revert if trying to bridge more than balance', async () => {
+        // Arrange
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await mintToOwner(token, owner, amount / 2n)
+
+        // Act / Assert
+        await expect(expectBridgeFromSucceed({
+          bridge, from: owner, to: destination, amount, token,
+        })).to.be.revertedWithCustomError(token, 'ERC20InsufficientBalance')
+      })
+      it('should revert if trying to bridge more than max bridge amount', async () => {
+        // Arrange
+        const [owner, destination] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const amount = await bridge.maxBridgeAmount() + 1n
+        await mintToOwner(token, owner, amount)
+
+        // Act / Assert
+        await expect(expectBridgeFromSucceed({
+          bridge, from: owner, to: destination, amount, token,
+        })).to.be.revertedWith('amount > max')
+      })
+    })
+    describe('when called by non-owner', () => {
+      it('should bridge tokens and emit event', async () => {
+        // Arrange
+        const [owner, destination, user] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await expectMintToSucceed(token, owner, user, amount)
+
+        // Act / Assert
+        await expectBridgeFromSucceed({
+          bridge, from: user, to: destination, amount, token,
+        })
+      })
+      it('should increment bridge ID after each bridge', async () => {
+        // Arrange
+        const [owner, destination, user] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const initialBridgeId = await bridge.nextBridgeFromId()
+        const bridgeCount = 5
+        await expectMintToSucceed(token, owner, user, amount * BigInt(bridgeCount))
+
+        // Act / Assert
+        for (let i = 0; i < bridgeCount; i++) {
+          await expectBridgeFromSucceed({
+            bridge, from: user, to: destination, amount, token,
+          })
+          const nextBridgeFromId = await bridge.nextBridgeFromId()
+          const expectedNextBridgeFromId = initialBridgeId + BigInt(i + 1)
+          expect(nextBridgeFromId).to.equal(expectedNextBridgeFromId)
+        }
+      })
+
+      it('should revert if trying to bridge more than balance', async () => {
+        // Arrange
+        const [owner, destination, user] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await expectMintToSucceed(token, owner, user, amount / 2n)
+
+        // Act / Assert
+        await expect(expectBridgeFromSucceed({
+          bridge, from: user, to: destination, amount, token,
+        })).to.be.revertedWithCustomError(token, 'ERC20InsufficientBalance')
+      })
+      it('should revert if trying to bridge more than max bridge amount', async () => {
+        // Arrange
+        const [owner, destination, user] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const amount = await bridge.maxBridgeAmount() + 1n
+        await expectMintToSucceed(token, owner, user, amount)
+
+        // Act / Assert
+        await expect(expectBridgeFromSucceed({
+          bridge, from: user, to: destination, amount, token,
+        })).to.be.revertedWith('amount > max')
+      })
+    })
+  })
 })
