@@ -45,9 +45,9 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @param newMax The new maximum bridge amount
     function setMaxBridgeAmount(uint256 newMax) external onlyOwner {
         require(newMax > 0, "max=0");
-        uint256 old = maxBridgeAmount;
+        uint256 oldMax = maxBridgeAmount;
         maxBridgeAmount = newMax;
-        emit MaxBridgeAmountUpdated(old, newMax);
+        emit MaxBridgeAmountUpdated(oldMax, newMax);
     }
 
     /// @notice Request bridging tokens to the remoteChain
