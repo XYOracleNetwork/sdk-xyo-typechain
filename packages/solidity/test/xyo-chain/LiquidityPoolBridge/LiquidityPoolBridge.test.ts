@@ -223,7 +223,7 @@ describe('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge to zero address', async () => {
         // Arrange
-        const [owner, user] = await ethers.getSigners()
+        const [owner, user, other] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -233,7 +233,7 @@ describe('LiquidityPoolBridge', () => {
 
         // Act / Assert
         await expect(expectBridgeToSucceed({
-          bridge, from: user, to: ZeroAddress, amount, token,
+          bridge, from: user, to: other, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
     })
