@@ -17,7 +17,7 @@ abstract contract Retirable is Ownable, Pausable {
     /// @param balance Balance transferred during retirement
     event Retired(address payout, uint256 balance);
 
-    error AlreadyRetired();
+    error ContractRetired();
 
     /// @notice Constructor for the Retirable contract
     /// @param payout_ Address that will receive any remaining assets upon retirement
@@ -32,13 +32,13 @@ abstract contract Retirable is Ownable, Pausable {
 
     /// @notice Modifier to make a function callable only if not retired
     modifier whenNotRetired() {
-        require(!_retired, "Retired: contract is retired");
+        if (_retired) revert ContractRetired();
         _;
     }
 
     /// @dev Retire the contract. Calls `_retire(payout)` hook for child contracts.
     function retire() public onlyOwner {
-        if (_retired) revert AlreadyRetired();
+        if (_retired) revert ContractRetired();
 
         _pause();
         _retired = true;
