@@ -30,6 +30,21 @@ describe('LiquidityPoolBridge.Retirable', () => {
       // Assert
       expect(await token.balanceOf(payout.address)).to.equal(amount)
     })
+    it('should indicate retired', async () => {
+      // Arrange
+      const [owner, payout] = await ethers.getSigners()
+      const { token } = await loadFixture(deployTestERC20)
+      const tokenAddress = await token.getAddress()
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, payout.address)
+      const { bridge } = await loadFixture(fixture)
+      expect(await bridge.retired()).to.equal(false)
+
+      // Act
+      await bridge.connect(owner).retire()
+
+      // Assert
+      expect(await bridge.retired()).to.equal(true)
+    })
     describe('should prevent calls to', () => {
       it('bridgeTo', async () => {
         // Arrange
