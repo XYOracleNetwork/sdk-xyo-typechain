@@ -6,8 +6,9 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
-//TODO: Extract Interface/Event Definitions
-contract LiquidityPoolBridge is Ownable, Pausable {
+import {ILiquidityPoolBridge} from "./ILiquidityPoolBridge.sol";
+
+contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     using SafeERC20 for IERC20;
 
     /// @notice The identifier for the remote chain
@@ -41,29 +42,6 @@ contract LiquidityPoolBridge is Ownable, Pausable {
     /// @notice History mappings TODO: [Make Array?]
     mapping(uint256 => BridgeToRemote) public toRemoteBridges;
     mapping(uint256 => BridgeFromRemote) public fromRemoteBridges;
-
-    /// @notice Emitted when a bridge to another chain is requested
-    event BridgedToRemote(
-        uint256 indexed id,
-        address indexed from,
-        address indexed to,
-        uint256 amount,
-        address remoteChain
-    );
-
-    /// @notice Emitted when a bridge from another chain is completed
-    event BridgedFromRemote(
-        uint256 indexed id,
-        address indexed from,
-        address indexed to,
-        uint256 amount,
-        address remoteChain
-    );
-
-    /// @notice Emitted when the maximum bridge amount is updated
-    /// @param oldAmount The previous maximum bridge amount
-    /// @param newAmount The new maximum bridge amount
-    event MaxBridgeAmountUpdated(uint256 oldAmount, uint256 newAmount);
 
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
