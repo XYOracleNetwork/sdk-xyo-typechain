@@ -10,7 +10,39 @@ const { ethers } = hre
 
 describe('LiquidityPoolBridge.Retirable', () => {
   const amount = ethers.parseUnits('1000000', 18)
+  describe('retire', () => {
+    it('should pause the contract', async () => {
+      // Arrange
+      const [owner] = await ethers.getSigners()
+      const { token } = await loadFixture(deployTestERC20)
+      const tokenAddress = await token.getAddress()
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+      const { bridge } = await loadFixture(fixture)
 
+      // Act
+      expect(await bridge.connect(owner).paused()).to.equal(false)
+      await bridge.connect(owner).retire()
+
+      // Assert
+      expect(await bridge.connect(owner).paused()).to.equal(true)
+    })
+    it('should allow already paused contract', async () => {
+      // Arrange
+      const [owner] = await ethers.getSigners()
+      const { token } = await loadFixture(deployTestERC20)
+      const tokenAddress = await token.getAddress()
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+      const { bridge } = await loadFixture(fixture)
+
+      // Act
+      await bridge.connect(owner).pause()
+      expect(await bridge.connect(owner).paused()).to.equal(true)
+      await bridge.connect(owner).retire()
+
+      // Assert
+      expect(await bridge.connect(owner).paused()).to.equal(true)
+    })
+  })
   describe('when retired', () => {
     it('should send remaining funds to payout address', async () => {
       // Arrange
