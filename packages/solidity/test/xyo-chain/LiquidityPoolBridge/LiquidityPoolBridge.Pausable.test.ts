@@ -10,7 +10,74 @@ const { ethers } = hre
 
 describe('LiquidityPoolBridge.Pausable', () => {
   const amount = ethers.parseUnits('1000000', 18)
+  describe('pause', () => {
+    describe('when called by owner', () => {
+      it('should pause', async () => {
+      // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        expect(await bridge.paused()).to.equal(false)
 
+        // Act
+        await bridge.connect(owner).pause()
+
+        // Assert
+        expect(await bridge.paused()).to.equal(true)
+      })
+    })
+    describe('when called by non-owner', () => {
+      it('should revert', async () => {
+      // Arrange
+        const [_, other] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        expect(await bridge.paused()).to.equal(false)
+
+        // Act/Assert
+        await expect(bridge.connect(other).pause()).to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
+      })
+    })
+  })
+  describe('unpause', () => {
+    describe('when called by owner', () => {
+      it('should unpause', async () => {
+      // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await bridge.connect(owner).pause()
+        expect(await bridge.paused()).to.equal(true)
+
+        // Act
+        await bridge.connect(owner).unpause()
+
+        // Assert
+        expect(await bridge.paused()).to.equal(false)
+      })
+    })
+    describe('when called by non-owner', () => {
+      it('should revert', async () => {
+      // Arrange
+        const [owner, other] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await bridge.connect(owner).pause()
+        expect(await bridge.paused()).to.equal(true)
+
+        // Act/Assert
+        await expect(bridge.connect(other).unpause()).to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
+      })
+    })
+  })
   describe('when paused', () => {
     it('should indicate paused', async () => {
       // Arrange
