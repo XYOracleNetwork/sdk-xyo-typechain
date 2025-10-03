@@ -1,4 +1,5 @@
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
 import hre from 'hardhat'
 
@@ -232,6 +233,50 @@ describe('LiquidityPoolBridge', () => {
         await expect(expectBridgeFromSucceed({
           bridge, from: user, to: destination, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
+      })
+    })
+  })
+  describe('setMaxBridgeAmount', () => {
+    describe('when called by owner', () => {
+      it('should set max bridge amount and emit event', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const oldAmount = await bridge.maxBridgeAmount()
+        const newAmount = oldAmount + 1n
+
+        // Act
+        await bridge.connect(owner).setMaxBridgeAmount(newAmount)
+
+        // Assert
+        expect(await bridge.maxBridgeAmount()).to.equal(newAmount)
+        // Get typed logs using the filter
+        const logs = await bridge.queryFilter(bridge.filters.MaxBridgeAmountUpdated())
+        expect(logs.length > 0).to.equal(true)
+        const log = logs.at(-1)
+        expect(log).not.to.equal(undefined)
+        const event = assertEx(log)
+        expect(event?.args.oldAmount).to.equal(oldAmount)
+        expect(event?.args.newAmount).to.equal(newAmount)
+      })
+    })
+    describe('when called by non-owner', () => {
+      it('should revert', async () => {
+        // Arrange
+        const [_, other] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        const previousMax = await bridge.maxBridgeAmount()
+        const expected = previousMax + 1n
+
+        // Act/Assert
+        await expect(bridge.connect(other).setMaxBridgeAmount(expected))
+          .to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
       })
     })
   })

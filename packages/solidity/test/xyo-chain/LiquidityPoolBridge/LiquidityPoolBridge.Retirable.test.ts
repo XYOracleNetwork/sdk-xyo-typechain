@@ -8,7 +8,7 @@ import {
 
 const { ethers } = hre
 
-describe.only('LiquidityPoolBridge.Retirable', () => {
+describe('LiquidityPoolBridge.Retirable', () => {
   const amount = ethers.parseUnits('1000000', 18)
 
   describe('when retired', () => {
