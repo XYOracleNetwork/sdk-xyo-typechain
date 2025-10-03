@@ -137,7 +137,7 @@ describe.only('LiquidityPoolBridge', () => {
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
         const { bridge } = await loadFixture(fixture)
-        await mintToOwner(token, owner, amount)
+        await expectMintToSucceed(token, owner, user, amount)
 
         // Act / Assert
         await expectBridgeToSucceed({
