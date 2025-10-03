@@ -23,10 +23,6 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @notice Incrementing counters for unique outbound bridge IDs
     uint256 public nextBridgeToId;
 
-    /// @notice History mappings TODO: [Make Array?]
-    mapping(uint256 => BridgeToRemote) public toRemoteBridges;
-    mapping(uint256 => BridgeFromRemote) public fromRemoteBridges;
-
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
     /// @param token_ The address of the ERC20 representing the asset being bridged
@@ -65,13 +61,6 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
         token.safeTransferFrom(msg.sender, address(this), amount);
 
         uint256 id = nextBridgeToId++;
-        toRemoteBridges[id] = BridgeToRemote({
-            from: msg.sender,
-            to: to,
-            amount: amount,
-            timepoint: block.timestamp
-        });
-
         emit BridgedToRemote(id, msg.sender, to, amount, remoteChain);
     }
 
@@ -90,13 +79,6 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
         token.safeTransfer(to, amount);
 
         uint256 id = nextBridgeFromId++;
-        fromRemoteBridges[id] = BridgeFromRemote({
-            from: from,
-            to: to,
-            amount: amount,
-            timepoint: block.timestamp
-        });
-
         emit BridgedFromRemote(id, from, to, amount, remoteChain);
     }
 

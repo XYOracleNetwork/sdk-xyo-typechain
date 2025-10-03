@@ -43,10 +43,10 @@ describe.only('LiquidityPoolBridge', () => {
     const receipt = await tx.wait()
     expect(receipt).not.to.equal(null)
 
-    const record = await bridge.toRemoteBridges(nextBridgeId)
-    expect(record.from).to.equal(from.address)
-    expect(record.to).to.equal(to.address)
-    expect(record.amount).to.equal(amount)
+    // const record = await bridge.toRemoteBridges(nextBridgeId)
+    // expect(record.from).to.equal(from.address)
+    // expect(record.to).to.equal(to.address)
+    // expect(record.amount).to.equal(amount)
 
     // Get typed logs using the filter
     const logs = await bridge.queryFilter(bridge.filters.BridgedFromRemote())
@@ -62,8 +62,9 @@ describe.only('LiquidityPoolBridge', () => {
     const finalBalance = await token.balanceOf(from.address)
     expect(finalBalance).to.equal(initialBalance - amount)
 
-    return { record, event }
+    return { event }
   }
+
   const expectBridgeToSucceed = async ({
     bridge, from, to, amount, token,
   }: {
@@ -84,10 +85,10 @@ describe.only('LiquidityPoolBridge', () => {
     const receipt = await tx.wait()
     expect(receipt).not.to.equal(null)
 
-    const record = await bridge.toRemoteBridges(nextBridgeId)
-    expect(record.from).to.equal(from.address)
-    expect(record.to).to.equal(to.address)
-    expect(record.amount).to.equal(amount)
+    // const record = await bridge.toRemoteBridges(nextBridgeId)
+    // expect(record.from).to.equal(from.address)
+    // expect(record.to).to.equal(to.address)
+    // expect(record.amount).to.equal(amount)
 
     // Get typed logs using the filter
     const logs = await bridge.queryFilter(bridge.filters.BridgedToRemote())
@@ -103,7 +104,7 @@ describe.only('LiquidityPoolBridge', () => {
     const finalBalance = await token.balanceOf(from.address)
     expect(finalBalance).to.equal(initialBalance - amount)
 
-    return { record, event }
+    return { event }
   }
 
   describe('bridgeTo', () => {
