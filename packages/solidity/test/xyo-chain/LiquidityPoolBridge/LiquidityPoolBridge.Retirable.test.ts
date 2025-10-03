@@ -11,36 +11,67 @@ const { ethers } = hre
 describe('LiquidityPoolBridge.Retirable', () => {
   const amount = ethers.parseUnits('1000000', 18)
   describe('retire', () => {
-    it('should pause the contract', async () => {
-      // Arrange
-      const [owner] = await ethers.getSigners()
-      const { token } = await loadFixture(deployTestERC20)
-      const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress)
-      const { bridge } = await loadFixture(fixture)
+    describe('when called by owner', () => {
+      it('should pause the contract', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
 
-      // Act
-      expect(await bridge.connect(owner).paused()).to.equal(false)
-      await bridge.connect(owner).retire()
+        // Act
+        expect(await bridge.connect(owner).paused()).to.equal(false)
+        await bridge.connect(owner).retire()
 
-      // Assert
-      expect(await bridge.connect(owner).paused()).to.equal(true)
+        // Assert
+        expect(await bridge.connect(owner).paused()).to.equal(true)
+      })
+      it('should allow already paused contract', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+
+        // Act
+        await bridge.connect(owner).pause()
+        expect(await bridge.connect(owner).paused()).to.equal(true)
+        await bridge.connect(owner).retire()
+
+        // Assert
+        expect(await bridge.connect(owner).paused()).to.equal(true)
+      })
+      it('should revert if contract already retired', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await bridge.connect(owner).pause()
+        expect(await bridge.connect(owner).paused()).to.equal(true)
+        await bridge.connect(owner).retire()
+
+        // Act/Assert
+        await expect(bridge.connect(owner).retire())
+          .to.be.revertedWithCustomError(bridge, 'ContractRetired')
+      })
     })
-    it('should allow already paused contract', async () => {
-      // Arrange
-      const [owner] = await ethers.getSigners()
-      const { token } = await loadFixture(deployTestERC20)
-      const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress)
-      const { bridge } = await loadFixture(fixture)
+    describe('when called by non-owner', () => {
+      it('should revert', async () => {
+        // Arrange
+        const [_, other] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
 
-      // Act
-      await bridge.connect(owner).pause()
-      expect(await bridge.connect(owner).paused()).to.equal(true)
-      await bridge.connect(owner).retire()
-
-      // Assert
-      expect(await bridge.connect(owner).paused()).to.equal(true)
+        // Act/Assert
+        await expect(bridge.connect(other).retire())
+          .to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
+      })
     })
   })
   describe('when retired', () => {
