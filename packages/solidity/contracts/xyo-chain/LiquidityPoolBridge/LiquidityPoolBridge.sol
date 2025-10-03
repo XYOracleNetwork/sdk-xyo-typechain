@@ -55,13 +55,22 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
     /// @param amount The amount of tokens being bridged
     function bridgeToRemote(address to, uint256 amount) external whenNotPaused {
         require(to != address(0), "to=0");
-        require(amount > 0, "amount=0");
-        require(amount <= maxBridgeAmount, "amount > max");
+        if (amount == 0) {
+            revert AmountZero();
+        }
+        if (amount > maxBridgeAmount) {
+            revert AmountExceedsMax(amount, maxBridgeAmount);
+        }
 
         token.safeTransferFrom(msg.sender, address(this), amount);
 
-        uint256 id = nextBridgeToId++;
-        emit BridgedToRemote(id, msg.sender, to, amount, remoteChain);
+        emit BridgedToRemote(
+            nextBridgeToId++,
+            msg.sender,
+            to,
+            amount,
+            remoteChain
+        );
     }
 
     /// @notice Fulfill bridging tokens from the remoteChain
@@ -73,13 +82,22 @@ contract LiquidityPoolBridge is ILiquidityPoolBridge, Ownable, Pausable {
         address to,
         uint256 amount
     ) external onlyOwner {
-        require(amount > 0, "amount=0");
-        require(token.balanceOf(address(this)) >= amount, "insufficient pool");
+        if (amount == 0) {
+            revert AmountZero();
+        }
+        if (amount > maxBridgeAmount) {
+            revert AmountExceedsMax(amount, maxBridgeAmount);
+        }
 
         token.safeTransfer(to, amount);
 
-        uint256 id = nextBridgeFromId++;
-        emit BridgedFromRemote(id, from, to, amount, remoteChain);
+        emit BridgedFromRemote(
+            nextBridgeFromId++,
+            from,
+            to,
+            amount,
+            remoteChain
+        );
     }
 
     function pause() external onlyOwner {
