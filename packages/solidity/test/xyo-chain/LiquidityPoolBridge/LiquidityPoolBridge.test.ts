@@ -132,7 +132,6 @@ describe('LiquidityPoolBridge', () => {
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
         const { bridge } = await loadFixture(fixture)
-        const amount = await bridge.maxBridgeAmount() + 1n
         await mintToOwner(token, owner, amount)
 
         // Act / Assert
@@ -223,17 +222,16 @@ describe('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge to zero address', async () => {
         // Arrange
-        const [owner, user, other] = await ethers.getSigners()
+        const [owner, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
         const { bridge } = await loadFixture(fixture)
-        const amount = await bridge.maxBridgeAmount() + 1n
         await expectMintToSucceed(token, owner, user, amount)
 
         // Act / Assert
         await expect(expectBridgeToSucceed({
-          bridge, from: user, to: other, amount, token,
+          bridge, from: user, to: ZeroAddress, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
     })
@@ -332,14 +330,13 @@ describe('LiquidityPoolBridge', () => {
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
         const { bridge } = await loadFixture(fixture)
-        const amount = await bridge.maxBridgeAmount()
         await mintToOwner(token, owner, amount)
         await fundBridge(token, owner, bridge, amount)
 
         // Act / Assert
         await expect(expectBridgeFromSucceed({
           bridge, from: owner, to: ZeroAddress, amount, token,
-        })).to.be.revertedWithCustomError(bridge, 'BridgeAmountZero')
+        })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
     })
     describe('when called by non-owner', () => {
