@@ -4,10 +4,13 @@ import hre from 'hardhat'
 
 const { ethers } = hre
 
+const DefaultMaxBridgeAmount = ethers.parseUnits('1000000000', 18)
+
 export const deployLiquidityPoolBridge = async (
   token: string,
   remoteChain?: string,
-  maxBridgeAmount: bigint = ethers.parseUnits('1000000000', 18),
+  maxBridgeAmount: bigint = DefaultMaxBridgeAmount,
+  payoutAddress?: string,
 ) => {
   // Contracts are deployed using the first signer/account by default
   const [owner] = await ethers.getSigners()
@@ -15,9 +18,12 @@ export const deployLiquidityPoolBridge = async (
   // If no remote chain is provided, use a dummy address
   if (isUndefined(remoteChain)) remoteChain = getAddress('0x0000000000000000000000000000000000000001')
 
+  // If no payout address is provided, use the owner's address
+  if (isUndefined(payoutAddress)) payoutAddress = owner.address
+
   // Deploy a LiquidityPoolBridge
   const LiquidityPoolBridgeFactory = await ethers.getContractFactory('LiquidityPoolBridge')
-  const bridge = await LiquidityPoolBridgeFactory.deploy(remoteChain, token, maxBridgeAmount, owner.address)
+  const bridge = await LiquidityPoolBridgeFactory.deploy(remoteChain, token, maxBridgeAmount, payoutAddress)
 
   return { bridge, owner }
 }
