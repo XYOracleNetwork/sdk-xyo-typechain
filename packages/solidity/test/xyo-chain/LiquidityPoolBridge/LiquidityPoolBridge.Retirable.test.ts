@@ -43,21 +43,6 @@ describe('LiquidityPoolBridge.Retirable', () => {
         // Assert
         expect(await bridge.connect(owner).paused()).to.equal(true)
       })
-      it('should revert if contract already retired', async () => {
-        // Arrange
-        const [owner] = await ethers.getSigners()
-        const { token } = await loadFixture(deployTestERC20)
-        const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
-        const { bridge } = await loadFixture(fixture)
-        await bridge.connect(owner).pause()
-        expect(await bridge.connect(owner).paused()).to.equal(true)
-        await bridge.connect(owner).retire()
-
-        // Act/Assert
-        await expect(bridge.connect(owner).retire())
-          .to.be.revertedWithCustomError(bridge, 'ContractRetired')
-      })
     })
     describe('when called by non-owner', () => {
       it('should revert', async () => {
@@ -187,6 +172,21 @@ describe('LiquidityPoolBridge.Retirable', () => {
 
         // Assert
         await expect(bridge.connect(owner).unpause())
+          .to.be.revertedWithCustomError(bridge, 'ContractRetired')
+      })
+      it('retire', async () => {
+        // Arrange
+        const [owner] = await ethers.getSigners()
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const { bridge } = await loadFixture(fixture)
+        await bridge.connect(owner).pause()
+        expect(await bridge.connect(owner).paused()).to.equal(true)
+        await bridge.connect(owner).retire()
+
+        // Act/Assert
+        await expect(bridge.connect(owner).retire())
           .to.be.revertedWithCustomError(bridge, 'ContractRetired')
       })
     })
