@@ -1,10 +1,7 @@
-import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
-import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
 import hre from 'hardhat'
 
-import type { BridgeableToken, LiquidityPoolBridge } from '../../../typechain-types/index.js'
 import {
   deployLiquidityPoolBridge, deployTestERC20, expectBridgeFromSucceed, expectBridgeToSucceed, expectMintToSucceed, fundBridge, mintToOwner,
 } from '../helpers/index.js'
