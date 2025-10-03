@@ -2,11 +2,10 @@
 pragma solidity ^0.8.26;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
-import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
 /// @notice Module that allows an owner to permanently retire a contract.
 /// Similar to OpenZeppelin's Pausable, but irreversible.
-abstract contract Retirable is Ownable, Pausable {
+abstract contract Retirable is Ownable {
     /// @dev Indicates if the contract has been retired
     bool private _retired;
     /// @notice Address that will receive any remaining assets upon retirement
@@ -17,7 +16,7 @@ abstract contract Retirable is Ownable, Pausable {
     /// @param balance Balance transferred during retirement
     event Retired(address payout, uint256 balance);
 
-    error AlreadyRetired();
+    error ContractRetired();
 
     /// @notice Constructor for the Retirable contract
     /// @param payout_ Address that will receive any remaining assets upon retirement
@@ -32,19 +31,17 @@ abstract contract Retirable is Ownable, Pausable {
 
     /// @notice Modifier to make a function callable only if not retired
     modifier whenNotRetired() {
-        require(!_retired, "Retired: contract is retired");
+        if (_retired) revert ContractRetired();
         _;
     }
 
     /// @dev Retire the contract. Calls `_retire(payout)` hook for child contracts.
-    function retire() public onlyOwner {
-        if (_retired) revert AlreadyRetired();
-
-        _pause();
+    function retire() public whenNotRetired onlyOwner {
+        // Mark as retired
         _retired = true;
-
+        // Call the hook for inheriting contracts to implement cleanup/asset transfer
         uint256 balance = _retire(retirementPayout);
-
+        // Emit the event
         emit Retired(retirementPayout, balance);
     }
 

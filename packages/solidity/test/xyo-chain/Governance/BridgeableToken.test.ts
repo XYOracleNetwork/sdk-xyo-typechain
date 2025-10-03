@@ -1,31 +1,18 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
+import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
-import type { EventLog } from 'ethers'
 import hre from 'hardhat'
 
 import type { BridgeableToken } from '../../../typechain-types/index.js'
-import { deployBridgeableToken } from '../helpers/index.js'
+import {
+  deployBridgeableToken, expectMintToRevert, expectMintToSucceed, mintToOwner,
+} from '../helpers/index.js'
 
 const { ethers } = hre
 
 describe('BridgeableToken', () => {
   const amount = ethers.parseUnits('1000000', 18)
-
-  const expectMintToSucceed = async (token: BridgeableToken, caller: HardhatEthersSigner, recipient: HardhatEthersSigner, amount: bigint) => {
-    const tx = await token.connect(caller).mint(recipient.address, amount)
-    await tx.wait()
-    const balance = await token.balanceOf(recipient.address)
-    expect(balance).to.equal(amount)
-  }
-
-  const expectMintToRevert = async (token: BridgeableToken, caller: HardhatEthersSigner, recipient: HardhatEthersSigner, amount: bigint) => {
-    await expect(token.connect(caller).mint(recipient.address, amount)).to.be.reverted
-  }
-
-  const mintToOwner = async (token: BridgeableToken, owner: HardhatEthersSigner, amount: bigint) => {
-    await expectMintToSucceed(token, owner, owner, amount)
-  }
 
   const expectBridgeToSucceed = async ({
     token, from, to, amount,
@@ -48,7 +35,11 @@ describe('BridgeableToken', () => {
     expect(record.amount).to.equal(amount)
     expect(record.timepoint).to.equal(receipt?.blockNumber)
 
-    const event = receipt?.logs.find((log): log is EventLog => 'fragment' in log && log.fragment?.name === 'BridgeInitiated')
+    const logs = await token.queryFilter(token.filters.BridgeInitiated())
+    expect(logs.length > 0).to.equal(true)
+    const log = logs.at(-1)
+    expect(log).not.to.equal(undefined)
+    const event = assertEx(log)
     expect(event?.args.id).to.equal(nextBridgeId)
     expect(event?.args.from).to.equal(from.address)
     expect(event?.args.destination).to.equal(to.address)
