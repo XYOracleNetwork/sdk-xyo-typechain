@@ -113,7 +113,9 @@ describe.only('LiquidityPoolBridge', () => {
         await mintToOwner(token, owner, amount / 2n)
 
         // Act / Assert
-        await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
+        await expect(expectBridgeToSucceed({
+          bridge, from: owner, to: destination, amount, token,
+        })).to.be.revertedWithCustomError(token, 'ERC20InsufficientBalance')
       })
       it('should revert if trying to bridge more than max bridge amount', async () => {
         // Arrange
@@ -122,11 +124,13 @@ describe.only('LiquidityPoolBridge', () => {
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
         const { bridge } = await loadFixture(fixture)
-        const maxBridgeAmount = await bridge.maxBridgeAmount()
-        await mintToOwner(token, owner, maxBridgeAmount + 1n)
+        const amount = await bridge.maxBridgeAmount() + 1n
+        await mintToOwner(token, owner, amount)
 
         // Act / Assert
-        await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
+        await expect(expectBridgeToSucceed({
+          bridge, from: owner, to: destination, amount, token,
+        })).to.be.revertedWith('amount > max')
       })
     })
     describe('when called by non-owner', () => {
@@ -176,7 +180,9 @@ describe.only('LiquidityPoolBridge', () => {
         await expectMintToSucceed(token, owner, user, amount / 2n)
 
         // Act / Assert
-        await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
+        await expect(expectBridgeToSucceed({
+          bridge, from: user, to: destination, amount, token,
+        })).to.be.revertedWithCustomError(token, 'ERC20InsufficientBalance')
       })
       it('should revert if trying to bridge more than max bridge amount', async () => {
         // Arrange
@@ -185,11 +191,13 @@ describe.only('LiquidityPoolBridge', () => {
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
         const { bridge } = await loadFixture(fixture)
-        const maxBridgeAmount = await bridge.maxBridgeAmount()
-        await expectMintToSucceed(token, owner, user, maxBridgeAmount + 1n)
+        const amount = await bridge.maxBridgeAmount() + 1n
+        await expectMintToSucceed(token, owner, user, amount)
 
         // Act / Assert
-        await expect(bridge.bridgeToRemote(destination.address, amount)).to.be.reverted
+        await expect(expectBridgeToSucceed({
+          bridge, from: user, to: destination, amount, token,
+        })).to.be.revertedWith('amount > max')
       })
     })
   })
