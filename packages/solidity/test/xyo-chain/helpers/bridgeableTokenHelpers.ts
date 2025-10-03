@@ -15,6 +15,10 @@ export const expectMintToSucceed = async (token: BridgeableToken, caller: Hardha
   expect(balance).to.equal(amount)
 }
 
+export const expectMintToRevert = async (token: BridgeableToken, caller: HardhatEthersSigner, recipient: HardhatEthersSigner, amount: bigint) => {
+  await expect(token.connect(caller).mint(recipient.address, amount)).to.be.reverted
+}
+
 export const mintToOwner = async (token: BridgeableToken, owner: HardhatEthersSigner, amount: bigint) => {
   await expectMintToSucceed(token, owner, owner, amount)
 }
