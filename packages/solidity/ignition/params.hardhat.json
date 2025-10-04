@@ -8,6 +8,12 @@
     "bridgeTreasuryAmount": "18000000000000000000000000000n",
     "subGovernorCustodyAddress": "0x2Dd79795c53368Ce8427bdE89cAA24A0E0d01Eb1"
   },
+  "LiquidityPoolBridge": {
+    "remoteChain": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    "token": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
+    "maxBridgeAmount": "100000000000000000000000000n",
+    "payout": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+  },
   "SingleAddressSubGovernor": {
     "name": "Single Address SubGovernor",
     "votingDelay": 1,
