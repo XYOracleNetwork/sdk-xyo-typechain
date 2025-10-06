@@ -23,10 +23,10 @@ interface ILiquidityPoolBridge {
     /// @notice Emitted when a bridge from another chain is completed
     event BridgedFromRemote(
         uint256 indexed id,
-        address indexed from,
-        address indexed to,
+        address indexed srcAddress,
+        address indexed destAddress,
         uint256 amount,
-        address remoteChain
+        address srcToken
     );
 
     /// @notice Emitted when the maximum bridge amount is updated
@@ -56,12 +56,12 @@ interface ILiquidityPoolBridge {
     function bridgeToRemote(address to, uint256 amount) external;
 
     /// @notice Fulfill bridging tokens from the remoteChain
-    /// @param from The address initiating the bridge
-    /// @param to The address receiving the bridged tokens
+    /// @param srcAddress The address initiating the bridge
+    /// @param destAddress The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
     function bridgeFromRemote(
-        address from,
-        address to,
+        address srcAddress,
+        address destAddress,
         uint256 amount
     ) external;
 }
