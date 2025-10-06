@@ -51,9 +51,9 @@ interface ILiquidityPoolBridge {
     function setMaxBridgeAmount(uint256 newMax) external;
 
     /// @notice Request bridging tokens to the remoteChain
-    /// @param to The intended recipient on the destination chain
+    /// @param destAddress The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
-    function bridgeToRemote(address to, uint256 amount) external;
+    function bridgeToRemote(address destAddress, uint256 amount) external;
 
     /// @notice Fulfill bridging tokens from the remoteChain
     /// @param srcAddress The address initiating the bridge
