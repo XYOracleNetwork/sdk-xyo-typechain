@@ -60,13 +60,13 @@ contract LiquidityPoolBridge is
     }
 
     /// @notice Request bridging tokens to the remoteChain
-    /// @param to The intended recipient on the destination chain
+    /// @param destAddress The intended recipient on the destination chain
     /// @param amount The amount of tokens being bridged
     function bridgeToRemote(
-        address to,
+        address destAddress,
         uint256 amount
     ) external whenNotRetired whenNotPaused {
-        if (to == address(0)) {
+        if (destAddress == address(0)) {
             revert BridgeAddressZero();
         }
         if (amount == 0) {
@@ -81,22 +81,22 @@ contract LiquidityPoolBridge is
         emit BridgedToRemote(
             nextBridgeToId++,
             msg.sender,
-            to,
+            destAddress,
             amount,
             remoteChain
         );
     }
 
     /// @notice Fulfill bridging tokens from the remoteChain
-    /// @param from The address initiating the bridge
-    /// @param to The address receiving the bridged tokens
+    /// @param srcAddress The address initiating the bridge
+    /// @param destAddress The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
     function bridgeFromRemote(
-        address from,
-        address to,
+        address srcAddress,
+        address destAddress,
         uint256 amount
     ) external whenNotRetired whenNotPaused onlyOwner {
-        if (to == address(0)) {
+        if (destAddress == address(0)) {
             revert BridgeAddressZero();
         }
         if (amount == 0) {
@@ -106,12 +106,12 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
-        token.safeTransfer(to, amount);
+        token.safeTransfer(destAddress, amount);
 
         emit BridgedFromRemote(
             nextBridgeFromId++,
-            from,
-            to,
+            srcAddress,
+            destAddress,
             amount,
             remoteChain
         );

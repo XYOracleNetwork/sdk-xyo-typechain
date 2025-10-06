@@ -73,13 +73,13 @@
     "solc": "0.8.30",
     "typescript": "~5.9.2"
   },
-  "packageManager": "yarn@4.9.3",
+  "packageManager": "yarn@4.10.3",
   "engines": {
     "node": ">=22.14.0"
   },
   "volta": {
     "node": "22.14.0",
-    "yarn": "4.9.3"
+    "yarn": "4.10.3"
   },
   "publishConfig": {
     "access": "public"
