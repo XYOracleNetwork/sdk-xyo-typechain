@@ -14,10 +14,10 @@ interface ILiquidityPoolBridge {
     /// @notice Emitted when a bridge to another chain is requested
     event BridgedToRemote(
         uint256 indexed id,
-        address indexed from,
-        address indexed to,
+        address indexed srcAddress,
+        address indexed destAddress,
         uint256 amount,
-        address remoteChain
+        address destToken
     );
 
     /// @notice Emitted when a bridge from another chain is completed

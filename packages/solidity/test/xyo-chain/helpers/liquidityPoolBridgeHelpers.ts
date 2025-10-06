@@ -74,8 +74,8 @@ export const expectBridgeToSucceed = async ({
   expect(log).not.to.equal(undefined)
   const event = assertEx(log)
   expect(event?.args.id).to.equal(nextBridgeId)
-  expect(event?.args.from).to.equal(from.address)
-  expect(event?.args.to).to.equal(to)
+  expect(event?.args.srcAddress).to.equal(from.address)
+  expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
 
   const finalBalance = await token.balanceOf(from.address)
