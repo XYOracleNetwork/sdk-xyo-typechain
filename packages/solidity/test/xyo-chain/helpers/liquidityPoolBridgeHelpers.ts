@@ -5,25 +5,34 @@ import type { AddressLike } from 'ethers'
 
 import type { BridgeableToken, LiquidityPoolBridge } from '../../../typechain-types'
 
-export const fundBridge = async (token: BridgeableToken, owner: HardhatEthersSigner, bridge: LiquidityPoolBridge, amount: bigint) => {
-  await token.connect(owner).approve(bridge.getAddress(), amount)
-  const tx = await token.transfer(bridge.getAddress(), amount)
+export const approveHotWallet = async (token: BridgeableToken, hotWallet: HardhatEthersSigner, bridgeAddress: string, amount: bigint) => {
+  await token.connect(hotWallet).approve(bridgeAddress, amount)
+}
+
+export const fundHotWallet = async (
+  token: BridgeableToken,
+  owner: HardhatEthersSigner,
+  hotWallet: HardhatEthersSigner,
+  amount: bigint,
+) => {
+  const tx = await token.connect(owner).mint(hotWallet.address, amount)
   await tx.wait()
-  const balance = await token.balanceOf(bridge.getAddress())
+  const balance = await token.balanceOf(hotWallet.address)
   expect(balance).to.equal(amount)
 }
 
 export const expectBridgeFromSucceed = async ({
-  bridge, from, to, amount, token,
+  bridge, from, to, amount, token, hotWallet,
 }: {
   amount: bigint
   bridge: LiquidityPoolBridge
   from: HardhatEthersSigner
+  hotWallet: HardhatEthersSigner
   to: AddressLike
   token: BridgeableToken
 }) => {
   const nextBridgeId = await bridge.nextBridgeFromId()
-  const initialBalance = await token.balanceOf(await bridge.getAddress())
+  const initialBalance = await token.balanceOf(hotWallet.address)
 
   // Send tokens to bridge
   const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount)
@@ -41,7 +50,7 @@ export const expectBridgeFromSucceed = async ({
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
 
-  const finalBalance = await token.balanceOf(await bridge.getAddress())
+  const finalBalance = await token.balanceOf(hotWallet.address)
   expect(finalBalance).to.equal(initialBalance - amount)
 
   return { event }

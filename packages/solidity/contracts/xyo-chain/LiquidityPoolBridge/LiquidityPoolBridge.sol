@@ -28,6 +28,8 @@ contract LiquidityPoolBridge is
     uint256 public nextBridgeFromId;
     /// @notice Incrementing counters for unique outbound bridge IDs
     uint256 public nextBridgeToId;
+    /// @notice Source for the liquidity funds
+    address public liquiditySource;
 
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
@@ -37,8 +39,8 @@ contract LiquidityPoolBridge is
         address remoteChain_,
         address token_,
         uint256 maxBridgeAmount_,
-        address payout_
-    ) Ownable(msg.sender) Retirable(payout_) {
+        address liquiditySource_
+    ) Ownable(msg.sender) Retirable() {
         require(remoteChain_ != address(0), "remoteChain=0");
         require(token_ != address(0), "token=0");
         require(maxBridgeAmount_ > 0, "max=0");
@@ -46,6 +48,7 @@ contract LiquidityPoolBridge is
         remoteChain = remoteChain_;
         token = IERC20(token_);
         maxBridgeAmount = maxBridgeAmount_;
+        liquiditySource = liquiditySource_;
     }
 
     /// @notice Set a new maximum bridge amount
@@ -76,7 +79,8 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
-        token.safeTransferFrom(msg.sender, address(this), amount);
+        // Transfer tokens from sender to liquidity source
+        token.safeTransferFrom(msg.sender, liquiditySource, amount);
 
         emit BridgedToRemote(
             nextBridgeToId++,
@@ -106,7 +110,8 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
-        token.safeTransfer(destAddress, amount);
+        // Transfer tokens from liquidity source to destination
+        token.safeTransferFrom(liquiditySource, destAddress, amount);
 
         emit BridgedFromRemote(
             nextBridgeFromId++,
@@ -125,15 +130,8 @@ contract LiquidityPoolBridge is
         _unpause();
     }
 
-    function _retire(address payout) internal override returns (uint256) {
-        // Transfer all tokens to the payout address
-        uint256 balance = token.balanceOf(address(this));
-        if (balance > 0) {
-            token.safeTransfer(payout, balance);
-        }
+    function _retire() internal override {
         // If not paused, pause the contract
         if (!paused()) _pause();
-        // Return the balance transferred
-        return balance;
     }
 }
