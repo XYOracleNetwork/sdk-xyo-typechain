@@ -13,7 +13,7 @@ import {
 
 const { ethers } = hre
 
-describe.only('LiquidityPoolBridge', () => {
+describe('LiquidityPoolBridge', () => {
   const amount = ethers.parseUnits('1000000', 18)
 
   let owner: HardhatEthersSigner
@@ -30,7 +30,7 @@ describe.only('LiquidityPoolBridge', () => {
       // Arrange
       const { token } = await loadFixture(deployTestERC20)
       const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress, undefined, ZeroAddress)
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address, ZeroAddress)
 
       // Act/Assert
       await expect(loadFixture(fixture))
@@ -38,7 +38,7 @@ describe.only('LiquidityPoolBridge', () => {
     })
     it('should revert if token is 0', async () => {
       // Arrange
-      const fixture = () => deployLiquidityPoolBridge(ZeroAddress)
+      const fixture = () => deployLiquidityPoolBridge(ZeroAddress, hotWallet.address)
 
       // Act/Assert
       await expect(loadFixture(fixture))
@@ -48,7 +48,7 @@ describe.only('LiquidityPoolBridge', () => {
       // Arrange
       const { token } = await loadFixture(deployTestERC20)
       const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress, owner.address, owner.address, 0n)
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address, undefined, 0n)
 
       // Act/Assert
       await expect(loadFixture(fixture))
