@@ -40,7 +40,7 @@ contract LiquidityPoolBridge is
         address token_,
         uint256 maxBridgeAmount_,
         address liquiditySource_
-    ) Ownable(msg.sender) Retirable(liquiditySource_) {
+    ) Ownable(msg.sender) Retirable() {
         require(remoteChain_ != address(0), "remoteChain=0");
         require(token_ != address(0), "token=0");
         require(maxBridgeAmount_ > 0, "max=0");
@@ -130,15 +130,8 @@ contract LiquidityPoolBridge is
         _unpause();
     }
 
-    function _retire(address payout) internal override returns (uint256) {
-        // Transfer all tokens to the payout address
-        uint256 balance = token.balanceOf(liquiditySource);
-        if (balance > 0) {
-            token.safeTransfer(payout, balance);
-        }
+    function _retire() internal override {
         // If not paused, pause the contract
         if (!paused()) _pause();
-        // Return the balance transferred
-        return balance;
     }
 }

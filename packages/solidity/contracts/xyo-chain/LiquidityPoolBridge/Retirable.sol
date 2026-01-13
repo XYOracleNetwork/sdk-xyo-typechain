@@ -8,21 +8,12 @@ import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 abstract contract Retirable is Ownable {
     /// @dev Indicates if the contract has been retired
     bool private _retired;
-    /// @notice Address that will receive any remaining assets upon retirement
-    address public immutable retirementPayout;
 
     /// @notice Emitted when the contract is retired
-    /// @param payout Address that received any final asset payouts
-    /// @param balance Balance transferred during retirement
-    event Retired(address payout, uint256 balance);
+    /// @param retirer Address that retired the contract
+    event Retired(address retirer);
 
     error ContractRetired();
-
-    /// @notice Constructor for the Retirable contract
-    /// @param payout_ Address that will receive any remaining assets upon retirement
-    constructor(address payout_) {
-        retirementPayout = payout_;
-    }
 
     /// @notice Returns true if the contract has been retired
     function retired() public view returns (bool) {
@@ -39,13 +30,12 @@ abstract contract Retirable is Ownable {
     function retire() public whenNotRetired onlyOwner {
         // Mark as retired
         _retired = true;
-        // Call the hook for inheriting contracts to implement cleanup/asset transfer
-        uint256 balance = _retire(retirementPayout);
+        // call the internal method
+        _retire();
         // Emit the event
-        emit Retired(retirementPayout, balance);
+        emit Retired(msg.sender);
     }
 
     /// @dev Hook for inheriting contracts to implement cleanup/asset transfer.
-    /// Should return how much balance was transferred.
-    function _retire(address payout) internal virtual returns (uint256);
+    function _retire() internal virtual;
 }
