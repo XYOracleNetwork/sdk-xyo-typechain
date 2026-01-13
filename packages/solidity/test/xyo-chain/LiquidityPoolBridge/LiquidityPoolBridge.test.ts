@@ -1,3 +1,4 @@
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
@@ -14,6 +15,15 @@ const { ethers } = hre
 
 describe.only('LiquidityPoolBridge', () => {
   const amount = ethers.parseUnits('1000000', 18)
+
+  let owner: HardhatEthersSigner
+  let destination: HardhatEthersSigner
+  let hotWallet: HardhatEthersSigner
+  let user: HardhatEthersSigner
+
+  beforeEach(async () => {
+    [owner, destination, hotWallet, user] = await ethers.getSigners()
+  })
 
   describe('constructor', () => {
     it('should revert if remoteChain is 0', async () => {
@@ -36,7 +46,6 @@ describe.only('LiquidityPoolBridge', () => {
     })
     it('should revert if maxBridgeAmount is 0', async () => {
       // Arrange
-      const [owner] = await ethers.getSigners()
       const { token } = await loadFixture(deployTestERC20)
       const tokenAddress = await token.getAddress()
       const fixture = () => deployLiquidityPoolBridge(tokenAddress, owner.address, owner.address, 0n)
@@ -50,7 +59,6 @@ describe.only('LiquidityPoolBridge', () => {
     describe('when called by owner', () => {
       it('should bridge tokens and emit event', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -64,7 +72,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should increment bridge ID after each bridge', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -85,7 +92,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge more than balance', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -99,7 +105,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge more than max bridge amount', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -114,7 +119,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge zero amount', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -129,7 +133,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge to zero address', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -145,7 +148,6 @@ describe.only('LiquidityPoolBridge', () => {
     describe('when called by non-owner', () => {
       it('should bridge tokens and emit event', async () => {
         // Arrange
-        const [owner, destination, hotWallet, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -159,7 +161,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should increment bridge ID after each bridge', async () => {
         // Arrange
-        const [owner, destination, hotWallet, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -180,7 +181,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge more than balance', async () => {
         // Arrange
-        const [owner, destination, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -194,7 +194,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge more than max bridge amount', async () => {
         // Arrange
-        const [owner, destination, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -209,7 +208,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge zero amount', async () => {
         // Arrange
-        const [owner, destination, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -242,7 +240,6 @@ describe.only('LiquidityPoolBridge', () => {
     describe('when called by owner', () => {
       it('should bridge tokens and emit event', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -257,7 +254,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should increment bridge ID after each bridge', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -280,7 +276,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge more than balance', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -295,7 +290,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge more than max bridge amount', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -310,7 +304,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge zero amount', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -326,7 +319,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if trying to bridge zero address', async () => {
         // Arrange
-        const [owner, destination, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -343,7 +335,6 @@ describe.only('LiquidityPoolBridge', () => {
     describe('when called by non-owner', () => {
       it('should fail because non-owners cannot bridge from remote', async () => {
         // Arrange
-        const [owner, destination, hotWallet, user] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -362,7 +353,6 @@ describe.only('LiquidityPoolBridge', () => {
     describe('when called by owner', () => {
       it('should set max bridge amount and emit event', async () => {
         // Arrange
-        const [owner, , hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -386,7 +376,6 @@ describe.only('LiquidityPoolBridge', () => {
       })
       it('should revert if set to 0', async () => {
         // Arrange
-        const [owner, , hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -401,7 +390,6 @@ describe.only('LiquidityPoolBridge', () => {
     describe('when called by non-owner', () => {
       it('should revert', async () => {
         // Arrange
-        const [_, other, hotWallet] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
@@ -410,7 +398,7 @@ describe.only('LiquidityPoolBridge', () => {
         const expected = previousMax + 1n
 
         // Act/Assert
-        await expect(bridge.connect(other).setMaxBridgeAmount(expected))
+        await expect(bridge.connect(destination).setMaxBridgeAmount(expected))
           .to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
       })
     })
