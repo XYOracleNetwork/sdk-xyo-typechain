@@ -56,6 +56,25 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "LocalTest:SpecificFile",
+      "cwd": "${workspaceFolder}/packages/solidity",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [
+        "--loader",
+        "ts-node/esm/transpile-only",
+        "--no-warnings=ExperimentalWarning",
+        "./node_modules/.bin/hardhat",
+        "test",
+        "test/xyo-chain/LiquidityPoolBridge/LiquidityPoolBridge.test.ts",
+      ],
+      "env": {
+        "TS_NODE_PROJECT": "./tsconfig.json"
+      },
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "LocalTest:AdvanceBlocks",
       "cwd": "${workspaceFolder}/packages/solidity",
       "runtimeExecutable": "node",
