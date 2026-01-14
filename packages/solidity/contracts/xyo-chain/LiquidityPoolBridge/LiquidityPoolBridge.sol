@@ -73,16 +73,6 @@ contract LiquidityPoolBridge is
         liquiditySource = liquiditySource_;
     }
 
-    function _incrementBridgeToId() internal returns (uint256 id) {
-        id = nextBridgeToId;
-        nextBridgeToId++;
-    }
-
-    function _incrementBridgeFromId() internal returns (uint256 id) {
-        id = nextBridgeFromId;
-        nextBridgeFromId++;
-    }
-
     /// @notice Set a new maximum bridge amount
     /// @param newMax The new maximum bridge amount
     function setMaxBridgeAmount(
@@ -112,7 +102,7 @@ contract LiquidityPoolBridge is
         }
 
         // Generate a new bridge ID
-        uint256 bridgeId = _incrementBridgeToId();
+        uint256 bridgeId = nextBridgeToId++;
 
         // Check if bridge ID already exists
         if (bridgesToRemote[bridgeId].srcAddress != address(0)) {
@@ -166,7 +156,7 @@ contract LiquidityPoolBridge is
         }
 
         // Increment bridge from remote counter
-        _incrementBridgeFromId();
+        nextBridgeFromId++;
 
         // Transfer tokens from liquidity source to destination
         token.safeTransferFrom(liquiditySource, destAddress, amount);
