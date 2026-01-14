@@ -65,7 +65,7 @@
         "--no-warnings=ExperimentalWarning",
         "./node_modules/.bin/hardhat",
         "test",
-        "test/xyo-chain/LiquidityPoolBridge/LiquidityPoolBridge.test.ts",
+        "test/xyo-chain/helpers/liquidityPoolBridgeHelpers.ts",
       ],
       "env": {
         "TS_NODE_PROJECT": "./tsconfig.json"

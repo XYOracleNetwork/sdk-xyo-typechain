@@ -13,7 +13,7 @@ import {
 
 const { ethers } = hre
 
-describe.only('LiquidityPoolBridge', () => {
+describe('LiquidityPoolBridge', () => {
   const amount = ethers.parseUnits('1000000', 18)
 
   let owner: HardhatEthersSigner

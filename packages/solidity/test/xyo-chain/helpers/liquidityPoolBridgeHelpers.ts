@@ -31,6 +31,7 @@ export const expectBridgeFromSucceed = async ({
   to: AddressLike
   token: BridgeableToken
 }) => {
+  const nextBridgeFromId = await bridge.nextBridgeFromId()
   const initialBalance = await token.balanceOf(hotWallet.address)
 
   // random sha256 hash for nonce
@@ -47,10 +48,22 @@ export const expectBridgeFromSucceed = async ({
   const log = logs.at(-1)
   expect(log).not.to.equal(undefined)
   const event = assertEx(log)
+
+  // test counter increment
+  expect(await bridge.nextBridgeFromId()).to.equal(nextBridgeFromId + 1n)
+
+  // test event args match expected values
   expect(event?.args.id).to.equal(nonce)
   expect(event?.args.srcAddress).to.equal(from.address)
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
+
+  // test mapping entry matches expected values
+  const newMapEntry = await bridge.bridgesFromRemote(nonce)
+  expect(newMapEntry.srcAddress).to.equal(from.address)
+  expect(newMapEntry.destAddress).to.equal(to)
+  expect(newMapEntry.amount).to.equal(amount)
+  expect(newMapEntry.destToken).to.equal(await token.getAddress())
 
   const finalBalance = await token.balanceOf(hotWallet.address)
   expect(finalBalance).to.equal(initialBalance - amount)
@@ -84,10 +97,23 @@ export const expectBridgeToSucceed = async ({
   const log = logs.at(-1)
   expect(log).not.to.equal(undefined)
   const event = assertEx(log)
+
+  // test counter increment
+  expect(await bridge.nextBridgeToId()).to.equal(nextBridgeId + 1n)
+
+  // test event args match expected values
   expect(event?.args.id).to.equal(nextBridgeId)
   expect(event?.args.srcAddress).to.equal(from.address)
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
+  expect(event?.args.destToken).to.equal(await bridge.remoteChain())
+
+  // test mapping entry matches expected values
+  const newMapEntry = await bridge.bridgesToRemote(nextBridgeId)
+  expect(newMapEntry.srcAddress).to.equal(from.address)
+  expect(newMapEntry.destAddress).to.equal(to)
+  expect(newMapEntry.amount).to.equal(amount)
+  expect(newMapEntry.destToken).to.equal(await token.getAddress())
 
   const finalBalance = await token.balanceOf(from.address)
   expect(finalBalance).to.equal(initialBalance - amount)
