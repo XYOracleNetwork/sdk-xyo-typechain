@@ -331,6 +331,24 @@ describe('LiquidityPoolBridge', () => {
           bridge, from: owner, hotWallet, to: ZeroAddress, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
+      it('should revert if trying to bridge with duplicate nonce', async () => {
+        // Arrange
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
+        const { bridge } = await loadFixture(fixture)
+        await fundHotWallet(token, owner, hotWallet, amount)
+        await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
+
+        // Act / Assert
+        // Update the bridgesFromRemote mapping by calling bridgeFromRemote (owner only)
+        const nonce = ethers.sha256(ethers.randomBytes(32))
+        await bridge.bridgeFromRemote(owner.address, user.address, amount, nonce)
+
+        await expect(
+          bridge.bridgeFromRemote(owner.address, user.address, amount, nonce),
+        ).to.be.revertedWithCustomError(bridge, 'BridgesFromRemoteAlreadyExists')
+      })
     })
     describe('when called by non-owner', () => {
       it('should fail because non-owners cannot bridge from remote', async () => {
