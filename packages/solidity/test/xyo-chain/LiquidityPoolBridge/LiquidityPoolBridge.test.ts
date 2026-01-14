@@ -55,6 +55,46 @@ describe('LiquidityPoolBridge', () => {
         .to.be.revertedWith('max=0')
     })
   })
+  describe('properties', () => {
+    it('should only increment bridge ID after successful bridge', async () => {
+      // Arrange
+      const { token } = await loadFixture(deployTestERC20)
+      const tokenAddress = await token.getAddress()
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
+      const { bridge } = await loadFixture(fixture)
+      const initialBridgeId = await bridge.nextBridgeFromId()
+      const bridgeCount = 5
+      const totalAmount = amount * BigInt(bridgeCount)
+      const reusedNonce = ethers.sha256(ethers.randomBytes(32))
+      await fundHotWallet(token, owner, hotWallet, totalAmount)
+
+      // Act / Assert
+      for (let i = 0; i < bridgeCount; i++) {
+        // approve spend on each iteration
+        await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
+        // for first iteration, supply a nonce
+        if (i === 0) {
+          expect(await expectBridgeFromSucceed({
+            bridge, from: owner, hotWallet, to: destination, amount, token, nonce: reusedNonce,
+          }))
+          continue
+        }
+        // for the second iteration, supply a reused nonce and expect failure
+        if (i === 1) {
+          await expect(expectBridgeFromSucceed({
+            bridge, from: owner, hotWallet, to: destination, amount, token, nonce: reusedNonce,
+          })).to.be.revertedWithCustomError(bridge, 'BridgesFromRemoteAlreadyExists')
+          continue
+        }
+        // for subsequent iterations don't reuse a nonce
+        await expectBridgeFromSucceed({
+          bridge, from: owner, hotWallet, to: destination, amount, token,
+        })
+      }
+      // ensure the incrementor only increased for successful bridges
+      expect(await bridge.nextBridgeFromId()).to.equal(initialBridgeId + BigInt(bridgeCount - 1))
+    })
+  })
   describe('bridgeTo', () => {
     describe('when called by owner', () => {
       it('should bridge tokens and emit event', async () => {
@@ -348,44 +388,6 @@ describe('LiquidityPoolBridge', () => {
         await expect(
           bridge.bridgeFromRemote(owner.address, user.address, amount, nonce),
         ).to.be.revertedWithCustomError(bridge, 'BridgesFromRemoteAlreadyExists')
-      })
-      it('should only increment bridge ID after successful bridge', async () => {
-        // Arrange
-        const { token } = await loadFixture(deployTestERC20)
-        const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
-        const { bridge } = await loadFixture(fixture)
-        const initialBridgeId = await bridge.nextBridgeFromId()
-        const bridgeCount = 5
-        const totalAmount = amount * BigInt(bridgeCount)
-        const reusedNonce = ethers.sha256(ethers.randomBytes(32))
-        await fundHotWallet(token, owner, hotWallet, totalAmount)
-
-        // Act / Assert
-        for (let i = 0; i < bridgeCount; i++) {
-          // approve spend on each iteration
-          await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
-          // for first iteration, supply a nonce
-          if (i === 0) {
-            expect(await expectBridgeFromSucceed({
-              bridge, from: owner, hotWallet, to: destination, amount, token, nonce: reusedNonce,
-            }))
-            continue
-          }
-          // for the second iteration, supply a reused nonce and expect failure
-          if (i === 1) {
-            await expect(expectBridgeFromSucceed({
-              bridge, from: owner, hotWallet, to: destination, amount, token, nonce: reusedNonce,
-            })).to.be.revertedWithCustomError(bridge, 'BridgesFromRemoteAlreadyExists')
-            continue
-          }
-          // for subsequent iterations don't reuse a nonce
-          await expectBridgeFromSucceed({
-            bridge, from: owner, hotWallet, to: destination, amount, token,
-          })
-        }
-        // ensure the incrementor only increased for successful bridges
-        expect(await bridge.nextBridgeFromId()).to.equal(initialBridgeId + BigInt(bridgeCount - 1))
       })
     })
     describe('when called by non-owner', () => {
