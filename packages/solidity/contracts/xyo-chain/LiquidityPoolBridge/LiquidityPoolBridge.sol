@@ -102,18 +102,18 @@ contract LiquidityPoolBridge is
         }
 
         // Generate a new bridge ID
-        uint256 bridgeId = nextBridgeToId++;
+        nextBridgeToId++;
 
         // Check if bridge ID already exists
-        if (bridgesToRemote[bridgeId].srcAddress != address(0)) {
-            revert BridgesToRemoteAlreadyExists(bridgeId);
+        if (bridgesToRemote[nextBridgeToId].srcAddress != address(0)) {
+            revert BridgesToRemoteAlreadyExists(nextBridgeToId);
         }
 
         // Transfer tokens from sender to liquidity source
         token.safeTransferFrom(msg.sender, liquiditySource, amount);
 
         // update mapping
-        bridgesToRemote[bridgeId] = BridgeToRemoteData({
+        bridgesToRemote[nextBridgeToId] = BridgeToRemoteData({
             srcAddress: msg.sender,
             destAddress: destAddress,
             amount: amount,
@@ -122,7 +122,7 @@ contract LiquidityPoolBridge is
 
         // emit event
         emit BridgedToRemote(
-            bridgeId,
+            nextBridgeToId,
             msg.sender,
             destAddress,
             amount,
