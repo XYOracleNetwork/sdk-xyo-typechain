@@ -59,9 +59,11 @@ interface ILiquidityPoolBridge {
     /// @param srcAddress The address initiating the bridge
     /// @param destAddress The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
+    /// @param nonce The unique identifier for the bridge transaction
     function bridgeFromRemote(
         address srcAddress,
         address destAddress,
-        uint256 amount
+        uint256 amount,
+        bytes32 nonce
     ) external;
 }
