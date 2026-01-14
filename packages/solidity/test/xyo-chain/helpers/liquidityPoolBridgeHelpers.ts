@@ -52,7 +52,8 @@ export const expectBridgeFromSucceed = async ({
   const event = assertEx(log)
 
   // test counter increment
-  expect(await bridge.nextBridgeFromId()).to.equal(nextBridgeFromId + 1n)
+  const newBridgeFromId = await bridge.nextBridgeFromId()
+  expect(newBridgeFromId).to.equal(nextBridgeFromId + 1n)
 
   // test event args match expected values
   expect(event?.args.id).to.equal(nonce)
@@ -101,17 +102,18 @@ export const expectBridgeToSucceed = async ({
   const event = assertEx(log)
 
   // test counter increment
-  expect(await bridge.nextBridgeToId()).to.equal(nextBridgeId + 1n)
+  const newNextBridgeToId = await bridge.nextBridgeToId()
+  expect(newNextBridgeToId).to.equal(nextBridgeId + 1n)
 
   // test event args match expected values
-  expect(event?.args.id).to.equal(nextBridgeId)
+  expect(event?.args.id).to.equal(newNextBridgeToId)
   expect(event?.args.srcAddress).to.equal(from.address)
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
   expect(event?.args.destToken).to.equal(await bridge.remoteChain())
 
   // test mapping entry matches expected values
-  const newMapEntry = await bridge.bridgesToRemote(nextBridgeId)
+  const newMapEntry = await bridge.bridgesToRemote(newNextBridgeToId)
   expect(newMapEntry.srcAddress).to.equal(from.address)
   expect(newMapEntry.destAddress).to.equal(to)
   expect(newMapEntry.amount).to.equal(amount)
