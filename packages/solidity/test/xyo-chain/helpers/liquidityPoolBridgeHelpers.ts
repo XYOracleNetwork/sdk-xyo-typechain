@@ -1,5 +1,6 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { assertEx } from '@xylabs/assert'
+import { isDefined } from '@xylabs/typeof'
 import { expect } from 'chai'
 import { type AddressLike, ethers } from 'ethers'
 
@@ -36,7 +37,7 @@ export const expectBridgeFromSucceed = async ({
   const initialBalance = await token.balanceOf(hotWallet.address)
 
   // random sha256 hash for nonce
-  nonce = ethers.sha256(ethers.randomBytes(32))
+  nonce = isDefined(nonce) ? nonce : ethers.sha256(ethers.randomBytes(32))
 
   // Send tokens to bridge
   const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount, nonce)
