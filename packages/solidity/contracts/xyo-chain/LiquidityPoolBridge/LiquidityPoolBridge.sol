@@ -31,6 +31,17 @@ contract LiquidityPoolBridge is
     /// @notice Source for the liquidity funds
     address public liquiditySource;
 
+    /// @notice Struct to store bridge to remote event data
+    struct BridgeToRemoteData {
+        address srcAddress;
+        address destAddress;
+        uint256 amount;
+        address destToken;
+    }
+
+    /// @notice Mapping of bridge IDs to bridging to remote event data
+    mapping(uint256 => BridgeToRemoteData) public bridgesToRemote;
+
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
     /// @param token_ The address of the ERC20 representing the asset being bridged
@@ -82,8 +93,20 @@ contract LiquidityPoolBridge is
         // Transfer tokens from sender to liquidity source
         token.safeTransferFrom(msg.sender, liquiditySource, amount);
 
+        // Generate a new bridge ID
+        uint256 nextId = nextBridgeToId++;
+
+        // update mapping
+        bridgesToRemote[nextId] = BridgeToRemoteData({
+            srcAddress: msg.sender,
+            destAddress: destAddress,
+            amount: amount,
+            destToken: address(token)
+        });
+
+        // emit event
         emit BridgedToRemote(
-            nextBridgeToId++,
+            nextId,
             msg.sender,
             destAddress,
             amount,
