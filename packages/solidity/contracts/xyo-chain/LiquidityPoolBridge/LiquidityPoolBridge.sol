@@ -42,6 +42,7 @@ contract LiquidityPoolBridge is
     /// @notice Mapping of bridge IDs to bridging to remote event data
     mapping(uint256 => BridgeToRemoteData) public bridgesToRemote;
 
+    /// @notice Struct to store bridge from remote event data
     struct BridgeFromRemoteData {
         address srcAddress;
         address destAddress;
