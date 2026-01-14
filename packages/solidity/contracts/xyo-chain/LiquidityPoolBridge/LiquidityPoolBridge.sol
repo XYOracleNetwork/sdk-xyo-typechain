@@ -101,11 +101,16 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
-        // Transfer tokens from sender to liquidity source
-        token.safeTransferFrom(msg.sender, liquiditySource, amount);
-
         // Generate a new bridge ID
         uint256 nextId = nextBridgeToId++;
+
+        // Check if bridge ID already exists
+        if (bridgesToRemote[nextId].srcAddress != address(0)) {
+            revert BridgesToRemoteAlreadyExists(nextId);
+        }
+
+        // Transfer tokens from sender to liquidity source
+        token.safeTransferFrom(msg.sender, liquiditySource, amount);
 
         // update mapping
         bridgesToRemote[nextId] = BridgeToRemoteData({
@@ -144,6 +149,10 @@ contract LiquidityPoolBridge is
         }
         if (amount > maxBridgeAmount) {
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
+        }
+        // Check if nonce already exists
+        if (bridgesFromRemote[nonce].srcAddress != address(0)) {
+            revert BridgesFromRemoteAlreadyExists(nonce);
         }
 
         // Increment bridge from remote counter

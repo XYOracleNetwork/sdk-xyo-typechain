@@ -10,6 +10,10 @@ interface ILiquidityPoolBridge {
     error BridgeAmountExceedsMax(uint256 amount, uint256 maxAllowed);
     /// @notice Thrown when bridged amount provided is zero
     error BridgeAmountZero();
+    /// @notice Thrown when a bridge to remote already exists for the given ID
+    error BridgesToRemoteAlreadyExists(uint256 id);
+    /// @notice Thrown when a bridge from remote already exists for the given ID
+    error BridgesFromRemoteAlreadyExists(bytes32 id);
 
     /// @notice Emitted when a bridge to another chain is requested
     event BridgedToRemote(
