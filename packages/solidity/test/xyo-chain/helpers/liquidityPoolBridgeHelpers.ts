@@ -1,7 +1,7 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { assertEx } from '@xylabs/assert'
 import { expect } from 'chai'
-import type { AddressLike } from 'ethers'
+import { type AddressLike, ethers } from 'ethers'
 
 import type { BridgeableToken, LiquidityPoolBridge } from '../../../typechain-types'
 
@@ -31,11 +31,13 @@ export const expectBridgeFromSucceed = async ({
   to: AddressLike
   token: BridgeableToken
 }) => {
-  const nextBridgeId = await bridge.nextBridgeFromId()
   const initialBalance = await token.balanceOf(hotWallet.address)
 
+  // random sha256 hash for nonce
+  const nonce = ethers.sha256(ethers.randomBytes(32))
+
   // Send tokens to bridge
-  const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount)
+  const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount, nonce)
   const receipt = await tx.wait()
   expect(receipt).not.to.equal(null)
 
@@ -45,7 +47,7 @@ export const expectBridgeFromSucceed = async ({
   const log = logs.at(-1)
   expect(log).not.to.equal(undefined)
   const event = assertEx(log)
-  expect(event?.args.id).to.equal(nextBridgeId)
+  expect(event?.args.id).to.equal(nonce)
   expect(event?.args.srcAddress).to.equal(from.address)
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
