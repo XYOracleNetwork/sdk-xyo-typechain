@@ -128,7 +128,7 @@ contract LiquidityPoolBridge is
     /// @param srcAddress The address initiating the bridge
     /// @param destAddress The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
-    /// @param nonce The unique identifier for the bridge transaction
+    /// @param nonce The unique identifier for the bridge transaction (i.e. transaction hash from remote chain)
     function bridgeFromRemote(
         address srcAddress,
         address destAddress,
@@ -145,6 +145,9 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
+        // Increment bridge from remote counter
+        nextBridgeFromId++;
+
         // Transfer tokens from liquidity source to destination
         token.safeTransferFrom(liquiditySource, destAddress, amount);
 
@@ -156,8 +159,9 @@ contract LiquidityPoolBridge is
             destToken: address(token)
         });
 
+        // emit event
         emit BridgedFromRemote(
-            nextBridgeFromId++,
+            nonce,
             srcAddress,
             destAddress,
             amount,

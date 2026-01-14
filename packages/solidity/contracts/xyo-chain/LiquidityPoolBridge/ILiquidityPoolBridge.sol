@@ -22,7 +22,7 @@ interface ILiquidityPoolBridge {
 
     /// @notice Emitted when a bridge from another chain is completed
     event BridgedFromRemote(
-        uint256 indexed id,
+        bytes32 indexed id,
         address indexed srcAddress,
         address indexed destAddress,
         uint256 amount,
