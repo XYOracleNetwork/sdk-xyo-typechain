@@ -22,12 +22,13 @@ export const fundHotWallet = async (
 }
 
 export const expectBridgeFromSucceed = async ({
-  bridge, from, to, amount, token, hotWallet,
+  bridge, from, to, amount, token, hotWallet, nonce,
 }: {
   amount: bigint
   bridge: LiquidityPoolBridge
   from: HardhatEthersSigner
   hotWallet: HardhatEthersSigner
+  nonce?: string
   to: AddressLike
   token: BridgeableToken
 }) => {
@@ -35,7 +36,7 @@ export const expectBridgeFromSucceed = async ({
   const initialBalance = await token.balanceOf(hotWallet.address)
 
   // random sha256 hash for nonce
-  const nonce = ethers.sha256(ethers.randomBytes(32))
+  nonce = ethers.sha256(ethers.randomBytes(32))
 
   // Send tokens to bridge
   const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount, nonce)
