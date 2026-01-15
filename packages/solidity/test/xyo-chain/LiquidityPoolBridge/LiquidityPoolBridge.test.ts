@@ -331,6 +331,55 @@ describe('LiquidityPoolBridge', () => {
           bridge, from: owner, hotWallet, to: ZeroAddress, amount, token,
         })).to.be.revertedWithCustomError(bridge, 'BridgeAddressZero')
       })
+      it('should revert if trying to bridge with duplicate nonce', async () => {
+        // Arrange
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
+        const { bridge } = await loadFixture(fixture)
+        await fundHotWallet(token, owner, hotWallet, amount)
+        await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
+
+        // Act / Assert
+        // Update the bridgesFromRemote mapping by calling bridgeFromRemote (owner only)
+        const nonce = ethers.sha256(ethers.randomBytes(32))
+        await bridge.bridgeFromRemote(owner.address, user.address, amount, nonce)
+
+        await expect(
+          bridge.bridgeFromRemote(owner.address, user.address, amount, nonce),
+        ).to.be.revertedWithCustomError(bridge, 'BridgesFromRemoteAlreadyExists')
+      })
+      it('should only increment bridge ID after successful bridge', async () => {
+      // Arrange
+        const { token } = await loadFixture(deployTestERC20)
+        const tokenAddress = await token.getAddress()
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
+        const { bridge } = await loadFixture(fixture)
+        const initialBridgeId = await bridge.nextBridgeFromId()
+        const reusedNonce = ethers.sha256(ethers.randomBytes(32))
+        const totalAttempts = 3
+        await fundHotWallet(token, owner, hotWallet, amount * BigInt(totalAttempts))
+
+        // Act / Assert
+        // first attempt successful
+        await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
+        expect(await expectBridgeFromSucceed({
+          bridge, from: owner, hotWallet, to: destination, amount, token, nonce: reusedNonce,
+        }))
+        // second attempt fails
+        await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
+        await expect(expectBridgeFromSucceed({
+          bridge, from: owner, hotWallet, to: destination, amount, token, nonce: reusedNonce,
+        })).to.be.revertedWithCustomError(bridge, 'BridgesFromRemoteAlreadyExists')
+        // third attempt successful
+        await approveHotWallet(token, hotWallet, await bridge.getAddress(), amount)
+        expect(await expectBridgeFromSucceed({
+          bridge, from: owner, hotWallet, to: destination, amount, token,
+        }))
+        // ensure the incrementor only increased for successful bridges
+        const successfulAttempts = 2n
+        expect(await bridge.nextBridgeFromId()).to.equal(initialBridgeId + successfulAttempts)
+      })
     })
     describe('when called by non-owner', () => {
       it('should fail because non-owners cannot bridge from remote', async () => {

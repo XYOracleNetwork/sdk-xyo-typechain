@@ -31,6 +31,28 @@ contract LiquidityPoolBridge is
     /// @notice Source for the liquidity funds
     address public liquiditySource;
 
+    /// @notice Struct to store bridge to remote event data
+    struct BridgeToRemoteData {
+        address srcAddress;
+        address destAddress;
+        uint256 amount;
+        address destToken;
+    }
+
+    /// @notice Mapping of bridge IDs to bridging to remote event data
+    mapping(uint256 => BridgeToRemoteData) public bridgesToRemote;
+
+    /// @notice Struct to store bridge from remote event data
+    struct BridgeFromRemoteData {
+        address srcAddress;
+        address destAddress;
+        uint256 amount;
+        address destToken;
+    }
+
+    /// @notice Mapping of bridge IDs to bridging from remote event data
+    mapping(bytes32 => BridgeFromRemoteData) public bridgesFromRemote;
+
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
     /// @param token_ The address of the ERC20 representing the asset being bridged
@@ -79,11 +101,28 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
 
+        // Generate a new bridge ID
+        nextBridgeToId++;
+
+        // Check if bridge ID already exists
+        if (bridgesToRemote[nextBridgeToId].srcAddress != address(0)) {
+            revert BridgesToRemoteAlreadyExists(nextBridgeToId);
+        }
+
         // Transfer tokens from sender to liquidity source
         token.safeTransferFrom(msg.sender, liquiditySource, amount);
 
+        // update mapping
+        bridgesToRemote[nextBridgeToId] = BridgeToRemoteData({
+            srcAddress: msg.sender,
+            destAddress: destAddress,
+            amount: amount,
+            destToken: address(token)
+        });
+
+        // emit event
         emit BridgedToRemote(
-            nextBridgeToId++,
+            nextBridgeToId,
             msg.sender,
             destAddress,
             amount,
@@ -95,10 +134,12 @@ contract LiquidityPoolBridge is
     /// @param srcAddress The address initiating the bridge
     /// @param destAddress The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
+    /// @param nonce The unique identifier for the bridge transaction (i.e. transaction hash from remote chain)
     function bridgeFromRemote(
         address srcAddress,
         address destAddress,
-        uint256 amount
+        uint256 amount,
+        bytes32 nonce
     ) external whenNotRetired whenNotPaused onlyOwner {
         if (destAddress == address(0)) {
             revert BridgeAddressZero();
@@ -109,12 +150,28 @@ contract LiquidityPoolBridge is
         if (amount > maxBridgeAmount) {
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
+        // Check if nonce already exists
+        if (bridgesFromRemote[nonce].srcAddress != address(0)) {
+            revert BridgesFromRemoteAlreadyExists(nonce);
+        }
+
+        // Increment bridge from remote counter
+        nextBridgeFromId++;
 
         // Transfer tokens from liquidity source to destination
         token.safeTransferFrom(liquiditySource, destAddress, amount);
 
+        // update mapping
+        bridgesFromRemote[nonce] = BridgeFromRemoteData({
+            srcAddress: srcAddress,
+            destAddress: destAddress,
+            amount: amount,
+            destToken: address(token)
+        });
+
+        // emit event
         emit BridgedFromRemote(
-            nextBridgeFromId++,
+            nonce,
             srcAddress,
             destAddress,
             amount,

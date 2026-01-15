@@ -1,7 +1,8 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
 import { assertEx } from '@xylabs/assert'
+import { isDefined } from '@xylabs/typeof'
 import { expect } from 'chai'
-import type { AddressLike } from 'ethers'
+import { type AddressLike, ethers } from 'ethers'
 
 import type { BridgeableToken, LiquidityPoolBridge } from '../../../typechain-types'
 
@@ -22,20 +23,24 @@ export const fundHotWallet = async (
 }
 
 export const expectBridgeFromSucceed = async ({
-  bridge, from, to, amount, token, hotWallet,
+  bridge, from, to, amount, token, hotWallet, nonce,
 }: {
   amount: bigint
   bridge: LiquidityPoolBridge
   from: HardhatEthersSigner
   hotWallet: HardhatEthersSigner
+  nonce?: string
   to: AddressLike
   token: BridgeableToken
 }) => {
-  const nextBridgeId = await bridge.nextBridgeFromId()
+  const nextBridgeFromId = await bridge.nextBridgeFromId()
   const initialBalance = await token.balanceOf(hotWallet.address)
 
+  // random sha256 hash for nonce
+  nonce = isDefined(nonce) ? nonce : ethers.sha256(ethers.randomBytes(32))
+
   // Send tokens to bridge
-  const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount)
+  const tx = await bridge.connect(from).bridgeFromRemote(from.address, to, amount, nonce)
   const receipt = await tx.wait()
   expect(receipt).not.to.equal(null)
 
@@ -45,10 +50,23 @@ export const expectBridgeFromSucceed = async ({
   const log = logs.at(-1)
   expect(log).not.to.equal(undefined)
   const event = assertEx(log)
-  expect(event?.args.id).to.equal(nextBridgeId)
+
+  // test counter increment
+  const newBridgeFromId = await bridge.nextBridgeFromId()
+  expect(newBridgeFromId).to.equal(nextBridgeFromId + 1n)
+
+  // test event args match expected values
+  expect(event?.args.id).to.equal(nonce)
   expect(event?.args.srcAddress).to.equal(from.address)
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
+
+  // test mapping entry matches expected values
+  const newMapEntry = await bridge.bridgesFromRemote(nonce)
+  expect(newMapEntry.srcAddress).to.equal(from.address)
+  expect(newMapEntry.destAddress).to.equal(to)
+  expect(newMapEntry.amount).to.equal(amount)
+  expect(newMapEntry.destToken).to.equal(await token.getAddress())
 
   const finalBalance = await token.balanceOf(hotWallet.address)
   expect(finalBalance).to.equal(initialBalance - amount)
@@ -82,10 +100,24 @@ export const expectBridgeToSucceed = async ({
   const log = logs.at(-1)
   expect(log).not.to.equal(undefined)
   const event = assertEx(log)
-  expect(event?.args.id).to.equal(nextBridgeId)
+
+  // test counter increment
+  const newNextBridgeToId = await bridge.nextBridgeToId()
+  expect(newNextBridgeToId).to.equal(nextBridgeId + 1n)
+
+  // test event args match expected values
+  expect(event?.args.id).to.equal(newNextBridgeToId)
   expect(event?.args.srcAddress).to.equal(from.address)
   expect(event?.args.destAddress).to.equal(to)
   expect(event?.args.amount).to.equal(amount)
+  expect(event?.args.destToken).to.equal(await bridge.remoteChain())
+
+  // test mapping entry matches expected values
+  const newMapEntry = await bridge.bridgesToRemote(newNextBridgeToId)
+  expect(newMapEntry.srcAddress).to.equal(from.address)
+  expect(newMapEntry.destAddress).to.equal(to)
+  expect(newMapEntry.amount).to.equal(amount)
+  expect(newMapEntry.destToken).to.equal(await token.getAddress())
 
   const finalBalance = await token.balanceOf(from.address)
   expect(finalBalance).to.equal(initialBalance - amount)

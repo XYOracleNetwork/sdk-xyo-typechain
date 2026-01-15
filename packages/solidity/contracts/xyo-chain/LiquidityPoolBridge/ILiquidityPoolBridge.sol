@@ -10,6 +10,10 @@ interface ILiquidityPoolBridge {
     error BridgeAmountExceedsMax(uint256 amount, uint256 maxAllowed);
     /// @notice Thrown when bridged amount provided is zero
     error BridgeAmountZero();
+    /// @notice Thrown when a bridge to remote already exists for the given ID
+    error BridgesToRemoteAlreadyExists(uint256 id);
+    /// @notice Thrown when a bridge from remote already exists for the given ID
+    error BridgesFromRemoteAlreadyExists(bytes32 id);
 
     /// @notice Emitted when a bridge to another chain is requested
     event BridgedToRemote(
@@ -22,7 +26,7 @@ interface ILiquidityPoolBridge {
 
     /// @notice Emitted when a bridge from another chain is completed
     event BridgedFromRemote(
-        uint256 indexed id,
+        bytes32 indexed id,
         address indexed srcAddress,
         address indexed destAddress,
         uint256 amount,
@@ -59,9 +63,11 @@ interface ILiquidityPoolBridge {
     /// @param srcAddress The address initiating the bridge
     /// @param destAddress The address receiving the bridged tokens
     /// @param amount The amount of tokens being bridged
+    /// @param nonce The unique identifier for the bridge transaction
     function bridgeFromRemote(
         address srcAddress,
         address destAddress,
-        uint256 amount
+        uint256 amount,
+        bytes32 nonce
     ) external;
 }
