@@ -19,7 +19,7 @@
     "forkFromLastHash": "113941745558234458747379102073260273734136420295792696568102548073617922391740n",
     "maxStakersPerAddress": 10,
     "minStake": 1,
-    "minWithdrawalBlocks": 1,
+    "minWithdrawalBlocks": 300,
     "networkStakingAddress": "0x1969196919691969196919691969196919691969",
     "stakingTokenAddress": "0x3E67484D61ea5A8963F2AC8a659848c86caBaC9a"
   },
