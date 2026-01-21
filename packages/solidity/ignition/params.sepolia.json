@@ -15,8 +15,8 @@
   },
   "StakedXyoChainV2": {
     "forkFromChainId": "0xdd381fbb392c85160d8b0453e446757b12384046",
-    "forkFromLastBlockNumber": 2,
-    "forkFromLastHash": "113941745558234458747379102073260273734136420295792696568102548073617922391740n",
+    "forkFromLastBlockNumber": 255103,
+    "forkFromLastHash": "78151349876028348679720728080597475870752645070491438547833295990727244185797n",
     "maxStakersPerAddress": 10,
     "minStake": 1,
     "minWithdrawalBlocks": 300,
