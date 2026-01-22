@@ -44,9 +44,9 @@
     "@uniswap/v3-core": "~1.0.1",
     "@uniswap/v4-core": "~1.0.2",
     "@uniswap/v4-periphery": "~1.0.3",
-    "@xylabs/ts-scripts-yarn3": "~7.2.8",
+    "@xylabs/ts-scripts-yarn3": "~7.3.1",
     "copyfiles": "~2.4.1",
-    "rimraf": "~6.0.1",
+    "rimraf": "~6.1.2",
     "truffle": "~5.11.5"
   },
   "publishConfig": {

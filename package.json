@@ -60,18 +60,18 @@
     "@xyo-network/world-typechain": "workspace:~"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "~5.6.1",
-    "@types/node": "~24.2.0",
-    "@typescript-eslint/eslint-plugin": "~8.48.1",
-    "@typescript-eslint/parser": "~8.48.1",
-    "@xylabs/eslint-config-flat": "~7.2.8",
-    "@xylabs/ts-scripts-yarn3": "~7.2.8",
-    "@xylabs/tsconfig": "~7.2.8",
-    "eslint": "~9.39.1",
+    "@stylistic/eslint-plugin": "~5.7.0",
+    "@types/node": "~25.0.10",
+    "@typescript-eslint/eslint-plugin": "~8.53.1",
+    "@typescript-eslint/parser": "~8.53.1",
+    "@xylabs/eslint-config-flat": "~7.3.1",
+    "@xylabs/ts-scripts-yarn3": "~7.3.1",
+    "@xylabs/tsconfig": "~7.3.1",
+    "eslint": "~9.39.2",
     "eslint-import-resolver-typescript": "~4.4.4",
-    "knip": "~5.62.0",
-    "solc": "0.8.30",
-    "typescript": "~5.9.2"
+    "knip": "~5.82.1",
+    "solc": "0.8.33",
+    "typescript": "~5.9.3"
   },
   "packageManager": "yarn@4.12.0",
   "engines": {
