@@ -1,7 +1,6 @@
 {
-  "name": "@xyo-network/sdk-xyo-typechain-build",
+  "name": "@xyo-network/sdk-xyo-typechain",
   "version": "4.0.10",
-  "private": true,
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -47,18 +46,15 @@
     "dev-add-stake": "yarn workspace @xyo-network/solidity ts-node scripts/LocalTestAddStake.ts",
     "dev-local": "yarn workspace @xyo-network/solidity dev-local"
   },
+  "dependencies": {
+    "@xyo-network/open-zeppelin-typechain": "workspace:~",
+    "@xyo-network/typechain": "workspace:~",
+    "@xyo-network/uniswap-typechain": "workspace:~",
+    "@xyo-network/world-typechain": "workspace:~"
+  },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "~5.7.0",
-    "@types/node": "~25.0.10",
-    "@typescript-eslint/eslint-plugin": "~8.53.1",
-    "@typescript-eslint/parser": "~8.53.1",
-    "@xylabs/eslint-config-flat": "~7.3.1",
     "@xylabs/ts-scripts-yarn3": "~7.3.1",
     "@xylabs/tsconfig": "~7.3.1",
-    "eslint": "~9.39.2",
-    "eslint-import-resolver-typescript": "~4.4.4",
-    "knip": "~5.82.1",
-    "solc": "0.8.33",
     "typescript": "~5.9.3"
   },
   "packageManager": "yarn@4.12.0",
@@ -70,6 +66,6 @@
     "yarn": "4.10.3"
   },
   "publishConfig": {
-    "access": "restricted"
+    "access": "public"
   }
 }

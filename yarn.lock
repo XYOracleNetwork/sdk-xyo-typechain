@@ -3633,9 +3633,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xyo-network/sdk-xyo-typechain@workspace:.":
+"@xyo-network/sdk-xyo-typechain-build@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@xyo-network/sdk-xyo-typechain@workspace:."
+  resolution: "@xyo-network/sdk-xyo-typechain-build@workspace:."
   dependencies:
     "@stylistic/eslint-plugin": "npm:~5.7.0"
     "@types/node": "npm:~25.0.10"
@@ -3644,14 +3644,24 @@ __metadata:
     "@xylabs/eslint-config-flat": "npm:~7.3.1"
     "@xylabs/ts-scripts-yarn3": "npm:~7.3.1"
     "@xylabs/tsconfig": "npm:~7.3.1"
-    "@xyo-network/open-zeppelin-typechain": "workspace:~"
-    "@xyo-network/typechain": "workspace:~"
-    "@xyo-network/uniswap-typechain": "workspace:~"
-    "@xyo-network/world-typechain": "workspace:~"
     eslint: "npm:~9.39.2"
     eslint-import-resolver-typescript: "npm:~4.4.4"
     knip: "npm:~5.82.1"
     solc: "npm:0.8.33"
+    typescript: "npm:~5.9.3"
+  languageName: unknown
+  linkType: soft
+
+"@xyo-network/sdk-xyo-typechain@workspace:packages/sdk":
+  version: 0.0.0-use.local
+  resolution: "@xyo-network/sdk-xyo-typechain@workspace:packages/sdk"
+  dependencies:
+    "@xylabs/ts-scripts-yarn3": "npm:~7.3.1"
+    "@xylabs/tsconfig": "npm:~7.3.1"
+    "@xyo-network/open-zeppelin-typechain": "workspace:~"
+    "@xyo-network/typechain": "workspace:~"
+    "@xyo-network/uniswap-typechain": "workspace:~"
+    "@xyo-network/world-typechain": "workspace:~"
     typescript: "npm:~5.9.3"
   languageName: unknown
   linkType: soft
