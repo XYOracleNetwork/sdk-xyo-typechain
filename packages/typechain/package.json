@@ -51,7 +51,7 @@
     "@xylabs/ts-scripts-yarn3": "~7.3.1",
     "@xyo-network/solidity": "workspace:~",
     "copyfiles": "~2.4.1",
-    "glob": "~11.0.3",
+    "glob": "~13.0.0",
     "rimraf": "~6.1.2",
     "typechain": "~8.3.2",
     "typescript": "~5.9.3"
