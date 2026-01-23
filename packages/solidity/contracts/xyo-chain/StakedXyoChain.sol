@@ -4,6 +4,7 @@ pragma solidity 0.8.26;
 import {XyoChain} from "./XyoChain/XyoChain.sol";
 import {AddressStaking} from "./AddressStaking/AddressStaking.sol";
 import {IXyoChainRewards} from "./XyoChain/IXyoChainRewards.sol";
+import {IStakedXyoChain} from "./IStakedXyoChain.sol";
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";

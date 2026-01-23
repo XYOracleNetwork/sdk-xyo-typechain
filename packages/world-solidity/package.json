@@ -1,6 +1,6 @@
 {
   "name": "@xyo-network/world-solidity",
-  "version": "4.0.11",
+  "version": "4.1.0",
   "bugs": {
     "url": "git+https://github.com/XYOracleNetwork/sdk-xyo-typechain/issues",
     "email": "support@xyo.network"
@@ -30,8 +30,8 @@
   },
   "devDependencies": {
     "@openzeppelin/contracts": "~5.4.0",
-    "@xylabs/ts-scripts-yarn3": "~7.2.8",
-    "rimraf": "~6.0.1",
+    "@xylabs/ts-scripts-yarn3": "~7.3.1",
+    "rimraf": "~6.1.2",
     "truffle": "~5.11.5"
   },
   "publishConfig": {

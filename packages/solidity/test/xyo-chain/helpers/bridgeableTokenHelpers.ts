@@ -22,3 +22,7 @@ export const expectMintToRevert = async (token: BridgeableToken, caller: Hardhat
 export const mintToOwner = async (token: BridgeableToken, owner: HardhatEthersSigner, amount: bigint) => {
   await expectMintToSucceed(token, owner, owner, amount)
 }
+
+export const mintToUser = async (token: BridgeableToken, owner: HardhatEthersSigner, user: HardhatEthersSigner, amount: bigint) => {
+  await expectMintToSucceed(token, owner, user, amount)
+}

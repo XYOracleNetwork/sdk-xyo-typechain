@@ -1,23 +1,32 @@
+import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers.js'
 import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers.js'
 import { expect } from 'chai'
 import hre from 'hardhat'
 
 import {
-  deployLiquidityPoolBridge, deployTestERC20, expectBridgeFromSucceed, expectBridgeToSucceed, fundBridge, mintToOwner,
+  deployLiquidityPoolBridge, deployTestERC20, expectBridgeFromSucceed, expectBridgeToSucceed, fundHotWallet, mintToOwner,
 } from '../helpers/index.js'
 
 const { ethers } = hre
 
 describe('LiquidityPoolBridge.Retirable', () => {
   const amount = ethers.parseUnits('1000000', 18)
+
+  let owner: HardhatEthersSigner
+  let destination: HardhatEthersSigner
+  let hotWallet: HardhatEthersSigner
+
+  beforeEach(async () => {
+    [owner, destination, hotWallet] = await ethers.getSigners()
+  })
+
   describe('retire', () => {
     describe('when called by owner', () => {
       it('should pause the contract', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
 
         // Act
@@ -29,10 +38,9 @@ describe('LiquidityPoolBridge.Retirable', () => {
       })
       it('should allow already paused contract', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
 
         // Act
@@ -47,43 +55,23 @@ describe('LiquidityPoolBridge.Retirable', () => {
     describe('when called by non-owner', () => {
       it('should revert', async () => {
         // Arrange
-        const [_, other] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
 
         // Act/Assert
-        await expect(bridge.connect(other).retire())
+        await expect(bridge.connect(destination).retire())
           .to.be.revertedWithCustomError(bridge, 'OwnableUnauthorizedAccount')
       })
     })
   })
   describe('when retired', () => {
-    it('should send remaining funds to payout address', async () => {
-      // Arrange
-      const [owner, payout] = await ethers.getSigners()
-      const { token } = await loadFixture(deployTestERC20)
-      const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress, payout.address)
-      const { bridge } = await loadFixture(fixture)
-      await mintToOwner(token, owner, amount)
-      await fundBridge(token, owner, bridge, amount)
-      expect(await token.balanceOf(await bridge.getAddress())).to.equal(amount)
-      expect(await token.balanceOf(payout.address)).to.equal(0n)
-
-      // Act
-      await bridge.connect(owner).retire()
-
-      // Assert
-      expect(await token.balanceOf(payout.address)).to.equal(amount)
-    })
     it('should indicate retired', async () => {
       // Arrange
-      const [owner, payout] = await ethers.getSigners()
       const { token } = await loadFixture(deployTestERC20)
       const tokenAddress = await token.getAddress()
-      const fixture = () => deployLiquidityPoolBridge(tokenAddress, payout.address)
+      const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
       const { bridge } = await loadFixture(fixture)
       expect(await bridge.retired()).to.equal(false)
 
@@ -96,7 +84,6 @@ describe('LiquidityPoolBridge.Retirable', () => {
     describe('should prevent calls to', () => {
       it('bridgeTo', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
         const fixture = () => deployLiquidityPoolBridge(tokenAddress)
@@ -113,28 +100,26 @@ describe('LiquidityPoolBridge.Retirable', () => {
       })
       it('bridgeFrom', async () => {
         // Arrange
-        const [owner, destination] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
         await mintToOwner(token, owner, amount)
-        await fundBridge(token, owner, bridge, amount)
+        await fundHotWallet(token, owner, hotWallet, amount)
 
         // Act
         await bridge.connect(owner).retire()
 
         // Assert
         await expect(expectBridgeFromSucceed({
-          bridge, from: owner, to: destination, amount, token,
+          bridge, from: owner, to: destination, amount, token, hotWallet,
         })).to.be.revertedWithCustomError(bridge, 'ContractRetired')
       })
       it('setMaxBridgeAmount', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
 
         // Act
@@ -146,10 +131,9 @@ describe('LiquidityPoolBridge.Retirable', () => {
       })
       it('pause', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
 
         // Act
@@ -161,10 +145,9 @@ describe('LiquidityPoolBridge.Retirable', () => {
       })
       it('unpause', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
 
         // Act
@@ -176,10 +159,9 @@ describe('LiquidityPoolBridge.Retirable', () => {
       })
       it('retire', async () => {
         // Arrange
-        const [owner] = await ethers.getSigners()
         const { token } = await loadFixture(deployTestERC20)
         const tokenAddress = await token.getAddress()
-        const fixture = () => deployLiquidityPoolBridge(tokenAddress)
+        const fixture = () => deployLiquidityPoolBridge(tokenAddress, hotWallet.address)
         const { bridge } = await loadFixture(fixture)
         await bridge.connect(owner).pause()
         expect(await bridge.connect(owner).paused()).to.equal(true)
