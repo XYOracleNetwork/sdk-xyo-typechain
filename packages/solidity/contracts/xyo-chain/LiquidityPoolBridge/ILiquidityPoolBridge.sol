@@ -13,7 +13,7 @@ interface ILiquidityPoolBridge {
     /// @notice Thrown when a bridge to remote already exists for the given ID
     error BridgesToRemoteAlreadyExists(uint256 id);
     /// @notice Thrown when a bridge from remote already exists for the given ID
-    error BridgesFromRemoteAlreadyExists(bytes32 id);
+    error BridgesFromRemoteAlreadyExists(uint256 id);
 
     /// @notice Emitted when a bridge to another chain is requested
     event BridgedToRemote(
@@ -26,7 +26,7 @@ interface ILiquidityPoolBridge {
 
     /// @notice Emitted when a bridge from another chain is completed
     event BridgedFromRemote(
-        bytes32 indexed id,
+        uint256 indexed id,
         address indexed srcAddress,
         address indexed destAddress,
         uint256 amount,
@@ -68,6 +68,6 @@ interface ILiquidityPoolBridge {
         address srcAddress,
         address destAddress,
         uint256 amount,
-        bytes32 nonce
+        uint256 nonce
     ) external;
 }
