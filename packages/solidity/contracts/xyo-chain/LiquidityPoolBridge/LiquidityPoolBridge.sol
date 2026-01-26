@@ -51,7 +51,7 @@ contract LiquidityPoolBridge is
     }
 
     /// @notice Mapping of bridge IDs to bridging from remote event data
-    mapping(bytes32 => BridgeFromRemoteData) public bridgesFromRemote;
+    mapping(uint256 => BridgeFromRemoteData) public bridgesFromRemote;
 
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
@@ -139,7 +139,7 @@ contract LiquidityPoolBridge is
         address srcAddress,
         address destAddress,
         uint256 amount,
-        bytes32 nonce
+        uint256 nonce
     ) external whenNotRetired whenNotPaused onlyOwner {
         if (destAddress == address(0)) {
             revert BridgeAddressZero();
