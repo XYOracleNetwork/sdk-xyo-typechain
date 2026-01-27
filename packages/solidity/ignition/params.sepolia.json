@@ -4,7 +4,7 @@
     "tokenSymbol": "XL1"
   },
   "DeployXL1": {
-    "bridgeTreasuryAddress": "0xe53218d47913b5f9E58bb74F0a0eD790bbF21972",
+    "bridgeTreasuryAddress": "0xbd6d49C3a3B16cCfc3A0f76676c14990CadC6d16",
     "bridgeTreasuryAmount": "18000000000000000000000000000n",
     "subGovernorCustodyAddress": "0x2Dd79795c53368Ce8427bdE89cAA24A0E0d01Eb1"
   },
@@ -15,11 +15,11 @@
   },
   "StakedXyoChainV2": {
     "forkFromChainId": "0xdd381fbb392c85160d8b0453e446757b12384046",
-    "forkFromLastBlockNumber": 2,
-    "forkFromLastHash": "113941745558234458747379102073260273734136420295792696568102548073617922391740n",
+    "forkFromLastBlockNumber": 255103,
+    "forkFromLastHash": "78151349876028348679720728080597475870752645070491438547833295990727244185797n",
     "maxStakersPerAddress": 10,
     "minStake": 1,
-    "minWithdrawalBlocks": 1,
+    "minWithdrawalBlocks": 300,
     "networkStakingAddress": "0x1969196919691969196919691969196919691969",
     "stakingTokenAddress": "0x3E67484D61ea5A8963F2AC8a659848c86caBaC9a"
   },
