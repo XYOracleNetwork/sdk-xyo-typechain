@@ -8,6 +8,7 @@
   },
   "Sepolia": {
     "BridgeableToken": "0xeb605e6B2afc0927Af64e4e82A1E921Ef17A21d4",
+    "LiquidityPoolBridge": "0x8A40298aA9811276aE383153f001D57d3CB78e2E",
     "SingleAddressSubGovernor": "0xa88B3f83Fd31B43ec042c8DF907506dcd58532Cc",
     "StakedXyoChainV2": "0x4B43a753C8024C0E5000e8Ac948aC0063ac624BC",
     "XL1Governance": "0xe00C8994c0fC953b3bc00ABdB2E11D2C443107dB",
