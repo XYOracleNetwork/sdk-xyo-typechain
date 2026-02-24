@@ -6,6 +6,8 @@ import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 import {Pausable} from "@openzeppelin/contracts/utils/Pausable.sol";
 
+import {EnumerableMap} from "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+
 import {ILiquidityPoolBridge} from "./ILiquidityPoolBridge.sol";
 import {Retirable} from "./Retirable.sol";
 
@@ -16,6 +18,7 @@ contract LiquidityPoolBridge is
     Retirable
 {
     using SafeERC20 for IERC20;
+    using EnumerableMap for EnumerableMap.UintToBytes32Map;
 
     /// @notice The identifier for the remote chain
     address public immutable remoteChain;
@@ -40,7 +43,7 @@ contract LiquidityPoolBridge is
     }
 
     /// @notice Mapping of bridge IDs to bridging to remote event data
-    mapping(uint256 => BridgeToRemoteData) public bridgesToRemote;
+    EnumerableMap.UintToBytes32Map private bridgesToRemote;
 
     /// @notice Struct to store bridge from remote event data
     struct BridgeFromRemoteData {
@@ -51,7 +54,7 @@ contract LiquidityPoolBridge is
     }
 
     /// @notice Mapping of bridge IDs to bridging from remote event data
-    mapping(uint256 => BridgeFromRemoteData) public bridgesFromRemote;
+    EnumerableMap.UintToBytes32Map private bridgesFromRemote;
 
     /// @notice Constructor for the LiquidityPoolBridge contract
     /// @param remoteChain_ The identifier for the remote chain
@@ -105,7 +108,7 @@ contract LiquidityPoolBridge is
         nextBridgeToId++;
 
         // Check if bridge ID already exists
-        if (bridgesToRemote[nextBridgeToId].srcAddress != address(0)) {
+        if (bridgesToRemote.contains(nextBridgeToId)) {
             revert BridgesToRemoteAlreadyExists(nextBridgeToId);
         }
 
@@ -113,12 +116,19 @@ contract LiquidityPoolBridge is
         token.safeTransferFrom(msg.sender, liquiditySource, amount);
 
         // update mapping
-        bridgesToRemote[nextBridgeToId] = BridgeToRemoteData({
-            srcAddress: msg.sender,
-            destAddress: destAddress,
-            amount: amount,
-            destToken: address(token)
-        });
+        bridgesToRemote.set(
+            nextBridgeToId,
+            keccak256(
+                abi.encode(
+                    BridgeToRemoteData({
+                        srcAddress: msg.sender,
+                        destAddress: destAddress,
+                        amount: amount,
+                        destToken: address(token)
+                    })
+                )
+            )
+        );
 
         // emit event
         emit BridgedToRemote(
@@ -151,7 +161,7 @@ contract LiquidityPoolBridge is
             revert BridgeAmountExceedsMax(amount, maxBridgeAmount);
         }
         // Check if nonce already exists
-        if (bridgesFromRemote[nonce].srcAddress != address(0)) {
+        if (bridgesFromRemote.contains(nonce)) {
             revert BridgesFromRemoteAlreadyExists(nonce);
         }
 
@@ -162,12 +172,19 @@ contract LiquidityPoolBridge is
         token.safeTransferFrom(liquiditySource, destAddress, amount);
 
         // update mapping
-        bridgesFromRemote[nonce] = BridgeFromRemoteData({
-            srcAddress: srcAddress,
-            destAddress: destAddress,
-            amount: amount,
-            destToken: address(token)
-        });
+        bridgesFromRemote.set(
+            nonce,
+            keccak256(
+                abi.encode(
+                    BridgeFromRemoteData({
+                        srcAddress: srcAddress,
+                        destAddress: destAddress,
+                        amount: amount,
+                        destToken: address(token)
+                    })
+                )
+            )
+        );
 
         // emit event
         emit BridgedFromRemote(
