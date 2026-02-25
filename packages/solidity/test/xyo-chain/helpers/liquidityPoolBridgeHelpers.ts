@@ -22,6 +22,7 @@ export const fundHotWallet = async (
   expect(balance).to.equal(amount)
 }
 
+// eslint-disable-next-line max-statements
 export const expectBridgeFromSucceed = async ({
   bridge, from, to, amount, token, hotWallet, nonce,
 }: {
@@ -35,6 +36,7 @@ export const expectBridgeFromSucceed = async ({
 }) => {
   const nextBridgeFromId = await bridge.nextBridgeFromId()
   const initialBalance = await token.balanceOf(hotWallet.address)
+  const initialNoncesCount = await bridge.bridgesFromRemoteCount()
 
   // random sha256 hash for nonce
   nonce = isDefined(nonce) ? nonce : ethers.sha256(ethers.randomBytes(32))
@@ -54,6 +56,19 @@ export const expectBridgeFromSucceed = async ({
   // test counter increment
   const newBridgeFromId = await bridge.nextBridgeFromId()
   expect(newBridgeFromId).to.equal(nextBridgeFromId + 1n)
+
+  // test inbound nonce enumeration increment
+  const newNoncesCount = await bridge.bridgesFromRemoteCount()
+  expect(newNoncesCount).to.equal(initialNoncesCount + 1n)
+
+  // test last nonce in the enumerable set matches the nonce we just bridged
+  const lastNonce = await bridge.bridgesFromRemoteNonceAt(newNoncesCount - 1n)
+  expect(lastNonce).to.equal(nonce)
+
+  // test pagination helper returns the nonce (fetch the last item only)
+  const paged = await bridge.bridgesFromRemoteNonces(newNoncesCount - 1n, 1n)
+  expect(paged.length).to.equal(1)
+  expect(paged[0]).to.equal(nonce)
 
   // test event args match expected values
   expect(event?.args.id).to.equal(nonce)
