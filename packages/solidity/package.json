@@ -31,7 +31,8 @@
     "contracts/**/*",
     "artifacts/**/*.json",
     "typechain-types/**/*",
-    "!artifacts/**/*.dbg.json"
+    "!artifacts/**/*.dbg.json",
+    "README.md"
   ],
   "scripts": {
     "deploy-ethereum": "NODE_OPTIONS='--experimental-loader ts-node/esm/transpile-only --no-warnings=ExperimentalWarning' SOLIDITY_COVERAGE=true TS_NODE_TRANSPILE_ONLY=true yarn hardhat ignition deploy ./ignition/modules/DeployXL1.ts --network ethereum --parameters ./ignition/params.ethereum.json",
@@ -71,8 +72,9 @@
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@xylabs/assert": "~5.0.64",
-    "@xylabs/ts-scripts-yarn3": "~7.3.1",
-    "@xylabs/tsconfig": "~7.3.1",
+    "@xylabs/ts-scripts-common": "~7.9.3",
+    "@xylabs/ts-scripts-yarn3": "~7.9.3",
+    "@xylabs/tsconfig": "~7.9.3",
     "@xylabs/typeof": "~5.0.64",
     "chai": "~5.0.3",
     "dotenv": "~17.2.3",
@@ -88,9 +90,6 @@
   },
   "engines": {
     "node": ">=22.14.0"
-  },
-  "volta": {
-    "node": "22.14.0"
   },
   "publishConfig": {
     "access": "public"
