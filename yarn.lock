@@ -3696,7 +3696,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain, @xyo-network/open-zeppelin-typechain@workspace:~":
+"@xyo-network/open-zeppelin-typechain@npm:~4.1.3, @xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/open-zeppelin-typechain@workspace:packages/open-zeppelin-typechain"
   dependencies:
@@ -3738,15 +3738,15 @@ __metadata:
     "@xylabs/ts-scripts-common": "npm:~7.9.3"
     "@xylabs/ts-scripts-yarn3": "npm:~7.9.3"
     "@xylabs/tsconfig": "npm:~7.9.3"
-    "@xyo-network/open-zeppelin-typechain": "workspace:~"
-    "@xyo-network/typechain": "workspace:~"
-    "@xyo-network/uniswap-typechain": "workspace:~"
-    "@xyo-network/world-typechain": "workspace:~"
+    "@xyo-network/open-zeppelin-typechain": "npm:~4.1.3"
+    "@xyo-network/typechain": "npm:~4.1.3"
+    "@xyo-network/uniswap-typechain": "npm:~4.1.3"
+    "@xyo-network/world-typechain": "npm:~4.1.3"
     typescript: "npm:~5.9.3"
   languageName: unknown
   linkType: soft
 
-"@xyo-network/solidity@workspace:packages/solidity, @xyo-network/solidity@workspace:~":
+"@xyo-network/solidity@npm:~4.1.3, @xyo-network/solidity@workspace:packages/solidity":
   version: 0.0.0-use.local
   resolution: "@xyo-network/solidity@workspace:packages/solidity"
   dependencies:
@@ -3783,14 +3783,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xyo-network/typechain@workspace:packages/typechain, @xyo-network/typechain@workspace:~":
+"@xyo-network/typechain@npm:~4.1.3, @xyo-network/typechain@workspace:packages/typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/typechain@workspace:packages/typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:~0.5.1"
     "@xylabs/ts-scripts-common": "npm:~7.9.3"
     "@xylabs/ts-scripts-yarn3": "npm:~7.9.3"
-    "@xyo-network/solidity": "workspace:~"
+    "@xyo-network/solidity": "npm:~4.1.3"
     copyfiles: "npm:~2.4.1"
     ethers: "npm:^6.16.0"
     glob: "npm:~13.0.0"
@@ -3800,7 +3800,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity, @xyo-network/uniswap-solidity@workspace:~":
+"@xyo-network/uniswap-solidity@npm:~4.1.3, @xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity":
   version: 0.0.0-use.local
   resolution: "@xyo-network/uniswap-solidity@workspace:packages/uniswap-solidity"
   dependencies:
@@ -3815,14 +3815,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain, @xyo-network/uniswap-typechain@workspace:~":
+"@xyo-network/uniswap-typechain@npm:~4.1.3, @xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/uniswap-typechain@workspace:packages/uniswap-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:~0.5.1"
     "@xylabs/ts-scripts-common": "npm:~7.9.3"
     "@xylabs/ts-scripts-yarn3": "npm:~7.9.3"
-    "@xyo-network/uniswap-solidity": "workspace:~"
+    "@xyo-network/uniswap-solidity": "npm:~4.1.3"
     ethers: "npm:^6.16.0"
     rimraf: "npm:~6.1.2"
     typechain: "npm:~8.3.2"
@@ -3830,7 +3830,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xyo-network/world-solidity@workspace:packages/world-solidity, @xyo-network/world-solidity@workspace:~":
+"@xyo-network/world-solidity@npm:~4.1.3, @xyo-network/world-solidity@workspace:packages/world-solidity":
   version: 0.0.0-use.local
   resolution: "@xyo-network/world-solidity@workspace:packages/world-solidity"
   dependencies:
@@ -3842,14 +3842,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@xyo-network/world-typechain@workspace:packages/world-typechain, @xyo-network/world-typechain@workspace:~":
+"@xyo-network/world-typechain@npm:~4.1.3, @xyo-network/world-typechain@workspace:packages/world-typechain":
   version: 0.0.0-use.local
   resolution: "@xyo-network/world-typechain@workspace:packages/world-typechain"
   dependencies:
     "@typechain/ethers-v6": "npm:~0.5.1"
     "@xylabs/ts-scripts-common": "npm:~7.9.3"
     "@xylabs/ts-scripts-yarn3": "npm:~7.9.3"
-    "@xyo-network/world-solidity": "workspace:~"
+    "@xyo-network/world-solidity": "npm:~4.1.3"
     ethers: "npm:^6.16.0"
     rimraf: "npm:~6.1.2"
     typechain: "npm:~8.3.2"
