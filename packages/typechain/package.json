@@ -20,19 +20,18 @@
   "exports": {
     ".": {
       "types": "./types.d.ts",
-      "import": "./dist/neutral/index.mjs"
+      "default": "./dist/neutral/index.mjs"
     },
     "./common": {
       "types": "./dist/neutral/common.d.ts",
-      "import": "./dist/neutral/common.mjs"
+      "default": "./dist/neutral/common.mjs"
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/neutral/index.mjs",
-  "types": "./types.d.ts",
   "files": [
     "dist",
-    "types.d.ts"
+    "types.d.ts",
+    "README.md"
   ],
   "scripts": {
     "copy-artifacts": "rimraf src && copyfiles -u 3 '../solidity/artifacts/**/*.*' artifacts",
@@ -48,8 +47,9 @@
   },
   "devDependencies": {
     "@typechain/ethers-v6": "~0.5.1",
-    "@xylabs/ts-scripts-yarn3": "~7.3.1",
-    "@xyo-network/solidity": "workspace:~",
+    "@xylabs/ts-scripts-common": "~7.9.3",
+    "@xylabs/ts-scripts-yarn3": "~7.9.3",
+    "@xyo-network/solidity": "~4.1.2",
     "copyfiles": "~2.4.1",
     "glob": "~13.0.0",
     "rimraf": "~6.1.2",

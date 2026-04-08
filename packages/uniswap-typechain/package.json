@@ -20,46 +20,45 @@
   "exports": {
     ".": {
       "types": "./types-v3.d.ts",
-      "import": "./dist/neutral/v3/index.mjs"
+      "default": "./dist/neutral/v3/index.mjs"
     },
     "./common": {
       "types": "./dist/neutral/v3/common.d.ts",
-      "import": "./dist/neutral/v3/common.mjs"
+      "default": "./dist/neutral/v3/common.mjs"
     },
     "./v3": {
       "types": "./types-v3.d.ts",
-      "import": "./dist/neutral/v3/index.mjs"
+      "default": "./dist/neutral/v3/index.mjs"
     },
     "./v3/common": {
       "types": "./dist/neutral/v3/common.d.ts",
-      "import": "./dist/neutral/v3/common.mjs"
+      "default": "./dist/neutral/v3/common.mjs"
     },
     "./v4": {
       "types": "./types-v4.d.ts",
-      "import": "./dist/neutral/v4/index.mjs"
+      "default": "./dist/neutral/v4/index.mjs"
     },
     "./v4/common": {
       "types": "./dist/neutral/v4/common.d.ts",
-      "import": "./dist/neutral/v4/common.mjs"
+      "default": "./dist/neutral/v4/common.mjs"
     },
     "./v4-periphery": {
       "types": "./types-v4-periphery.d.ts",
-      "import": "./dist/neutral/v4-periphery/index.mjs"
+      "default": "./dist/neutral/v4-periphery/index.mjs"
     },
     "./v4-periphery/common": {
       "types": "./dist/neutral/v4-periphery/common.d.ts",
-      "import": "./dist/neutral/v4-periphery/common.mjs"
+      "default": "./dist/neutral/v4-periphery/common.mjs"
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/neutral/v3/index.mjs",
-  "types": "./types-v3.d.ts",
   "files": [
     "dist",
     "types.d.ts",
     "types-v3.d.ts",
     "types-v4.d.ts",
-    "types-v4-periphery.d.ts"
+    "types-v4-periphery.d.ts",
+    "README.md"
   ],
   "scripts": {
     "generate:sdk": "yarn generate:sdk-v3 && yarn generate:sdk-v4 && yarn generate:sdk-v4-periphery",
@@ -77,8 +76,9 @@
   },
   "devDependencies": {
     "@typechain/ethers-v6": "~0.5.1",
-    "@xylabs/ts-scripts-yarn3": "~7.3.1",
-    "@xyo-network/uniswap-solidity": "workspace:~",
+    "@xylabs/ts-scripts-common": "~7.9.3",
+    "@xylabs/ts-scripts-yarn3": "~7.9.3",
+    "@xyo-network/uniswap-solidity": "~4.1.2",
     "rimraf": "~6.1.2",
     "typechain": "~8.3.2",
     "typescript": "~5.9.3"

@@ -20,20 +20,18 @@
   "exports": {
     ".": {
       "types": "./types.d.ts",
-      "import": "./dist/neutral/index.mjs"
+      "default": "./dist/neutral/index.mjs"
     },
     "./common": {
       "types": "./dist/neutral/common.d.ts",
-      "import": "./dist/neutral/common.mjs"
+      "default": "./dist/neutral/common.mjs"
     },
     "./package.json": "./package.json"
   },
-  "module": "./dist/neutral/index.mjs",
-  "types": "./types.d.ts",
   "files": [
     "dist",
-    "src",
-    "types.d.ts"
+    "types.d.ts",
+    "README.md"
   ],
   "scripts": {
     "generate:sdk": "typechain --node16-modules --out-dir=./src --target=ethers-v6 ../world-solidity/build/contracts/**/*.json",
@@ -48,8 +46,9 @@
   },
   "devDependencies": {
     "@typechain/ethers-v6": "~0.5.1",
-    "@xylabs/ts-scripts-yarn3": "~7.3.1",
-    "@xyo-network/world-solidity": "workspace:~",
+    "@xylabs/ts-scripts-common": "~7.9.3",
+    "@xylabs/ts-scripts-yarn3": "~7.9.3",
+    "@xyo-network/world-solidity": "~4.1.2",
     "rimraf": "~6.1.2",
     "typechain": "~8.3.2",
     "typescript": "~5.9.3"

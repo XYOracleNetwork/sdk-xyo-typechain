@@ -19,7 +19,8 @@
   "type": "module",
   "files": [
     "build",
-    "contracts"
+    "contracts",
+    "README.md"
   ],
   "scripts": {
     "package-build": "truffle compile --config truffle-config.cjs",
@@ -30,7 +31,8 @@
   },
   "devDependencies": {
     "@openzeppelin/contracts": "~5.4.0",
-    "@xylabs/ts-scripts-yarn3": "~7.3.1",
+    "@xylabs/ts-scripts-common": "~7.9.3",
+    "@xylabs/ts-scripts-yarn3": "~7.9.3",
     "rimraf": "~6.1.2",
     "truffle": "~5.11.5"
   },

@@ -21,20 +21,19 @@
     ".": {
       "node": {
         "types": "./dist/node/index.d.ts",
-        "import": "./dist/node/index.mjs"
+        "default": "./dist/node/index.mjs"
       },
       "browser": {
         "types": "./dist/browser/index.d.ts",
-        "import": "./dist/browser/index.mjs"
-      }
+        "default": "./dist/browser/index.mjs"
+      },
+      "default": "./dist/node/index.mjs"
     },
     "./package.json": "./package.json"
   },
-  "module": "dist/node/index.mjs",
-  "types": "dist/node/index.d.ts",
   "files": [
     "dist",
-    "src"
+    "README.md"
   ],
   "workspaces": [
     "packages/**/*"
@@ -47,23 +46,19 @@
     "dev-local": "yarn workspace @xyo-network/solidity dev-local"
   },
   "dependencies": {
-    "@xyo-network/open-zeppelin-typechain": "workspace:~",
-    "@xyo-network/typechain": "workspace:~",
-    "@xyo-network/uniswap-typechain": "workspace:~",
-    "@xyo-network/world-typechain": "workspace:~"
+    "@xyo-network/open-zeppelin-typechain": "~4.1.2",
+    "@xyo-network/typechain": "~4.1.2",
+    "@xyo-network/uniswap-typechain": "~4.1.2",
+    "@xyo-network/world-typechain": "~4.1.2"
   },
   "devDependencies": {
-    "@xylabs/ts-scripts-yarn3": "~7.3.1",
-    "@xylabs/tsconfig": "~7.3.1",
+    "@xylabs/ts-scripts-common": "~7.9.3",
+    "@xylabs/ts-scripts-yarn3": "~7.9.3",
+    "@xylabs/tsconfig": "~7.9.3",
     "typescript": "~5.9.3"
   },
-  "packageManager": "yarn@4.12.0",
   "engines": {
     "node": ">=22.14.0"
-  },
-  "volta": {
-    "node": "22.14.0",
-    "yarn": "4.10.3"
   },
   "publishConfig": {
     "access": "public"
