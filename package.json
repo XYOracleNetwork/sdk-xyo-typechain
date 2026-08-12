@@ -33,40 +33,33 @@
   "module": "dist/node/index.mjs",
   "types": "dist/node/index.d.ts",
   "files": [
-    "dist",
-    "src"
-  ],
-  "workspaces": [
-    "packages/**/*"
+    "dist"
   ],
   "scripts": {
-    "build": "yarn xy clean && yarn compile",
-    "compile": "yarn workspaces foreach --all --topological-dev run package-compile",
-    "dev": "yarn workspace @xyo-network/solidity dev",
-    "dev-add-stake": "yarn workspace @xyo-network/solidity ts-node scripts/LocalTestAddStake.ts",
-    "dev-local": "yarn workspace @xyo-network/solidity dev-local"
+    "build": "pnpm xy clean && pnpm compile",
+    "compile": "pnpm -r --sort --if-present run package-compile",
+    "dev": "pnpm --filter @xyo-network/solidity dev",
+    "dev-add-stake": "pnpm --filter @xyo-network/solidity exec ts-node scripts/LocalTestAddStake.ts",
+    "dev-local": "pnpm --filter @xyo-network/solidity dev-local"
   },
   "devDependencies": {
-    "@stylistic/eslint-plugin": "~5.7.0",
-    "@types/node": "~25.0.10",
-    "@typescript-eslint/eslint-plugin": "~8.53.1",
-    "@typescript-eslint/parser": "~8.53.1",
-    "@xylabs/eslint-config-flat": "~7.3.2",
-    "@xylabs/ts-scripts-common": "~7.9.3",
-    "@xylabs/ts-scripts-yarn3": "~7.9.3",
-    "@xylabs/tsconfig": "~7.9.3",
-    "eslint": "~9.39.2",
-    "eslint-import-resolver-typescript": "~4.4.4",
-    "knip": "~5.82.1",
+    "@ariestools/eslint-config-flat": "~9",
+    "@ariestools/toolchain": "^9.0.0",
+    "@ariestools/tsconfig": "~9",
+    "@stylistic/eslint-plugin": "~5.10.0",
+    "@types/node": "~26.2.0",
+    "@typescript-eslint/eslint-plugin": "~8.67.0",
+    "@typescript-eslint/parser": "~8.67.0",
+    "eslint": "~10.8.1",
+    "eslint-import-resolver-typescript": "~4.4.5",
     "solc": "0.8.33",
-    "typescript": "~5.9.3"
+    "typescript": "~6.0.3"
   },
-  "packageManager": "yarn@4.12.0",
+  "packageManager": "pnpm@11.21.0+sha512.521705bce689924eac72f5a3587122f362689ef6571e55ba80076fd637c11132ecffada26fad4ea79c485bfddbfd3d5a2a5b05805a77e893de71ec8a6cca3bb1",
   "engines": {
     "node": ">=22.14.0"
   },
   "volta": {
-    "node": "22.14.0",
-    "yarn": "4.10.3"
+    "node": "22.14.0"
   }
 }

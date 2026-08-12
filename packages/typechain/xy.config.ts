@@ -1,10 +1,17 @@
-import type { XyTsupConfig } from '@xylabs/ts-scripts-yarn3'
+import type { XyTsupConfig } from '@ariestools/toolchain'
+
 const config: XyTsupConfig = {
   compile: {
     entryMode: 'all',
-    browser: {},
-    neutral: { src: true },
-    node: {},
+    neutral: true,
+  },
+  commands: {
+    publint: {
+      rules: {
+        'pub.platform': 'warn',
+        'pub.compileTargets': 'warn',
+      },
+    },
   },
 }
 

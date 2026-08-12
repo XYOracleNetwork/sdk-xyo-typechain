@@ -5,13 +5,7 @@ dist
 *.log
 public/contracts
 lib
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+
 .tsconfig*
 .eslintcache
 .deps
