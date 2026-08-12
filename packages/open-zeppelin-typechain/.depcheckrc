@@ -1,5 +1,5 @@
 ignores: [
-  "@xylabs/tsconfig",
+  "@ariestools/tsconfig",
   "@typechain/ethers-v6",
   "ethers",
   "rimraf"

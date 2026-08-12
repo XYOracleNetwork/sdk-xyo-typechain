@@ -1,6 +1,6 @@
 import type { HardhatEthersSigner } from '@nomicfoundation/hardhat-ethers/signers'
-import { assertEx } from '@xylabs/assert'
-import { isDefined } from '@xylabs/typeof'
+import { assertEx } from '@ariestools/sdk'
+import { isDefined } from '@ariestools/sdk'
 import { expect } from 'chai'
 import { type AddressLike, ethers } from 'ethers'
 
