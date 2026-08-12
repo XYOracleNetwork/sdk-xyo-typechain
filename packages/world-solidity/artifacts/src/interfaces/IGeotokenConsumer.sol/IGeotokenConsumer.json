@@ -1,0 +1,27 @@
+{
+  "_format": "hh3-artifact-1",
+  "contractName": "IGeotokenConsumer",
+  "sourceName": "src/interfaces/IGeotokenConsumer.sol",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "geotokens",
+      "outputs": [
+        {
+          "internalType": "contract IGeotokenErc721",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "linkReferences": {},
+  "deployedLinkReferences": {},
+  "immutableReferences": {},
+  "inputSourceName": "project/src/interfaces/IGeotokenConsumer.sol",
+  "buildInfoId": "solc-0_8_26-873bbef1a0340d91b318c0a2842afb70a7679095"
+}

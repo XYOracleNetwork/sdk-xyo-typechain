@@ -1,6 +1,6 @@
 ignores: [
   "@xyo-network/uniswap-solidity",
-  "@xylabs/tsconfig",
+  "@ariestools/tsconfig",
   "@typechain/ethers-v6",
   "ethers",
   "rimraf"

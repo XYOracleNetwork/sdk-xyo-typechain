@@ -52,24 +52,18 @@ yarn add @xyo-network/sdk-xyo-typechain
 
 ## Credits
 
-[Made with 🔥 and ❄️ by XYO](https://xyo.network)
-
-[logo]: https://cdn.xy.company/img/brand/XYO_full_colored.png
+[Made with 🔥 and ❄️ by XYO Foundation](https://xyo.network)
 
 [main-build]: https://github.com/XYOracleNetwork/sdk-xyo-typechain/actions/workflows/build-main.yml/badge.svg
 [main-build-link]: https://github.com/XYOracleNetwork/sdk-xyo-typechain/actions/workflows/build-main.yml
-
 [npm-badge]: https://img.shields.io/npm/v/@xyo-network/sdk-xyo-typechain.svg
 [npm-link]: https://www.npmjs.com/package/@xyo-network/sdk-xyo-typechain
-
 [bch-badge]: https://bettercodehub.com/edge/badge/XYOracleNetwork/sdk-xyo-typechain?branch=main
 [bch-link]: https://bettercodehub.com/results/XYOracleNetwork/sdk-xyo-typechain
-
 [codacy-badge]: https://app.codacy.com/project/badge/Grade/cceadf68cb0b4ec5896cb05f1e0d6b24
 [codacy-link]: https://www.codacy.com/gh/XYOracleNetwork/sdk-xyo-typechain/dashboard?utm_source=github.com&utm_medium=referral&utm_content=XYOracleNetwork/sdk-xyo-typechain&utm_campaign=Badge_Grade
-
 [codeclimate-badge]: https://api.codeclimate.com/v1/badges/fd816e09dbad82d985d0/maintainability
 [codeclimate-link]: https://codeclimate.com/github/XYOracleNetwork/sdk-xyo-typechain/maintainability
-
 [snyk-badge]: https://snyk.io/test/github/XYOracleNetwork/sdk-xyo-typechain/badge.svg?targetFile=package.json
 [snyk-link]: https://snyk.io/test/github/XYOracleNetwork/sdk-xyo-typechain?targetFile=package.json
+[logo]: https://cdn.xy.company/img/brand/XYO_full_colored.png

@@ -1,0 +1,15 @@
+packages:
+  - 'packages/**/*'
+allowBuilds:
+  '@apollo/protobufjs': false
+  bufferutil: false
+  es5-ext: false
+  esbuild: true
+  keccak: false
+  leveldown: false
+  secp256k1: true
+  unrs-resolver: true
+  utf-8-validate: false
+  web3: false
+  web3-bzz: false
+  web3-shh: false
