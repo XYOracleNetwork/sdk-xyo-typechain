@@ -36,6 +36,7 @@
   "scripts": {
     "copy-artifacts": "rimraf src && copyfiles -u 3 '../solidity/artifacts/**/*.*' artifacts",
     "generate:sdk": "node ./scripts/generate-sdk.mjs",
+    "test:generated-imports": "node --test scripts/spec/normalize-generated-imports.spec.mjs",
     "lint-pkg": "npmPkgJsonLint .",
     "package-build": "pnpm run package-compile",
     "package-clean": "rimraf dist && rimraf src",

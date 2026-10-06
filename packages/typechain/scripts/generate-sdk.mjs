@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 
 import { execSync } from 'node:child_process'
-import { glob, globSync } from 'glob'
 import fs from 'node:fs'
 
-export function findFilesByGlob(cwd, pattern) {
+import { glob, globSync } from 'glob'
+
+import { normalizeGeneratedImports } from './normalize-generated-imports.mjs'
+
+function findFilesByGlob(cwd, pattern) {
   return globSync(pattern, { cwd, absolute: true })
 }
 
@@ -25,3 +28,5 @@ execSync(
   `typechain --node16-modules --out-dir=./src --target=ethers-v6 ${filesToProcess.join(' ')}`,
   { stdio: 'inherit' },
 )
+
+normalizeGeneratedImports('./src')

@@ -4,7 +4,7 @@ import {
   workspacesConfig,
   rulesConfig,
   importConfig
-} from '@xylabs/eslint-config-flat'
+} from '@ariestools/eslint-config-flat'
 
 export default [
   {
@@ -17,8 +17,8 @@ export default [
   unicornConfig,
   workspacesConfig,
   rulesConfig,
-  typescriptConfig,
-  importConfig,
+  ...typescriptConfig,
+  ...importConfig,
   {
     rules: {
       'unicorn/no-abusive-eslint-disable': ['off']
