@@ -34,7 +34,7 @@
     "README.md"
   ],
   "scripts": {
-    "copy-artifacts": "rimraf src && copyfiles -u 3 '../solidity/artifacts/**/*.*' artifacts",
+    "copy-artifacts": "rimraf src && copyfiles -u 3 \"../solidity/artifacts/**/*.*\" artifacts",
     "generate:sdk": "node ./scripts/generate-sdk.mjs",
     "test:generated-imports": "node --test scripts/spec/normalize-generated-imports.spec.mjs",
     "lint-pkg": "npmPkgJsonLint .",
