@@ -30,7 +30,7 @@
     "build-v4-periphery": "echo \"[build-v4-periphery]\" && hardhat compile --config hardhat.v4-periphery.config.ts",
     "copy-contracts": "echo \"[copy-contracts]\" && rimraf contracts && pnpm run copy-contracts-v3 && pnpm run copy-contracts-v4 && pnpm run copy-contracts-v4-periphery",
     "copy-contracts-v3": "echo \"[copy-contracts-v3]\" && copyfiles -u 4 \"node_modules/@uniswap/v3-core/contracts/**/*\" contracts/v3",
-    "copy-contracts-v4": "echo \"[copy-contracts-v4]\" && copyfiles -u 4 \"node_modules/@uniswap/v4-core/src/**/*\" contracts/v4 && rimraf contracts/v4/test contracts/v4/*.sol",
+    "copy-contracts-v4": "echo \"[copy-contracts-v4]\" && copyfiles -u 4 \"node_modules/@uniswap/v4-core/src/**/*\" contracts/v4 && rimraf --glob contracts/v4/test \"contracts/v4/*.sol\"",
     "copy-contracts-v4-periphery": "echo \"[copy-contracts-v4-periphery]\" && copyfiles -u 5 \"node_modules/@uniswap/v4-periphery/src/interfaces/**/*\" contracts/v4-periphery/interfaces && copyfiles -u 5 \"node_modules/@uniswap/v4-periphery/src/libraries/PathKey.sol\" contracts/v4-periphery/libraries && copyfiles -u 5 \"node_modules/@uniswap/v4-periphery/src/libraries/PositionInfoLibrary.sol\" contracts/v4-periphery/libraries",
     "package-build": "echo \"[package-build]\" && pnpm run build",
     "package-clean": "echo \"[package-clean]\" && rimraf contracts artifacts cache dist build",
