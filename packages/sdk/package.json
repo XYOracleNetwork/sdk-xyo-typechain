@@ -50,8 +50,8 @@
     "@xyo-network/world-typechain": "workspace:*"
   },
   "devDependencies": {
-    "@ariestools/toolchain": "^9.0.0",
-    "@ariestools/tsconfig": "~9",
+    "@ariestools/toolchain": "~9.0.2",
+    "@ariestools/tsconfig": "~9.0.2",
     "typescript": "~6.0.3"
   },
   "engines": {

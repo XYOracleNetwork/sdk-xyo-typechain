@@ -1,0 +1,49 @@
+---
+name: xy-toolchain
+description: Aries Tools TypeScript toolchain used by XY, XYO, and XL1 repositories. Covers the @ariestools/toolchain xy CLI, library and application profiles, monorepo and single-package topology, package-manager behavior, xy.config.ts compile modes, tiered ESLint flat configs, @ariestools TypeScript configs (including lib-neutral ambient globals), @ariestools/vitest-config, Vitest, dependency and API-exposure analysis (deplint roles, pick, placement/presence), publishing checks, dead-code analysis, repository policy, skills, xy work tracking with optional GitHub Issues dual-write/sync and multi-folder workspace scope, and configurable clean (including --full hygiene). Use when setting up or maintaining projects, selecting a project profile, running or debugging build/lint/test commands, configuring package output, fixing dependency placement or required presence, validating publish surfaces, tracking work with xy work, or interpreting xy command failures.
+metadata:
+  version: 0.1.3 # x-release-please-version
+---
+
+# XY Toolchain
+
+Use the active [`@ariestools/toolchain`](https://github.com/ariestools/toolchain) packages. Do not install the retired `@xylabs/*` compatibility names in new work.
+
+Inspect the repository's `package.json`, lockfile, `xy.config.ts`, ESLint config, TypeScript configs, and test config before choosing commands. Prefer existing repository scripts; use the `xy` CLI directly when the repository exposes no narrower wrapper.
+
+This skill builds on the [Development Skill](../xy-development/SKILL.md), which covers language and workflow principles. Load only the reference needed for the task:
+
+## References
+
+### [Project profiles](project-profiles.md)
+
+Read first when classifying a repository or package as a library, service, app, CLI, or other role; choosing neutral/node/browser/React guidance; deciding how monorepo and single-package setup differ; or determining whether framework tooling or `xy compile` owns production output.
+
+### [Toolchain and project setup](toolchain.md)
+
+Read when installing the toolchain, selecting a package manager, wiring scripts, distinguishing `xy` commands from `package-*` hooks, migrating from `@xylabs/*`, or troubleshooting project setup.
+
+### [Compilation and package output](compilation.md)
+
+Read when editing `xy.config.ts`, selecting neutral/node/browser targets, choosing library/bundle/transpile/monolith/vendor mode, configuring validation, or debugging emitted files and export layouts.
+
+### [Command and policy catalog](commands.md)
+
+Read when choosing among `build`, `check`, `fix`, `clean`, `deplint` (including `pick` and package roles), `api-exposure`, `publint`, `dead`, repository-policy commands, `skills`, or `work` (including GitHub Issues dual-write, `list --all`, `sync`, and multi-folder `--workspace` scope); also read when configuring dependency placement/presence, clean patterns, or using `--rules`, `--json`, `--strict`, and automation behavior.
+
+### [ESLint configuration](eslint.md)
+
+Read when creating or repairing an ESLint flat config, selecting a rule tier, enabling type-aware linting, honoring `.gitignore`, diagnosing lint performance, or using `xy lint init`, `lint lint`, and `lint config`.
+
+### [TypeScript configuration](typescript.md)
+
+Read when selecting `@ariestools/tsconfig`, `-dom`, or `-react`, configuring Node types or `@ariestools/lib-neutral` ambient globals, interpreting `noEmit`, or separating type validation from toolchain emission.
+
+### [Testing with Vitest](testing.md)
+
+Read when configuring Vitest (including `@ariestools/vitest-config`), choosing spec locations and node/browser routing, running a workspace or path, clearing the test cache, or distinguishing test failures from build failures.
+
+## Related skills
+
+- **[ariestools-sdk](../ariestools-sdk/SKILL.md)** — `@ariestools/sdk` utilities and specialist packages from `sdk-js`.
+- Domain scaffolds (for example XL1 apps in the separate [xyo-skills](https://github.com/XYOracleNetwork/xyo-skills) pack) should still depend on the active `@ariestools/*` toolchain packages described here.

@@ -43,9 +43,9 @@
     "dev-local": "pnpm --filter @xyo-network/solidity dev-local"
   },
   "devDependencies": {
-    "@ariestools/eslint-config-flat": "~9",
-    "@ariestools/toolchain": "^9.0.0",
-    "@ariestools/tsconfig": "~9",
+    "@ariestools/eslint-config-flat": "~9.0.2",
+    "@ariestools/toolchain": "~9.0.2",
+    "@ariestools/tsconfig": "~9.0.2",
     "@stylistic/eslint-plugin": "~5.10.0",
     "@types/node": "~26.2.0",
     "@typescript-eslint/eslint-plugin": "~8.67.0",
@@ -55,11 +55,16 @@
     "solc": "0.8.33",
     "typescript": "~6.0.3"
   },
-  "packageManager": "pnpm@11.21.0+sha512.521705bce689924eac72f5a3587122f362689ef6571e55ba80076fd637c11132ecffada26fad4ea79c485bfddbfd3d5a2a5b05805a77e893de71ec8a6cca3bb1",
-  "engines": {
-    "node": ">=22.14.0"
-  },
-  "volta": {
-    "node": "22.14.0"
+  "devEngines": {
+    "runtime": {
+      "name": "node",
+      "onFail": "error",
+      "version": ">=26.0.0 <27.0.0"
+    },
+    "packageManager": {
+      "name": "pnpm",
+      "onFail": "error",
+      "version": ">=12.0.0 <13.0.0"
+    }
   }
 }

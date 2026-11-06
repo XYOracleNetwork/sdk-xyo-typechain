@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "skills": {
+    "xy-development": {
+      "source": "ariestools/ariestools-skills",
+      "sourceType": "github",
+      "skillPath": "skills/xy-development/SKILL.md",
+      "computedHash": "99acf7c5fe06fcd53ae0ff1d3c54d4c38fb499e83c5e09413e662b2ffac35f43"
+    },
+    "xy-toolchain": {
+      "source": "ariestools/ariestools-skills",
+      "sourceType": "github",
+      "skillPath": "skills/xy-toolchain/SKILL.md",
+      "computedHash": "9dbd4c4ca0aaa649688ee9e8ca70e7d805c293eff61c3406444aff5f0a664297"
+    },
+    "xyo-knowledge": {
+      "source": "XYOracleNetwork/xyo-skills",
+      "sourceType": "github",
+      "skillPath": "skills/xyo-knowledge/SKILL.md",
+      "computedHash": "09bd0f4f1887c39afefe6e08c54309ce6d6d9310f741abab7dca10c2fc586c83"
+    }
+  }
+}

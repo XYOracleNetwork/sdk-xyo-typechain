@@ -57,8 +57,8 @@
     "verify-sepolia": "hardhat ignition verify chain-11155111 --network sepolia"
   },
   "devDependencies": {
-    "@ariestools/toolchain": "^9.0.0",
-    "@ariestools/tsconfig": "~9",
+    "@ariestools/toolchain": "~9.0.2",
+    "@ariestools/tsconfig": "~9.0.2",
     "@nomicfoundation/hardhat-ethers": "~4.0.15",
     "@nomicfoundation/hardhat-ethers-chai-matchers": "^3.0.0",
     "@nomicfoundation/hardhat-ignition": "~3.1.8",
