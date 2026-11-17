@@ -1,6 +1,6 @@
-import type { XyTsupConfig } from '@ariestools/toolchain'
+import type { XyEsbuildConfig } from '@ariestools/toolchain'
 
-const config: XyTsupConfig = {
+const config: XyEsbuildConfig = {
   compile: {
     entryMode: 'all',
     browser: true,
