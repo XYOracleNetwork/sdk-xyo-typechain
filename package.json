@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@ariestools/eslint-config-flat": "~9.0.2",
-    "@ariestools/toolchain": "~9.0.2",
+    "@ariestools/toolchain": "~10.3.1",
     "@ariestools/tsconfig": "~9.0.2",
     "@stylistic/eslint-plugin": "~5.10.0",
     "@types/node": "~26.2.0",
